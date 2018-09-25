@@ -84,24 +84,24 @@ export class StartupService {
     // ACL：设置权限为全量
     this.aclService.setFull(true);
     // 初始化菜单
-    this.menuService.add([
-      {
-        text: '主导航',
-        group: true,
-        children: [
-          {
-            text: '仪表盘',
-            link: '/luohaha',
-            icon: 'anticon anticon-appstore-o',
-          },
-          {
-            text: '快捷菜单',
-            icon: 'anticon anticon-rocket',
-            shortcutRoot: false,
-          },
-        ],
-      }
-    ]);
+    // this.menuService.add([
+    //   {
+    //     text: '主导航',
+    //     group: true,
+    //     children: [
+    //       {
+    //         text: '仪表盘',
+    //         link: '/luohaha',
+    //         icon: 'anticon anticon-appstore-o',
+    //       },
+    //       {
+    //         text: '快捷菜单',
+    //         icon: 'anticon anticon-rocket',
+    //         shortcutRoot: false,
+    //       },
+    //     ],
+    //   },
+    // ]);
     // 设置页面标题的后缀
     this.titleService.suffix = app.name;
 

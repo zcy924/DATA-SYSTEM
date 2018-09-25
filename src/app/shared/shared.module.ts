@@ -11,6 +11,7 @@ import { DelonFormModule } from '@delon/form';
 // region: third libs
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CountdownModule } from 'ngx-countdown';
+import { SidebarComponent } from '../layout/default/sidebar/sidebar.component';
 const THIRDMODULES = [
   NgZorroAntdModule,
   CountdownModule
@@ -18,7 +19,7 @@ const THIRDMODULES = [
 // endregion
 
 // region: your componets & directives
-const COMPONENTS = [];
+const COMPONENTS = [SidebarComponent];
 const DIRECTIVES = [];
 // endregion
 
