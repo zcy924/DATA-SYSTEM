@@ -9,7 +9,6 @@ const routes: Routes = [
   { path: 'user-report', component: ReportCollectComponent },
   { path: 'user-screen', component: ScreenCollectComponent },
   { path: 'user-message', component: UserInfoComponent },
-  { path: 'square', component: SpaceSquareComponent },
 ];
 
 @NgModule({

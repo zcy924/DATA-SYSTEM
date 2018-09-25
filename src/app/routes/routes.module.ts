@@ -15,6 +15,7 @@ import { Exception403Component } from './exception/403.component';
 import { Exception404Component } from './exception/404.component';
 import { Exception500Component } from './exception/500.component';
 import { PersonalCenterComponent } from './system/personal-center/personal-center.component';
+import { SpaceSquareComponent } from './system/space-square/space-square.component';
 
 
 const COMPONENTS = [
@@ -30,7 +31,7 @@ const COMPONENTS = [
   Exception404Component,
   Exception500Component
 ];
-const COMPONENTS_NOROUNT = [PersonalCenterComponent];
+const COMPONENTS_NOROUNT = [PersonalCenterComponent,SpaceSquareComponent];
 
 @NgModule({
   imports: [ SharedModule, RouteRoutingModule ],

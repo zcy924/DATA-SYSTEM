@@ -20,14 +20,14 @@
     </li>
     <!-- 数据报告个人中心 -->
     <li class="hidden-mobile">
-      <div class="alain-default__nav-item" >
-        <i class="anticon anticon-user" nz-tooltip nzTitle="个人中心" [routerLink]="['/system/user']" routerLinkActive="router-link-active"  nzPlacement="bottom"></i>
+      <div class="alain-default__nav-item" [routerLink]="['/app/user']" routerLinkActive="router-link-active">
+        <i class="anticon anticon-user" nz-tooltip nzTitle="个人中心"   nzPlacement="bottom"></i>
       </div>
     </li>
     <!-- 空间广场 -->
     <li class="hidden-mobile">
-      <div class="alain-default__nav-item" >
-        <i class="anticon anticon-appstore-o" nz-tooltip nzTitle="空间广场" [routerLink]="['/system/square']" routerLinkActive="router-link-active" nzPlacement="bottom"></i>
+      <div class="alain-default__nav-item" [routerLink]="['/app/square']" routerLinkActive="router-link-active" >
+        <i class="anticon anticon-appstore-o" nz-tooltip nzTitle="空间广场" nzPlacement="bottom"></i>
       </div>
     </li>
   </ul>

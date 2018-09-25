@@ -18,6 +18,7 @@ import { Exception403Component } from './exception/403.component';
 import { Exception404Component } from './exception/404.component';
 import { Exception500Component } from './exception/500.component';
 import { PersonalCenterComponent } from './system/personal-center/personal-center.component';
+import { SpaceSquareComponent } from './system/space-square/space-square.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,9 @@ const routes: Routes = [
         path: 'user',
         component: PersonalCenterComponent,
         loadChildren: './system/system.module#SystemModule',
+      },{
+        path: 'square',
+        component: SpaceSquareComponent,
       },
       // 业务子模块
       // { path: 'widgets', loadChildren: './widgets/widgets.module#WidgetsModule' }
