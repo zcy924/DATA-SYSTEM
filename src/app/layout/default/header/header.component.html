@@ -12,26 +12,25 @@
         <i class="anticon anticon-menu-{{settings.layout.collapsed ? 'unfold' : 'fold'}}"></i>
       </div>
     </li>
-    <!-- Github Page -->
-    <li>
-      <a class="alain-default__nav-item" href="//github.com/ng-alain/ng-alain" target="_blank">
-        <i class="anticon anticon-github"></i>
-      </a>
-    </li>
     <!-- Lock Page -->
     <li class="hidden-mobile">
       <div class="alain-default__nav-item" [routerLink]="['/lock']">
-        <i class="anticon anticon-lock"></i>
+        <i class="anticon anticon-lock" nz-tooltip nzTitle="锁定" nzPlacement="bottom"></i>
       </div>
     </li>
-    <!-- Search Button -->
-    <li class="header-search__btn" (click)="searchToggleChange()">
-      <div class="alain-default__nav-item">
-        <i class="anticon anticon-search"></i>
+    <!-- 数据报告个人中心 -->
+    <li class="hidden-mobile">
+      <div class="alain-default__nav-item" >
+        <i class="anticon anticon-user" nz-tooltip nzTitle="个人中心" nzPlacement="bottom"></i>
+      </div>
+    </li>
+    <!-- 空间广场 -->
+    <li class="hidden-mobile">
+      <div class="alain-default__nav-item" >
+        <i class="anticon anticon-appstore-o" nz-tooltip nzTitle="空间广场" nzPlacement="bottom"></i>
       </div>
     </li>
   </ul>
-  <header-search class="alain-default__search" [toggleChange]="searchToggleStatus"></header-search>
   <ul class="alain-default__nav">
     <!-- Notify -->
     <li>
@@ -61,6 +60,7 @@
         </div>
       </nz-dropdown>
     </li>
+    <!-- 个人中心 -->
     <li class="hidden-mobile">
       <header-user></header-user>
     </li>
