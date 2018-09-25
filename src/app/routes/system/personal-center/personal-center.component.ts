@@ -16,18 +16,18 @@ export class PersonalCenterComponent implements OnInit {
         children: [
           {
             text: '报表收藏管理',
-            link: '/luohaha',
+            link: '/app/user/user-report',
             icon: 'anticon anticon-appstore-o',
           },
           {
             text: '大屏收藏管理',
             icon: 'anticon anticon-area-chart',
-            shortcutRoot: false,
+            link: '/app/user/user-screen',
           },
           {
             text: '个人信息管理',
             icon: 'anticon anticon-user',
-            shortcutRoot: false,
+            link: '/app/user/user-message',
           },
         ],
       },

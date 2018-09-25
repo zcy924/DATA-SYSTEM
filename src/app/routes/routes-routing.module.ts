@@ -21,16 +21,14 @@ import { PersonalCenterComponent } from './system/personal-center/personal-cente
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'app',
     component: LayoutDefaultComponent,
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {
-        path: 'dashboard',
-        component: DashboardComponent,
-        data: { title: '仪表盘', titleI18n: 'dashboard' },
+        path: 'user',
+        component: PersonalCenterComponent,
+        loadChildren: './system/system.module#SystemModule',
       },
-      { path: 'system', loadChildren: './system/system.module#SystemModule' },
       // 业务子模块
       // { path: 'widgets', loadChildren: './widgets/widgets.module#WidgetsModule' }
     ],
@@ -46,9 +44,14 @@ const routes: Routes = [
   // },
   // passport
   {
-    path: 'passport',
+    path: '',
     component: LayoutPassportComponent,
     children: [
+      {
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full',
+      },
       {
         path: 'login',
         component: UserLoginComponent,
