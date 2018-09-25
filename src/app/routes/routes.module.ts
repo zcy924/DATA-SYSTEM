@@ -14,6 +14,7 @@ import { UserLockComponent } from './passport/lock/lock.component';
 import { Exception403Component } from './exception/403.component';
 import { Exception404Component } from './exception/404.component';
 import { Exception500Component } from './exception/500.component';
+import { PersonalCenterComponent } from './system/personal-center/personal-center.component';
 
 
 const COMPONENTS = [
@@ -29,7 +30,7 @@ const COMPONENTS = [
   Exception404Component,
   Exception500Component
 ];
-const COMPONENTS_NOROUNT = [];
+const COMPONENTS_NOROUNT = [PersonalCenterComponent];
 
 @NgModule({
   imports: [ SharedModule, RouteRoutingModule ],
