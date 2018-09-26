@@ -4,6 +4,7 @@ import { SharedModule } from '@shared/shared.module';
 import { ReportCollectComponent } from './personal-center/component/report-collect.component';
 import { ScreenCollectComponent } from './personal-center/component/screen-collect.component';
 import { UserInfoComponent } from './personal-center/component/user-info.component';
+import { SystemService } from './system.service';
 
 const modules = [SharedModule, SystemRoutingModule];
 const components = [ReportCollectComponent, ScreenCollectComponent, UserInfoComponent];
@@ -11,6 +12,6 @@ const components = [ReportCollectComponent, ScreenCollectComponent, UserInfoComp
   imports: [...modules],
   exports: [],
   declarations: [...components],
-  providers: [],
+  providers: [SystemService],
 })
 export class SystemModule {}

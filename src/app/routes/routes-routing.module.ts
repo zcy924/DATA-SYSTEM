@@ -35,15 +35,17 @@ const routes: Routes = [
       {
         path: 'square/:spaceId',
         component: SpaceManageComponent,
-        loadChildren: './system/space-manage/space-manage.module#SpaceManageModule'
+        loadChildren:
+          './system/space-manage/space-manage.module#SpaceManageModule',
       },
       // 业务子模块
       // { path: 'widgets', loadChildren: './widgets/widgets.module#WidgetsModule' }
-    ]
-  }, {
-    path: 'passport',
+    ],
+  },
+  {
+    path: '',
     component: LayoutPassportComponent,
-    loadChildren: './passport/passport.module#PassportModule'
+    loadChildren: './passport/passport.module#PassportModule',
   },
   // 全屏布局
   // {
@@ -73,5 +75,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, { useHash: environment.useHash })],
   exports: [RouterModule],
 })
-export class RouteRoutingModule {
-}
+export class RouteRoutingModule {}

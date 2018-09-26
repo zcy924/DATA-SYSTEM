@@ -23,8 +23,10 @@ import { DA_SERVICE_TOKEN, TokenService } from '@delon/auth';
  */
 @Injectable()
 export class DefaultInterceptor implements HttpInterceptor {
-  constructor(private injector: Injector,
-              @Inject(DA_SERVICE_TOKEN) private tokenService: TokenService) {}
+  constructor(
+    private injector: Injector,
+    @Inject(DA_SERVICE_TOKEN) private tokenService: TokenService,
+  ) {}
 
   get msg(): NzMessageService {
     return this.injector.get(NzMessageService);
@@ -98,16 +100,7 @@ export class DefaultInterceptor implements HttpInterceptor {
     if (!url.startsWith('https://') && !url.startsWith('http://')) {
       url = environment.SERVER_URL + url;
     }
-
-    let token = this.tokenService.get().token;
-    console.info("---------intercept------------------------");
-    console.info(token);
-    // TODO Token拦截
-    let newReq = req.clone({ url: url, });
-    if(!token === undefined){
-      newReq = req.clone({ url: url, setHeaders: { Token: token } });
-    }
-    
+    const newReq = req.clone({ url: url });
     return next.handle(newReq).pipe(
       mergeMap((event: any) => {
         // 允许统一对请求错误处理，这是因为一个请求若是业务上错误的情况下其HTTP请求的状态是200的情况下需要
@@ -115,7 +108,6 @@ export class DefaultInterceptor implements HttpInterceptor {
           return this.handleData(event);
         // 若一切都正常，则后续操作
         return of(event);
-        console.info("---------intercept return--------------------");
       }),
       catchError((err: HttpErrorResponse) => this.handleData(err)),
     );

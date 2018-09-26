@@ -109,37 +109,38 @@ export class UserLoginComponent implements OnDestroy {
     // 默认配置中对所有HTTP请求都会强制[校验](https://ng-alain.com/auth/getting-started) 用户 Token
     // 然一般来说登录请求不需要校验，因此可以在请求URL加上：`/login?_allow_anonymous=true` 表示不触发用户 Token 校验
     this.loading = true;
-    this.httpClient.post(
-      'http://localhost:8080/data-reporter/login?_allow_anonymous=true',
-      { uid: this.userName.value, pwd: this.password.value, })
+    this.httpClient
+      .post('http://10.2.215.213:8080/data-reporter/login?_allow_anonymous=true', {
+        uid: this.userName.value,
+        pwd: this.password.value,
+      })
       .subscribe(data => {
-      console.info('-----------------------------------------');
-      if (data['code'] === '00') {
-        console.info(data);
-        console.info('登陸成功');
+        console.info('-----------------------------------------');
+        if (data['code'] === '00') {
+          console.info(data);
+          console.info('登陸成功');
 
-        // 清空路由复用信息
-        this.reuseTabService.clear();
-        // 设置Token信息
-        this.tokenService.set({
-          token: data['token'],
-          name: this.userName.value,
-          // email: `cipchk@qq.com`,
-          // id: 10000,
-          time: +new Date(),
-        });
-        // 重新获取 StartupService 内容，若其包括 User 有关的信息的话
-        // this.startupSrv.load().then(() => this.router.navigate(['/']));
-        // 否则直接跳转
-        this.router.navigate(['/app/user']);
-
-      } else {
-        console.info('用户名或密码错误');
-        console.info(data);
-        this.error = '用户名或密码错误';
-        return;
-      }
-    });
+          // 清空路由复用信息
+          this.reuseTabService.clear();
+          // 设置Token信息
+          this.tokenService.set({
+            token: data['token'],
+            name: this.userName.value,
+            // email: `cipchk@qq.com`,
+            // id: 10000,
+            time: +new Date(),
+          });
+          // 重新获取 StartupService 内容，若其包括 User 有关的信息的话
+          // this.startupSrv.load().then(() => this.router.navigate(['/']));
+          // 否则直接跳转
+          this.router.navigate(['/app/user']);
+        } else {
+          console.info('用户名或密码错误');
+          console.info(data);
+          this.error = '用户名或密码错误';
+          return;
+        }
+      });
   }
 
   // region: social
