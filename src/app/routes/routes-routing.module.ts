@@ -8,9 +8,6 @@ import { LayoutPassportComponent } from '../layout/passport/passport.component';
 // dashboard pages
 import { DashboardComponent } from './dashboard/dashboard.component';
 // passport pages
-import { UserLoginComponent } from './passport/login/login.component';
-import { UserRegisterComponent } from './passport/register/register.component';
-import { UserRegisterResultComponent } from './passport/register-result/register-result.component';
 // single pages
 import { CallbackComponent } from './callback/callback.component';
 import { UserLockComponent } from './passport/lock/lock.component';
@@ -42,7 +39,11 @@ const routes: Routes = [
       },
       // 业务子模块
       // { path: 'widgets', loadChildren: './widgets/widgets.module#WidgetsModule' }
-    ],
+    ]
+  }, {
+    path: 'passport',
+    component: LayoutPassportComponent,
+    loadChildren: './passport/passport.module#PassportModule'
   },
   // 全屏布局
   // {
@@ -54,32 +55,7 @@ const routes: Routes = [
   //     ]
   // },
   // passport
-  {
-    path: '',
-    component: LayoutPassportComponent,
-    children: [
-      {
-        path: '',
-        redirectTo: 'login',
-        pathMatch: 'full',
-      },
-      {
-        path: 'login',
-        component: UserLoginComponent,
-        data: { title: '登录', titleI18n: 'pro-login' },
-      },
-      {
-        path: 'register',
-        component: UserRegisterComponent,
-        data: { title: '注册', titleI18n: 'pro-register' },
-      },
-      {
-        path: 'register-result',
-        component: UserRegisterResultComponent,
-        data: { title: '注册结果', titleI18n: 'pro-register-result' },
-      },
-    ],
-  },
+
   // 单页不包裹Layout
   { path: 'callback/:type', component: CallbackComponent },
   {
@@ -97,4 +73,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, { useHash: environment.useHash })],
   exports: [RouterModule],
 })
-export class RouteRoutingModule {}
+export class RouteRoutingModule {
+}

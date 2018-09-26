@@ -22,9 +22,9 @@ import { SpaceManageComponent } from './system/space-manage/space-manage.compone
 const COMPONENTS = [
   DashboardComponent,
   // passport pages
-  UserLoginComponent,
-  UserRegisterComponent,
-  UserRegisterResultComponent,
+  // UserLoginComponent,
+  // UserRegisterComponent,
+  // UserRegisterResultComponent,
   // single pages
   CallbackComponent,
   UserLockComponent,

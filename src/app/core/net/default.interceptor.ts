@@ -1,4 +1,4 @@
-import { Injectable, Injector } from '@angular/core';
+import { Inject, Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   HttpInterceptor,
@@ -16,13 +16,15 @@ import { mergeMap, catchError } from 'rxjs/operators';
 import { NzMessageService } from 'ng-zorro-antd';
 import { _HttpClient } from '@delon/theme';
 import { environment } from '@env/environment';
+import { DA_SERVICE_TOKEN, TokenService } from '@delon/auth';
 
 /**
  * 默认HTTP拦截器，其注册细节见 `app.module.ts`
  */
 @Injectable()
 export class DefaultInterceptor implements HttpInterceptor {
-  constructor(private injector: Injector) {}
+  constructor(private injector: Injector,
+              @Inject(DA_SERVICE_TOKEN) private tokenService: TokenService) {}
 
   get msg(): NzMessageService {
     return this.injector.get(NzMessageService);
@@ -97,9 +99,15 @@ export class DefaultInterceptor implements HttpInterceptor {
       url = environment.SERVER_URL + url;
     }
 
-    const newReq = req.clone({
-      url: url,
-    });
+    let token = this.tokenService.get().token;
+    console.info("---------intercept------------------------");
+    console.info(token);
+    // TODO Token拦截
+    let newReq = req.clone({ url: url, });
+    if(!token === undefined){
+      newReq = req.clone({ url: url, setHeaders: { Token: token } });
+    }
+    
     return next.handle(newReq).pipe(
       mergeMap((event: any) => {
         // 允许统一对请求错误处理，这是因为一个请求若是业务上错误的情况下其HTTP请求的状态是200的情况下需要
@@ -107,6 +115,7 @@ export class DefaultInterceptor implements HttpInterceptor {
           return this.handleData(event);
         // 若一切都正常，则后续操作
         return of(event);
+        console.info("---------intercept return--------------------");
       }),
       catchError((err: HttpErrorResponse) => this.handleData(err)),
     );
