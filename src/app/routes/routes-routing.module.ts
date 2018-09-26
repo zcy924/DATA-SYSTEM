@@ -19,6 +19,7 @@ import { Exception404Component } from './exception/404.component';
 import { Exception500Component } from './exception/500.component';
 import { PersonalCenterComponent } from './system/personal-center/personal-center.component';
 import { SpaceSquareComponent } from './system/space-square/space-square.component';
+import { SpaceManageComponent } from './system/space-manage/space-manage.component';
 
 const routes: Routes = [
   {
@@ -33,6 +34,11 @@ const routes: Routes = [
       {
         path: 'square',
         component: SpaceSquareComponent,
+      },
+      {
+        path: 'square/:spaceId',
+        component: SpaceManageComponent,
+        loadChildren: './system/space-manage/space-manage.module#SpaceManageModule'
       },
       // 业务子模块
       // { path: 'widgets', loadChildren: './widgets/widgets.module#WidgetsModule' }

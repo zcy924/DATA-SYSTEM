@@ -14,9 +14,10 @@ import { UserLockComponent } from './passport/lock/lock.component';
 import { Exception403Component } from './exception/403.component';
 import { Exception404Component } from './exception/404.component';
 import { Exception500Component } from './exception/500.component';
+
 import { PersonalCenterComponent } from './system/personal-center/personal-center.component';
 import { SpaceSquareComponent } from './system/space-square/space-square.component';
-
+import { SpaceManageComponent } from './system/space-manage/space-manage.component';
 
 const COMPONENTS = [
   DashboardComponent,
@@ -29,16 +30,17 @@ const COMPONENTS = [
   UserLockComponent,
   Exception403Component,
   Exception404Component,
-  Exception500Component
+  Exception500Component,
 ];
-const COMPONENTS_NOROUNT = [PersonalCenterComponent,SpaceSquareComponent];
+const COMPONENTS_NOROUNT = [
+  PersonalCenterComponent,
+  SpaceSquareComponent,
+  SpaceManageComponent,
+];
 
 @NgModule({
-  imports: [ SharedModule, RouteRoutingModule ],
-  declarations: [
-    ...COMPONENTS,
-    ...COMPONENTS_NOROUNT
-  ],
-  entryComponents: COMPONENTS_NOROUNT
+  imports: [SharedModule, RouteRoutingModule],
+  declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT],
+  entryComponents: COMPONENTS_NOROUNT,
 })
 export class RoutesModule {}

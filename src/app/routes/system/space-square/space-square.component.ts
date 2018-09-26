@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-space-aquare',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SpaceSquareComponent implements OnInit {
   groups = [1, 2, 3, 4, 5];
-  constructor() {
+  constructor(private router: Router) {
     // this.service.getSpaces().subscribe(data => {
     //   this.groups = data.data;
     // });
@@ -17,6 +18,6 @@ export class SpaceSquareComponent implements OnInit {
 
   openDetail(item) {
     console.log(item);
-    // this.router.navigate(['app/groups/' + item.group_name]);
+    this.router.navigate(['app/square/' +'123']);
   }
 }
