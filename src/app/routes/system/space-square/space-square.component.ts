@@ -1,22 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 
-
 @Component({
   selector: 'app-space-aquare',
   templateUrl: './space-square.html',
-  styleUrls:['./space-square.less']
+  styleUrls: ['./space-square.less'],
 })
 export class SpaceSquareComponent implements OnInit {
-
-  groups = [];
+  groups = [1, 2, 3, 4, 5];
   constructor() {
     // this.service.getSpaces().subscribe(data => {
     //   this.groups = data.data;
     // });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   openDetail(item) {
     console.log(item);

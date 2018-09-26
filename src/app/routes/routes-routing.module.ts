@@ -29,7 +29,8 @@ const routes: Routes = [
         path: 'user',
         component: PersonalCenterComponent,
         loadChildren: './system/system.module#SystemModule',
-      },{
+      },
+      {
         path: 'square',
         component: SpaceSquareComponent,
       },
