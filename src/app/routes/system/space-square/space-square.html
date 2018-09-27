@@ -1,31 +1,28 @@
- <nz-layout style="padding-top:64px">
-    <nz-content>
-      <div nz-row style="background-color: rgb(246,248,248) ;border-bottom: 1px solid rgb(222,230,231);padding: 8px">
-        <div nz-col nzSpan="4" style="line-height: 32px; font-size: x-large ">
-          空间广场
-        </div>
-        <div nz-col style="float: right">
-          <button nz-button nzType="primary"><i class="anticon anticon-setting"></i>公司管理</button>
-          <span>&nbsp;&nbsp;</span>
-          <button nz-button ><i class="anticon anticon-plus"></i>创建空间</button>
-        </div>
+<nz-layout style="padding-top:56px">
+  <nz-content>
+    <div nz-row style="background-color: rgb(246,248,248) ;border-bottom: 1px solid rgb(222,230,231);padding: 8px">
+      <div nz-col nzSpan="4" style="line-height: 32px; font-size: x-large ">
+        空间广场
       </div>
-      <div nz-row style="background-color: #f5f7fa;padding: 16px;">
-        <!-- <div nz-row>
-          <div nz-col>
-            <span>我的空间</span>
-          </div>
-        </div> -->
-        <div nz-row style="padding-top: 16px" nzGutter="16">
-          <div nz-col nzSpan="6" (click)="openDetail(item.id)" *ngFor="let item of spaceArr" style="padding-bottom: 16px">
-            <nz-card style="width: 300px;margin-top: 16px" nzHoverable="true">
-              <nz-card-meta [nzAvatar]="avatarTemplate" nzTitle="{{item.name}}" nzDescription="{{item.remark}}"></nz-card-meta>
-            </nz-card>
-          </div>
+      <div nz-col style="float: right">
+        <button nz-button nzType="primary"><i class="anticon anticon-setting"></i>公司管理</button>
+        <span>&nbsp;&nbsp;</span>
+        <button nz-button><i class="anticon anticon-plus"></i>创建空间</button>
+      </div>
+    </div>
+    <div nz-row style="background-color: #f5f7fa;padding: 16px;">
+      <div nz-row nzType="flex" nzJustify="space-around">
+        <div nz-col (click)="openDetail(item.id)" *ngFor="let item of spaceArr" style="width: 300px;float:left;;">
           <ng-template #avatarTemplate>
-            <div  style="line-height:60px;"><nz-avatar nzSrc="./assets/tmp/img/icon.png" nzSize="large"></nz-avatar></div>
+            <div style="line-height:60px;">
+              <nz-avatar nzSrc="./assets/tmp/img/icon.png" nzSize="large"></nz-avatar>
+            </div>
           </ng-template>
+          <nz-card style="margin-top: 16px" nzHoverable="true">
+            <nz-card-meta [nzAvatar]="avatarTemplate" nzTitle="{{item.name}}" nzDescription="{{item.remark}}"></nz-card-meta>
+          </nz-card>
         </div>
       </div>
-    </nz-content>
-  </nz-layout>
+    </div>
+  </nz-content>
+</nz-layout>
