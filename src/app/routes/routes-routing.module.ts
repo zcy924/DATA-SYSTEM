@@ -26,15 +26,18 @@ const routes: Routes = [
       {
         path: 'user',
         component: PersonalCenterComponent,
+        data: { title: '用户中心' },
         loadChildren: './system/system.module#SystemModule',
       },
       {
         path: 'square',
+        data: { title: '空间广场' },
         component: SpaceSquareComponent,
       },
       {
         path: 'square/:spaceId',
         component: SpaceManageComponent,
+        data: { title: '空间管理' },
         loadChildren:
           './system/space-manage/space-manage.module#SpaceManageModule',
       },

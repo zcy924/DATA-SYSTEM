@@ -4,6 +4,7 @@ import { PassportRoutingModule } from './passport.routing';
 import { UserLoginComponent } from './login/login.component';
 import { UserRegisterResultComponent } from './register-result/register-result.component';
 import { UserRegisterComponent } from './register/register.component';
+import { LoginService } from './login/login.service';
 
 const modules = [SharedModule,PassportRoutingModule];
 const components = [UserLoginComponent,UserRegisterResultComponent,UserRegisterComponent];
@@ -11,6 +12,6 @@ const components = [UserLoginComponent,UserRegisterResultComponent,UserRegisterC
   imports: [...modules],
   exports: [],
   declarations: [...components],
-  providers: [],
+  providers: [LoginService],
 })
 export class PassportModule {}

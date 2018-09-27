@@ -7,11 +7,31 @@ import { RoleManageComponent } from './component/role-manage/role-manage.compone
 import { UserManageComponent } from './component/user-manage/user-manage.component';
 
 const routes: Routes = [
-  { path: 'report-detail/:reportId', component: ReportDetailComponent },
-  { path: 'report-manage', component: ReportManageComponent },
-  { path: 'screen-manage', component: ScreenManageComponent },
-  { path: 'role-manage', component: RoleManageComponent },
-  { path: 'user-manage', component: UserManageComponent },
+  {
+    path: 'report-detail/:reportId',
+    component: ReportDetailComponent,
+    data: { title: '报表详情' },
+  },
+  {
+    path: 'report-manage',
+    component: ReportManageComponent,
+    data: { title: '报表管理' },
+  },
+  {
+    path: 'screen-manage',
+    component: ScreenManageComponent,
+    data: { title: '大屏管理' },
+  },
+  {
+    path: 'role-manage',
+    component: RoleManageComponent,
+    data: { title: '角色管理' },
+  },
+  {
+    path: 'user-manage',
+    component: UserManageComponent,
+    data: { title: '用户管理' },
+  },
 ];
 
 @NgModule({
