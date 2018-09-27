@@ -9,7 +9,7 @@ export class SapaceSquareService {
   }
 
   getSpaceList(params: any): Observable<any> {
-    return this.http.post('http://localhost:8080/data-reporter/api/list', params);
+    return this.http.post('http://10.2.215.213:8080/data-reporter/api/list', params);
   }
 
 
