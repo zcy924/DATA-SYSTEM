@@ -10,8 +10,7 @@ import { SapaceSquareService } from './space-square.service';
 })
 export class SpaceSquareComponent implements OnInit {
   groups = [1, 2, 3, 4, 5];
-  title = 'it is title';
-  description = ' this is a long long long long description';
+  spaceArr = [];
 
   constructor(private router: Router, private spaceService: SapaceSquareService) {
     // this.service.getSpaces().subscribe(data => {
@@ -24,15 +23,16 @@ export class SpaceSquareComponent implements OnInit {
   ngOnInit() {
   }
 
-  openDetail(item) {
-    console.log(item);
-    this.router.navigate(['app/square/' + '123']);
+  openDetail(id) {
+    console.log(id);
+    this.router.navigate(['app/square/' + id]);
   }
 
   getList() {
     this.spaceService.getSpaceList({})
       .subscribe(res => {
         console.log(res);
+        this.spaceArr = res['retList']
       }, err => {
         console.log(err);
       });

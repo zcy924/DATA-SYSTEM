@@ -17,13 +17,13 @@
           </div>
         </div> -->
         <div nz-row style="padding-top: 16px" nzGutter="16">
-          <div nz-col nzSpan="6" (click)="openDetail(item)" *ngFor="let item of groups" style="padding-bottom: 16px">
+          <div nz-col nzSpan="6" (click)="openDetail(item.id)" *ngFor="let item of spaceArr" style="padding-bottom: 16px">
             <nz-card style="width: 300px;margin-top: 16px" nzHoverable="true">
-              <nz-card-meta [nzAvatar]="avatarTemplate" nzTitle="{{title}}" nzDescription="{{description}}"></nz-card-meta>
+              <nz-card-meta [nzAvatar]="avatarTemplate" nzTitle="{{item.name}}" nzDescription="{{item.remark}}"></nz-card-meta>
             </nz-card>
           </div>
           <ng-template #avatarTemplate>
-            <nz-avatar nzSrc="./assets/tmp/img/icon.png" nzSize="large"></nz-avatar>
+            <div  style="line-height:60px;"><nz-avatar nzSrc="./assets/tmp/img/icon.png" nzSize="large"></nz-avatar></div>
           </ng-template>
         </div>
       </div>
