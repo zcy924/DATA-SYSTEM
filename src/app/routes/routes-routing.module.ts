@@ -27,7 +27,7 @@ const routes: Routes = [
         path: 'user',
         component: PersonalCenterComponent,
         data: { title: '用户中心' },
-        loadChildren: './system/system.module#SystemModule',
+        loadChildren: './system/personal-center/personal-center.module#PersonalCenterModule',
       },
       {
         path: 'square',
