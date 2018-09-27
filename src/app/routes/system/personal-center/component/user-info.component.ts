@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SystemService } from '../../system.service';
+import { PersonalCenterService } from '../personal-center.service';
 
 @Component({
   selector: 'app-user-info',
@@ -13,11 +13,11 @@ import { SystemService } from '../../system.service';
   ],
 })
 export class UserInfoComponent implements OnInit {
-  constructor(private service: SystemService) {}
+  constructor(private perService: PersonalCenterService) {}
 
   ngOnInit() {}
   test() {
-    this.service.test().subscribe(data => {
+    this.perService.getUser().subscribe(data => {
       console.log(data);
     });
   }

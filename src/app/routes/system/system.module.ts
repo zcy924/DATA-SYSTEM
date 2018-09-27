@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { SystemRoutingModule } from './system.routing';
 import { SharedModule } from '@shared/shared.module';
-import { SystemService } from './system.service';
 
 const modules = [SharedModule, SystemRoutingModule];
 const components = [];
@@ -9,6 +8,6 @@ const components = [];
   imports: [...modules],
   exports: [],
   declarations: [...components],
-  providers: [SystemService],
+  providers: [],
 })
 export class SystemModule {}

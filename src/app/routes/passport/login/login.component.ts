@@ -122,11 +122,9 @@ export class UserLoginComponent implements OnDestroy {
         this.reuseTabService.clear();
         // 设置Token信息
         this.tokenService.set({
-          token: data['TokenID'],
-          name: data['name'],
-          account: data['account'],
-          // email: `cipchk@qq.com`,
-          // id: 10000,
+          token: data['retData']['TokenID'],
+          name: data['retData']['userName'],
+          account: data['retData']['userID'],
           time: +new Date(),
         });
         // 重新获取 StartupService 内容，若其包括 User 有关的信息的话
@@ -134,7 +132,7 @@ export class UserLoginComponent implements OnDestroy {
         // 否则直接跳转
         this.router.navigate(['/app/user']);
       } else {
-        this.msg.error('用户名或密码错误!');
+        this.msg.error(data.retMsg);
         this.loading = false;
         return;
       }
