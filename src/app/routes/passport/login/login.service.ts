@@ -6,7 +6,8 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class LoginService {
-  url = environment.SERVER_URL;
+  // url = environment.SERVER_URL;
+  url = environment.TEST_URL;
   constructor(private httpClient: HttpClient) {}
   login(params): Observable<any> {
     return this.httpClient.post(this.url + 'system/login', params);

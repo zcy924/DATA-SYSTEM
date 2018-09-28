@@ -4,6 +4,7 @@
 
 export const environment = {
   SERVER_URL: `http://10.2.72.172:8080/DVSP/`,
+  TEST_URL: `http://127.0.0.1:3000/`,
   production: false,
   useHash: true,
   hmr: false,

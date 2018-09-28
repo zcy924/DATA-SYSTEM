@@ -9,6 +9,9 @@ export class PersonalCenterService {
   url = environment.SERVER_URL;
   constructor(private httpClient: HttpClient) {}
   getUser(): Observable<any> {
-    return this.httpClient.get('http://10.2.215.213:8080/data-reporter/api/user');
+    return this.httpClient.post('http://127.0.0.1:3000/system/login', {
+      username: 'admin',
+      password: 'abcd1234',
+    });
   }
 }
