@@ -8,6 +8,7 @@ import { LayoutPassportComponent } from '../layout/passport/passport.component';
 // dashboard pages
 import { DashboardComponent } from './dashboard/dashboard.component';
 // passport pages
+
 // single pages
 import { CallbackComponent } from './callback/callback.component';
 import { UserLockComponent } from './passport/lock/lock.component';
@@ -17,6 +18,7 @@ import { Exception500Component } from './exception/500.component';
 import { PersonalCenterComponent } from './system/personal-center/personal-center.component';
 import { SpaceSquareComponent } from './system/space-square/space-square.component';
 import { SpaceManageComponent } from './system/space-manage/space-manage.component';
+import { CompanyManageComponent } from './system/company-manage/company-manage.component';
 
 const routes: Routes = [
   {
@@ -32,14 +34,19 @@ const routes: Routes = [
       {
         path: 'square',
         data: { title: '空间广场' },
-        component: SpaceSquareComponent,
+        component: SpaceSquareComponent
       },
       {
         path: 'square/:spaceId',
         component: SpaceManageComponent,
         data: { title: '空间管理' },
-        loadChildren:
-          './system/space-manage/space-manage.module#SpaceManageModule',
+        loadChildren: './system/space-manage/space-manage.module#SpaceManageModule',
+      },
+      {
+        path: 'company',
+        component: CompanyManageComponent,
+        data: { title: '公司管理' },
+        loadChildren: './system/company-manage/company-manage.module#CompanyManageModule',
       },
       // 业务子模块
       // { path: 'widgets', loadChildren: './widgets/widgets.module#WidgetsModule' }

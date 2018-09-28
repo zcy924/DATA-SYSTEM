@@ -5,9 +5,7 @@ import { RouteRoutingModule } from './routes-routing.module';
 // dashboard pages
 import { DashboardComponent } from './dashboard/dashboard.component';
 // passport pages
-import { UserLoginComponent } from './passport/login/login.component';
-import { UserRegisterComponent } from './passport/register/register.component';
-import { UserRegisterResultComponent } from './passport/register-result/register-result.component';
+
 // single pages
 import { CallbackComponent } from './callback/callback.component';
 import { UserLockComponent } from './passport/lock/lock.component';
@@ -18,14 +16,11 @@ import { Exception500Component } from './exception/500.component';
 import { PersonalCenterComponent } from './system/personal-center/personal-center.component';
 import { SpaceSquareComponent } from './system/space-square/space-square.component';
 import { SpaceManageComponent } from './system/space-manage/space-manage.component';
+import { SystemModule } from './system/system.module';
+import { CompanyManageComponent } from './system/company-manage/company-manage.component';
 
 const COMPONENTS = [
   DashboardComponent,
-  // passport pages
-  // UserLoginComponent,
-  // UserRegisterComponent,
-  // UserRegisterResultComponent,
-  // single pages
   CallbackComponent,
   UserLockComponent,
   Exception403Component,
@@ -36,10 +31,11 @@ const COMPONENTS_NOROUNT = [
   PersonalCenterComponent,
   SpaceSquareComponent,
   SpaceManageComponent,
+  CompanyManageComponent
 ];
 
 @NgModule({
-  imports: [SharedModule, RouteRoutingModule],
+  imports: [SharedModule, RouteRoutingModule,SystemModule],
   declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT],
   entryComponents: COMPONENTS_NOROUNT,
 })
