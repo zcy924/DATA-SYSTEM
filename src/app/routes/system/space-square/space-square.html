@@ -11,8 +11,8 @@
       </div>
     </div>
     <div nz-row style="background-color: #f5f7fa;padding: 16px;">
-      <div nz-row nzType="flex" nzJustify="space-around">
-        <div nz-col (click)="openDetail(item.id)" *ngFor="let item of spaceArr" style="width: 300px;float:left;">
+      <div nz-row>
+        <div nz-col (click)="openDetail(item.id)" *ngFor="let item of spaceArr" style="width: 300px;float:left;padding-right: 16px">
           <ng-template #avatarTemplate>
             <div style="line-height:60px;">
               <nz-avatar nzSrc="./assets/tmp/img/icon.png" nzSize="large"></nz-avatar>
