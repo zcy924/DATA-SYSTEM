@@ -1,22 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SapaceSquareService } from './space-square.service';
+import { SpaceSquareService } from './space-square.service';
+import { CreateSpaceComponent } from './component/create-sapce.component';
+import { NzModalService } from 'ng-zorro-antd';
+
 
 @Component({
   selector: 'app-space-aquare',
   templateUrl: './space-square.html',
   styleUrls: ['./space-square.less'],
-  providers: [SapaceSquareService],
+  providers: [SpaceSquareService,NzModalService],
 })
 export class SpaceSquareComponent implements OnInit {
-  groups = [1, 2, 3, 4, 5];
+
   spaceArr = [];
 
-  constructor(private router: Router, private spaceService: SapaceSquareService) {
-    // this.service.getSpaces().subscribe(data => {
-    //   this.groups = data.data;
-    // });
-    console.log('-------------------------------------');
+  constructor(
+          private router: Router,
+          private spaceService: SpaceSquareService,
+          private nzModel: NzModalService) {
     this.getList();
   }
 
@@ -32,10 +34,22 @@ export class SpaceSquareComponent implements OnInit {
     this.spaceService.getSpaceList({})
       .subscribe(res => {
         console.log(res);
-        this.spaceArr = res['retList']
+        this.spaceArr = res['retList'];
       }, err => {
         console.log(err);
       });
   }
+
+  showModal(title): void {
+    const modal = this.nzModel.create({
+      nzTitle: `${title}`,
+      nzContent: CreateSpaceComponent,
+      nzWidth: '50%',
+      nzStyle: {
+        top: '10%'
+      }
+    });
+  }
+
 }
 

@@ -4,12 +4,12 @@ import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class SapaceSquareService {
+export class SpaceSquareService {
   constructor(private http: HttpClient) {
   }
 
   getSpaceList(params: any): Observable<any> {
-    return this.http.post('http://10.2.215.213:8080/data-reporter/api/list', params);
+    return this.http.post('http://10.2.215.218:8080/data-reporter/api/list', params);
   }
 
 
