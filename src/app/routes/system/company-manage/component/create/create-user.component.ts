@@ -8,13 +8,11 @@ import {
 } from '@angular/forms';
 
 @Component({
-  selector: 'app-create-space',
-  templateUrl: './create-space.html',
+  selector: 'app-create-user',
+  templateUrl: './create-user.html',
   styles: []
 })
-export class CreateSpaceComponent implements OnInit {
-  firstUrl='http://10.2.72.172:8080/DVSP/app/square/';
-  typeValue;
+export class CreateUserComponent implements OnInit {
 
   constructor() {}
 
