@@ -22,37 +22,80 @@
   <button nz-button nzType="primary">批量移除</button>
 </div>
 
-<div nz-row style="background-color: #f5f7fa;padding-left: 16px;">
-  <div nz-row >
-    <div nz-col  *ngFor="let item of arr" style="width: 300px;float:left;padding-left: 32px">
-      <!--<ng-template #avatarTemplate>-->
-        <!--<div style="line-height:60px;">-->
-          <!--<nz-avatar nzSrc="./assets/tmp/img/icon.png" nzSize="large"></nz-avatar>-->
-        <!--</div>-->
-      <!--</ng-template>-->
-
-
-      <nz-card style="margin-top: 16px"
-               [nzCover]="coverTemplate"
-               [nzActions]="[actionEdit,actionSetting]"
-      >
-        <!--<nz-card-meta [nzAvatar]="avatarTemplate" nzTitle="title" nzDescription="remark"></nz-card-meta>-->
-      <div>
-        <nz-tag [nzColor]="'#f50'">#f50</nz-tag>
-        <nz-tag [nzColor]="'#2db7f5'">#2db7f5</nz-tag>
-        <nz-tag [nzColor]="'#87d068'">#87d068</nz-tag>
+<div nz-row style="padding: 16px 0 0 48px">
+  <nz-content *ngFor="let item of arr ">
+    <div style="padding: 0 16px 32px 0;float: left;">
+      <div class="card-content">
+          <div nz-row style="padding: 8px">
+            <div nz-col nzSpan="5" style="text-align: center;padding-top:8px">
+              <nz-avatar nzSize="large" nzIcon="anticon anticon-user"></nz-avatar>
+            </div>
+            <div nz-col nzSpan="17">
+              <div nz-row>
+                <span style="font-size: 150%">cyzhu@zjft.com</span>
+              </div>
+              <div nz-row>
+                <span>zhezhenshige1lajikapian</span>
+              </div>
+            </div>
+            <div nz-col nzSpan="2">
+              <div nz-row>
+                <label nz-checkbox [ngModel]="'demo'"></label>
+              </div>
+              <div nz-row></div>
+            </div>
+          </div>
+          <div nz-row class="card-tabs">
+            <div nz-col nzSpan="24">
+              <nz-tag [nzColor]="'#f50'">#f50</nz-tag>
+              <nz-tag [nzColor]="'#2db7f5'">#2db7f5</nz-tag>
+              <nz-tag [nzColor]="'#87d068'">#87d068</nz-tag>
+              <nz-tag [nzColor]="'#108ee9'">#108ee9</nz-tag>
+            </div>
+          </div>
+          <div nz-row class="card-handle">
+            <div nz-col nzSpan="12" style="border-right: solid 1px #cccccc; ">
+              <a><i class="anticon anticon-edit"></i></a>
+            </div>
+            <div nz-col nzSpan="12">
+              <a><i class="anticon anticon-delete"></i></a>
+            </div>
+          </div>
+        </div>
       </div>
+  </nz-content>
+
+
+
+
+
+  <!-- <div nz-row>
+    <div nz-col *ngFor="let item of arr" style="width: 300px;float:left;padding-left: 32px">
+
+
+
+      <nz-card style="margin-top: 16px" [nzCover]="coverTemplate" [nzActions]="[actionEdit,actionSetting]">
+
+        <div>
+          <nz-tag [nzColor]="'#f50'">#f50</nz-tag>
+          <nz-tag [nzColor]="'#2db7f5'">#2db7f5</nz-tag>
+          <nz-tag [nzColor]="'#87d068'">#87d068</nz-tag>
+        </div>
       </nz-card>
 
       <ng-template #coverTemplate>
-        <!--<nz-card-meta [nzAvatar]="avatarTemplate" nzTitle="title" nzDescription="remark"></nz-card-meta>-->
+
         <div style="padding-top: 8px;padding-left: 8px">
           <table>
             <tr>
-              <td rowspan="2"><nz-avatar nzIcon="anticon anticon-user" nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar></td>
+              <td rowspan="2">
+                <nz-avatar nzIcon="anticon anticon-user" nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
+              </td>
               <td>title</td>
             </tr>
-            <tr><td>desc</td></tr>
+            <tr>
+              <td>desc</td>
+            </tr>
           </table>
 
         </div>
@@ -64,10 +107,6 @@
 
       <ng-template #actionSetting>移除</ng-template>
       <ng-template #actionEdit>编辑</ng-template>
-
-
-
-
     </div>
-  </div>
+  </div> -->
 </div>
