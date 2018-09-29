@@ -1,12 +1,12 @@
-<nz-layout style="padding:16px">
+<nz-layout>
   <nz-content>
     <div nz-row style="background-color: rgb(246,248,248) ;border-bottom: 1px solid rgb(222,230,231);padding: 8px">
       <div nz-col nzSpan="4" style="line-height: 32px; font-size: x-large ">
         用户管理
       </div>
       <div nz-col style="float: right">
-        <button nz-button nzType="primary" (click)="showModal('添加用户')">添加用户</button>
-        <nz-input-group nzSearch [nzSuffix]="suffixIconButton">
+        <button nz-button nzType="primary" (click)="showModal('添加用户')" >添加用户</button>
+        <nz-input-group nzSearch [nzSuffix]="suffixIconButton" style="padding-left:16px">
           <input type="text" nz-input placeholder="input search text">
         </nz-input-group>
         <ng-template #suffixIconButton>
@@ -14,7 +14,7 @@
         </ng-template>
       </div>
     </div>
-    <div nz-row>
+    <div nz-row style="padding:16px">
       <div nz-col nzSpan="24">
         <nz-card >
           <nz-table #basicTable [nzData]="dataSet">
