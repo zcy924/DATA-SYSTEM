@@ -9,6 +9,7 @@ export class CompanySettingComponent implements OnInit {
   dropdown: NzDropdownContextComponent;
   activedNode: NzTreeNode;
   dragNodeElement;
+  isVisible=true;
 
   dataSet = [
     {

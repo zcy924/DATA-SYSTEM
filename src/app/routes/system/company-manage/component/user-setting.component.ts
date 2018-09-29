@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NzModalService } from 'ng-zorro-antd';
+import { CreateUserComponent } from './create/create-user.component';
 
 @Component({
   selector: 'app-user-setting',
@@ -27,7 +29,18 @@ export class UserSettingComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(private nzModel: NzModalService) { }
 
   ngOnInit() { }
+
+  showModal(title): void {
+    const modal = this.nzModel.create({
+      nzTitle: `${title}`,
+      nzContent: CreateUserComponent,
+      nzWidth: '50%',
+      nzStyle: {
+        top: '10%'
+      }
+    });
+  }
 }
