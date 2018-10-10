@@ -18,7 +18,7 @@ import { SpaceSquareComponent } from './system/space-square/space-square.compone
 import { SpaceManageComponent } from './system/space-manage/space-manage.component';
 import { SystemModule } from './system/system.module';
 import { CompanyManageComponent } from './system/company-manage/company-manage.component';
-import { SystemManageComponent } from './system/system-manage/system-manage.component';
+import { PlatformManageComponent } from './system/platform-manage/platform-manage.component';
 
 const COMPONENTS = [
   DashboardComponent,
@@ -33,7 +33,7 @@ const COMPONENTS_NOROUNT = [
   SpaceSquareComponent,
   SpaceManageComponent,
   CompanyManageComponent,
-  SystemManageComponent
+  PlatformManageComponent
 ];
 
 @NgModule({

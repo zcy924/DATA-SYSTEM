@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
-import { SystemManageService } from './system-manage.service';
-import { SystemManageRoutingModule } from './system-manage.routing';
+import { PlatformManageService } from './platform-manage.service';
+import { PlatformManageRoutingModule } from './platform-manage.routing';
 import { CompanisManageComponent } from './component/companis-manage.component';
 
 import { NzModalService } from 'ng-zorro-antd';
@@ -13,10 +13,10 @@ const components = [
 ];
 const modals = [CreateCompanyComponent];
 @NgModule({
-  imports: [SharedModule, SystemManageRoutingModule],
+  imports: [SharedModule, PlatformManageRoutingModule],
   exports: [...components],
   declarations: [...components,...modals],
-  providers: [SystemManageService,NzModalService],
+  providers: [PlatformManageService,NzModalService],
   entryComponents: [...modals],
 })
-export class SystemManageModule {}
+export class PlatformManageModule {}

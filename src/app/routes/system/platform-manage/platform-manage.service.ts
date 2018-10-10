@@ -5,7 +5,7 @@ import { environment } from '@env/environment';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class SystemManageService {
+export class PlatformManageService {
   url = environment.SERVER_URL;
   constructor(private httpClient: HttpClient) {}
   // getUser(): Observable<any> {

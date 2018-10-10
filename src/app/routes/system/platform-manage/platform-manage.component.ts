@@ -3,20 +3,20 @@ import { MenuService } from '@delon/theme';
 
 @Component({
   selector: 'app-system-manage',
-  templateUrl: './system-manage.html',
+  templateUrl: './platform-manage.html',
 })
-export class SystemManageComponent implements OnInit {
+export class PlatformManageComponent implements OnInit {
   constructor(private menuService: MenuService) {}
 
   ngOnInit() {
 
     this.menuService.add([
       {
-        text: '公司管理中心',
+        text: '平台管理中心',
         group: true,
         children: [
           {
-            text: '公司管理',
+            text: '平台管理',
             link: '/app/system/companis-manage',
             icon: 'anticon anticon-team',
           },

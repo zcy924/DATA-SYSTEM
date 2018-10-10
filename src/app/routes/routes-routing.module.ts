@@ -19,7 +19,7 @@ import { PersonalCenterComponent } from './system/personal-center/personal-cente
 import { SpaceSquareComponent } from './system/space-square/space-square.component';
 import { SpaceManageComponent } from './system/space-manage/space-manage.component';
 import { CompanyManageComponent } from './system/company-manage/company-manage.component';
-import { SystemManageComponent } from './system/system-manage/system-manage.component';
+import { PlatformManageComponent } from './system/platform-manage/platform-manage.component';
 
 const routes: Routes = [
   {
@@ -51,9 +51,9 @@ const routes: Routes = [
       },
       {
         path: 'system',
-        component: SystemManageComponent,
-        data: { title: '系统管理' },
-        loadChildren: './system/system-manage/system-manage.module#SystemManageModule',
+        component: PlatformManageComponent,
+        data: { title: '平台管理' },
+        loadChildren: './system/platform-manage/platform-manage.module#PlatformManageModule',
       },
       // 业务子模块
       // { path: 'widgets', loadChildren: './widgets/widgets.module#WidgetsModule' }
