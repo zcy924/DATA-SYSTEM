@@ -43,7 +43,7 @@ const routes: Routes = [
       },
       {
         path: 'company',
-        // component: CompanyManageComponent,
+        component: CompanyManageComponent,
         data: { title: '公司管理' },
         loadChildren:
           './system/company-manage/company-manage.module#CompanyManageModule',
