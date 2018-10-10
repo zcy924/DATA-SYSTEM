@@ -21,8 +21,7 @@ export class CompanisManageComponent implements OnInit {
 
   constructor(
     private nzModel: NzModalService,
-    private platformManageService: PlatformManageService) {
-  }
+    private platformManageService: PlatformManageService) {}
 
   ngOnInit() {
     this.searchData(true);

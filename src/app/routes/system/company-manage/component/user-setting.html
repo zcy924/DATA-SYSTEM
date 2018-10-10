@@ -17,20 +17,27 @@
     <div nz-row style="padding:16px">
       <div nz-col nzSpan="24">
         <nz-card >
-          <nz-table #basicTable [nzData]="dataSet">
+          <nz-table #basicTable
+                    [nzData]="dataSet"
+                    [nzLoading]="loading"
+                    [nzTotal]="total"
+                    [(nzPageIndex)]="pageIndex"
+                    [(nzPageSize)]="pageSize"
+                    (nzPageIndexChange)="searchData()"
+                    (nzPageSizeChange)="searchData(true)">
             <thead>
-            <tr>
-              <th nzShowSort >邮箱</th>
-              <th nzShowSort >姓名</th>
-              <th nzShowSort >操作</th>
-            </tr>
+              <tr>
+                <th nzShowSort >账号</th>
+                <th nzShowSort >姓名</th>
+                <th >操作</th>
+              </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let data of basicTable.data">
-              <td>{{data.name}}</td>
-              <td>{{data.age}}</td>
-              <td><a style="color: #f5222d"><i class="anticon anticon-delete" ></i></a></td>
-            </tr>
+              <tr *ngFor="let data of dataSet">
+                <td>{{data.userNo}}</td>
+                <td>{{data.userName}}</td>
+                <td><a style="color: #f5222d"><i class="anticon anticon-delete" ></i></a></td>
+              </tr>
             </tbody>
           </nz-table>
         </nz-card>
