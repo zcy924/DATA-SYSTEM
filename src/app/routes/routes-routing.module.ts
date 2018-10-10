@@ -35,7 +35,7 @@ const routes: Routes = [
           './system/personal-center/personal-center.module#PersonalCenterModule',
       },
       {
-        path: 'square/:spceId',
+        path: 'square/:spaceId',
         component: SpaceManageComponent,
         data: { title: '空间管理' },
         loadChildren:

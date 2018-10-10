@@ -25,9 +25,8 @@ export class SpaceSquareComponent implements OnInit {
   ngOnInit() {
   }
 
-  openDetail(id) {
-    console.log(id);
-    this.router.navigate(['app/square/' + id]);
+  openDetail(spaceId) {
+    this.router.navigate(['app/square/' + spaceId]);
   }
 
   getList() {

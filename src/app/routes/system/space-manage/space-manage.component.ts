@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './space-manage.html',
 })
 export class SpaceManageComponent implements OnInit {
+  url: String;
   menu: any = [
     {
       text: '大屏管理',
@@ -54,48 +55,48 @@ export class SpaceManageComponent implements OnInit {
       children: [
         {
           text: '报表管理',
-          link: './report-manage',
+          link: 'report-manage',
           icon: 'anticon anticon-appstore-o',
         },
         {
           text: '大屏管理',
           icon: 'anticon anticon-area-chart',
-          link: './screen-manage',
+          link: 'screen-manage',
         },
         {
           text: '角色管理',
           icon: 'anticon anticon-user',
-          link: './role-manage',
+          link: 'role-manage',
         },
         {
           text: '用户管理',
           icon: 'anticon anticon-user',
-          link: './user-manage',
+          link: 'user-manage',
         },
         {
           text: '数据源管理',
           icon: 'anticon anticon-user',
-          link: '/app/user/user-message',
+          link: 'user-message',
         },
         {
           text: '数据表预览',
           icon: 'anticon anticon-user',
-          link: '/app/user/user-message',
+          link: 'user-message',
         },
         {
           text: 'SQL模型管理',
           icon: 'anticon anticon-user',
-          link: '/app/user/user-message',
+          link: 'user-message',
         },
         {
           text: '数据值映射管理',
           icon: 'anticon anticon-user',
-          link: '/app/user/user-message',
+          link: 'user-message',
         },
         {
           text: '空间设置',
           icon: 'anticon anticon-user',
-          link: '/app/user/user-message',
+          link: 'user-message',
         },
       ],
     },
@@ -151,23 +152,26 @@ export class SpaceManageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const spaceId = this.acRouter.snapshot.params['spaceId'];
-    console.log(spaceId);
+    this.url = this.acRouter.snapshot.params['spaceId'];
     this.spaceContent.screenList.forEach(value => {
       const item = {
         text: value.screenName,
-        link: './screen-detail',
+        link: `/app/square/${this.url}/screen`,
         icon: 'anticon anticon-area-chart',
       };
+      console.log(item.link);
       this.menu[0]['children'][0]['children'].push(item);
     });
     this.spaceContent.reportList.forEach(value => {
       const item1 = {
         text: value.reportName,
-        link: './report-detail/' + value.reportId,
+        link: `/app/square/${this.url}/report-detail/${value.reportId}`,
         icon: 'anticon anticon-table',
       };
       this.menu[1]['children'].push(item1);
+    });
+    this.menu[2]['children'].map(value => {
+      value.link = `/app/square/${this.url}/${value.link}`;
     });
     this.menuService.add(this.menu);
   }
