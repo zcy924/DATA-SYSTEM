@@ -22,6 +22,7 @@ const COMPONENTS = [
   LayoutDefaultComponent,
   LayoutFullScreenComponent,
   HeaderComponent,
+  HarfScreenComponent,
   // SidebarComponent,
   ...SETTINGDRAWER
 ];
@@ -38,6 +39,7 @@ const HEADERCOMPONENTS = [
 
 // passport
 import { LayoutPassportComponent } from './passport/passport.component';
+import { HarfScreenComponent } from './harfscreen/harfscreen.component';
 const PASSPORT = [
   LayoutPassportComponent
 ];

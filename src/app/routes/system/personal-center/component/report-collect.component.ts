@@ -1,5 +1,6 @@
 import { Component, OnInit, TemplateRef, HostListener } from '@angular/core';
 import { NzModalService, NzDropdownService, NzTreeNode, NzFormatEmitEvent, NzDropdownContextComponent } from 'ng-zorro-antd';
+import { MenuService } from '@delon/theme';
 
 @Component({
   templateUrl: './report-collect.html',
@@ -220,7 +221,8 @@ export class ReportCollectComponent implements OnInit {
     console.log('dropdown clicked');
   }
 
-  constructor(private nzDropdownService: NzDropdownService, private nzModel: NzModalService) {}
+  constructor(private nzDropdownService: NzDropdownService, private nzModel: NzModalService,private menuService: MenuService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 }

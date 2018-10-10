@@ -19,6 +19,7 @@ import { PersonalCenterComponent } from './system/personal-center/personal-cente
 import { SpaceSquareComponent } from './system/space-square/space-square.component';
 import { SpaceManageComponent } from './system/space-manage/space-manage.component';
 import { CompanyManageComponent } from './system/company-manage/company-manage.component';
+import { HarfScreenComponent } from '../layout/harfscreen/harfscreen.component';
 
 const routes: Routes = [
   {
@@ -29,28 +30,37 @@ const routes: Routes = [
         path: 'user',
         component: PersonalCenterComponent,
         data: { title: '用户中心' },
-        loadChildren: './system/personal-center/personal-center.module#PersonalCenterModule',
+        loadChildren:
+          './system/personal-center/personal-center.module#PersonalCenterModule',
       },
       {
-        path: 'square',
-        data: { title: '空间广场' },
-        component: SpaceSquareComponent
-      },
-      {
-        path: 'square/:spaceId',
+        path: 'square/:spceId',
         component: SpaceManageComponent,
         data: { title: '空间管理' },
-        loadChildren: './system/space-manage/space-manage.module#SpaceManageModule',
+        loadChildren:
+          './system/space-manage/space-manage.module#SpaceManageModule',
       },
       {
         path: 'company',
-        component: CompanyManageComponent,
+        // component: CompanyManageComponent,
         data: { title: '公司管理' },
-        loadChildren: './system/company-manage/company-manage.module#CompanyManageModule',
+        loadChildren:
+          './system/company-manage/company-manage.module#CompanyManageModule',
       },
       // 业务子模块
       // { path: 'widgets', loadChildren: './widgets/widgets.module#WidgetsModule' }
     ],
+  },
+  {
+    path: 'content',
+    component: HarfScreenComponent,
+    children: [
+      {
+        path: 'square',
+        data: { title: '空间广场' },
+        component: SpaceSquareComponent,
+      },
+    ]
   },
   {
     path: '',
