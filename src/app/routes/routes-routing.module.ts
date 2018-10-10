@@ -20,6 +20,7 @@ import { SpaceSquareComponent } from './system/space-square/space-square.compone
 import { SpaceManageComponent } from './system/space-manage/space-manage.component';
 import { CompanyManageComponent } from './system/company-manage/company-manage.component';
 import { HarfScreenComponent } from '../layout/harfscreen/harfscreen.component';
+import { PlatformManageComponent } from './system/platform-manage/platform-manage.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,12 @@ const routes: Routes = [
         data: { title: '公司管理' },
         loadChildren:
           './system/company-manage/company-manage.module#CompanyManageModule',
+      },
+      {
+        path: 'system',
+        component: PlatformManageComponent,
+        data: { title: '平台管理' },
+        loadChildren: './system/platform-manage/platform-manage.module#PlatformManageModule',
       },
       // 业务子模块
       // { path: 'widgets', loadChildren: './widgets/widgets.module#WidgetsModule' }
