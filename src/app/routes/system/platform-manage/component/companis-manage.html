@@ -5,12 +5,7 @@
         公司管理
       </div>
       <div nz-col style="float: right">
-        <nz-input-group nzSearch [nzSuffix]="suffixIconButton">
-          <input type="text" nz-input placeholder="input search text">
-        </nz-input-group>
-        <ng-template #suffixIconButton>
-          <button nz-button nzType="primary" nzSearch><i class="anticon anticon-search"></i></button>
-        </ng-template>
+        <button nz-button nzType="primary" (click)="showModal('新增公司')" >新增公司</button>
       </div>
     </div>
 
@@ -21,26 +16,17 @@
             <thead>
             <tr>
               <th nzShowSort >公司名称</th>
-              <th nzShowSort >英文名称</th>
-              <th >公司管理员</th>
-              <th nzShowSort >操作</th>
+              <th  >Logo</th>
+              <th nzShowSort>空间数量</th>
+              <th nzShowSort>用户人数</th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let data of basicTable.data">
               <td>{{data.name}}</td>
+              <td><img src="./assets/tmp/img/icon.png"></td>
               <td>{{data.age}}</td>
-              <td>
-                <nz-list [nzDataSource]="data.address" nzBordered [nzRenderItem]="item">
-                  <ng-template #item let-item>
-                    <nz-list-item [nzContent]="item"></nz-list-item>
-                  </ng-template>
-                </nz-list>
-              </td>
-              <td>
-                <button nz-button nzType="danger">修改管理员</button>
-                <!--<nz-divider nzType="vertical"></nz-divider>-->
-              </td>
+              <td>{{data.age}}</td>
             </tr>
             </tbody>
           </nz-table>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NzModalService } from 'ng-zorro-antd';
+import { CreateCompanyComponent } from './create/create-company.component';
 
 @Component({
   selector: 'app-companis-manage',
@@ -27,7 +29,18 @@ export class CompanisManageComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(private nzModel: NzModalService) { }
 
   ngOnInit() { }
+
+  showModal(title): void {
+    const modal = this.nzModel.create({
+      nzTitle: `${title}`,
+      nzContent: CreateCompanyComponent,
+      nzWidth: '50%',
+      nzStyle: {
+        top: '10%'
+      }
+    });
+  }
 }

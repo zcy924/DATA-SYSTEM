@@ -16,7 +16,7 @@ export class PlatformManageComponent implements OnInit {
         group: true,
         children: [
           {
-            text: '平台管理',
+            text: '公司管理',
             link: '/app/system/companis-manage',
             icon: 'anticon anticon-team',
           },
