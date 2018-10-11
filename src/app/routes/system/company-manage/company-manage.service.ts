@@ -19,4 +19,7 @@ export class CompanyManageService {
     return this.httpClient.post(this.url + 'user/add', params);
   }
 
+  delUser(params): Observable<any> {
+    return this.httpClient.post(this.url + 'user/del', params);
+  }
 }
