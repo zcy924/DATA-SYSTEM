@@ -1,75 +1,63 @@
-<!-- <div style="height: 1000px">
-  <h1>报表管理</h1>
-</div> -->
 <nz-layout style="background-color:#f5f7fa;">
-  <nz-sider style="background-color:#f5f7fa;">
-    <div>
-      <nz-tree [(ngModel)]="nodes" [nzShowExpand]="true" [nzDraggable]="true" (nzOnDragStart)="dragStart($event)"
-        (nzClick)="activeNode($event)" (nzDblClick)="openFolder($event)">
-        <ng-template #contextTemplate>
-          <ul nz-menu nzInDropDown>
-            <li nz-menu-item (click)="selectDropdown()">新建文件</li>
-            <li nz-menu-item (click)="selectDropdown()">新建文件夹</li>
-          </ul>
-        </ng-template>
-        <ng-template #nzTreeTemplate let-node>
-          <span class="custom-node" draggable="true" aria-grabbed="true" [class.active]="activedNode?.key===node.key">
-            <span *ngIf="!node.isLeaf" [class.shine-animate]="node.origin.isLoading" (contextmenu)="contextMenu($event,contextTemplate, node)">
-              <i class="anticon anticon-folder" *ngIf="!node.isExpanded" (click)="openFolder(node)"></i>
-              <i class="anticon anticon-folder-open" *ngIf="node.isExpanded" (click)="openFolder(node)"></i>
-              <span class="folder-name">{{node.title}}</span>
-              <!-- <span class="folder-desc">{{node?.origin?.author | lowercase}} created at 2018-04-01</span> -->
-            </span>
-            <span *ngIf="node.isLeaf" (contextmenu)="contextMenu($event,contextTemplate, node)">
-              <i class="anticon anticon-file"></i>
-              <span class="file-name">{{node.title}}</span>
-              <!-- <span class="file-desc">{{node?.origin?.author | lowercase}} modified at 2018-05-01</span> -->
-            </span>
-          </span>
-        </ng-template>
-      </nz-tree>
+  <nz-content style="padding:16px">
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <nz-button-group>
+          <button nz-button nzType="primary" (click)="addReport(isReport)">新建报表页面</button>
+          <button nz-button (click)="addReport(isFolder)">新建文件夹</button>
+        </nz-button-group>
+      </div>
     </div>
-  </nz-sider>
-  <nz-layout style="background-color:#f5f7fa;">
-    <nz-content style="padding:16px">
-      <div nz-row>
-        <div nz-col nzSpan="24">
-          <nz-button-group>
-            <button nz-button>排序</button>
-            <button nz-button nzType="primary" (click)="addReport('报表页面')">新建报表页面</button>
-            <button nz-button (click)="addReport('文件夹')">新建文件夹</button>
-            <button nz-button (click)="addReport('iframe页面')">新建iframe页面</button>
-          </nz-button-group>
-        </div>
+    <div nz-row style="padding-top: 16px">
+      <div nz-col naSpan="24">
+        <nz-card  nzTitle="{{folders}}" >
+          <nz-table #basicTable  style="text-align: center"
+                    [nzData]="dataSet"
+                    [nzLoading]="loading"
+                    [nzTotal]="total"
+                    [(nzPageIndex)]="pageIndex"
+                    [(nzPageSize)]="pageSize"
+                    (nzPageIndexChange)="searchData()"
+                    (nzPageSizeChange)="searchData(true)">
+            <thead>
+              <tr>
+                <th nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
+                <th>类型</th>
+                <th>名称</th>
+                <th>备注</th>
+                <th>是否公开</th>
+                <th>开发模式</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of dataSet">
+                <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="refreshStatus()"></td>
+                <td>
+                  <i class="anticon anticon-file" *ngIf="data.type===isReport"></i>
+                  <i class="anticon anticon-folder" *ngIf="data.type===isFolder"></i>
+                </td>
+                <td>
+                  <a *ngIf="data.type===isFolder" (click)="searchData(data.report_id)">{{data.report_name}}</a>
+                  <p *ngIf="data.type===isReport">{{data.report_name}}</p>
+                </td>
+                <td>{{data.remark}}</td>
+                <td>{{data.ispublic === isPublic ? '是':'否'}}</td>
+                <td>{{data.isdev === isDev ? '是':'否'}}</td>
+                <td>
+                  <div style="width: 100px;text-align: right">
+  <span style="padding-right: 12px"><i class="anticon anticon-eye"    nz-tooltip nzTitle="打开报表页面" *ngIf="data.type===isReport" (click)="openReport()" ></i></span>
+  <span style="padding-right: 12px"><i class="anticon anticon-copy"   nz-tooltip nzTitle="以此报表为模板新建" *ngIf="data.type===isReport" (click)="addReport('新建文件夹')"></i></span>
+  <span style="padding-right: 12px"><i class="anticon anticon-edit"   nz-tooltip nzTitle="编辑" (click)="editReport('编辑文件夹')"></i></span>
+  <span style="padding-right: 0"><i class="anticon anticon-delete" nz-tooltip nzTitle="删除" (click)="delReport(data.report_id,data.type)"></i></span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </nz-card>
       </div>
-      <div nz-row style="padding-top: 16px">
-        <div nz-col naSpan="24">
-          <nz-card  nzTitle="根目录">
-            <nz-table #basicTable [nzData]="dataSet">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Age</th>
-                  <th>Address</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let data of basicTable.data">
-                  <td>{{data.name}}</td>
-                  <td>{{data.age}}</td>
-                  <td>{{data.address}}</td>
-                  <td>
-                    <a>Action 一 {{data.name}}</a>
-                    <nz-divider nzType="vertical"></nz-divider>
-                    <a>Delete</a>
-                  </td>
-                </tr>
-              </tbody>
-            </nz-table>
-          </nz-card>
-        </div>
-      </div>
-    </nz-content>
-  </nz-layout>
+    </div>
+  </nz-content>
 </nz-layout>
+

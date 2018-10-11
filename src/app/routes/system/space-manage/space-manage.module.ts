@@ -9,6 +9,8 @@ import { SpaceManageRoutingModule } from './space-manage.routing';
 import { CreateNewpageComponent } from './component/report-manage/components/create-newpage.component';
 import { AddRoleComponent } from './component/role-manage/components/add-role.component';
 import { AddUserComponent } from './component/user-manage/components/add-user.component';
+import { SpaceManageService } from './space-manage.service';
+import { NzModalService } from 'ng-zorro-antd';
 
 const components = [
   ReportDetailComponent,
@@ -22,7 +24,7 @@ const modals = [CreateNewpageComponent, AddRoleComponent, AddUserComponent];
   imports: [SharedModule, SpaceManageRoutingModule],
   exports: [...components],
   declarations: [...components, ...modals],
-  providers: [],
+  providers: [SpaceManageService,NzModalService],
   entryComponents: [...modals],
 })
 export class SpaceManageModule {}

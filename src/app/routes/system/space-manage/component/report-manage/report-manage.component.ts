@@ -1,179 +1,139 @@
 import { Component, HostListener, OnInit, TemplateRef } from '@angular/core';
-import { NzDropdownService, NzFormatEmitEvent, NzTreeNode, NzDropdownContextComponent, NzModalService } from 'ng-zorro-antd';
+import {
+  NzModalService,
+  NzMessageService,
+} from 'ng-zorro-antd';
 import { CreateNewpageComponent } from './components/create-newpage.component';
+import { SpaceManageService } from '../../space-manage.service';
+
 @Component({
   selector: 'app-report-manage',
   templateUrl: './report-manage.html',
-  styleUrls: ['./report-manage.less']
+  styleUrls: ['./report-manage.less'],
 })
 export class ReportManageComponent implements OnInit {
-  dropdown: NzDropdownContextComponent;
-  // can active only one node
 
-  activedNode: NzTreeNode;
-  dragNodeElement;
+  isReport = '1';   // 报表
+  isFolder = '0';   // 文件夹
+  isPublic = '1';   // 公开
+  isDev = '1';      // 开发者模式
 
-  dataSet = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park'
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park'
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park'
+  folder = '根目录';  // 当前目录名称
+  folders = '根目录'; // 当前路径
+  folderID = '/'; // 当前目录ID
+
+  loading = true;
+  dataSet = [];
+  pageIndex = 1;
+  pageSize = 5;
+  total = 100;
+
+
+  constructor(
+    private nzModel: NzModalService,
+    private message: NzMessageService,
+    private spaceManageService: SpaceManageService) {
+  }
+
+  ngOnInit(): void {
+  }
+
+
+
+  indeterminate = false;
+  allChecked = true;
+
+  checkAll(event): void {
+
+  }
+
+  refreshStatus() {
+
+  }
+
+  searchData(reset: boolean = false, reportId: string = '/'): void {
+    if (reset) {
+      this.pageIndex = 1;
     }
-  ];
-
-  nodes = [
-    new NzTreeNode({
-      title: '根目录',
-      key: '1001',
-      author: 'ANGULAR',
-      expanded: true,
-      children: [
-        {
-          title: '部门报表',
-          key: '10001',
-          author: 'ZORRO',
-          children: [
-            {
-              title: '支出统计',
-              key: '100011',
-              author: 'ZORRO',
-              children: [
-                {
-                  title: '一月支出',
-                  key: '1000111',
-                  isLeaf: true
-                }
-              ]
-            },
-            {
-              title: '收入统计',
-              key: '100012',
-              author: 'ZORRO',
-              children: [
-                {
-                  title: '一月收入',
-                  key: '1000121',
-                  author: 'ZORRO-FANS',
-                  isLeaf: true,
-                  checked: false,
-                  disabled: false
-                },
-                {
-                  title: '二月收入',
-                  key: '1000122',
-                  author: 'ZORRO-FANS',
-                  isLeaf: true
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    })
-  ];
-
-  @HostListener('mouseleave', ['$event'])
-  mouseLeave(event: MouseEvent): void {
-    event.preventDefault();
-    if (this.dragNodeElement && this.dragNodeElement.className.indexOf('is-dragging') > -1) {
-      this.dragNodeElement.className = this.dragNodeElement.className.replace(' is-dragging', '');
-    }
+    this.loading = true;
+    let spaceID = localStorage.getItem('spaceID');
+    let params = {
+      pageSize: this.pageSize,
+      curPage: this.pageIndex,
+      Report: {
+        space_id: spaceID,
+        parentid: reportId,
+      },
+    };
+    this.spaceManageService.getReportList(params)
+      .subscribe(res => {
+        console.log(res);
+        this.loading = false;
+        this.dataSet = res['retList'];
+        this.total = this.dataSet.length;
+      }, err => {
+        console.log(err);
+      });
   }
 
-  @HostListener('mousedown', ['$event'])
-  mouseDown(): void {
-    // do not prevent
-    if (this.dragNodeElement && this.dragNodeElement.className.indexOf('is-dragging') > -1) {
-      this.dragNodeElement.className = this.dragNodeElement.className.replace(' is-dragging', '');
-    }
-  }
 
-  /**
-   * important:
-   * if u want to custom event/node properties, u need to maintain the selectedNodesList/checkedNodesList yourself
-   * @param {} data
-   */
-  openFolder(data: NzTreeNode | NzFormatEmitEvent): void {
-    // do something if u want
-    if (data instanceof NzTreeNode) {
-      // change node's expand status
-      if (!data.isExpanded) {
-        // close to open
-        data.origin.isLoading = true;
-        setTimeout(() => {
-          data.isExpanded = !data.isExpanded;
-          data.origin.isLoading = false;
-        }, 500);
-      } else {
-        data.isExpanded = !data.isExpanded;
-      }
-    } else {
-      // change node's expand status
-      if (!data.node.isExpanded) {
-        // close to open
-        data.node.origin.isLoading = true;
-        setTimeout(() => {
-          data.node.isExpanded = !data.node.isExpanded;
-          data.node.origin.isLoading = false;
-        }, 500);
-      } else {
-        data.node.isExpanded = !data.node.isExpanded;
-      }
-    }
-  }
 
-  // 选中节点
-  activeNode(data: NzFormatEmitEvent): void {
-    if (this.activedNode) {
-      this.activedNode = null;
-    }
-    data.node.isSelected = true;
-    this.activedNode = data.node;
-  }
-
-  dragStart(event: NzFormatEmitEvent): void {
-    // disallow drag if root or search
-    this.activedNode = null;
-    this.dragNodeElement = event.event.srcElement;
-    if (this.dragNodeElement.className.indexOf('is-dragging') === -1) {
-      this.dragNodeElement.className = event.event.srcElement.className + ' is-dragging';
-    }
-  }
-
-  contextMenu($event: MouseEvent, template: TemplateRef<void>, node: NzTreeNode): void {
-    this.dropdown = this.nzDropdownService.create($event, template);
-  }
-
-  selectDropdown(): void {
-    this.dropdown.close();
-    // do something
-    console.log('dropdown clicked');
-  }
-
-  constructor(private nzDropdownService: NzDropdownService, private nzModel: NzModalService) {}
-
-  ngOnInit(): void {}
+  // 新增报表
   addReport(type) {
+    let title = type === this.isReport ? '报表页面' : '文件夹';
     const modal = this.nzModel.create({
-      nzTitle: `新建${type}`,
+      nzTitle: `新建${title}`,
       nzContent: CreateNewpageComponent,
       nzWidth: '50%',
-      nzStyle: {
-        top: '10%'
+      nzComponentParams: {
+        folder: this.folder,
+        folders: this.folders,
+        folderID: this.folderID,
+        radioValue: type === this.isReport ? this.isReport : this.isFolder,
+      },
+      nzOnOk: (res) => {
+        res.createReport();
+        this.searchData(true,this.folderID);
       }
     });
+  }
+
+  // 编辑报表属性
+  editReport() {
+
+
+  }
+
+  // 删除报表
+  delReport(reportID: string, type: string): void {
+    let title = (type === this.isFolder) ? '文件夹' : '报表';
+    let content = (type === this.isFolder) ? '此操作将会级联删除该文件夹中的子文件' : '';
+
+    let spaceID = localStorage.getItem('spaceID');
+    this.nzModel.confirm({
+      nzTitle: '是否删除此' + title + '?',
+      nzContent: content,
+      nzOnOk: (res) => {
+        let params = {
+          spaceID: spaceID,
+          reportID: reportID,
+        };
+        this.spaceManageService.delReport(params)
+          .subscribe(res => {
+            if (res['retCode'] === '00000') {
+              this.message.success('删除' + title + '成功！');
+            } else {
+              this.message.error('删除' + title + '失败！');
+            }
+          }, err => {
+            this.message.error('删除' + title + '失败！');
+          });
+      },
+    });
+  }
+
+  // 打开报表页面
+  openReport() {
+    // TODO 展示报表内容
   }
 }
