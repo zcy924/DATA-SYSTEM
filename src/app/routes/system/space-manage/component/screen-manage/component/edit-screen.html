@@ -3,12 +3,12 @@
       <nz-form-label [nzSm]="2" [nzXs]="24" nzRequired nzFor="name">名称</nz-form-label>
       <nz-form-control [nzSm]="22" [nzXs]="24">
         <input nz-input formControlName="name" id="name" />
-        <nz-form-explain *ngIf="name.dirty && name.errors">名称不可以为空!</nz-form-explain>
+        <nz-form-explain *ngIf="validateForm.get('name').dirty&&validateForm.get('name').errors">名称不可以为空!</nz-form-explain>
       </nz-form-control>
     </nz-form-item>
     <nz-divider [nzDashed]="true"></nz-divider>
     <nz-form-item>
-      <nz-form-label [nzSm]="2" [nzXs]="24" nzRequired nzFor="remark">简介</nz-form-label>
+      <nz-form-label [nzSm]="2" [nzXs]="24" nzFor="remark">简介</nz-form-label>
       <nz-form-control [nzSm]="22" [nzXs]="24">
         <input nz-input formControlName="remark" id="remark" />
         <!-- <nz-form-explain *ngIf="validateForm.get('remark').dirty && validateForm.get('remark').errors"></nz-form-explain> -->
@@ -24,9 +24,9 @@
     </nz-form-item>
     <nz-divider [nzDashed]="true"></nz-divider>
     <nz-form-item>
-      <nz-form-label [nzSm]="2" [nzXs]="24" nzRequired nzFor="icon">图标</nz-form-label>
+      <nz-form-label [nzSm]="2" [nzXs]="24"  nzFor="icon">图标</nz-form-label>
       <nz-form-control [nzSm]="22" [nzXs]="24">
-        <input nz-input  id="icon" />
+        <input nz-input  id="icon" formControlName="icon" />
         <!-- <nz-form-explain *ngIf="validateForm.get('icon').dirty && validateForm.get('icon').errors">图标无效</nz-form-explain> -->
       </nz-form-control>
     </nz-form-item>

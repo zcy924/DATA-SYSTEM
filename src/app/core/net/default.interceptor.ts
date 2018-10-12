@@ -17,6 +17,8 @@ import { NzMessageService } from 'ng-zorro-antd';
 import { _HttpClient } from '@delon/theme';
 import { environment } from '@env/environment';
 import { DA_SERVICE_TOKEN, TokenService } from '@delon/auth';
+import * as _ from 'lodash';
+import * as moment from 'moment';
 
 /**
  * 默认HTTP拦截器，其注册细节见 `app.module.ts`
@@ -101,7 +103,11 @@ export class DefaultInterceptor implements HttpInterceptor {
       // url = environment.SERVER_URL + url;
       url = 'http://' + url;
     }
-    const newReq = req.clone({ url: url });
+    const newReq = req.clone({
+      url: url,
+      withCredentials: true,
+      body: this.parseParams(req.body),
+    });
     return next.handle(newReq).pipe(
       mergeMap((event: any) => {
         // 允许统一对请求错误处理，这是因为一个请求若是业务上错误的情况下其HTTP请求的状态是200的情况下需要
@@ -112,5 +118,24 @@ export class DefaultInterceptor implements HttpInterceptor {
       }),
       catchError((err: HttpErrorResponse) => this.handleData(err)),
     );
+  }
+  parseParams(requestBody: any) {
+    const ret = Object.assign({}, requestBody);
+    // tslint:disable-next-line:forin
+    for (const key in requestBody) {
+      let _data = requestBody[key];
+      // 将时间转化为：字符串 (YYYY-MM-DD)
+      if (_data instanceof Date) {
+        _data = moment(_data || undefined).format('YYYY-MM-DD');
+        ret[key] = _data;
+      } else if (key == 'curPage') {
+        const curPage = requestBody['curPage'];
+        Object.assign(
+          ret,
+          _.isNumber(curPage) && curPage > 0 ? { curPage: curPage - 1 } : {},
+        );
+      }
+    }
+    return ret;
   }
 }
