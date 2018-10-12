@@ -10,6 +10,6 @@ export class LoginService {
   // url = environment.TEST_URL;
   constructor(private httpClient: HttpClient) {}
   login(params): Observable<any> {
-    return this.httpClient.post(this.url + 'system/login', params);
+    return this.httpClient.post('10.2.215.53:8080/DVSP/system/login', params);
   }
 }

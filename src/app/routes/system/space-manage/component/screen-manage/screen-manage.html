@@ -1,10 +1,9 @@
-
 <div nz-row style="background-color: rgb(246,248,248) ;border-bottom: 1px solid rgb(222,230,231);padding: 8px;">
   <div nz-col nzSpan="4" class="title-tab">
     大屏管理
   </div>
   <div nz-col>
-   <button nz-button nzType="primary">添加新大屏</button>
+    <button nz-button nzType="primary" (click)="openAdd()">添加新大屏</button>
   </div>
 </div>
 <div style="padding: 16px">
@@ -16,36 +15,48 @@
     </div>
     <div nz-row style="padding-top:16px">
       <div nz-col nzSpan="24">
-        <button nz-button><i class="anticon anticon-appstore"></i></button>
-        <button nz-button><i class="anticon anticon-filter"></i></button>
+        <!-- <button nz-button><i class="anticon anticon-filter"></i></button> -->
         <nz-select style="width: 80px;" nzAllowClear nzPlaceHolder="请选择">
           <nz-option nzValue="jack" nzLabel="全部删除"></nz-option>
           <nz-option nzValue="lucy" nzLabel="全部完成"></nz-option>
-        </nz-select>
+        </nz-select>&nbsp;&nbsp;
         <button nz-button>操作</button>
       </div>
     </div>
     <div nz-row style="padding-top: 16px">
-        <nz-table
-        #rowSelectionTable
-        [nzData]="data"
-        (nzCurrentPageDataChange)="currentPageDataChange($event)"
-        (nzPageIndexChange)="refreshStatus()"
-        (nzPageSizeChange)="refreshStatus()">
-        <thead>
+      <nz-table #ajaxTable nzShowSizeChanger [nzFrontPagination]="false" [nzData]="dataSet" [nzLoading]="loading"
+        [nzTotal]="page.totalRow" [(nzPageIndex)]="page.curPage" [(nzPageSize)]="page.pageSize" (nzPageIndexChange)="getScreenList()"
+        (nzPageSizeChange)="getScreenList(true)" (nzCurrentPageDataChange)="currentDataChange($event)">
+        <thead nzSingleSort>
           <tr>
             <th nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Address</th>
+            <th>大屏</th>
+            <th>备注</th>
+            <th><span>发布状态</span></th>
+            <th><span>发布连接</span></th>
+            <th><span>开发模式</span></th>
+            <th><span>操作</span></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let data of rowSelectionTable.data">
-            <td nzShowCheckbox [(nzChecked)]="data.checked" [nzDisabled]="data.disabled" (nzCheckedChange)="refreshStatus($event)"></td>
-            <td>{{data.name}}</td>
-            <td>{{data.age}}</td>
-            <td>{{data.address}}</td>
+          <tr *ngFor="let data of ajaxTable.data">
+            <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="checkLine($event,data.dashboardId)"></td>
+            <td>{{data.icon}}{{data.name}}</td>
+            <td>{{data.remark}}</td>
+            <td><span *ngIf="data.isPublic=='false'">未发布</span><span *ngIf="data.isPublic=='true'">已发布</span></td>
+            <td>{{data.token}}</td>
+            <td><span *ngIf="data.isDev=='false'">否</span><span *ngIf="data.isDev=='true'">是</span></td>
+            <td>
+              <a (click)="view()" nz-tooltip nzTitle="查看大屏页面"><i class="anticon anticon-eye"></i></a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <a (click)="edit()" nz-tooltip nzTitle="编辑页面属性"><i class="anticon anticon-edit"></i></a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <a (click)="public()" nz-tooltip nzTitle="发布管理"><i class="anticon anticon-share-alt"></i></a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <a (click)="copy()" nz-tooltip nzTitle="以此大屏为模板新建"><i class="anticon anticon-copy"></i></a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <a (click)="delete()" nz-tooltip nzTitle="删除"><i class="anticon anticon-delete"></i></a>
+            </td>
           </tr>
         </tbody>
       </nz-table>

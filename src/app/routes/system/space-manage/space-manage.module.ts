@@ -9,6 +9,9 @@ import { SpaceManageRoutingModule } from './space-manage.routing';
 import { CreateNewpageComponent } from './component/report-manage/components/create-newpage.component';
 import { AddRoleComponent } from './component/role-manage/components/add-role.component';
 import { AddUserComponent } from './component/user-manage/components/add-user.component';
+import { AddScreenComponent } from './component/screen-manage/component/add-screen.component';
+import { SpaceManageService } from './space-manage.service';
+import { EditScreenComponent } from './component/screen-manage/component/edit-screen.component';
 
 const components = [
   ReportDetailComponent,
@@ -17,12 +20,18 @@ const components = [
   UserManageComponent,
   ScreenManageComponent,
 ];
-const modals = [CreateNewpageComponent, AddRoleComponent, AddUserComponent];
+const modals = [
+  CreateNewpageComponent,
+  AddRoleComponent,
+  AddUserComponent,
+  AddScreenComponent,
+  EditScreenComponent,
+];
 @NgModule({
   imports: [SharedModule, SpaceManageRoutingModule],
   exports: [...components],
   declarations: [...components, ...modals],
-  providers: [],
+  providers: [SpaceManageService],
   entryComponents: [...modals],
 })
 export class SpaceManageModule {}

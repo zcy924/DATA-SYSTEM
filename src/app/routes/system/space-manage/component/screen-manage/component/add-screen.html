@@ -1,0 +1,58 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <nz-form-label [nzSm]="2" [nzXs]="24" nzRequired nzFor="name">名称</nz-form-label>
+    <nz-form-control [nzSm]="22" [nzXs]="24">
+      <input nz-input formControlName="name" id="name" />
+      <nz-form-explain *ngIf="name.dirty && name.errors">名称不可以为空!</nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-divider [nzDashed]="true"></nz-divider>
+  <span>基于模板创建(选中某模板后，再次点击该模板可取消选中)</span>
+  <div nz-row nzType="flex" nzJustify="space-between">
+    <div nz-col nzSpan="12" style="height:16px"></div>
+    <div nz-col nzSpan="12" style="height:16px"></div>
+    <div nz-col [ngClass]="{'template-card': true,'selected-card':selected1}" (click)="checked(1)">
+      <div style="text-align:center; padding:4px">
+        <img width="260px" height="140px" src="./assets/images/templet-01.png" />
+      </div>
+      <div style="text-align: center">模板一</div>
+    </div>
+    <div nz-col [ngClass]="{'template-card': true,'selected-card':selected2}" (click)="checked(2)">
+      <div style="text-align:center; padding:4px">
+        <img width="260px" height="140px" src="./assets/images/templet-02.png" />
+      </div>
+      <div style="text-align: center">模板二</div>
+    </div>
+    <div nz-col nzSpan="12" style="height:16px"></div>
+    <div nz-col nzSpan="12" style="height:16px"></div>
+    <div nz-col [ngClass]="{'template-card': true,'selected-card':selected3}" (click)="checked(3)">
+      <div style="text-align:center; padding:4px">
+        <img width="260px" height="140px" src="./assets/images/templet-03.png" />
+      </div>
+      <div style="text-align: center">模板三</div>
+    </div>
+    <div nz-col [ngClass]="{'template-card': true,'selected-card':selected4}" (click)="checked(4)">
+      <div style="text-align:center; padding:4px">
+        <img width="260px" height="140px" src="./assets/images/templet-04.png" />
+      </div>
+      <div style="text-align: center">模板四</div>
+    </div>
+  </div>
+  <nz-divider [nzDashed]="true"></nz-divider>
+  <nz-form-item>
+    <nz-form-label [nzSm]="2" [nzXs]="24" nzRequired nzFor="remark">简介</nz-form-label>
+    <nz-form-control [nzSm]="22" [nzXs]="24">
+      <input nz-input formControlName="remark" id="remark" />
+      <!-- <nz-form-explain *ngIf="validateForm.get('remark').dirty && validateForm.get('remark').errors"></nz-form-explain> -->
+    </nz-form-control>
+  </nz-form-item>
+  <nz-divider [nzDashed]="true"></nz-divider>
+  <nz-form-item>
+    <nz-form-label [nzSm]="2" [nzXs]="24" nzRequired nzFor="icon">图标</nz-form-label>
+    <nz-form-control [nzSm]="22" [nzXs]="24">
+      <input nz-input  id="icon" />
+      <!-- <nz-form-explain *ngIf="validateForm.get('icon').dirty && validateForm.get('icon').errors">图标无效</nz-form-explain> -->
+    </nz-form-control>
+  </nz-form-item>
+
+</form>

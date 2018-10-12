@@ -38,7 +38,7 @@ import { DelonAuthConfig } from '@delon/auth';
 export function fnDelonAuthConfig(): DelonAuthConfig {
   return Object.assign(new DelonAuthConfig(), <DelonAuthConfig>{
     login_url: '/login',
-    token_send_key: 'token',
+    token_send_key: 'TokenID',
     token_send_template: '${token}',
     token_send_place: 'header',
   });
