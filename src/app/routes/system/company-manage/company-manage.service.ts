@@ -7,8 +7,19 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class CompanyManageService {
   url = environment.SERVER_URL;
+  // url = environment.TEST_URL;
+
   constructor(private httpClient: HttpClient) {}
-  // getUser(): Observable<any> {
-  //   return this.httpClient.get('http://10.2.215.213:8080/data-reporter/api/user');
-  // }
+
+  getUserList(params): Observable<any> {
+    return this.httpClient.post(this.url + 'user/list', params);
+  }
+
+  createUser(params): Observable<any> {
+    return this.httpClient.post(this.url + 'user/add', params);
+  }
+
+  delUser(params): Observable<any> {
+    return this.httpClient.post(this.url + 'user/del', params);
+  }
 }

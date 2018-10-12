@@ -12,22 +12,29 @@
     <div nz-row style="padding:16px">
       <div nz-col nzSpan="24">
         <nz-card >
-          <nz-table #basicTable [nzData]="dataSet">
+          <nz-table #basicTable
+                    [nzData]="dataSet"
+                    [nzLoading]="loading"
+                    [nzTotal]="total"
+                    [(nzPageIndex)]="pageIndex"
+                    [(nzPageSize)]="pageSize"
+                    (nzPageIndexChange)="searchData()"
+                    (nzPageSizeChange)="searchData(true)">
             <thead>
-            <tr>
-              <th nzShowSort >公司名称</th>
-              <th  >Logo</th>
-              <th nzShowSort>空间数量</th>
-              <th nzShowSort>用户人数</th>
-            </tr>
+              <tr>
+                <th nzShowSort >公司名称</th>
+                <th  >Logo</th>
+                <th nzShowSort>空间数量</th>
+                <th nzShowSort>用户人数</th>
+              </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let data of basicTable.data">
-              <td>{{data.name}}</td>
-              <td><img src="./assets/tmp/img/icon.png"></td>
-              <td>{{data.age}}</td>
-              <td>{{data.age}}</td>
-            </tr>
+              <tr *ngFor="let data of dataSet">
+                <td>{{data.companyName}}</td>
+                <td><img src="{{data.avatar}}"></td>
+                <td>{{data.spaceNum}}</td>
+                <td>{{data.userNum}}</td>
+              </tr>
             </tbody>
           </nz-table>
         </nz-card>

@@ -1,15 +1,15 @@
 <form nz-form >
   <nz-form-item nz-row >
-    <nz-form-label [nzSpan]="4" >空间名称</nz-form-label>
+    <nz-form-label [nzSpan]="4" >用户账号</nz-form-label>
     <nz-form-control [nzSpan]="18">
-      <input nz-input  id="name">
+      <input nz-input  name="userNo" [(ngModel)]="data.userNo">
       <!--<nz-form-explain *ngIf="validateForm.get('email').dirty && validateForm.get('email').errors">The input is not valid E-mail!</nz-form-explain>-->
     </nz-form-control>
   </nz-form-item>
   <nz-form-item nz-row >
-    <nz-form-label [nzSpan]="4" >空间描述</nz-form-label>
+    <nz-form-label [nzSpan]="4" >用户姓名</nz-form-label>
     <nz-form-control [nzSpan]="18">
-      <textarea  nz-input  id="desc" [nzAutosize]="{ minRows: 2, maxRows: 4 }"></textarea>
+      <input nz-input  name="userName" [(ngModel)]="data.userName">
       <!--<nz-form-explain *ngIf="validateForm.get('email').dirty && validateForm.get('email').errors">The input is not valid E-mail!</nz-form-explain>-->
     </nz-form-control>
   </nz-form-item>

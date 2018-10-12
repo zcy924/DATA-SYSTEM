@@ -1,89 +1,67 @@
 import { Component, OnInit } from '@angular/core';
-import { NzTreeNode, NzFormatEmitEvent } from 'ng-zorro-antd';
+import { NzTreeNode, NzFormatEmitEvent, NzMessageService } from 'ng-zorro-antd';
+import { SpaceManageService } from '../../../space-manage.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-create-newpage',
   templateUrl: './create-newpage.html',
   styles: [
-    `
+      `
       nz-date-picker ::ng-deep .ant-calendar-picker {
         width: 100%;
       }
-    `
-  ]
+    `,
+  ],
 })
 export class CreateNewpageComponent implements OnInit {
-  expandKeys = ['1001', '10001'];
-  value: string;
-  nodes = [
-    new NzTreeNode({
-      title: 'root1',
-      key: '1001',
-      children: [
-        {
-          title: 'child1',
-          key: '10001',
-          children: [
-            {
-              title: 'child1.1',
-              key: '100011',
-              children: []
-            },
-            {
-              title: 'child1.2',
-              key: '100012',
-              children: [
-                {
-                  title: 'grandchild1.2.1',
-                  key: '1000121',
-                  isLeaf: true,
-                  disabled: true
-                },
-                {
-                  title: 'grandchild1.2.2',
-                  key: '1000122',
-                  isLeaf: true
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }),
-    new NzTreeNode({
-      title: 'root2',
-      key: '1002',
-      children: [
-        {
-          title: 'child2.1',
-          key: '10021',
-          children: [],
-          disableCheckbox: true
-        },
-        {
-          title: 'child2.2',
-          key: '10022',
-          children: [
-            {
-              title: 'grandchild2.2.1',
-              key: '100221',
-              isLeaf: true
-            }
-          ]
-        }
-      ]
-    })
-  ];
 
-  onChange($event: NzTreeNode): void {
-    console.log($event);
+  REPORT = '1';   // 报表
+  FOLDER = '0';   // 文件夹
+  PUBLIC = '1';   // 公开
+  NOT_PUBLIC = '0';   // 公开
+  DEV = '1';      // 开发者模式
+  NOT_DEV = '0';  // 开发者模式
+
+  reportName = '1';
+  folder = '';
+  folders = '';
+  folderID = '';
+  radioValue = '';
+  isDev = true;
+  isPublic = false;
+  remark = '';
+
+
+  constructor(
+    private spaceManageService: SpaceManageService,
+    private message: NzMessageService) {
   }
 
-  constructor() {}
-
   ngOnInit() {
-    setTimeout(() => {
-      this.value = '10001';
-    }, 1000);
+  }
+
+  createReport() {
+    let spaceID = localStorage.getItem('spaceID');
+    let params = {
+      ispublic: this.isPublic ? this.PUBLIC : this.NOT_PUBLIC,
+      isdev: this.isDev ? this.DEV : this.NOT_DEV,
+      remark: this.remark,
+      report_name: this.reportName,
+      type: this.radioValue,
+      space_id: spaceID,
+      parentid: this.folderID,
+    };
+
+    this.spaceManageService.createReport(params).subscribe(res => {
+      console.log(res);
+      if (res['retCode'] === '00000') {
+        this.message.success('添加报表成功！');
+      } else {
+        this.message.error('添加报表失败！');
+      }
+    }, err => {
+      this.message.error('添加报表失败！');
+    });
   }
 }
