@@ -15,8 +15,16 @@ export class SpaceManageService {
     );
   }
   getScreenList(params): Observable<any> {
-    return this.httpClient
-      .post('10.2.215.53:8080/DVSP/spaceManage/dashBoard/listQry', params);
+    return this.httpClient.post(
+      '10.2.215.53:8080/DVSP/spaceManage/dashBoard/listQry',
+      params,
+    );
+  }
+  modScreenInfo(params): Observable<any> {
+    return this.httpClient.post(
+      '10.2.215.53:8080/DVSP/spaceManage/dashBoard/contentUdt',
+      params,
+    );
   }
 
 

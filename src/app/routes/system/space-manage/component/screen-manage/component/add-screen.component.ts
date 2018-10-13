@@ -33,20 +33,20 @@ export class AddScreenComponent implements OnInit {
   ngOnInit() {
     this.validateForm = this.fb.group({
       name: [null, [Validators.required]],
-      remark: [null, [Validators.required]],
+      remark: [null],
     });
   }
-  get name() {
-    return this.validateForm.controls.name;
-  }
-  get remark() {
-    return this.validateForm.controls.remark;
-  }
+  // get name() {
+  //   return this.validateForm.controls.name;
+  // }
+  // get remark() {
+  //   return this.validateForm.controls.remark;
+  // }
   submitForm() {
+    // tslint:disable-next-line:forin
     for (const i in this.validateForm.controls) {
-      if (this.validateForm.controls[i]) {
-        this.validateForm.controls[i].markAsDirty();
-      }
+      this.validateForm.controls[i].markAsDirty();
+      this.validateForm.controls[i].updateValueAndValidity();
     }
     if (this.validateForm.invalid) {
       return;

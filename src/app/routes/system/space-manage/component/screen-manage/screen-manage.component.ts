@@ -58,7 +58,7 @@ export class ScreenManageComponent implements OnInit {
     this.loading = true;
     const params = {
       spaceId: '111',
-      curPage: this.page.curPage - 1,
+      curPage: this.page.curPage,
       pageSize: this.page.pageSize,
       totalPage: this.page.totalPage || '',
       totalRow: this.page.totalRow || '',

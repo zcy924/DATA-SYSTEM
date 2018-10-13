@@ -3,7 +3,7 @@
     <nz-form-label [nzSm]="2" [nzXs]="24" nzRequired nzFor="name">名称</nz-form-label>
     <nz-form-control [nzSm]="22" [nzXs]="24">
       <input nz-input formControlName="name" id="name" />
-      <nz-form-explain *ngIf="name.dirty && name.errors">名称不可以为空!</nz-form-explain>
+      <nz-form-explain *ngIf="validateForm.get('name').dirty && validateForm.get('name').errors">大屏名称不可以为空!</nz-form-explain>
     </nz-form-control>
   </nz-form-item>
   <nz-divider [nzDashed]="true"></nz-divider>
