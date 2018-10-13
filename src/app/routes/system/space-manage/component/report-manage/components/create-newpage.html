@@ -2,14 +2,14 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="4">名称</nz-form-label>
     <nz-form-control  [nzSpan]="20">
-      <input nz-input [ngModel]="reportName" name="reportName" />
+      <input nz-input [(ngModel)]="reportName" name="reportName" />
       <!-- <nz-form-explain>Should be combination of numbers & alphabets</nz-form-explain> -->
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
     <nz-form-label [nzSpan]="4">父目录</nz-form-label>
     <nz-form-control  [nzSpan]="20">
-      <input nz-input disabled="true" [ngModel]="folders" name="folders" />
+      <input nz-input disabled="true" [ngModel]="folder" name="folders" />
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>

@@ -23,9 +23,10 @@ export class CreateNewpageComponent implements OnInit {
   DEV = '1';      // 开发者模式
   NOT_DEV = '0';  // 开发者模式
 
-  reportName = '1';
+  reportName = '';
+  report_id = '';
   folder = '';
-  folders = '';
+  folders = [];
   folderID = '';
   radioValue = '';
   isDev = true;
@@ -44,13 +45,15 @@ export class CreateNewpageComponent implements OnInit {
   createReport() {
     let spaceID = localStorage.getItem('spaceID');
     let params = {
-      ispublic: this.isPublic ? this.PUBLIC : this.NOT_PUBLIC,
-      isdev: this.isDev ? this.DEV : this.NOT_DEV,
-      remark: this.remark,
-      report_name: this.reportName,
-      type: this.radioValue,
-      space_id: spaceID,
-      parentid: this.folderID,
+      Report: {
+        ispublic: this.isPublic ? this.PUBLIC : this.NOT_PUBLIC,
+        isdev: this.isDev ? this.DEV : this.NOT_DEV,
+        remark: this.remark,
+        report_name: this.reportName,
+        type: this.radioValue,
+        space_id: spaceID,
+        parentid: this.folderID,
+      },
     };
 
     this.spaceManageService.createReport(params).subscribe(res => {
@@ -64,4 +67,32 @@ export class CreateNewpageComponent implements OnInit {
       this.message.error('添加报表失败！');
     });
   }
+
+  modReport() {
+    let spaceID = localStorage.getItem('spaceID');
+    let params = {
+      Report: {
+        ispublic: this.isPublic ? this.PUBLIC : this.NOT_PUBLIC,
+        isdev: this.isDev ? this.DEV : this.NOT_DEV,
+        remark: this.remark,
+        report_name: this.reportName,
+        type: this.radioValue,
+        space_id: spaceID,
+        parentid: this.folderID,
+        report_id: this.report_id,
+      },
+    };
+
+    this.spaceManageService.modReport(params).subscribe(res => {
+      console.log(res);
+      if (res['retCode'] === '00000') {
+        this.message.success('修改成功！');
+      } else {
+        this.message.error('修改失败！');
+      }
+    }, err => {
+      this.message.error('修改失败！');
+    });
+  }
+
 }
