@@ -34,7 +34,7 @@ export class SpaceSquareComponent implements OnInit {
       .subscribe(res => {
         console.log(res);
         this.spaceArr = res['retList'];
-      }, err => {
+      }, err => { 
         console.log(err);
       });
   }

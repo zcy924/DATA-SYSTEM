@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { NzMessageService, NzModalRef } from 'ng-zorro-antd';
 import { SpaceManageService } from '../../../space-manage.service';
+import { Observable, of } from 'rxjs';
 
 @Component({
   templateUrl: './add-screen.html',
@@ -59,15 +60,16 @@ export class AddScreenComponent implements OnInit {
     this.spaceManageService.addScreen(params).subscribe(data => {
       if (data.retCode === '00000') {
         this.nzMessage.success('新增大屏成功!');
-        // this.modal.destroy();
+        this.modal.destroy('ok');
       } else {
         this.nzMessage.error(data.retMsg);
       }
     });
+    // return this.spaceManageService.addScreen(params);
   }
-  test() {
+  test(){
     setTimeout(() => {
-      this.submitForm();
+      return this.submitForm();
     }, 2000);
   }
   checked(i) {

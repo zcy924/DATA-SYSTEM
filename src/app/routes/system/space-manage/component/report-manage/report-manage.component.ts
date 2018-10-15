@@ -71,7 +71,7 @@ export class ReportManageComponent implements OnInit {
     this.loading = true;
     let spaceID = localStorage.getItem('spaceID');
     let params = {
-      curPage: this.page.curPage - 1,
+      curPage: this.page.curPage,
       pageSize: this.page.pageSize,
       Report: {
         space_id: spaceID,

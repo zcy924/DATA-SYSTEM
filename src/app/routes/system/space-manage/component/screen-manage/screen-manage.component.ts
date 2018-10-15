@@ -41,8 +41,15 @@ export class ScreenManageComponent implements OnInit {
       nzOkText: '新增',
       nzCancelText: '取消',
       nzOnOk: i => {
-        i.submitForm();
+        return new Promise(res => {
+          i.submitForm();
+        });
       },
+    });
+    modal.afterClose.subscribe(data => {
+      if (data === 'ok') {
+        this.getScreenList(true);
+      }
     });
   }
   getScreenList(reset = false) {
@@ -51,7 +58,7 @@ export class ScreenManageComponent implements OnInit {
     }
     this.loading = true;
     const params = {
-      spaceId: '111',
+      spaceId: localStorage.getItem('spaceID'),
       curPage: this.page.curPage,
       pageSize: this.page.pageSize,
       totalPage: this.page.totalPage || '',
@@ -116,6 +123,7 @@ export class ScreenManageComponent implements OnInit {
   copy() {}
   delete(screenId) {
     const params = {
+      spaceId: localStorage.getItem('spaceID'),
       dashboardId: screenId,
     };
     this.spaceManageService.delScreen(params).subscribe(data => {
