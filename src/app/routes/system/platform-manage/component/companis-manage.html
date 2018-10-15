@@ -1,46 +1,44 @@
-<nz-layout>
-  <nz-content>
-    <div nz-row style="background-color: rgb(246,248,248) ;border-bottom: 1px solid rgb(222,230,231);padding: 8px">
-      <div nz-col nzSpan="4" style="line-height: 32px; font-size: x-large ">
-        公司管理
-      </div>
-      <div nz-col style="float: right">
-        <button nz-button nzType="primary" (click)="showModal('新增公司')" >新增公司</button>
-      </div>
+<nz-content style="padding:0 16px 16px 16px">
+  <div nz-row style="background-color: rgb(246,248,248) ;border-bottom: 1px solid rgb(222,230,231);padding: 8px 0;">
+    <div nz-col nzSpan="4" style="line-height: 32px; font-size: x-large ">
+      公司管理
     </div>
+    <div nz-col style="float: right">
+      <button nz-button nzType="primary" (click)="showModal('新增公司')" >新增公司</button>
+    </div>
+  </div>
 
-    <div nz-row style="padding:16px">
-      <div nz-col nzSpan="24">
-        <nz-card >
-          <nz-table #basicTable
-                    [nzData]="dataSet"
-                    [nzLoading]="loading"
-                    [nzTotal]="total"
-                    [(nzPageIndex)]="pageIndex"
-                    [(nzPageSize)]="pageSize"
-                    (nzPageIndexChange)="searchData()"
-                    (nzPageSizeChange)="searchData(true)">
-            <thead>
-              <tr>
-                <th nzShowSort >公司名称</th>
-                <th  >Logo</th>
-                <th nzShowSort>空间数量</th>
-                <th nzShowSort>用户人数</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let data of dataSet">
-                <td>{{data.companyName}}</td>
-                <td><img src="{{data.avatar}}"></td>
-                <td>{{data.spaceNum}}</td>
-                <td>{{data.userNum}}</td>
-              </tr>
-            </tbody>
-          </nz-table>
-        </nz-card>
-      </div>
+  <div nz-row style="padding-top:16px">
+    <div nz-col nzSpan="24">
+      <nz-card >
+        <nz-table #basicTable
+                  [nzData]="dataSet"
+                  [nzLoading]="loading"
+                  [nzTotal]="total"
+                  [(nzPageIndex)]="pageIndex"
+                  [(nzPageSize)]="pageSize"
+                  (nzPageIndexChange)="searchData()"
+                  (nzPageSizeChange)="searchData(true)">
+          <thead>
+            <tr>
+              <th nzShowSort >公司名称</th>
+              <th  >Logo</th>
+              <th nzShowSort>空间数量</th>
+              <th nzShowSort>用户人数</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of dataSet">
+              <td>{{data.companyName}}</td>
+              <td><img src="{{data.avatar}}"></td>
+              <td>{{data.spaceNum}}</td>
+              <td>{{data.userNum}}</td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </nz-card>
     </div>
-  </nz-content>
-</nz-layout>
+  </div>
+</nz-content>
 
 

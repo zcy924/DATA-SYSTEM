@@ -12,14 +12,14 @@ export class CompanyManageService {
   constructor(private httpClient: HttpClient) {}
 
   getUserList(params): Observable<any> {
-    return this.httpClient.post(this.url + 'user/list', params);
+    return this.httpClient.post('localhost:8080/data-reporter/ipa/user/list', params);
   }
 
   createUser(params): Observable<any> {
-    return this.httpClient.post(this.url + 'user/add', params);
+    return this.httpClient.post('localhost:8080/data-reporter/ipa/user/add', params);
   }
 
   delUser(params): Observable<any> {
-    return this.httpClient.post(this.url + 'user/del', params);
+    return this.httpClient.post('localhost:8080/data-reporter/ipa/user/del', params);
   }
 }

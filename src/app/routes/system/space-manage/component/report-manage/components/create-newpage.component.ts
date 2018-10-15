@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NzTreeNode, NzFormatEmitEvent, NzMessageService } from 'ng-zorro-antd';
+import { NzTreeNode, NzFormatEmitEvent, NzMessageService, NzModalRef } from 'ng-zorro-antd';
 import { SpaceManageService } from '../../../space-manage.service';
 import { ActivatedRoute } from '@angular/router';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-create-newpage',
@@ -25,7 +26,7 @@ export class CreateNewpageComponent implements OnInit {
 
   reportName = '';
   report_id = '';
-  folder = '';
+  folderName = '';
   folders = [];
   folderID = '';
   radioValue = '';
@@ -36,7 +37,8 @@ export class CreateNewpageComponent implements OnInit {
 
   constructor(
     private spaceManageService: SpaceManageService,
-    private message: NzMessageService) {
+    private message: NzMessageService,
+    private modalRef:NzModalRef) {
   }
 
   ngOnInit() {
@@ -63,8 +65,6 @@ export class CreateNewpageComponent implements OnInit {
       } else {
         this.message.error('添加报表失败！');
       }
-    }, err => {
-      this.message.error('添加报表失败！');
     });
   }
 
@@ -87,11 +87,10 @@ export class CreateNewpageComponent implements OnInit {
       console.log(res);
       if (res['retCode'] === '00000') {
         this.message.success('修改成功！');
+        this.modalRef.destroy("ok");
       } else {
         this.message.error('修改失败！');
       }
-    }, err => {
-      this.message.error('修改失败！');
     });
   }
 

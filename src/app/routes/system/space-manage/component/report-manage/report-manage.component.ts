@@ -19,9 +19,9 @@ export class ReportManageComponent implements OnInit {
   isPublic = '1';   // 公开
   isDev = '1';      // 开发者模式
 
-  folder = '根目录';  // 当前目录名称
-  folders: any; // 当前全路径
+  folderName = '根目录';  // 当前目录名称
   folderID = '/';     // 当前目录ID
+  folders: any;     // 当前全路径
 
   loading = false;
   indeterminate = false;
@@ -89,7 +89,7 @@ export class ReportManageComponent implements OnInit {
         this.page.totalRow = res['totalRow'];
         this.page.totalPage = res['totalPage'];
 
-        this.folder = data.report_name;
+        this.folderName = data.report_name;
         this.folderID = data.parentid;
 
         if (data.parentid === '/') { // 清除无效目录
@@ -122,19 +122,23 @@ export class ReportManageComponent implements OnInit {
       nzContent: CreateNewpageComponent,
       nzWidth: '50%',
       nzComponentParams: {
-        folder: this.folder,
+        folderName: this.folderName,
         folders: this.folders,
         folderID: this.folderID,
         radioValue: type === this.isReport ? this.isReport : this.isFolder,
       },
       nzOnOk: (res) => {
         res.createReport();
-        this.searchData(true, { parentid: this.folderID, report_name: this.folder });
       },
+    });
+    modal.afterClose.subscribe(res =>{
+      if(res === 'ok'){
+        this.searchData(true, { parentid: this.folderID, report_name: this.folderName });
+      }
     });
   }
 
-  // 以当前报表作为模板新建
+  // 以此报表作为模板新建
   addReportByOne(data) {
 
 
@@ -148,7 +152,7 @@ export class ReportManageComponent implements OnInit {
       nzContent: CreateNewpageComponent,
       nzWidth: '50%',
       nzComponentParams: {
-        folder: this.folder,
+        folderName: this.folderName,
         folders: this.folders,
         folderID: data.parentid,
         isPublic: data.isPublic === this.isPublic,
@@ -160,7 +164,7 @@ export class ReportManageComponent implements OnInit {
       },
       nzOnOk: (res) => {
         res.modReport();
-        this.searchData(true, { parentid: this.folderID, report_name: this.folder });
+        this.searchData(true, { parentid: this.folderID, report_name: this.folderName });
       },
     });
   }
@@ -190,7 +194,7 @@ export class ReportManageComponent implements OnInit {
           .subscribe(res => {
             if (res['retCode'] === '00000') {
               this.message.success('删除' + title + '成功！');
-              this.searchData(true, { parentid: this.folderID, report_name: this.folder });
+              this.searchData(true, { parentid: this.folderID, report_name: this.folderName });
             } else {
               this.message.error('删除' + title + '失败！');
             }
