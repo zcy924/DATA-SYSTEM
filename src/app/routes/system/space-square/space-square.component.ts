@@ -3,22 +3,23 @@ import { Router } from '@angular/router';
 import { SpaceSquareService } from './space-square.service';
 import { CreateSpaceComponent } from './component/create-sapce.component';
 import { NzModalService } from 'ng-zorro-antd';
+import { CreateNewpageComponent } from '../space-manage/component/report-manage/components/create-newpage.component';
 
 
 @Component({
   selector: 'app-space-aquare',
   templateUrl: './space-square.html',
   styleUrls: ['./space-square.less'],
-  providers: [SpaceSquareService,NzModalService],
+  providers: [SpaceSquareService, NzModalService],
 })
 export class SpaceSquareComponent implements OnInit {
 
   spaceArr = [];
 
   constructor(
-          private router: Router,
-          private spaceService: SpaceSquareService,
-          private nzModel: NzModalService) {
+    private router: Router,
+    private spaceService: SpaceSquareService,
+    private nzModel: NzModalService) {
     this.getList();
   }
 
@@ -34,21 +35,27 @@ export class SpaceSquareComponent implements OnInit {
       .subscribe(res => {
         console.log(res);
         this.spaceArr = res['retList'];
-      }, err => { 
+      }, err => {
         console.log(err);
       });
   }
 
-  showModal(title): void {
+  showCreateModal(title): void {
     const modal = this.nzModel.create({
-      nzTitle: `${title}`,
+      nzTitle: `新建${title}`,
       nzContent: CreateSpaceComponent,
       nzWidth: '50%',
-      nzStyle: {
-        top: '10%'
+      nzOnOk: res => {
+        res.createSpace();
+      },
+    });
+    modal.afterClose.subscribe(res => {
+      if (res === 'ok') {
+        this.getList();
       }
     });
   }
+
 
 }
 

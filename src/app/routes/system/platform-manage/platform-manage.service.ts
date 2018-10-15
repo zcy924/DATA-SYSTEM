@@ -13,10 +13,10 @@ export class PlatformManageService {
   constructor(private httpClient: HttpClient) {}
 
   getCompanyList(params): Observable<any> {
-    return this.httpClient.post(this.url + 'company/list', params);
+    return this.httpClient.post('localhost:8080/data-reporter/ipa/company/list', params);
   }
 
   createCompany(params): Observable<any> {
-    return this.httpClient.post(this.url + 'company/add', params);
+    return this.httpClient.post('localhost:8080/data-reporter/ipa/company/add', params);
   }
 }

@@ -15,4 +15,7 @@ export class SpaceSquareService {
     return this.http.post('http://10.2.215.191:8080/data-reporter/ipa/space/list', params);
   }
 
+  createSpace(params: any): Observable<any> {
+    return this.http.post('http://10.2.215.191:8080/data-reporter/ipa/space/add', params);
+  }
 }
