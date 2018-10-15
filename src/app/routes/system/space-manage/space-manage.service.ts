@@ -38,19 +38,22 @@ export class SpaceManageService {
       params,
     );
   }
-  // url = environment.TEST_URL;
+
+
   getReportList(params): Observable<any> {
-    return this.httpClient.post(this.url + 'report/list', params);
+    return this.httpClient.post(this.url + 'space/report/qryReportList', params);
   }
 
   delReport(params): Observable<any> {
-    return this.httpClient.post(this.url + 'report/del', params);
+    return this.httpClient.post(this.url + 'space/report/del', params);
   }
 
   createReport(params): Observable<any> {
-    return this.httpClient.post(this.url + 'report/add', params);
+    return this.httpClient.post(this.url + 'space/report/add', params);
   }
-  // createCompany(params): Observable<any> {
-  //   return this.httpClient.post(this.url + 'company/add', params);
-  // }
+
+  modReport(params): Observable<any> {
+    return this.httpClient.post(this.url + 'space/report/modReportContent', params);
+  }
+
 }
