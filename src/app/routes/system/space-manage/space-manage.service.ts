@@ -10,19 +10,31 @@ export class SpaceManageService {
   constructor(private httpClient: HttpClient) {}
   addScreen(params): Observable<any> {
     return this.httpClient.post(
-      '10.2.215.53:8080/DVSP/spaceManage/dashBoard/increase',
+      this.url + 'spaceManage/dashBoard/increase',
       params,
     );
   }
   getScreenList(params): Observable<any> {
     return this.httpClient.post(
-      '10.2.215.53:8080/DVSP/spaceManage/dashBoard/listQry',
+      this.url + 'spaceManage/dashBoard/listQry',
       params,
     );
   }
   modScreenInfo(params): Observable<any> {
     return this.httpClient.post(
-      '10.2.215.53:8080/DVSP/spaceManage/dashBoard/contentUdt',
+      this.url + 'spaceManage/dashBoard/revise',
+      params,
+    );
+  }
+  delScreen(params): Observable<any> {
+    return this.httpClient.post(
+      this.url + 'spaceManage/dashBoard/delete',
+      params,
+    );
+  }
+  delAllScreen(params): Observable<any> {
+    return this.httpClient.post(
+      this.url + 'spaceManage/dashBoard/alldel',
       params,
     );
   }

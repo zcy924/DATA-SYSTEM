@@ -153,7 +153,7 @@ export class SpaceManageComponent implements OnInit {
 
   ngOnInit() {
     this.url = this.acRouter.snapshot.params['spaceId'];
-    localStorage.setItem('spaceID',this.url.toString());
+    localStorage.setItem('spaceID', this.url.toString());
 
     this.spaceContent.screenList.forEach(value => {
       const item = {

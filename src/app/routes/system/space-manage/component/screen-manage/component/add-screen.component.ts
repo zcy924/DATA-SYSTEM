@@ -18,6 +18,8 @@ import { SpaceManageService } from '../../../space-manage.service';
 })
 export class AddScreenComponent implements OnInit {
   validateForm: FormGroup;
+  spaceId;
+  companyId;
   styleArray = ['template-card'];
   selected1: Boolean = false;
   selected2: Boolean = false;
@@ -36,12 +38,6 @@ export class AddScreenComponent implements OnInit {
       remark: [null],
     });
   }
-  // get name() {
-  //   return this.validateForm.controls.name;
-  // }
-  // get remark() {
-  //   return this.validateForm.controls.remark;
-  // }
   submitForm() {
     // tslint:disable-next-line:forin
     for (const i in this.validateForm.controls) {
@@ -52,6 +48,8 @@ export class AddScreenComponent implements OnInit {
       return;
     }
     const params = {
+      companyId: this.companyId,
+      spaceId: this.spaceId,
       name: this.validateForm.controls.name.value,
       remark: this.validateForm.controls.remark.value,
       icon: 'anticon anticon-area-chart',
@@ -60,12 +58,17 @@ export class AddScreenComponent implements OnInit {
     };
     this.spaceManageService.addScreen(params).subscribe(data => {
       if (data.retCode === '00000') {
-        this.modal.destroy('onOk');
         this.nzMessage.success('新增大屏成功!');
+        // this.modal.destroy();
       } else {
         this.nzMessage.error(data.retMsg);
       }
     });
+  }
+  test() {
+    setTimeout(() => {
+      this.submitForm();
+    }, 2000);
   }
   checked(i) {
     switch (i) {

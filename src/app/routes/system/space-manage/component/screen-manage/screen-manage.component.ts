@@ -5,6 +5,7 @@ import { SpaceManageService } from '../../space-manage.service';
 import { HttpResponse } from '@angular/common/http';
 import { Page } from 'app/models/page';
 import { EditScreenComponent } from './component/edit-screen.component';
+import { SettingsService } from '@delon/theme';
 
 @Component({
   selector: 'app-screen-manage',
@@ -14,14 +15,15 @@ import { EditScreenComponent } from './component/edit-screen.component';
 export class ScreenManageComponent implements OnInit {
   page = new Page();
   loading = false;
+  operation;
   indeterminate = false;
   allChecked = false;
-  selectedArray = [];
   dataSet = [];
   constructor(
     private nzModal: NzModalService,
     private nzMessage: NzMessageService,
     private spaceManageService: SpaceManageService,
+    private settings: SettingsService,
   ) {}
   ngOnInit() {
     this.getScreenList();
@@ -31,24 +33,16 @@ export class ScreenManageComponent implements OnInit {
       nzTitle: `新增大屏`,
       nzContent: AddScreenComponent,
       nzWidth: '600px',
-      nzFooter: [
-        {
-          label: '取消',
-          type: 'default',
-          onClick: () => modal.destroy(),
-        },
-        {
-          label: '新增',
-          type: 'primary',
-          autoLoading: true,
-          onClick: i => {
-            i.submitForm();
-          },
-        },
-      ],
-    });
-    modal.afterClose.subscribe(() => {
-      this.getScreenList(true);
+      nzOkLoading: false,
+      nzComponentParams: {
+        spaceId: localStorage.getItem('spaceID'),
+        companyId: this.settings.user.companyId,
+      },
+      nzOkText: '新增',
+      nzCancelText: '取消',
+      nzOnOk: i => {
+        i.submitForm();
+      },
     });
   }
   getScreenList(reset = false) {
@@ -101,33 +95,65 @@ export class ScreenManageComponent implements OnInit {
   }
 
   view() {}
-  edit() {
+  edit(data) {
     const modal = this.nzModal.create({
-      nzTitle: `编辑大屏`,
+      nzTitle: `编辑大屏${data.name}`,
       nzContent: EditScreenComponent,
       nzWidth: '600px',
-      nzFooter: [
-        {
-          label: '取消',
-          type: 'default',
-          onClick: () => modal.destroy(),
-        },
-        {
-          label: '确认',
-          type: 'primary',
-          autoLoading: true,
-          onClick: i => {
-            i.submitForm();
-          },
-        },
-      ],
+      nzOnOk: i => {
+        i.submitForm();
+        this.getScreenList(true);
+      },
       nzComponentParams: {
-        screenName: '紫金大屏',
-        screenRemark: '测试',
+        screenName: data.name,
+        screenRemark: data.remark,
+        dashboardId: data.dashboardId,
+        spaceId: localStorage.getItem('spaceID'),
       },
     });
   }
   public() {}
   copy() {}
-  delete() {}
+  delete(screenId) {
+    const params = {
+      dashboardId: screenId,
+    };
+    this.spaceManageService.delScreen(params).subscribe(data => {
+      if (data.retCode == '00000') {
+        this.nzMessage.success('删除成功!');
+        this.getScreenList(true);
+      } else {
+        this.nzMessage.error(data.retMsg);
+      }
+    });
+  }
+  handle() {
+    this.nzModal.warning({
+      nzTitle: '系统提示',
+      nzContent: '确定删除所选大屏吗？',
+      nzOkText: '确认',
+      nzCancelText: '取消',
+      nzOnOk: () => {
+        const handleArray = [];
+        this.dataSet.forEach(value => {
+          if (value.checked) {
+            const item = {
+              dashboardId: value.dashboardId,
+              spaceId: localStorage.getItem('spaceID'),
+            };
+            handleArray.push(item);
+          }
+        });
+        const params = { reqList: handleArray };
+        this.spaceManageService.delAllScreen(params).subscribe(data => {
+          if (data.retCode == '00000') {
+            this.nzMessage.success('批量删除成功!');
+            this.getScreenList(true);
+          } else {
+            this.nzMessage.error(data.retMsg);
+          }
+        });
+      },
+    });
+  }
 }

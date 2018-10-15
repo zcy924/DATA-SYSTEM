@@ -55,8 +55,6 @@ export class UserLoginComponent implements OnDestroy {
     modalSrv.closeAll();
   }
 
-  // region: fields
-
   get userName() {
     return this.form.controls.userName;
   }
@@ -73,23 +71,9 @@ export class UserLoginComponent implements OnDestroy {
     return this.form.controls.captcha;
   }
 
-  // endregion
-
   switch(ret: any) {
     this.type = ret.index;
   }
-
-  // region: get captcha
-
-  // getCaptcha() {
-  //   this.count = 59;
-  //   this.interval$ = setInterval(() => {
-  //     this.count -= 1;
-  //     if (this.count <= 0) clearInterval(this.interval$);
-  //   }, 1000);
-  // }
-
-  // endregion
 
   submit() {
     this.error = '';
@@ -113,7 +97,7 @@ export class UserLoginComponent implements OnDestroy {
     this.passwordMD5 = Md5.hashStr(this.password.value).toString();
     const params = {
       userNo: this.userName.value,
-      password: this.passwordMD5
+      password: this.passwordMD5,
     };
 
     this.loginService.login(params).subscribe(data => {
@@ -123,9 +107,14 @@ export class UserLoginComponent implements OnDestroy {
         // 设置Token信息
         this.tokenService.set({
           token: data['retData']['TokenID'],
-          name: data['retData']['userName'],
-          account: data['retData']['userID'],
-          time: +new Date(),
+        });
+        this.settingsService.setUser({
+          name: data.retData.userName,
+          avatar: data.userIcon,
+          account: data.userId,
+          companyId: data.companyId,
+          companyName: data.companyName,
+          companyLogo: data.avatar
         });
         // 重新获取 StartupService 内容，若其包括 User 有关的信息的话
         // this.startupSrv.load().then(() => this.router.navigate(['/']));
@@ -138,8 +127,6 @@ export class UserLoginComponent implements OnDestroy {
       }
     });
   }
-
-  // region: social
 
   open(type: string, openType: SocialOpenType = 'href') {
     let url = ``;
@@ -182,9 +169,6 @@ export class UserLoginComponent implements OnDestroy {
     }
   }
 
-  // endregion
-
   ngOnDestroy(): void {
-    // if (this.interval$) clearInterval(this.interval$);
   }
 }
