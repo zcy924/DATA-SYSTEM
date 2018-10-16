@@ -10,19 +10,19 @@ export class SpaceSettingComponent implements OnInit {
     {
       key: '1',
       name: 'John Brown',
-      age: 32,
+      avatar:'./assets/tmp/img/icon.png',
       address: ['New','Lake']
     },
     {
       key: '2',
       name: 'Jim Green',
-      age: 42,
+      avatar:'./assets/tmp/img/icon.png',
       address: ['London','Lake','Park']
     },
     {
       key: '3',
       name: 'Joe Black',
-      age: 32,
+      avatar:'./assets/tmp/img/icon.png',
       address: ['Sidney',' No.','1','Lake Park']
     }
   ];

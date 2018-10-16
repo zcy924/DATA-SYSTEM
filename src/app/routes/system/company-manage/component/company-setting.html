@@ -13,7 +13,15 @@
           <nz-form-item nz-row >
             <nz-form-label [nzSpan]="8" >公司名称</nz-form-label>
             <nz-form-control [nzSpan]="16">
-              <input nz-input  id="name">
+              <input nz-input  name="companyName" [(ngModel)]="companyName">
+              <!--<nz-form-explain *ngIf="validateForm.get('email').dirty && validateForm.get('email').errors">The input is not valid E-mail!</nz-form-explain>-->
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item nz-row >
+            <nz-form-label [nzSpan]="8" >空间数量</nz-form-label>
+            <nz-form-control [nzSpan]="16">
+              <h4>{{spaceNum}}</h4>
               <!--<nz-form-explain *ngIf="validateForm.get('email').dirty && validateForm.get('email').errors">The input is not valid E-mail!</nz-form-explain>-->
             </nz-form-control>
           </nz-form-item>
@@ -21,7 +29,7 @@
           <nz-form-item nz-row >
             <nz-form-label [nzSpan]="8" >只允许管理员创建空间</nz-form-label>
             <nz-form-control [nzSpan]="16">
-              <nz-switch [ngModel]="true" nzCheckedChildren="是" nzUnCheckedChildren="否"></nz-switch>
+              <nz-switch name="onlyAdmin" [(ngModel)]="onlyAdmin" nzCheckedChildren="是" nzUnCheckedChildren="否"></nz-switch>
             </nz-form-control>
           </nz-form-item>
 
@@ -29,21 +37,15 @@
             <nz-form-label [nzSpan]="8" >公司管理员</nz-form-label>
             <nz-form-control [nzSpan]="16">
 
-
-              <label nz-checkbox [(ngModel)]="checked">Checkbox</label><br>
-              <label nz-checkbox [(ngModel)]="checked">Checkbox</label><br>
-              <label nz-checkbox [(ngModel)]="checked">Checkbox</label><br>
+              <div *ngFor="let admin of admins"><label nz-checkbox  name="checked"  (ngModelChange)="updateChecked(admin)"  [(ngModel)]="admin.checked" >{{admin.userName}}</label></div>
 
               <nz-input-group nzSearch nzSize="large" [nzSuffix]="suffixButton">
-                <input type="text" nz-input placeholder="input search text">
+                <input type="text" nz-input placeholder="搜索用户">
               </nz-input-group>
               <ng-template #suffixButton>
                 <button nz-button nzType="primary" nzSize="large" nzSearch>Search</button>
               </ng-template>
-              <br>
-              <label nz-checkbox nzDisabled [(ngModel)]="checked">Checkbox</label><br>
-              <label nz-checkbox nzDisabled [(ngModel)]="checked">Checkbox</label><br>
-              <label nz-checkbox nzDisabled [(ngModel)]="checked">Checkbox</label><br>
+
 
             </nz-form-control>
           </nz-form-item>

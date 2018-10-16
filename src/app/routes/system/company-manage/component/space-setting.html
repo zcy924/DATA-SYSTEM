@@ -20,15 +20,15 @@
           <thead>
             <tr>
               <th nzShowSort >空间名称</th>
-              <th nzShowSort >英文名称</th>
-              <th >空间管理员</th>
-              <th nzShowSort >操作</th>
+              <th>Logo</th>
+              <th>空间管理员</th>
+              <th>操作</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let data of basicTable.data">
               <td>{{data.name}}</td>
-              <td>{{data.age}}</td>
+              <td><img src="{{data.avatar}}"></td>
               <td>
                 <nz-list [nzDataSource]="data.address" nzBordered [nzRenderItem]="item">
                   <ng-template #item let-item>

@@ -22,4 +22,11 @@ export class CompanyManageService {
   delUser(params): Observable<any> {
     return this.httpClient.post('localhost:8080/data-reporter/ipa/user/del', params);
   }
+
+  getCompanyInfo(params): Observable<any> {
+    return this.httpClient.post('localhost:8080/data-reporter/ipa/company/info', params);
+  }
+
+
+
 }
