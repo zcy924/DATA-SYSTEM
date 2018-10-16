@@ -4,19 +4,19 @@
       公司管理
     </div>
     <div nz-col style="float: right">
-      <button nz-button nzType="primary" (click)="showModal('新增公司')" >新增公司</button>
+      <button nz-button nzType="primary" (click)="createCompany('新增公司')" >新增公司</button>
     </div>
   </div>
 
   <div nz-row style="padding-top:16px">
     <div nz-col nzSpan="24">
       <nz-card >
-        <nz-table #basicTable
+        <nz-table #ajaxTable  style="text-align: center" nzShowSizeChanger [nzFrontPagination]="false"
                   [nzData]="dataSet"
                   [nzLoading]="loading"
-                  [nzTotal]="total"
-                  [(nzPageIndex)]="pageIndex"
-                  [(nzPageSize)]="pageSize"
+                  [nzTotal]="page.totalRow"
+                  [(nzPageIndex)]="page.curPage"
+                  [(nzPageSize)]="page.pageSize"
                   (nzPageIndexChange)="searchData()"
                   (nzPageSizeChange)="searchData(true)">
           <thead>

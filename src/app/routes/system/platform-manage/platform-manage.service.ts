@@ -7,16 +7,17 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class PlatformManageService {
 
-  url = environment.SERVER_URL;
-  // url = environment.TEST_URL;
+  // url = environment.SERVER_URL;
+  url = '10.2.215.203:8080/dvsp/';
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+  }
 
   getCompanyList(params): Observable<any> {
-    return this.httpClient.post('localhost:8080/data-reporter/ipa/company/list', params);
+    return this.httpClient.post(this.url + 'company/companyListQry', params);
   }
 
   createCompany(params): Observable<any> {
-    return this.httpClient.post('localhost:8080/data-reporter/ipa/company/add', params);
+    return this.httpClient.post(this.url + 'company/addCompany', params);
   }
 }

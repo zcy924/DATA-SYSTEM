@@ -73,6 +73,8 @@ export class ReportManageComponent implements OnInit {
     let params = {
       curPage: this.page.curPage,
       pageSize: this.page.pageSize,
+      totalPage: this.page.totalPage,
+      totalRow: this.page.totalRow,
       Report: {
         space_id: spaceID,
         parentid: data.parentid,

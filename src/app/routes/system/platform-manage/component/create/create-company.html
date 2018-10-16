@@ -2,7 +2,7 @@
   <nz-form-item nz-row >
     <nz-form-label [nzSpan]="5" >公司名称</nz-form-label>
     <nz-form-control [nzSpan]="16">
-      <input nz-input  name="companyName" [(ngModel)]="data.companyName">
+      <input nz-input  name="companyName" [(ngModel)]="companyName">
       <!--<nz-form-explain *ngIf="validateForm.get('email').dirty && validateForm.get('email').errors">The input is not valid E-mail!</nz-form-explain>-->
     </nz-form-control>
   </nz-form-item>
@@ -10,7 +10,7 @@
   <nz-form-item nz-row >
     <nz-form-label [nzSpan]="5" >公司管理员账号</nz-form-label>
     <nz-form-control [nzSpan]="16">
-      <input nz-input  name="companyAdmin"  [(ngModel)]="data.companyAdmin">
+      <input nz-input  name="companyAdmin"  [(ngModel)]="companyAdmin">
       <!--<nz-form-explain *ngIf="validateForm.get('email').dirty && validateForm.get('email').errors">The input is not valid E-mail!</nz-form-explain>-->
     </nz-form-control>
   </nz-form-item>

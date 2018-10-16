@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { SpaceSquareService } from './space-square.service';
 import { CreateSpaceComponent } from './component/create-sapce.component';
 import { NzModalService } from 'ng-zorro-antd';
-import { CreateNewpageComponent } from '../space-manage/component/report-manage/components/create-newpage.component';
+import { ReportModalComponent } from '../space-manage/component/report-manage/components/report-modal.component';
 
 
 @Component({
