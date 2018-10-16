@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-create-newpage',
-  templateUrl: './create-newpage.html',
+  templateUrl: './report-modal.html',
   styles: [
       `
       nz-date-picker ::ng-deep .ant-calendar-picker {
@@ -15,7 +15,7 @@ import { Observable, of } from 'rxjs';
     `,
   ],
 })
-export class CreateNewpageComponent implements OnInit {
+export class ReportModalComponent implements OnInit {
 
   REPORT = '1';   // 报表
   FOLDER = '0';   // 文件夹

@@ -3,7 +3,7 @@ import {
   NzModalService,
   NzMessageService,
 } from 'ng-zorro-antd';
-import { CreateNewpageComponent } from './components/create-newpage.component';
+import { ReportModalComponent } from './components/report-modal.component';
 import { SpaceManageService } from '../../space-manage.service';
 import { Page } from '../../../../../models/page';
 
@@ -119,7 +119,7 @@ export class ReportManageComponent implements OnInit {
     let title = type === this.isReport ? '报表页面' : '文件夹';
     const modal = this.nzModel.create({
       nzTitle: `新建${title}`,
-      nzContent: CreateNewpageComponent,
+      nzContent: ReportModalComponent,
       nzWidth: '50%',
       nzComponentParams: {
         folderName: this.folderName,
@@ -149,7 +149,7 @@ export class ReportManageComponent implements OnInit {
     let title = data.type === this.isReport ? '报表页面' : '文件夹';
     const modal = this.nzModel.create({
       nzTitle: `编辑${title}`,
-      nzContent: CreateNewpageComponent,
+      nzContent: ReportModalComponent,
       nzWidth: '50%',
       nzComponentParams: {
         folderName: this.folderName,

@@ -6,9 +6,9 @@ import { RoleManageComponent } from './component/role-manage/role-manage.compone
 import { UserManageComponent } from './component/user-manage/user-manage.component';
 import { ScreenManageComponent } from './component/screen-manage/screen-manage.component';
 import { SpaceManageRoutingModule } from './space-manage.routing';
-import { CreateNewpageComponent } from './component/report-manage/components/create-newpage.component';
-import { AddRoleComponent } from './component/role-manage/components/add-role.component';
-import { AddUserComponent } from './component/user-manage/components/add-user.component';
+import { ReportModalComponent } from './component/report-manage/components/report-modal.component';
+import { RoleModalComponent } from './component/role-manage/components/role-modal.component';
+import { UserModalComponent } from './component/user-manage/components/user-modal.component';
 import { AddScreenComponent } from './component/screen-manage/component/add-screen.component';
 import { SpaceManageService } from './space-manage.service';
 import { EditScreenComponent } from './component/screen-manage/component/edit-screen.component';
@@ -21,9 +21,9 @@ const components = [
   ScreenManageComponent,
 ];
 const modals = [
-  CreateNewpageComponent,
-  AddRoleComponent,
-  AddUserComponent,
+  ReportModalComponent,
+  RoleModalComponent,
+  UserModalComponent,
   AddScreenComponent,
   EditScreenComponent,
 ];

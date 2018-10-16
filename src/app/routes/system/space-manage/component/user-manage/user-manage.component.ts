@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd';
-import { AddUserComponent } from './components/add-user.component';
+import { UserModalComponent } from './components/user-modal.component';
 
 @Component({
   selector: 'app-user-manage',
@@ -53,7 +53,7 @@ export class UserManageComponent implements OnInit {
   addUser() {
     this.nzModal.create({
       nzTitle: '新增用户',
-      nzContent: AddUserComponent,
+      nzContent: UserModalComponent,
       nzWidth: '50%',
       nzStyle: {
         top: '10%',

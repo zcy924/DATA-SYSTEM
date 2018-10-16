@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd';
-import { AddRoleComponent } from './components/add-role.component';
+import { RoleModalComponent } from './components/role-modal.component';
 
 @Component({
   selector: 'app-role-manage',
@@ -46,7 +46,7 @@ export class RoleManageComponent implements OnInit {
   addRole() {
     this.nzModal.create({
       nzTitle: '新建角色',
-      nzContent: AddRoleComponent,
+      nzContent: RoleModalComponent,
       nzWidth: '50%',
       nzStyle: {
         top: '10%'
