@@ -37,14 +37,16 @@
             <nz-form-label [nzSpan]="8" >公司管理员</nz-form-label>
             <nz-form-control [nzSpan]="16">
 
-              <div *ngFor="let admin of admins"><label nz-checkbox  name="checked"  (ngModelChange)="updateChecked(admin)"  [(ngModel)]="admin.checked" >{{admin.userName}}</label></div>
+              <div *ngFor="let admin of admins"><label nz-checkbox name="{{admin.userNo}}"  (ngModelChange)="updateChecked(admin)"  [(ngModel)]="admin.checked" >{{admin.userName}}（{{admin.userNo}}）</label></div>
 
-              <nz-input-group nzSearch nzSize="large" [nzSuffix]="suffixButton">
-                <input type="text" nz-input placeholder="搜索用户">
+              <nz-input-group nzSearch [nzSuffix]="suffixButton">
+                <input type="text" name="key" [(ngModel)]="key" nz-input placeholder="搜索用户">
               </nz-input-group>
               <ng-template #suffixButton>
-                <button nz-button nzType="primary" nzSize="large" nzSearch>Search</button>
+                <button nz-button nzType="primary" (click)="searchUsers()"  nzSearch><i class="anticon anticon-search"></i></button>
               </ng-template>
+
+              <div *ngFor="let admin of searchedAdmins"><label nz-checkbox  name="{{admin.userNo}}"  (ngModelChange)="searchChecked(admin)"  [nzDisabled]="admin.checked" [(ngModel)]="admin.checked" >{{admin.userName}}（{{admin.userNo}}）</label></div>
 
 
             </nz-form-control>
@@ -52,7 +54,11 @@
 
           <nz-divider></nz-divider>
 
-          <button nz-button [nzType]="'primary'" style="float: right">确定</button>
+          <div style="float: right">
+            <button nz-button [nzType]="'default'" style="margin-right: 12px" (click)="getCompanyInfo()">重置</button>
+            <button nz-button [nzType]="'primary'"  (click)="updateCompany()">确定</button>
+          </div>
+
         </form>
 
       </nz-card>

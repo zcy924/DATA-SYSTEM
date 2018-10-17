@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NzModalService } from 'ng-zorro-antd';
-import { CompanyManageService } from '../company-manage.service';
-import { Page } from '../../../../models/page';
-import { CreateUserComponent } from './create/create-user.component';
-import { AdminModalComponent } from './create/admin-modal.component';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd';
+import { CompanyManageService } from '../../company-manage.service';
+import { Page } from '../../../../../models/page';
+import { AdminModalComponent } from './modal/admin-modal.component';
 
 @Component({
   selector: 'app-space-setting',
@@ -26,7 +25,6 @@ export class SpaceSettingComponent implements OnInit {
     this.getSpaceAndAdminList(true);
   }
 
-
   getSpaceAndAdminList(reset: boolean = false): void {
     if (reset) {
       this.page.curPage = 1;
@@ -45,7 +43,7 @@ export class SpaceSettingComponent implements OnInit {
         this.page.totalPage = res['totalPage'];
         this.dataSet.forEach(res => {
           res['user'] = [];
-          let userNameList = res.userNo.split(',');
+          let userNameList = res.userName.split(',');
           let userNoList = res.userNo.split(',');
           userNoList.forEach((value, index) => {
             res.user.push({
@@ -58,8 +56,8 @@ export class SpaceSettingComponent implements OnInit {
       });
   }
 
-  changeAdminModal(list, spaceId) {
 
+  changeAdminModal(list, spaceId) {
     list.forEach(item => {
       item.checked = true;
     });

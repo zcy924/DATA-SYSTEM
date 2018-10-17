@@ -16,7 +16,14 @@
   <div nz-row style="padding-top: 16px">
     <div nz-col nzSpan="24">
       <nz-card >
-        <nz-table #basicTable [nzData]="dataSet">
+        <nz-table #ajaxTable  style="text-align: center" nzShowSizeChanger [nzFrontPagination]="false"
+                  [nzData]="dataSet"
+                  [nzLoading]="loading"
+                  [nzTotal]="page.totalRow"
+                  [(nzPageIndex)]="page.curPage"
+                  [(nzPageSize)]="page.pageSize"
+                  (nzPageIndexChange)="getSpaceAndAdminList()"
+                  (nzPageSizeChange)="getSpaceAndAdminList(true)">
           <thead>
             <tr>
               <th nzShowSort >空间名称</th>
@@ -32,7 +39,7 @@
               <td>
                 <nz-list [nzDataSource]="data.user" nzBordered [nzRenderItem]="item">
                   <ng-template #item let-item>
-                    <nz-list-item [nzContent]="item.userName"></nz-list-item>
+                    <nz-list-item [nzContent]="item.userName.concat('（',item.userNo,'）')"></nz-list-item>
                   </ng-template>
                 </nz-list>
               </td>

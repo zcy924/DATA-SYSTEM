@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class PlatformManageService {
 
   // url = environment.SERVER_URL;
-  url = '10.2.215.203:8080/dvsp/';
+  url = '10.2.72.22:8080/dvsp/';
 
   constructor(private httpClient: HttpClient) {
   }

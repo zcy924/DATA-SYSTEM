@@ -6,10 +6,10 @@
     <div nz-col style="float: right">
       <button nz-button nzType="primary" (click)="showCreateUserModal('添加用户')" >添加用户</button>
       <nz-input-group nzSearch [nzSuffix]="suffixIconButton" style="padding-left:16px">
-        <input type="text" nz-input placeholder="搜索用户">
+        <input type="text" nz-input placeholder="搜索用户" [(ngModel)]="key">
       </nz-input-group>
       <ng-template #suffixIconButton>
-        <button nz-button nzType="primary" nzSearch><i class="anticon anticon-search"></i></button>
+        <button nz-button nzType="primary" nzSearch (click)="searchMisUserList()"> <i class="anticon anticon-search"></i></button>
       </ng-template>
     </div>
   </div>
@@ -17,14 +17,14 @@
   <div nz-row style="padding-top: 16px">
     <div nz-col nzSpan="24">
       <nz-card >
-        <nz-table #basicTable
+        <nz-table #ajaxTable  style="text-align: center" nzShowSizeChanger [nzFrontPagination]="false"
                   [nzData]="dataSet"
                   [nzLoading]="loading"
-                  [nzTotal]="total"
-                  [(nzPageIndex)]="pageIndex"
-                  [(nzPageSize)]="pageSize"
-                  (nzPageIndexChange)="searchData()"
-                  (nzPageSizeChange)="searchData(true)">
+                  [nzTotal]="page.totalRow"
+                  [(nzPageIndex)]="page.curPage"
+                  [(nzPageSize)]="page.pageSize"
+                  (nzPageIndexChange)="searchUserList()"
+                  (nzPageSizeChange)="searchUserList(true)">
           <thead>
             <tr>
               <th nzShowSort >账号</th>

@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
 import { CompanyManageService } from './company-manage.service';
 import { CompanyManageRoutingModule } from './company-manage.routing';
-import { CompanySettingComponent } from './component/company-setting.component';
-import { SpaceSettingComponent } from './component/space-setting.component';
-import { UserSettingComponent } from './component/user-setting.component';
-import { CreateUserComponent } from './component/create/create-user.component';
+import { CompanySettingComponent } from './component/company-setting/company-setting.component';
+import { SpaceSettingComponent } from './component/space-setting/space-setting.component';
+import { UserSettingComponent } from './component/user-setting/user-setting.component';
+import { CreateUserComponent } from './component/user-setting/modal/create-user.component';
 import { NzModalService } from 'ng-zorro-antd';
-import { AdminModalComponent } from './component/create/admin-modal.component';
+import { AdminModalComponent } from './component/space-setting/modal/admin-modal.component';
 
 const components = [
   CompanySettingComponent,

@@ -1,0 +1,20 @@
+<form nz-form >
+  <nz-form-item nz-row >
+    <nz-form-label [nzSpan]="8" >公司管理员</nz-form-label>
+    <nz-form-control [nzSpan]="16">
+
+      <div *ngFor="let admin of admins"><label nz-checkbox name="{{admin.userNo}}"  (ngModelChange)="updateChecked(admin)"  [(ngModel)]="admin.checked" >{{admin.userName}}</label></div>
+
+      <nz-input-group nzSearch nzSize="large" [nzSuffix]="suffixButton">
+        <input type="text" name="key" [(ngModel)]="key" nz-input placeholder="搜索用户">
+      </nz-input-group>
+      <ng-template #suffixButton>
+        <button nz-button nzType="primary" nzSize="large" (click)="searchUsers()"  nzSearch>Search</button>
+      </ng-template>
+
+      <div *ngFor="let admin of searchedAdmins"><label nz-checkbox  name="{{admin.userNo}}"  (ngModelChange)="searchChecked(admin)"  [nzDisabled]="admin.checked" [(ngModel)]="admin.checked" >{{admin.userName}}</label></div>
+
+
+    </nz-form-control>
+  </nz-form-item>
+</form>

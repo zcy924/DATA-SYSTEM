@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
-import { CreateUserComponent } from './create/create-user.component';
-import { CompanyManageService } from '../company-manage.service';
+import { CreateUserComponent } from './modal/create-user.component';
+import { CompanyManageService } from '../../company-manage.service';
+import { Page } from '../../../../../models/page';
 
 @Component({
   selector: 'app-user-setting',
@@ -11,9 +12,8 @@ import { CompanyManageService } from '../company-manage.service';
 export class UserSettingComponent implements OnInit {
   loading = true;
   dataSet = [];
-  pageIndex = 1;
-  pageSize = 5;
-  total = 100;
+  page = new Page();
+  key = '';
 
   constructor(
     private nzModel: NzModalService,
@@ -22,49 +22,58 @@ export class UserSettingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.searchData(true);
+    this.searchUserList(true);
   }
 
+  // 添加用户的对话框
   showCreateUserModal(title): void {
     const modal = this.nzModel.create({
       nzTitle: `${title}`,
       nzContent: CreateUserComponent,
       nzWidth: '50%',
       nzOnOk: (ref) => {
-        console.log(ref.data);
         ref.createUser();
-        this.searchData(true);
+        this.searchUserList(true);
       },
     });
   }
 
-  searchData(reset: boolean = false): void {
+  // 查询用户列表
+  searchUserList(reset: boolean = false): void {
+    if (!(this.key === '')) {
+      this.searchMisUserList(reset);
+      return;
+    }
     if (reset) {
-      this.pageIndex = 1;
+      this.page.curPage = 1;
     }
     this.loading = true;
     let params = {
-      start: this.pageIndex,
-      limit: this.pageSize,
+      pageSize: this.page.pageSize,
+      curPage: this.page.curPage,
+      totalPage: this.page.totalPage,
+      totalRow: this.page.totalRow,
     };
     this.companyManageService.getUserList(params)
       .subscribe(res => {
         console.log(res);
         this.loading = false;
         this.dataSet = res['retList'];
-        this.total = this.dataSet.length;
+        this.page.totalRow = res['totalRow'];
+        this.page.totalPage = res['totalPage'];
       }, err => {
         console.log(err);
       });
   }
 
-  showDelUserConfirm(userNo: string): void{
+  // 删除用户的对话框
+  showDelUserConfirm(userNo: string): void {
     this.nzModel.confirm({
       nzTitle: '是否删除此用户',
       // nzContent: 'When clicked the OK button, this dialog will be closed after 1 second',
-      nzOnOk: (res) =>{
+      nzOnOk: (res) => {
         this.delUser(userNo);
-      }
+      },
     });
   }
 
@@ -81,6 +90,35 @@ export class UserSettingComponent implements OnInit {
         }
       }, err => {
         this.message.error('删除用户失败！');
+      });
+  }
+
+  // 模糊查询用户
+  searchMisUserList(reset: boolean = false): void {
+    if (this.key === '') {
+      this.searchUserList(reset);
+      return;
+    }
+    if (reset) {
+      this.page.curPage = 1;
+    }
+    this.loading = true;
+    let params = {
+      key: this.key,
+      pageSize: this.page.pageSize,
+      curPage: this.page.curPage,
+      totalPage: this.page.totalPage,
+      totalRow: this.page.totalRow,
+    };
+    this.companyManageService.searchMisUsers(params)
+      .subscribe(res => {
+        console.log(res);
+        this.loading = false;
+        this.dataSet = res['retList'];
+        this.page.totalRow = res['totalRow'];
+        this.page.totalPage = res['totalPage'];
+      }, err => {
+        console.log(err);
       });
   }
 }
