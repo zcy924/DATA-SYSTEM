@@ -39,9 +39,11 @@ export class SpaceManageService {
     );
   }
 
-
   getReportList(params): Observable<any> {
-    return this.httpClient.post(this.url + 'space/report/qryReportList', params);
+    return this.httpClient.post(
+      this.url + 'space/report/qryReportList',
+      params,
+    );
   }
 
   delReport(params): Observable<any> {
@@ -53,7 +55,9 @@ export class SpaceManageService {
   }
 
   modReport(params): Observable<any> {
-    return this.httpClient.post(this.url + 'space/report/modReportContent', params);
+    return this.httpClient.post(
+      this.url + 'space/report/modReportContent',
+      params,
+    );
   }
-
 }

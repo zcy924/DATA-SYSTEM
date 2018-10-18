@@ -30,7 +30,6 @@ export class LayoutDefaultComponent implements AfterViewInit {
   isFetching = false;
   @ViewChild('settingHost', { read: ViewContainerRef })
   settingHost: ViewContainerRef;
-
   constructor(
     router: Router,
     scroll: ScrollService,
@@ -39,7 +38,7 @@ export class LayoutDefaultComponent implements AfterViewInit {
     public menuSrv: MenuService,
     public settings: SettingsService,
   ) {
-    // scroll to top in change page
+        // scroll to top in change page
     router.events.subscribe(evt => {
       if (!this.isFetching && evt instanceof RouteConfigLoadStart) {
         this.isFetching = true;
