@@ -8,9 +8,14 @@ import { environment } from '@env/environment';
 export class SpaceSquareService {
   url = environment.SERVER_URL;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   getSpaceList(params: any): Observable<any> {
-    return this.http.post(this.url + 'space/list', params);
+    return this.http.post('http://10.2.215.191:8080/data-reporter/ipa/space/list', params);
+  }
+
+  createSpace(params: any): Observable<any> {
+    return this.http.post('http://10.2.215.191:8080/data-reporter/ipa/space/add', params);
   }
 }

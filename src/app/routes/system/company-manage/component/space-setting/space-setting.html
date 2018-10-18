@@ -1,0 +1,59 @@
+<nz-content style="padding:0 16px 16px 16px">
+  <div nz-row style="background-color: rgb(246,248,248) ;border-bottom: 1px solid rgb(222,230,231);padding: 8px 0;">
+    <div nz-col nzSpan="4" style="line-height: 32px; font-size: x-large ">
+      空间设置
+    </div>
+    <div nz-col style="float: right">
+      <nz-input-group nzSearch [nzSuffix]="suffixIconButton">
+        <input type="text" nz-input placeholder="input search text">
+      </nz-input-group>
+      <ng-template #suffixIconButton>
+        <button nz-button nzType="primary" nzSearch><i class="anticon anticon-search"></i></button>
+      </ng-template>
+    </div>
+  </div>
+
+  <div nz-row style="padding-top: 16px">
+    <div nz-col nzSpan="24">
+      <nz-card >
+        <nz-table #ajaxTable  style="text-align: center" nzShowSizeChanger [nzFrontPagination]="false"
+                  [nzData]="dataSet"
+                  [nzLoading]="loading"
+                  [nzTotal]="page.totalRow"
+                  [(nzPageIndex)]="page.curPage"
+                  [(nzPageSize)]="page.pageSize"
+                  (nzPageIndexChange)="getSpaceAndAdminList()"
+                  (nzPageSizeChange)="getSpaceAndAdminList(true)">
+          <thead>
+            <tr>
+              <th nzShowSort >空间名称</th>
+              <th>Logo</th>
+              <th>空间管理员</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of dataSet">
+              <td>{{data.spaceName}}</td>
+              <td><img src="{{data.avatar}}"></td>
+              <td>
+                <nz-list [nzDataSource]="data.user" nzBordered [nzRenderItem]="item">
+                  <ng-template #item let-item>
+                    <nz-list-item [nzContent]="item.userName.concat('（',item.userNo,'）')"></nz-list-item>
+                  </ng-template>
+                </nz-list>
+              </td>
+              <td>
+                <button nz-button nzType="danger" (click)="changeAdminModal(data.user,data.spaceId)">修改管理员</button>
+                <!--<nz-divider nzType="vertical"></nz-divider>-->
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </nz-card>
+    </div>
+  </div>
+</nz-content>
+
+
+

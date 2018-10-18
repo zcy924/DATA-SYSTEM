@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CompanySettingComponent } from './component/company-setting.component';
-import { SpaceSettingComponent } from './component/space-setting.component';
-import { UserSettingComponent } from './component/user-setting.component';
+import { CompanySettingComponent } from './component/company-setting/company-setting.component';
+import { SpaceSettingComponent } from './component/space-setting/space-setting.component';
+import { UserSettingComponent } from './component/user-setting/user-setting.component';
 
 const routes: Routes = [
   {

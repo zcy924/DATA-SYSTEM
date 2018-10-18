@@ -1,0 +1,48 @@
+<nz-content style="padding:0 16px 16px 16px">
+  <div nz-row style="background-color: rgb(246,248,248) ;border-bottom: 1px solid rgb(222,230,231);padding: 8px 0;">
+    <div nz-col nzSpan="4" style="line-height: 32px; font-size: x-large ">
+      用户管理
+    </div>
+    <div nz-col style="float: right">
+      <button nz-button nzType="primary" (click)="showCreateUserModal('添加用户')" >添加用户</button>
+      <nz-input-group nzSearch [nzSuffix]="suffixIconButton" style="padding-left:16px">
+        <input type="text" nz-input placeholder="搜索用户" [(ngModel)]="key">
+      </nz-input-group>
+      <ng-template #suffixIconButton>
+        <button nz-button nzType="primary" nzSearch (click)="searchMisUserList()"> <i class="anticon anticon-search"></i></button>
+      </ng-template>
+    </div>
+  </div>
+
+  <div nz-row style="padding-top: 16px">
+    <div nz-col nzSpan="24">
+      <nz-card >
+        <nz-table #ajaxTable  style="text-align: center" nzShowSizeChanger [nzFrontPagination]="false"
+                  [nzData]="dataSet"
+                  [nzLoading]="loading"
+                  [nzTotal]="page.totalRow"
+                  [(nzPageIndex)]="page.curPage"
+                  [(nzPageSize)]="page.pageSize"
+                  (nzPageIndexChange)="searchUserList()"
+                  (nzPageSizeChange)="searchUserList(true)">
+          <thead>
+            <tr>
+              <th nzShowSort >账号</th>
+              <th nzShowSort >姓名</th>
+              <th >操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of dataSet">
+              <td>{{data.userNo}}</td>
+              <td>{{data.userName}}</td>
+              <td><a style="color: #f5222d" (click)="showDelUserConfirm(data.userNo)"><i class="anticon anticon-delete" ></i></a></td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </nz-card>
+    </div>
+  </div>
+</nz-content>
+
+

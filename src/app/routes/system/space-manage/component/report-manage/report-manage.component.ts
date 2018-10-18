@@ -3,7 +3,7 @@ import {
   NzModalService,
   NzMessageService,
 } from 'ng-zorro-antd';
-import { CreateNewpageComponent } from './components/create-newpage.component';
+import { ReportModalComponent } from './components/report-modal.component';
 import { SpaceManageService } from '../../space-manage.service';
 import { Page } from '../../../../../models/page';
 
@@ -19,9 +19,9 @@ export class ReportManageComponent implements OnInit {
   isPublic = '1';   // 公开
   isDev = '1';      // 开发者模式
 
-  folder = '根目录';  // 当前目录名称
-  folders: any; // 当前全路径
+  folderName = '根目录';  // 当前目录名称
   folderID = '/';     // 当前目录ID
+  folders: any;     // 当前全路径
 
   loading = false;
   indeterminate = false;
@@ -73,6 +73,8 @@ export class ReportManageComponent implements OnInit {
     let params = {
       curPage: this.page.curPage,
       pageSize: this.page.pageSize,
+      totalPage: this.page.totalPage,
+      totalRow: this.page.totalRow,
       Report: {
         space_id: spaceID,
         parentid: data.parentid,
@@ -89,7 +91,7 @@ export class ReportManageComponent implements OnInit {
         this.page.totalRow = res['totalRow'];
         this.page.totalPage = res['totalPage'];
 
-        this.folder = data.report_name;
+        this.folderName = data.report_name;
         this.folderID = data.parentid;
 
         if (data.parentid === '/') { // 清除无效目录
@@ -119,22 +121,26 @@ export class ReportManageComponent implements OnInit {
     let title = type === this.isReport ? '报表页面' : '文件夹';
     const modal = this.nzModel.create({
       nzTitle: `新建${title}`,
-      nzContent: CreateNewpageComponent,
+      nzContent: ReportModalComponent,
       nzWidth: '50%',
       nzComponentParams: {
-        folder: this.folder,
+        folderName: this.folderName,
         folders: this.folders,
         folderID: this.folderID,
         radioValue: type === this.isReport ? this.isReport : this.isFolder,
       },
       nzOnOk: (res) => {
         res.createReport();
-        this.searchData(true, { parentid: this.folderID, report_name: this.folder });
       },
+    });
+    modal.afterClose.subscribe(res =>{
+      if(res === 'ok'){
+        this.searchData(true, { parentid: this.folderID, report_name: this.folderName });
+      }
     });
   }
 
-  // 以当前报表作为模板新建
+  // 以此报表作为模板新建
   addReportByOne(data) {
 
 
@@ -145,10 +151,10 @@ export class ReportManageComponent implements OnInit {
     let title = data.type === this.isReport ? '报表页面' : '文件夹';
     const modal = this.nzModel.create({
       nzTitle: `编辑${title}`,
-      nzContent: CreateNewpageComponent,
+      nzContent: ReportModalComponent,
       nzWidth: '50%',
       nzComponentParams: {
-        folder: this.folder,
+        folderName: this.folderName,
         folders: this.folders,
         folderID: data.parentid,
         isPublic: data.isPublic === this.isPublic,
@@ -160,7 +166,7 @@ export class ReportManageComponent implements OnInit {
       },
       nzOnOk: (res) => {
         res.modReport();
-        this.searchData(true, { parentid: this.folderID, report_name: this.folder });
+        this.searchData(true, { parentid: this.folderID, report_name: this.folderName });
       },
     });
   }
@@ -178,27 +184,26 @@ export class ReportManageComponent implements OnInit {
     type: string,
     title = '所选择的的文件夹或报表',
     content = '此操作将会批量删除所选择的的文件夹或报表') {
-
-    this.nzModel.confirm({
-      nzTitle: '是否删除' + title + '?',
-      nzContent: content,
-      nzOnOk: (res) => {
-        let params = {
-          ReportList: list,
-        };
-        this.spaceManageService.delReport(params)
-          .subscribe(res => {
-            if (res['retCode'] === '00000') {
-              this.message.success('删除' + title + '成功！');
-              this.searchData(true, { parentid: this.folderID, report_name: this.folder });
-            } else {
+      this.nzModel.confirm({
+        nzTitle: '是否删除' + title + '?',
+        nzContent: content,
+        nzOnOk: (res) => {
+          let params = {
+            ReportList: list,
+          };
+          this.spaceManageService.delReport(params)
+            .subscribe(res => {
+              if (res['retCode'] === '00000') {
+                this.message.success('删除' + title + '成功！');
+                this.searchData(true, { parentid: this.folderID, report_name: this.folderName });
+              } else {
+                this.message.error('删除' + title + '失败！');
+              }
+            }, err => {
               this.message.error('删除' + title + '失败！');
-            }
-          }, err => {
-            this.message.error('删除' + title + '失败！');
-          });
-      },
-    });
+            });
+        },
+      });
   }
 
   // 打开报表页面
