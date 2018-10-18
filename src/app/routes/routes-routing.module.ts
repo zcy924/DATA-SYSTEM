@@ -6,11 +6,9 @@ import { LayoutDefaultComponent } from '../layout/default/default.component';
 import { LayoutFullScreenComponent } from '../layout/fullscreen/fullscreen.component';
 import { LayoutPassportComponent } from '../layout/passport/passport.component';
 // dashboard pages
-import { DashboardComponent } from './dashboard/dashboard.component';
 // passport pages
 
 // single pages
-import { CallbackComponent } from './callback/callback.component';
 import { UserLockComponent } from './passport/lock/lock.component';
 import { Exception403Component } from './exception/403.component';
 import { Exception404Component } from './exception/404.component';
@@ -21,6 +19,8 @@ import { SpaceManageComponent } from './system/space-manage/space-manage.compone
 import { CompanyManageComponent } from './system/company-manage/company-manage.component';
 import { HarfScreenComponent } from '../layout/harfscreen/harfscreen.component';
 import { PlatformManageComponent } from './system/platform-manage/platform-manage.component';
+import { LoginComponent } from './system/login/login.component';
+import { Log } from '@angular/core/testing/src/logger';
 
 const routes: Routes = [
   {
@@ -71,8 +71,12 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: LayoutPassportComponent,
-    loadChildren: './passport/passport.module#PassportModule',
+    component: LoginComponent
+  },
+  {
+    path: 'platform',
+    component: LoginComponent,
+    // loadChildren: './passport/passport.module#PassportModule',
   },
   // 全屏布局
   // {
@@ -86,7 +90,7 @@ const routes: Routes = [
   // passport
 
   // 单页不包裹Layout
-  { path: 'callback/:type', component: CallbackComponent },
+  // { path: 'callback/:type', component: CallbackComponent },
   {
     path: 'lock',
     component: UserLockComponent,
