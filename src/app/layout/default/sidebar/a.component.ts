@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { SettingsService } from '@delon/theme';
 import { SideMenuService } from '@shared/side-menu.service';
@@ -22,7 +22,7 @@ import { Router } from '@angular/router';
     `,
   ],
 })
-export class AComponent implements OnInit {
+export class AComponent {
   @Input()
   items: {
     isRoot: Boolean;
@@ -35,9 +35,6 @@ export class AComponent implements OnInit {
     private router: Router,
   ) {}
 
-  ngOnInit() {
-    console.log(this.items);
-  }
   go(url) {
     if (url !== undefined) {
       this.router.navigateByUrl(url);

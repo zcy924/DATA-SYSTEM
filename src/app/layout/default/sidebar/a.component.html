@@ -9,10 +9,10 @@
       </span>
       <app-a [items]="{isRoot:false,menu:option.children}"></app-a>
     </li>
-    <li nz-menu-item *ngIf="option.isLeaf&&(!option.isGroup||option.isGroup==undefined)">
+    <li (click)="go(option.link)" nz-menu-item *ngIf="option.isLeaf&&(!option.isGroup||option.isGroup==undefined)">
       <span title>
         <i class="{{option.icon}}"></i>
-        <span (click)="go(option.link)">{{option.text}}</span>
+        <span>{{option.text}}</span>
       </span>
     </li>
     <li *ngIf="option.isGroup&&option.isGroup!==undefined" [ngClass]="{'group-li': !settings.layout.collapsed}" >
@@ -32,10 +32,10 @@
       </span>
       <app-a [items]="{isRoot:false,menu:option.children}"></app-a>
     </li>
-    <li nz-menu-item *ngIf="option.isLeaf&&(!option.isGroup||option.isGroup==undefined)">
+    <li (click)="go(option.link)" nz-menu-item *ngIf="option.isLeaf&&(!option.isGroup||option.isGroup==undefined)">
       <span title>
         <i class="{{option.icon}}"></i>
-        <span (click)="go(option.link)">{{option.text}}</span>
+        <span>{{option.text}}</span>
       </span>
     </li>
     <li *ngIf="option.isGroup&&option.isGroup!==undefined" style="padding: 16px">

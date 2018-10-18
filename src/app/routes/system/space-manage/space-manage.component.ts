@@ -237,7 +237,7 @@ export class SpaceManageComponent implements OnInit {
     {
       text: '角色管理',
       isLeaf: true,
-      icon: 'anticon anticon-user',
+      icon: 'anticon anticon-usergroup-add',
       link: `app/square/${localStorage.getItem('spaceID')}/role-manage`,
     },
     {
@@ -249,7 +249,7 @@ export class SpaceManageComponent implements OnInit {
     {
       text: '数据源管理',
       isLeaf: true,
-      icon: 'anticon anticon-user',
+      icon: 'anticon anticon-database',
       link: 'user-message',
     },
     {
@@ -261,19 +261,19 @@ export class SpaceManageComponent implements OnInit {
     {
       text: 'SQL模型管理',
       isLeaf: true,
-      icon: 'anticon anticon-user',
+      icon: 'anticon anticon-api',
       link: 'user-message',
     },
     {
       text: '数据值映射管理',
       isLeaf: true,
-      icon: 'anticon anticon-user',
+      icon: 'anticon anticon-book',
       link: 'user-message',
     },
     {
       text: '空间设置',
       isLeaf: true,
-      icon: 'anticon anticon-user',
+      icon: 'anticon anticon-setting',
       link: 'user-message',
     },
   ];
@@ -357,7 +357,7 @@ export class SpaceManageComponent implements OnInit {
     //   value.link = `/app/square/${this.url}/${value.link}`;
     // });
     // this.menuService.add(this.menu);
-    this.sideMenu.setMenu({ menu: this.menu });
+    this.sideMenu.setMenu(this.menu);
   }
   getReportList() {
     this.spaceManageService.getReportList({}).subscribe(data => {
