@@ -15,12 +15,15 @@
         <div nz-col (click)="openDetail(item.space_id)" *ngFor="let item of spaceArr" style="width: 300px;float:left;padding-right: 16px">
           <ng-template #avatarTemplate>
             <div style="line-height:60px;">
-              <nz-avatar nzSrc="./assets/tmp/img/icon.png" nzSize="large"></nz-avatar>
+              <nz-avatar nzSrc="./assets/tmp/img/6.png" nzSize="large"></nz-avatar>
             </div>
           </ng-template>
           <nz-card style="margin-top: 16px" nzHoverable="true">
-            <nz-card-meta [nzAvatar]="avatarTemplate" nzTitle="{{item.space_name}}" nzDescription="{{item.remark}}"></nz-card-meta>
+            <nz-card-meta [nzAvatar]="avatarTemplate" [nzTitle]="title" nzDescription="{{item.remark}}"></nz-card-meta>
           </nz-card>
+          <ng-template #title>
+            <span style="color: #1890FF ">{{item.space_name}}</span>
+          </ng-template>
         </div>
       </div>
     </div>
