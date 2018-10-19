@@ -4,7 +4,10 @@
       空间设置
     </div>
     <div nz-col style="float: right">
-      <nz-input-group nzSearch [nzSuffix]="suffixIconButton">
+
+      <button nz-button [nzType]="'primary'" (click)="showCreateModal('空间')"><i class="anticon anticon-plus"></i>创建空间</button>
+
+      <nz-input-group nzSearch [nzSuffix]="suffixIconButton" style="padding-left: 16px">
         <input type="text" nz-input placeholder="input search text">
       </nz-input-group>
       <ng-template #suffixIconButton>

@@ -1,9 +1,11 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
-import { CreateCompanyComponent } from './create/create-company.component';
+
 import { PlatformManageService } from '../platform-manage.service';
-import { logging } from 'selenium-webdriver';
+
+
 import { Page } from '../../../../models/page';
+import { CreateCompanyComponent } from './create/create-company.component';
 
 @Component({
   selector: 'app-companis-manage',

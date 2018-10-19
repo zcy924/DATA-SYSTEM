@@ -11,10 +11,10 @@
   <nz-form-item nz-row >
     <nz-form-label [nzSpan]="5" >空间类型</nz-form-label>
     <nz-form-control [nzSpan]="16" nzValidateStatus="success">
-      <nz-radio-group [(ngModel)]="isPublic" name="isPublic">
-        <label nz-radio nzValue="0">普通</label>
-        <label nz-radio nzValue="1">公开</label>
-      </nz-radio-group>
+        <nz-radio-group [(ngModel)]="isPublic" name="isPublic">
+          <label nz-radio nzValue="F">普通</label>
+          <label nz-radio nzValue="T">公开</label>
+        </nz-radio-group>
     </nz-form-control>
   </nz-form-item>
 

@@ -8,13 +8,14 @@ import { UserSettingComponent } from './component/user-setting/user-setting.comp
 import { CreateUserComponent } from './component/user-setting/modal/create-user.component';
 import { NzModalService } from 'ng-zorro-antd';
 import { AdminModalComponent } from './component/space-setting/modal/admin-modal.component';
+import { CreateSpaceComponent } from './component/space-setting/modal/create-sapce.component';
 
 const components = [
   CompanySettingComponent,
   SpaceSettingComponent,
   UserSettingComponent
 ];
-const modals = [CreateUserComponent,AdminModalComponent];
+const modals = [CreateUserComponent,AdminModalComponent,CreateSpaceComponent];
 @NgModule({
   imports: [SharedModule, CompanyManageRoutingModule],
   exports: [...components],

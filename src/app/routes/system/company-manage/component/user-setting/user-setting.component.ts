@@ -4,6 +4,7 @@ import { CreateUserComponent } from './modal/create-user.component';
 import { CompanyManageService } from '../../company-manage.service';
 import { Page } from '../../../../../models/page';
 
+
 @Component({
   selector: 'app-user-setting',
   templateUrl: './user-setting.html',
@@ -32,9 +33,15 @@ export class UserSettingComponent implements OnInit {
       nzContent: CreateUserComponent,
       nzWidth: '50%',
       nzOnOk: (ref) => {
-        ref.createUser();
-        this.searchUserList(true);
+        return new Promise(res=>{
+          ref.createUser();
+        });
       },
+    });
+    modal.afterClose.subscribe(ref => {
+      if (ref === 'ok') {
+        this.searchUserList(true);
+      }
     });
   }
 
@@ -70,13 +77,13 @@ export class UserSettingComponent implements OnInit {
   showDelUserConfirm(userNo: string): void {
     this.nzModel.confirm({
       nzTitle: '是否删除此用户',
-      // nzContent: 'When clicked the OK button, this dialog will be closed after 1 second',
       nzOnOk: (res) => {
         this.delUser(userNo);
       },
     });
   }
 
+  // 删除用户
   delUser(userNo: string): void {
     let params = {
       userNo: userNo,
@@ -88,8 +95,6 @@ export class UserSettingComponent implements OnInit {
         } else {
           this.message.error('删除用户失败！');
         }
-      }, err => {
-        this.message.error('删除用户失败！');
       });
   }
 

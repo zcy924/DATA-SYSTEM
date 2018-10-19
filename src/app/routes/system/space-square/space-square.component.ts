@@ -15,6 +15,7 @@ import { ReportModalComponent } from '../space-manage/component/report-manage/co
 export class SpaceSquareComponent implements OnInit {
 
   spaceArr = [];
+  key;
 
   constructor(
     private router: Router,
