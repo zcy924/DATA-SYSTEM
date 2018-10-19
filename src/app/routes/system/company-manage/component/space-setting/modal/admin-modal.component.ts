@@ -30,25 +30,27 @@ export class AdminModalComponent implements OnInit {
   ngOnInit() {
   }
 
+  // 空间管理员复选框勾选
   updateChecked(user) {
-    // 将取消勾选的用户移除
-    this.admins = this.admins.filter(res => {
+    // 将取消勾选的用户置为false
+    this.admins.forEach(res => {
       if (user.userNo === res.userNo) {
-        return false;
+        res.checked = false;
       }
-      return true;
     });
-    // 将取消勾选的用户复选框初始化
+    // 将取消勾选的用户的列表复选框置为false
     this.searchedAdmins.forEach(res => {
       if (user.userNo === res.userNo) {
-        user.checked = !user.checked;
+        res.checked = false;
       }
     });
   }
 
+  // 模糊查询复选框勾选
   searchChecked(user) {
     // 将用户锁定，并加入勾选数组
     user.checked = !user.checked;
+    this.admins = this.admins.filter(res => !(res.userNo === user.userNo));
     this.admins.push(user);
   }
 
@@ -77,14 +79,13 @@ export class AdminModalComponent implements OnInit {
       totalPage: '0',
     };
     this.companyManageService.searchMisUsers(params).subscribe(res => {
-      console.log(res);
       this.searchedAdmins = [];
       this.searchedAdmins = res['retList'];
       this.searchedAdmins.forEach(i => {
         i.checked = false;
         // 查询已被勾选的用户，将其锁定
         this.admins.forEach(j => {
-          if (i.userNo === j.userNo) {
+          if (i.userNo === j.userNo && j.checked === true) {
             i.checked = !i.checked;
           }
         });

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {NzMessageService, NzModalRef} from 'ng-zorro-antd';
+import { NzMessageService, NzModalRef } from 'ng-zorro-antd';
 import { PlatformManageService } from '../../platform-manage.service';
 
 @Component({
@@ -11,12 +11,14 @@ export class CreateCompanyComponent implements OnInit {
 
   companyAdmin;
   companyName;
+  adminName;
 
   constructor(
     private platformManageService: PlatformManageService,
     private message: NzMessageService,
-    private modalRef:NzModalRef,
-    ) {}
+    private modalRef: NzModalRef,
+  ) {
+  }
 
   ngOnInit() {
   }
@@ -25,7 +27,9 @@ export class CreateCompanyComponent implements OnInit {
     let params = {
       companyName: this.companyName,
       companyAdmin: this.companyAdmin,
+      adminName: this.adminName,
       avatar: './assets/default/company.png',
+      onlyAdmin: 'T',
     };
     this.platformManageService.createCompany(params).subscribe(res => {
       console.log(res);

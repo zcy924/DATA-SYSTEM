@@ -6,8 +6,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { SpaceSquareService } from '../space-square.service';
-import { CompanyManageService } from '../../company-manage/company-manage.service';
+import { CompanyManageService } from '../../../company-manage.service';
 
 @Component({
   selector: 'app-create-space',
@@ -16,7 +15,7 @@ import { CompanyManageService } from '../../company-manage/company-manage.servic
 })
 export class CreateSpaceComponent implements OnInit {
 
-  isPublic = '0';
+  isPublic = 'F';
   space_desc = '';
   space_name = '';
   admins = [];
@@ -24,8 +23,7 @@ export class CreateSpaceComponent implements OnInit {
   key = '';
 
   constructor(
-    private service: SpaceSquareService,
-    private companyManageService: CompanyManageService,
+    private service: CompanyManageService,
     private message: NzMessageService,
     private modalRef: NzModalRef) {
   }
@@ -36,10 +34,11 @@ export class CreateSpaceComponent implements OnInit {
   createSpace() {
     let params = {
       Space: {
-        sapce_name: this.space_name,
+        spaceName: this.space_name,
         remark: this.space_desc,
-        ispublic: this.isPublic,
+        isPublic: this.isPublic,
         avatar: './assets/default/space.png',
+        admins:this.admins
       },
     };
 
@@ -89,7 +88,7 @@ export class CreateSpaceComponent implements OnInit {
       totalRow: '0',
       totalPage: '0',
     };
-    this.companyManageService.searchMisUsers(params).subscribe(res => {
+    this.service.searchMisUsers(params).subscribe(res => {
       console.log(res);
       this.searchedAdmins = [];
       this.searchedAdmins = res['retList'];
@@ -104,4 +103,5 @@ export class CreateSpaceComponent implements OnInit {
       });
     });
   }
+
 }

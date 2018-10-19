@@ -19,7 +19,7 @@ export class CompanyManageService {
   }
 
   updateCompanyInfo(params): Observable<any> {
-    return this.httpClient.post(this.url + 'qryCompanyMsg', params);
+    return this.httpClient.post(this.url + 'companyAdminUdt', params);
   }
 
   /***************************空间设置**************************/
@@ -32,6 +32,9 @@ export class CompanyManageService {
     return this.httpClient.post(this.url + 'spaceSquareManage/spaceAdminUdt', params);
   }
 
+  createSpace(params: any): Observable<any> {
+    return this.httpClient.post(this.url + 'spaceSquareManage/addSpace', params);
+  }
   /***************************用户设置**************************/
 
   searchMisUsers(params): Observable<any> {
