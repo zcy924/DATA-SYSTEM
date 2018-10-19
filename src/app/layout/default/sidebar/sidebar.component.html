@@ -13,5 +13,8 @@
       <li nz-menu-item (click)="msgSrv.success('logout')">登出</li>
     </ul>
   </nz-dropdown> -->
-  <sidebar-nav class="d-block py-lg"></sidebar-nav>
+  <!-- <sidebar-nav class="d-block py-lg"></sidebar-nav> -->
+  <nz-sider [(nzCollapsed)]="settings.layout.collapsed" [nzTrigger]="null">
+    <app-a [items]="{isRoot:true,menu:sideMenu.menu}"></app-a>
+  </nz-sider>
 </div>

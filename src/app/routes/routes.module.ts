@@ -3,11 +3,9 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
 import { RouteRoutingModule } from './routes-routing.module';
 // dashboard pages
-import { DashboardComponent } from './dashboard/dashboard.component';
 // passport pages
 
 // single pages
-import { CallbackComponent } from './callback/callback.component';
 import { UserLockComponent } from './passport/lock/lock.component';
 import { Exception403Component } from './exception/403.component';
 import { Exception404Component } from './exception/404.component';
@@ -21,8 +19,6 @@ import { CompanyManageComponent } from './system/company-manage/company-manage.c
 import { PlatformManageComponent } from './system/platform-manage/platform-manage.component';
 
 const COMPONENTS = [
-  DashboardComponent,
-  CallbackComponent,
   UserLockComponent,
   Exception403Component,
   Exception404Component,
@@ -33,11 +29,11 @@ const COMPONENTS_NOROUNT = [
   SpaceSquareComponent,
   SpaceManageComponent,
   CompanyManageComponent,
-  PlatformManageComponent
+  PlatformManageComponent,
 ];
 
 @NgModule({
-  imports: [SharedModule, RouteRoutingModule,SystemModule],
+  imports: [SharedModule, RouteRoutingModule, SystemModule],
   declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT],
   entryComponents: COMPONENTS_NOROUNT,
 })

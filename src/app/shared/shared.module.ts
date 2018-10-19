@@ -12,14 +12,13 @@ import { DelonFormModule } from '@delon/form';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CountdownModule } from 'ngx-countdown';
 import { SidebarComponent } from '../layout/default/sidebar/sidebar.component';
-const THIRDMODULES = [
-  NgZorroAntdModule,
-  CountdownModule
-];
+import { SideMenuService } from './side-menu.service';
+import { AComponent } from 'app/layout/default/sidebar/a.component';
+const THIRDMODULES = [NgZorroAntdModule, CountdownModule];
 // endregion
 
 // region: your componets & directives
-const COMPONENTS = [SidebarComponent];
+const COMPONENTS = [SidebarComponent, AComponent];
 const DIRECTIVES = [];
 // endregion
 
@@ -34,12 +33,12 @@ const DIRECTIVES = [];
     DelonACLModule,
     DelonFormModule,
     // third libs
-    ...THIRDMODULES
+    ...THIRDMODULES,
   ],
   declarations: [
     // your components
     ...COMPONENTS,
-    ...DIRECTIVES
+    ...DIRECTIVES,
   ],
   exports: [
     CommonModule,
@@ -54,7 +53,8 @@ const DIRECTIVES = [];
     ...THIRDMODULES,
     // your components
     ...COMPONENTS,
-    ...DIRECTIVES
-  ]
+    ...DIRECTIVES,
+  ],
+  providers: [SideMenuService],
 })
-export class SharedModule { }
+export class SharedModule {}
