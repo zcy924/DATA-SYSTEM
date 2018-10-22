@@ -55,6 +55,7 @@ export class AdminModalComponent implements OnInit {
   }
 
   updateAdmins() {
+    this.admins = this.admins.filter(user=>user.checked);
     let params = {
       spaceId: this.spaceId,
       admins: this.admins,
@@ -78,7 +79,7 @@ export class AdminModalComponent implements OnInit {
       totalRow: '0',
       totalPage: '0',
     };
-    this.companyManageService.searchMisUsers(params).subscribe(res => {
+    this.companyManageService.searchFuzzyUsers(params).subscribe(res => {
       this.searchedAdmins = [];
       this.searchedAdmins = res['retList'];
       this.searchedAdmins.forEach(i => {

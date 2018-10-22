@@ -9,7 +9,7 @@
         <input type="text" nz-input placeholder="搜索用户" [(ngModel)]="key">
       </nz-input-group>
       <ng-template #suffixIconButton>
-        <button nz-button nzType="primary" nzSearch (click)="searchMisUserList()"> <i class="anticon anticon-search"></i></button>
+        <button nz-button nzType="primary" nzSearch (click)="searchFuzzyUserList(true)"> <i class="anticon anticon-search"></i></button>
       </ng-template>
     </div>
   </div>
@@ -27,15 +27,15 @@
                   (nzPageSizeChange)="searchUserList(true)">
           <thead>
             <tr>
-              <th nzShowSort >账号</th>
               <th nzShowSort >姓名</th>
+              <th nzShowSort >账号</th>
               <th >操作</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let data of dataSet">
-              <td>{{data.userNo}}</td>
               <td>{{data.userName}}</td>
+              <td>{{data.userNo}}</td>
               <td><a style="color: #f5222d" (click)="showDelUserConfirm(data.userNo)"><i class="anticon anticon-delete" ></i></a></td>
             </tr>
           </tbody>

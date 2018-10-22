@@ -8,10 +8,10 @@
       <button nz-button [nzType]="'primary'" (click)="showCreateModal('空间')"><i class="anticon anticon-plus"></i>创建空间</button>
 
       <nz-input-group nzSearch [nzSuffix]="suffixIconButton" style="padding-left: 16px">
-        <input type="text" nz-input placeholder="input search text">
+        <input type="text" name="key" [(ngModel)]="key" nz-input placeholder="搜索空间或管理员">
       </nz-input-group>
       <ng-template #suffixIconButton>
-        <button nz-button nzType="primary" nzSearch><i class="anticon anticon-search"></i></button>
+        <button nz-button nzType="primary" nzSearch (click)="searchFuzzy(true)"><i class="anticon anticon-search"></i></button>
       </ng-template>
     </div>
   </div>
@@ -31,6 +31,7 @@
             <tr>
               <th nzShowSort >空间名称</th>
               <th>Logo</th>
+              <th>用户数量</th>
               <th>空间管理员</th>
               <th>操作</th>
             </tr>
@@ -39,6 +40,7 @@
             <tr *ngFor="let data of dataSet">
               <td>{{data.spaceName}}</td>
               <td><img src="{{data.avatar}}"></td>
+              <td>{{data.spaceUserNum}}</td>
               <td>
                 <nz-list [nzDataSource]="data.user" nzBordered [nzRenderItem]="item">
                   <ng-template #item let-item>

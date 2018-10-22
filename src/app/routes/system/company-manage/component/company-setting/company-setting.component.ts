@@ -76,7 +76,7 @@ export class CompanySettingComponent implements OnInit {
       totalRow: '0',
       totalPage: '0',
     };
-    this.service.searchMisUsers(params).subscribe(res => {
+    this.service.searchFuzzyUsers(params).subscribe(res => {
       this.searchedAdmins = [];
       this.searchedAdmins = res['retList'];
       this.searchedAdmins.forEach(i => {

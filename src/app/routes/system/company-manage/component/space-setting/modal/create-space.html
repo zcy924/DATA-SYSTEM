@@ -30,7 +30,7 @@
     <nz-form-label [nzSpan]="5" >空间管理员</nz-form-label>
     <nz-form-control [nzSpan]="16">
 
-      <div *ngFor="let admin of admins"><label nz-checkbox name="{{admin.userNo}}" [hidden]="!admin.checked" (ngModelChange)="updateChecked(admin)"  [(ngModel)]="admin.checked" >{{admin.userName}}（{{admin.userNo}}）</label></div>
+      <div *ngFor="let admin of users"><label nz-checkbox name="{{admin.userNo}}" [hidden]="!admin.checked" (ngModelChange)="updateChecked(admin)" [(ngModel)]="admin.checked" >{{admin.userName}}（{{admin.userNo}}）</label></div>
 
       <nz-input-group nzSearch [nzSuffix]="suffixButton">
         <input type="text" name="key" [(ngModel)]="key" nz-input placeholder="搜索用户">
@@ -39,7 +39,7 @@
         <button nz-button nzType="primary" (click)="searchUsers()"  nzSearch><i class="anticon anticon-search"></i></button>
       </ng-template>
 
-      <div *ngFor="let admin of searchedAdmins"><label nz-checkbox  name="{{admin.userNo}}"  (ngModelChange)="searchChecked(admin)"  [nzDisabled]="admin.checked" [(ngModel)]="admin.checked" >{{admin.userName}}（{{admin.userNo}}）</label></div>
+      <div *ngFor="let admin of searchedUsers"><label nz-checkbox name="{{admin.userNo}}" (ngModelChange)="searchChecked(admin)" [nzDisabled]="admin.checked" [(ngModel)]="admin.checked" >{{admin.userName}}（{{admin.userNo}}）</label></div>
 
 
     </nz-form-control>

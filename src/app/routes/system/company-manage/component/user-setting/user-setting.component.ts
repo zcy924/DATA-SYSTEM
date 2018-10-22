@@ -48,7 +48,7 @@ export class UserSettingComponent implements OnInit {
   // 查询用户列表
   searchUserList(reset: boolean = false): void {
     if (!(this.key === '')) {
-      this.searchMisUserList(reset);
+      this.searchFuzzyUserList(reset);
       return;
     }
     if (reset) {
@@ -100,7 +100,7 @@ export class UserSettingComponent implements OnInit {
   }
 
   // 模糊查询用户
-  searchMisUserList(reset: boolean = false): void {
+  searchFuzzyUserList(reset: boolean = false): void {
     if (this.key === '') {
       this.searchUserList(reset);
       return;
@@ -116,7 +116,7 @@ export class UserSettingComponent implements OnInit {
       totalPage: this.page.totalPage,
       totalRow: this.page.totalRow,
     };
-    this.companyManageService.searchMisUsers(params)
+    this.companyManageService.searchFuzzyUsers(params)
       .subscribe(res => {
         console.log(res);
         this.loading = false;
