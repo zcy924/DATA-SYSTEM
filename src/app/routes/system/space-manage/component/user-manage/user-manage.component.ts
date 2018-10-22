@@ -107,7 +107,7 @@ export class UserManageComponent implements OnInit {
         user_name: this.key,
       },
     };
-    this.service.getUserList(params).subscribe(res => {
+    this.service.getUserListWithRoles(params).subscribe(res => {
       this.userList = res['retList'];
       this.userList.forEach(user => {
         user.roleList.forEach(role => {
@@ -169,7 +169,7 @@ export class UserManageComponent implements OnInit {
     // TODO 查询角色对应的报表列表
     let params = {};
     let reports = [];
-    this.service.qryRoleUser(params).subscribe(res => {
+    this.service.qryReportListByUser(params).subscribe(res => {
 
     });
     const modal = this.nzModal.create({
@@ -180,7 +180,7 @@ export class UserManageComponent implements OnInit {
         userName: user.user_name,
         userNo: user.user_no,
         roles: user.roleList,
-        reportList: [],
+        reportList: reports,
       },
       nzOnOk: ref => {
         return new Promise(res => {

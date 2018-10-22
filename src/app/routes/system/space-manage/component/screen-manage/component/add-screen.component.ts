@@ -37,7 +37,7 @@ export class AddScreenComponent implements OnInit {
     this.validateForm = this.fb.group({
       name: [null, [Validators.required]],
       remark: [null],
-      isDev: [false]，
+      isDev: [false],
       icon: [null]
     });
   }
