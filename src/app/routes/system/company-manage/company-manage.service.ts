@@ -19,7 +19,7 @@ export class CompanyManageService {
   }
 
   updateCompanyInfo(params): Observable<any> {
-    return this.httpClient.post(this.url + 'companyAdminUdt', params);
+    return this.httpClient.post(this.url + 'company/companyAdminUdt', params);
   }
 
   /***************************空间设置**************************/
@@ -28,8 +28,12 @@ export class CompanyManageService {
     return this.httpClient.post(this.url + 'company/spaceSquareManage/qrySpaceAdmin', params);
   }
 
+  searchFuzzySpaceList(params): Observable<any> {
+    return this.httpClient.post(this.url + 'company/spaceSquareManage/qryDimSpaceAdmin', params);
+  }
+
   updateAdmins(params): Observable<any> {
-    return this.httpClient.post(this.url + 'spaceSquareManage/spaceAdminUdt', params);
+    return this.httpClient.post(this.url + 'company/spaceSquareManage/spaceAdminUdt', params);
   }
 
   createSpace(params: any): Observable<any> {
@@ -37,7 +41,7 @@ export class CompanyManageService {
   }
   /***************************用户设置**************************/
 
-  searchMisUsers(params): Observable<any> {
+  searchFuzzyUsers(params): Observable<any> {
     return this.httpClient.post(this.url + 'company/companyUserDimQry', params);
   }
 
@@ -46,7 +50,7 @@ export class CompanyManageService {
   }
 
   createUser(params): Observable<any> {
-    return this.httpClient.post(this.url + 'addCompanyUser', params);
+    return this.httpClient.post(this.url + 'company/addCompanyUser', params);
   }
 
   delUser(params): Observable<any> {

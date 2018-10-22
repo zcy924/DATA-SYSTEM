@@ -32,16 +32,20 @@ export class CreateSpaceComponent implements OnInit {
   }
 
   createSpace() {
+    this.admins = this.admins.filter(user=>user.checked);
+    this.admins.forEach(user=>{
+      user.user_id = user.userId;
+    });
     let params = {
       Space: {
-        spaceName: this.space_name,
+        space_name: this.space_name,
         remark: this.space_desc,
-        isPublic: this.isPublic,
+        ispublic: this.isPublic,
+        status:'T',
         avatar: './assets/default/space.png',
-        admins:this.admins
+        userList:this.admins
       },
     };
-
     this.service.createSpace(params).subscribe(res => {
       console.log(res);
       if (res['retCode'] === '00000') {
@@ -88,7 +92,7 @@ export class CreateSpaceComponent implements OnInit {
       totalRow: '0',
       totalPage: '0',
     };
-    this.service.searchMisUsers(params).subscribe(res => {
+    this.service.searchFuzzyUsers(params).subscribe(res => {
       console.log(res);
       this.searchedAdmins = [];
       this.searchedAdmins = res['retList'];
