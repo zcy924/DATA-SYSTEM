@@ -116,7 +116,7 @@ export class UserLoginComponent implements OnDestroy {
           companyName: data.companyName,
           companyLogo: data.avatar
         });
-        // 重新获取 StartupService 内容，若其包括 User 有关的信息的话
+        // 重新获取 Sta+rtupService 内容，若其包括 User 有关的信息的话
         // this.startupSrv.load().then(() => this.router.navigate(['/']));
         // 否则直接跳转
         this.router.navigate(['/app/user']);

@@ -12,6 +12,8 @@ import { UserModalComponent } from './component/user-manage/components/user-moda
 import { AddScreenComponent } from './component/screen-manage/component/add-screen.component';
 import { SpaceManageService } from './space-manage.service';
 import { EditScreenComponent } from './component/screen-manage/component/edit-screen.component';
+import { CompanyManageService } from '../company-manage/company-manage.service';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 const components = [
   ReportDetailComponent,
@@ -28,10 +30,10 @@ const modals = [
   EditScreenComponent,
 ];
 @NgModule({
-  imports: [SharedModule, SpaceManageRoutingModule],
+  imports: [SharedModule, SpaceManageRoutingModule,],
   exports: [...components],
   declarations: [...components, ...modals],
-  providers: [SpaceManageService],
+  providers: [SpaceManageService,CompanyManageService],
   entryComponents: [...modals],
 })
 export class SpaceManageModule {}
