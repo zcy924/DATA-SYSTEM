@@ -80,6 +80,7 @@ export class CreateSpaceComponent implements OnInit {
     this.admins = this.admins.filter(res => !(res.userNo === user.userNo));
     this.admins.push(user);
   }
+
   searchUsers() {
     if (this.key === '') {
       this.searchedAdmins = [];

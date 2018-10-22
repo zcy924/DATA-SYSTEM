@@ -3,8 +3,13 @@
   <nz-sider style="background-color:#f5f7fa;">
     <!-- <nz-sider style="background-color:#e4eaec;height: 1000px;"> -->
     <div>
-      <nz-tree [(ngModel)]="nodes" [nzShowExpand]="true" [nzDraggable]="true" (nzOnDragStart)="dragStart($event)"
-        (nzClick)="activeNode($event)" (nzDblClick)="openFolder($event)">
+      <nz-tree
+        [(ngModel)]="nodes"
+        [nzShowExpand]="true"
+        [nzDraggable]="true"
+        (nzOnDragStart)="dragStart($event)"
+        (nzClick)="activeNode($event)"
+        (nzDblClick)="openFolder($event)">
         <ng-template #contextTemplate>
           <ul nz-menu nzInDropDown>
             <li nz-menu-item (click)="selectDropdown()">新建文件</li>

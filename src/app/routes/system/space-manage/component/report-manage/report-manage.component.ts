@@ -130,11 +130,13 @@ export class ReportManageComponent implements OnInit {
         radioValue: type === this.isReport ? this.isReport : this.isFolder,
       },
       nzOnOk: (res) => {
-        res.createReport();
+        return new Promise(i => {
+          res.createReport();
+        });
       },
     });
-    modal.afterClose.subscribe(res =>{
-      if(res === 'ok'){
+    modal.afterClose.subscribe(res => {
+      if (res === 'ok') {
         this.searchData(true, { parentid: this.folderID, report_name: this.folderName });
       }
     });
@@ -184,26 +186,26 @@ export class ReportManageComponent implements OnInit {
     type: string,
     title = '所选择的的文件夹或报表',
     content = '此操作将会批量删除所选择的的文件夹或报表') {
-      this.nzModel.confirm({
-        nzTitle: '是否删除' + title + '?',
-        nzContent: content,
-        nzOnOk: (res) => {
-          let params = {
-            ReportList: list,
-          };
-          this.spaceManageService.delReport(params)
-            .subscribe(res => {
-              if (res['retCode'] === '00000') {
-                this.message.success('删除' + title + '成功！');
-                this.searchData(true, { parentid: this.folderID, report_name: this.folderName });
-              } else {
-                this.message.error('删除' + title + '失败！');
-              }
-            }, err => {
+    this.nzModel.confirm({
+      nzTitle: '是否删除' + title + '?',
+      nzContent: content,
+      nzOnOk: (res) => {
+        let params = {
+          ReportList: list,
+        };
+        this.spaceManageService.delReport(params)
+          .subscribe(res => {
+            if (res['retCode'] === '00000') {
+              this.message.success('删除' + title + '成功！');
+              this.searchData(true, { parentid: this.folderID, report_name: this.folderName });
+            } else {
               this.message.error('删除' + title + '失败！');
-            });
-        },
-      });
+            }
+          }, err => {
+            this.message.error('删除' + title + '失败！');
+          });
+      },
+    });
   }
 
   // 打开报表页面

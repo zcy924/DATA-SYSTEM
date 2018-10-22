@@ -1,45 +1,72 @@
 <nz-tabset [nzTabPosition]="'top'" [nzType]="'card'" [nzTabBarStyle]="{margin:0,border:0}">
   <form nz-form>
+
     <nz-tab [nzTitle]="'基本信息'">
       <div class="b-wrapper" style="padding: 15px;border: 1px solid #e8e8e8;">
         <nz-form-item nz-row>
           <nz-form-label [nzSpan]="5">角色名称</nz-form-label>
           <nz-form-control [nzSpan]="16">
-            <input nz-input name="companyName" [(ngModel)]="companyName">
+            <input nz-input name="roleName" [(ngModel)]="roleName">
             <!--<nz-form-explain *ngIf="validateForm.get('email').dirty && validateForm.get('email').errors">The input is not valid E-mail!</nz-form-explain>-->
           </nz-form-control>
         </nz-form-item>
         <nz-form-item nz-row>
           <nz-form-label [nzSpan]="5">角色描述</nz-form-label>
           <nz-form-control [nzSpan]="16">
-            <input nz-input name="companyAdmin" [(ngModel)]="userNo">
+            <input nz-input name="remark" [(ngModel)]="remark">
             <!--<nz-form-explain *ngIf="validateForm.get('email').dirty && validateForm.get('email').errors">The input is not valid E-mail!</nz-form-explain>-->
           </nz-form-control>
         </nz-form-item>
       </div>
     </nz-tab>
+
+
     <nz-tab [nzTitle]="'用户列表' ">
-      <div style="padding: 15px;border: 1px solid #e8e8e8;">
-        <nz-form-item nz-row >
-          <nz-form-label [nzSpan]="8" >选择本角色对应用户</nz-form-label>
-          <nz-form-control [nzSpan]="16">
-
-            <div *ngFor="let admin of admins"><label nz-checkbox  name="checked"  (ngModelChange)="updateChecked(admin)"  [(ngModel)]="admin.checked" >{{admin.userName}}</label></div>
-
-            <nz-input-group nzSearch nzSize="large" [nzSuffix]="suffixButton">
-              <input type="text" nz-input placeholder="输入账号或姓名搜索用户">
+      <div style="padding: 24px;border: 1px solid #e8e8e8;">
+        <label>选择本角色对应用户：</label>
+        <br> <br>
+        <nz-form-item nz-row style="padding: 8px">
+          <nz-form-control >
+            <div *ngFor="let user of users">
+              <label nz-checkbox name="{{user.userNo}}" [hidden]="!user.checked" (ngModelChange)="updateChecked(user)"  [(ngModel)]="user.checked" >{{user.userName}}（{{user.userNo}}）</label>
+            </div>
+            <nz-input-group nzSearch  [nzSuffix]="suffixButton">
+              <input type="text" name="key" [(ngModel)]="key" nz-input placeholder="输入账号或姓名搜索用户">
             </nz-input-group>
             <ng-template #suffixButton>
-              <button nz-button nzType="primary" nzSize="large" nzSearch>Search</button>
+              <button nz-button nzType="primary" (click)="searchUsers()"   nzSearch><i class="anticon anticon-search"></i></button>
             </ng-template>
-
+            <div *ngFor="let user of searchedUsers">
+              <label nz-checkbox  name="{{user.userNo}}"  (ngModelChange)="searchChecked(user)"  [nzDisabled]="user.checked" [(ngModel)]="user.checked" >{{user.userName}}（{{user.userNo}}）</label>
+            </div>
           </nz-form-control>
         </nz-form-item>
       </div>
     </nz-tab>
+
+
+
     <nz-tab [nzTitle]="'权限配置' ">
       <div style="padding: 15px;border: 1px solid #e8e8e8;">
-        <h2>我是一棵树</h2>
+        <nz-tree name="nodes"   #treeCom
+          [(ngModel)]="nodes"
+          [nzAsyncData]="true"
+          nzCheckable="true"
+          nzMultiple="true"
+          (nzExpandChange)="openFolder('expand',$event)"
+          (nzCheckBoxChange)="checkTreeNode($event)">
+
+          <ng-template #nzTreeTemplate let-node>
+            <span class="custom-node" draggable="true" aria-grabbed="true" [class.active]="node.isSelected">
+              <span  *ngIf="!node.isLeaf">
+                <i class="anticon" [ngClass]="node.isExpanded ? 'anticon-folder-open' : 'anticon-folder'"></i> {{node.title}}
+              </span>
+              <span  *ngIf="node.isLeaf">
+                <i class="anticon anticon-file"></i> {{node.title}}
+              </span>
+            </span>
+          </ng-template>
+        </nz-tree>
       </div>
     </nz-tab>
   </form>

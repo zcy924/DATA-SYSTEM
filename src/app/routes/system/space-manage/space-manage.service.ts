@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 export class SpaceManageService {
   url = environment.SERVER_URL;
   constructor(private httpClient: HttpClient) {}
+
+  /***********************************大屏************************************/
   addScreen(params): Observable<any> {
     return this.httpClient.post(
       this.url + 'spaceManage/dashBoard/increase',
@@ -38,7 +40,7 @@ export class SpaceManageService {
       params,
     );
   }
-
+/*************************************报表*************************************/
   getReportList(params): Observable<any> {
     return this.httpClient.post(
       this.url + 'space/report/qryReportList',
@@ -59,5 +61,39 @@ export class SpaceManageService {
       this.url + 'space/report/modReportContent',
       params,
     );
+  }
+  /************************************角色***********************************/
+  createRole(params): Observable<any> {
+    return this.httpClient.post(this.url + 'space/spaceRole/add', params,);
+  }
+
+  getRoleList(params): Observable<any> {
+    return this.httpClient.post(this.url + 'space/spaceRole/qryList', params,);
+  }
+
+  delRole(params): Observable<any> {
+    return this.httpClient.post(this.url + 'space/spaceRole/del', params,);
+  }
+
+  editRole(params): Observable<any> {
+    return this.httpClient.post(this.url + 'space/spaceRole/mod', params,);
+  }
+
+  qryRoleUser(params): Observable<any> {
+    return this.httpClient.post(this.url + 'space/spaceRole/qryRoleUser', params,);
+  }
+
+  /************************************用户*************************************/
+
+  addUser(params): Observable<any> {
+    return this.httpClient.post(this.url + '', params,);
+  }
+
+  getUserList(params): Observable<any> {
+    return this.httpClient.post(this.url + 'space/spaceUser/qryList', params,);
+  }
+
+  editUser(params): Observable<any> {
+    return this.httpClient.post(this.url + 'space/spaceUser/mod', params,);
   }
 }
