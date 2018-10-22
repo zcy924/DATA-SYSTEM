@@ -238,9 +238,9 @@ export class SsssComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.change$.unsubscribe();
-    if (this.route$) this.route$.unsubscribe();
-    this.clearFloatingContainer();
+    // this.change$.unsubscribe();
+    // if (this.route$) this.route$.unsubscribe();
+    // this.clearFloatingContainer();
   }
 
   // // region: Under pad
