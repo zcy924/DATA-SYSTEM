@@ -15,7 +15,7 @@ export class PersonalCenterComponent implements OnInit {
       children: [
         {
           text: '报表收藏管理',
-          link: '/app/user/user-report',
+          link: 'user/user-report',
           isLeaf: true,
           icon: 'anticon anticon-appstore-o',
         },
@@ -23,13 +23,13 @@ export class PersonalCenterComponent implements OnInit {
           text: '大屏收藏管理',
           isLeaf: true,
           icon: 'anticon anticon-area-chart',
-          link: '/app/user/user-screen',
+          link: 'user/user-screen',
         },
         {
           text: '个人信息管理',
           isLeaf: true,
           icon: 'anticon anticon-user',
-          link: '/app/user/user-message',
+          link: 'user/user-message',
         },
       ],
     },

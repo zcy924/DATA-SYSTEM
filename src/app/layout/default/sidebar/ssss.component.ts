@@ -73,17 +73,16 @@ export class SsssComponent implements OnInit, OnDestroy {
     this.bodyEl = this.doc.querySelector('body');
     this.menuSrv.openedByUrl(this.router.url);
     this.genFloatingContainer();
-    console.log(this.flag);
     if (this.items === undefined) {
       this.change$ = <any>this.menuSrv.change.subscribe(res => {
-        console.log(res);
         this.list = res;
         this.cd.detectChanges();
       });
     } else {
-      this.list = this.items;
-      console.log(this.items);
-      this.cd.detectChanges();
+      this.change$ = <any>this.menuSrv.change.subscribe(res => {
+        this.list = this.items;
+        this.cd.detectChanges();
+      });
     }
 
     this.installUnderPad();
@@ -224,7 +223,6 @@ export class SsssComponent implements OnInit, OnDestroy {
 
   @HostListener('click')
   _click() {
-    console.log('hahahahahhahahahah');
     if (this.isPad && this.collapsed) {
       this.openAside(false);
       this.hideAll();
@@ -238,9 +236,10 @@ export class SsssComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // this.change$.unsubscribe();
-    // if (this.route$) this.route$.unsubscribe();
-    // this.clearFloatingContainer();
+    this.change$.unsubscribe();
+    console.log('我被destroy()了');
+    if (this.route$) this.route$.unsubscribe();
+    this.clearFloatingContainer();
   }
 
   // // region: Under pad

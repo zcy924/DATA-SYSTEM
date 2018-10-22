@@ -78,23 +78,23 @@ export class SpaceManageComponent implements OnInit {
       children: [
         {
           text: '报表管理',
-          link: `app/square/${localStorage.getItem('spaceID')}/report-manage`,
+          link: `square/${localStorage.getItem('spaceID')}/report-manage`,
           icon: 'anticon anticon-appstore-o',
         },
         {
           text: '大屏管理',
           icon: 'anticon anticon-area-chart',
-          link: `app/square/${localStorage.getItem('spaceID')}/screen-manage`,
+          link: `square/${localStorage.getItem('spaceID')}/screen-manage`,
         },
         {
           text: '角色管理',
           icon: 'anticon anticon-user',
-          link: `app/square/${localStorage.getItem('spaceID')}/role-manage`,
+          link: `square/${localStorage.getItem('spaceID')}/role-manage`,
         },
         {
           text: '用户管理',
           icon: 'anticon anticon-user',
-          link: `app/square/${localStorage.getItem('spaceID')}/user-manage`,
+          link: `square/${localStorage.getItem('spaceID')}/user-manage`,
         },
         {
           text: '数据源管理',
@@ -187,7 +187,7 @@ export class SpaceManageComponent implements OnInit {
       const item = {
         text: value.screenName,
         // isLeaf: true,
-        link: `/app/square/${this.url}/screen`,
+        link: `/app/square/${this.url}/${Math.random()}`,
         icon: 'anticon anticon-area-chart',
       };
       console.log(item.link);
