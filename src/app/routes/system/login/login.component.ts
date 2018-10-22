@@ -54,6 +54,7 @@ export class LoginComponent {
       password: this.passwordMD5,
     };
     this.loginService.login(params).subscribe(data => {
+      // if (data['retCode'] === '00000') {
       if (data['retCode'] === '00000') {
         // 清空路由复用信息
         this.reuseTabService.clear();
@@ -79,5 +80,23 @@ export class LoginComponent {
         return;
       }
     });
+
+        // 设置Token信息
+        // this.tokenService.set({
+        //   token: 'asdawdawda',
+        // });
+        // this.settingsService.setUser({
+        //   name: data.retData.userName,
+        //   avatar: data.userIcon,
+        //   account: data.userId,
+        //   companyId: data.companyId,
+        //   companyName: data.companyName,
+        //   companyLogo: data.avatar,
+        // });
+        // 重新获取 StartupService 内容，若其包括 User 有关的信息的话
+        // this.startupSrv.load().then(() => this.router.navigate(['/']));
+        // 否则直接跳转
+        // this.router.navigate(['/app/user']);
+    // });
   }
 }

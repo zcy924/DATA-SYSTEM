@@ -92,6 +92,7 @@ export class UserSettingComponent implements OnInit {
       .subscribe(res => {
         if (res['retCode'] === '00000') {
           this.message.success('删除用户成功！');
+          this.searchUserList(true);
         } else {
           this.message.error('删除用户失败！');
         }

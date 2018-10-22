@@ -39,11 +39,11 @@
         <tbody>
           <tr *ngFor="let data of ajaxTable.data">
             <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="checkLine($event,data.dashboardId)"></td>
-            <td>{{data.icon}}{{data.name}}</td>
+            <td><i class="{{data.icon}}"></i>&nbsp;&nbsp;{{data.name}}</td>
             <td>{{data.remark}}</td>
-            <td><span *ngIf="data.isPublic=='false'">未发布</span><span *ngIf="data.isPublic=='true'">已发布</span></td>
+            <td><span *ngIf="data.isPublic=='F'">未发布</span><span *ngIf="data.isPublic=='T'">已发布</span></td>
             <td>{{data.token}}</td>
-            <td><span *ngIf="data.isDev=='false'">否</span><span *ngIf="data.isDev=='true'">是</span></td>
+            <td><span *ngIf="data.isDev=='F'">否</span><span *ngIf="data.isDev=='T'">是</span></td>
             <td>
               <a (click)="view()" nz-tooltip nzTitle="查看大屏页面"><i class="anticon anticon-eye"></i></a>
               <nz-divider nzType="vertical"></nz-divider>

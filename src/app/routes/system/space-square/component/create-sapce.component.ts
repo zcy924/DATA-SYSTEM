@@ -34,7 +34,7 @@ export class CreateSpaceComponent implements OnInit {
   }
 
   createSpace() {
-    let params = {
+    const params = {
       Space: {
         sapce_name: this.space_name,
         remark: this.space_desc,

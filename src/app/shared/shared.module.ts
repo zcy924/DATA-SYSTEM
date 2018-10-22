@@ -14,11 +14,12 @@ import { CountdownModule } from 'ngx-countdown';
 import { SidebarComponent } from '../layout/default/sidebar/sidebar.component';
 import { SideMenuService } from './side-menu.service';
 import { AComponent } from 'app/layout/default/sidebar/a.component';
+import { SsssComponent } from 'app/layout/default/sidebar/ssss.component';
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule];
 // endregion
 
 // region: your componets & directives
-const COMPONENTS = [SidebarComponent, AComponent];
+const COMPONENTS = [SidebarComponent, AComponent, SsssComponent];
 const DIRECTIVES = [];
 // endregion
 

@@ -5,7 +5,6 @@ import { CreateSpaceComponent } from './component/create-sapce.component';
 import { NzModalService } from 'ng-zorro-antd';
 import { ReportModalComponent } from '../space-manage/component/report-manage/components/report-modal.component';
 
-
 @Component({
   selector: 'app-space-aquare',
   templateUrl: './space-square.html',
@@ -13,32 +12,46 @@ import { ReportModalComponent } from '../space-manage/component/report-manage/co
   providers: [SpaceSquareService, NzModalService],
 })
 export class SpaceSquareComponent implements OnInit {
-
   spaceArr = [];
   key;
+  onlyRead = [];
+  onlyWrite = [];
+  public = [];
 
   constructor(
     private router: Router,
     private spaceService: SpaceSquareService,
-    private nzModel: NzModalService) {
+    private nzModel: NzModalService,
+  ) {
     this.getList();
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   openDetail(spaceId) {
     this.router.navigate(['app/square/' + spaceId]);
   }
 
   getList() {
-    this.spaceService.getSpaceList({})
-      .subscribe(res => {
+    const params = { Space: { space_name: this.key || '' } };
+    this.spaceService.getSpaceList(params).subscribe(
+      res => {
         console.log(res);
         this.spaceArr = res['retList'];
-      }, err => {
+        this.spaceArr.forEach(value => {
+          if (value.sign === 'public') {
+            this.public.push(value);
+          } else if (value.sign === 'not_admin') {
+            this.onlyRead.push(value);
+          } else {
+            this.onlyWrite.push(value);
+          }
+        });
+      },
+      err => {
         console.log(err);
-      });
+      },
+    );
   }
 
   showCreateModal(title): void {
@@ -47,7 +60,9 @@ export class SpaceSquareComponent implements OnInit {
       nzContent: CreateSpaceComponent,
       nzWidth: '50%',
       nzOnOk: res => {
-        res.createSpace();
+        return new Promise(reslove => {
+          res.createSpace();
+        });
       },
     });
     modal.afterClose.subscribe(res => {
@@ -56,7 +71,4 @@ export class SpaceSquareComponent implements OnInit {
       }
     });
   }
-
-
 }
-

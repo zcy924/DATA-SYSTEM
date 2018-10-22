@@ -114,6 +114,7 @@ export class ScreenManageComponent implements OnInit {
       nzComponentParams: {
         screenName: data.name,
         screenRemark: data.remark,
+        isDev: data.isDev,
         dashboardId: data.dashboardId,
         spaceId: localStorage.getItem('spaceID'),
       },

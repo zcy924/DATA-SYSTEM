@@ -9,6 +9,7 @@ import { NzMessageService, NzModalRef } from 'ng-zorro-antd';
 export class EditScreenComponent implements OnInit {
   validateForm: FormGroup;
   screenName;
+  isDev;
   screenRemark;
   dashboardId;
   spaceId;
@@ -20,10 +21,11 @@ export class EditScreenComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    const isdev = this.isDev === 'T' ? true : false;
     this.validateForm = this.fb.group({
       name: [this.screenName, [Validators.required]],
       remark: [this.screenRemark],
-      isDev: [false],
+      isDev: [isdev],
       icon: [''],
     });
   }

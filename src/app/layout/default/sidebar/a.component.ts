@@ -6,7 +6,7 @@ import { Menu } from 'app/models/menu';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-a',
-  templateUrl: './a.component.html',
+  templateUrl: './cc.html',
   styles: [
     `
       .folder-li {
@@ -25,9 +25,15 @@ import { Router } from '@angular/router';
 export class AComponent {
   @Input()
   items: {
-    isRoot: Boolean;
-    menu: Array<Menu>;
+    isRoot?: Boolean;
+    menu?: Array<Menu>;
+    isGroup?: Boolean;
+    groupText?: String;
   };
+  @Input()
+  list: any;
+  @Input()
+  flag:any;
   constructor(
     public settings: SettingsService,
     public msgSrv: NzMessageService,

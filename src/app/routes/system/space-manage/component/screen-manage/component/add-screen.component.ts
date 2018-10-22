@@ -37,6 +37,7 @@ export class AddScreenComponent implements OnInit {
     this.validateForm = this.fb.group({
       name: [null, [Validators.required]],
       remark: [null],
+      isDev: [false]
     });
   }
   submitForm() {
@@ -55,7 +56,7 @@ export class AddScreenComponent implements OnInit {
       remark: this.validateForm.controls.remark.value,
       icon: 'anticon anticon-area-chart',
       templetId: 'adasdadasd',
-      isDev: true,
+      isDev: this.validateForm.controls.isDev.value ? 'T' : 'F',
     };
     this.spaceManageService.addScreen(params).subscribe(data => {
       if (data.retCode === '00000') {
@@ -67,7 +68,7 @@ export class AddScreenComponent implements OnInit {
     });
     // return this.spaceManageService.addScreen(params);
   }
-  test(){
+  test() {
     setTimeout(() => {
       return this.submitForm();
     }, 2000);
