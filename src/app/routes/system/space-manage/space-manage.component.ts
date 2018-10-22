@@ -78,23 +78,23 @@ export class SpaceManageComponent implements OnInit {
       children: [
         {
           text: '报表管理',
-          link: `square/${localStorage.getItem('spaceID')}/report-manage`,
+          link: `app/square/${localStorage.getItem('spaceID')}/report-manage`,
           icon: 'anticon anticon-appstore-o',
         },
         {
           text: '大屏管理',
           icon: 'anticon anticon-area-chart',
-          link: `square/${localStorage.getItem('spaceID')}/screen-manage`,
+          link: `app/square/${localStorage.getItem('spaceID')}/screen-manage`,
         },
         {
           text: '角色管理',
           icon: 'anticon anticon-user',
-          link: `square/${localStorage.getItem('spaceID')}/role-manage`,
+          link: `app/square/${localStorage.getItem('spaceID')}/role-manage`,
         },
         {
           text: '用户管理',
           icon: 'anticon anticon-user',
-          link: `square/${localStorage.getItem('spaceID')}/user-manage`,
+          link: `app/square/${localStorage.getItem('spaceID')}/user-manage`,
         },
         {
           text: '数据源管理',
