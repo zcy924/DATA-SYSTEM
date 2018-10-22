@@ -63,9 +63,9 @@ export class LoginComponent {
           token: data['retData']['TokenID'],
         });
         this.settingsService.setUser({
-          name: data.retData.userName,
+          name: data.userName,
           avatar: data.userIcon,
-          account: data.userId,
+          userNo: data.userNo,
           companyId: data.companyId,
           companyName: data.companyName,
           companyLogo: data.avatar,

@@ -38,6 +38,7 @@
     "@delon/util": "^2.0.0-beta.1",
     "ajv": "^6.4.0",
     "core-js": "^2.5.4",
+    "echarts": "^4.2.0-rc.2",
     "editorconfig-tools": "^0.1.1",
     "husky": "^0.14.3",
     "lint-staged": "^7.1.2",

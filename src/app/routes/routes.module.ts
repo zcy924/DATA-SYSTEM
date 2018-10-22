@@ -17,6 +17,7 @@ import { SpaceManageComponent } from './system/space-manage/space-manage.compone
 import { SystemModule } from './system/system.module';
 import { CompanyManageComponent } from './system/company-manage/company-manage.component';
 import { PlatformManageComponent } from './system/platform-manage/platform-manage.component';
+import { AuthGuard } from '@core/guard/auth-guard.service';
 
 const COMPONENTS = [
   UserLockComponent,
@@ -36,5 +37,6 @@ const COMPONENTS_NOROUNT = [
   imports: [SharedModule, RouteRoutingModule, SystemModule],
   declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT],
   entryComponents: COMPONENTS_NOROUNT,
+  providers: [AuthGuard]
 })
 export class RoutesModule {}

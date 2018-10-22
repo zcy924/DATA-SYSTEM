@@ -34,6 +34,7 @@ export class SpaceManageComponent implements OnInit {
           reportId: '123',
           text: '报表一',
           icon: 'anticon anticon-table',
+          link:  `square/${localStorage.getItem('spaceID')}/report-detail/123`,
         },
         {
           reportId: '456',

@@ -37,7 +37,8 @@ export class AddScreenComponent implements OnInit {
     this.validateForm = this.fb.group({
       name: [null, [Validators.required]],
       remark: [null],
-      isDev: [false]
+      isDev: [false]，
+      icon: [null]
     });
   }
   submitForm() {
@@ -54,7 +55,7 @@ export class AddScreenComponent implements OnInit {
       spaceId: this.spaceId,
       name: this.validateForm.controls.name.value,
       remark: this.validateForm.controls.remark.value,
-      icon: 'anticon anticon-area-chart',
+      icon: this.validateForm.controls.icon.value,
       templetId: 'adasdadasd',
       isDev: this.validateForm.controls.isDev.value ? 'T' : 'F',
     };

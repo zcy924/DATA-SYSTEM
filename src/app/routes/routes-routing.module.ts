@@ -21,11 +21,13 @@ import { HarfScreenComponent } from '../layout/harfscreen/harfscreen.component';
 import { PlatformManageComponent } from './system/platform-manage/platform-manage.component';
 import { LoginComponent } from './system/login/login.component';
 import { Log } from '@angular/core/testing/src/logger';
+import { AuthGuard } from '@core/guard/auth-guard.service';
 
 const routes: Routes = [
   {
     path: 'app',
     component: LayoutDefaultComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'user',

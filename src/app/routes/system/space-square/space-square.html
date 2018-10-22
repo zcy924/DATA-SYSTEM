@@ -17,7 +17,7 @@
 
     </div>
     <div nz-row style="background-color: #f5f7fa;padding: 16px;">
-      <nz-divider nzText="可管理空间" nzOrientation="left"></nz-divider>
+      <nz-divider *ngIf="onlyWrite.length>0" nzText="可管理空间" nzOrientation="left"></nz-divider>
       <div nz-row>
         <div nz-col (click)="openDetail(item.space_id)" *ngFor="let item of onlyWrite" style="width: 300px;float:left;padding-right: 16px">
           <ng-template #avatarTemplate>
@@ -33,7 +33,7 @@
           </ng-template>
         </div>
       </div>
-      <nz-divider nzText="可查看空间" nzOrientation="left"></nz-divider>
+      <nz-divider *ngIf="onlyRead.length>0" nzText="可查看空间" nzOrientation="left"></nz-divider>
       <div nz-row>
         <div nz-col (click)="openDetail(item.space_id)" *ngFor="let item of onlyRead" style="width: 300px;float:left;padding-right: 16px">
           <ng-template #avatarTemplate>
@@ -49,7 +49,7 @@
           </ng-template>
         </div>
       </div>
-      <nz-divider nzText="公开空间" nzOrientation="left"></nz-divider>
+      <nz-divider *ngIf="public.length>0" nzText="公开空间" nzOrientation="left"></nz-divider>
       <div nz-row>
         <div nz-col (click)="openDetail(item.space_id)" *ngFor="let item of public" style="width: 300px;float:left;padding-right: 16px">
           <ng-template #avatarTemplate>

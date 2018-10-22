@@ -30,7 +30,8 @@
               "src/styles.less"
             ],
             "scripts": [
-              "node_modules/ajv/dist/ajv.bundle.js"
+              "node_modules/ajv/dist/ajv.bundle.js",
+              "node_modules/echarts/dist/echarts.min.js"
             ]
           },
           "configurations": {

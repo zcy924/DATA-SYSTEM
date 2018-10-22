@@ -1,15 +1,15 @@
-<form nz-form >
+<form nz-form>
 
-  <nz-form-item nz-row >
-    <nz-form-label [nzSpan]="5" >空间名称</nz-form-label>
+  <nz-form-item nz-row>
+    <nz-form-label [nzSpan]="5">空间名称</nz-form-label>
     <nz-form-control [nzSpan]="16">
-      <input nz-input  name="space_name" [(ngModel)]="space_name">
+      <input nz-input name="space_name" [(ngModel)]="space_name">
       <!--<nz-form-explain *ngIf="validateForm.get('email').dirty && validateForm.get('email').errors">The input is not valid E-mail!</nz-form-explain>-->
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item nz-row >
-    <nz-form-label [nzSpan]="5" >空间类型</nz-form-label>
+  <nz-form-item nz-row>
+    <nz-form-label [nzSpan]="5">空间类型</nz-form-label>
     <nz-form-control [nzSpan]="16" nzValidateStatus="success">
       <nz-radio-group [(ngModel)]="isPublic" name="isPublic">
         <label nz-radio nzValue="0">普通</label>
@@ -18,28 +18,30 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item nz-row >
-    <nz-form-label [nzSpan]="5" >空间描述</nz-form-label>
+  <nz-form-item nz-row>
+    <nz-form-label [nzSpan]="5">空间描述</nz-form-label>
     <nz-form-control [nzSpan]="16">
-      <textarea  nz-input  name="space_desc"  [(ngModel)]="space_desc" [nzAutosize]="{ minRows: 2, maxRows: 4 }"></textarea>
+      <textarea nz-input name="space_desc" [(ngModel)]="space_desc" [nzAutosize]="{ minRows: 2, maxRows: 4 }"></textarea>
       <!--<nz-form-explain *ngIf="validateForm.get('email').dirty && validateForm.get('email').errors">The input is not valid E-mail!</nz-form-explain>-->
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item nz-row >
-    <nz-form-label [nzSpan]="5" >空间管理员</nz-form-label>
+  <nz-form-item nz-row>
+    <nz-form-label [nzSpan]="5">空间管理员</nz-form-label>
     <nz-form-control [nzSpan]="16">
 
-      <div *ngFor="let admin of admins"><label nz-checkbox name="{{admin.userNo}}" [hidden]="!admin.checked" (ngModelChange)="updateChecked(admin)"  [(ngModel)]="admin.checked" >{{admin.userName}}（{{admin.userNo}}）</label></div>
+      <div *ngFor="let admin of admins"><label nz-checkbox name="{{admin.userNo}}" [hidden]="!admin.checked"
+          (ngModelChange)="updateChecked(admin)" [(ngModel)]="admin.checked">{{admin.userName}}（{{admin.userNo}}）</label></div>
 
       <nz-input-group nzSearch [nzSuffix]="suffixButton">
         <input type="text" name="key" [(ngModel)]="key" nz-input placeholder="搜索用户">
       </nz-input-group>
       <ng-template #suffixButton>
-        <button nz-button nzType="primary" (click)="searchUsers()"  nzSearch><i class="anticon anticon-search"></i></button>
+        <button nz-button nzType="primary" (click)="searchUsers()" nzSearch><i class="anticon anticon-search"></i></button>
       </ng-template>
 
-      <div *ngFor="let admin of searchedAdmins"><label nz-checkbox  name="{{admin.userNo}}"  (ngModelChange)="searchChecked(admin)"  [nzDisabled]="admin.checked" [(ngModel)]="admin.checked" >{{admin.userName}}（{{admin.userNo}}）</label></div>
+      <div *ngFor="let admin of searchedAdmins"><label nz-checkbox name="{{admin.userNo}}" (ngModelChange)="searchChecked(admin)"
+          [nzDisabled]="admin.checked" [(ngModel)]="admin.checked">{{admin.userName}}（{{admin.userNo}}）</label></div>
 
 
     </nz-form-control>

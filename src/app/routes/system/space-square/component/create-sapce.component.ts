@@ -89,7 +89,7 @@ export class CreateSpaceComponent implements OnInit {
       totalRow: '0',
       totalPage: '0',
     };
-    this.companyManageService.searchMisUsers(params).subscribe(res => {
+    this.companyManageService.searchFuzzyUsers(params).subscribe(res => {
       console.log(res);
       this.searchedAdmins = [];
       this.searchedAdmins = res['retList'];

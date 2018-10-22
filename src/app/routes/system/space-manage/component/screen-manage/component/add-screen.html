@@ -50,7 +50,13 @@
   <nz-form-item>
     <nz-form-label [nzSm]="3" [nzXs]="24" nzRequired nzFor="icon">图标</nz-form-label>
     <nz-form-control [nzSm]="21" [nzXs]="24">
-      <input nz-input  id="icon" />
+        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="选择图标" formControlName="icon">
+            <nz-option nzCustomContent nzLabel="饼状图" nzValue="anticon anticon-pie-chart"><i class="anticon anticon-pie-chart"></i></nz-option>
+            <nz-option nzCustomContent nzLabel="堆叠图" nzValue="anticon anticon-area-chart"><i class="anticon anticon-area-chart"></i></nz-option>
+            <nz-option nzCustomContent nzLabel="柱状图" nzValue="anticon anticon-bar-chart"><i class="anticon anticon-bar-chart"></i></nz-option>
+            <nz-option nzCustomContent nzLabel="散点图" nzValue="anticon anticon-dot-chart"><i class="anticon anticon-dot-chart"></i></nz-option>
+            <nz-option nzCustomContent nzLabel="线状图" nzValue="anticon anticon-line-chart"><i class="anticon anticon-line-chart"></i></nz-option>
+          </nz-select>
       <!-- <nz-form-explain *ngIf="validateForm.get('icon').dirty && validateForm.get('icon').errors">图标无效</nz-form-explain> -->
     </nz-form-control>
   </nz-form-item>
