@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuService, Menu } from '@delon/theme';
+import { MenuService } from '@delon/theme';
 import { ActivatedRoute } from '@angular/router';
 import { SpaceManageService } from './space-manage.service';
 import { SideMenuService } from '@shared/side-menu.service';
-
+import { Menu } from 'app/models/menu';
 
 @Component({
   templateUrl: './space-manage.html',
@@ -11,163 +11,108 @@ import { SideMenuService } from '@shared/side-menu.service';
 })
 export class SpaceManageComponent implements OnInit {
   url: String;
+  reportTree: any;
   menu: Array<Menu> = [
     {
-      text: '大屏管理',
-      group: true,
+      text: '主导航',
+      isGroup: true,
       children: [
         {
           text: '数据大屏',
-          group: true,
-          icon: 'anticon anticon-folder',
-          children: [], // 数据大屏列表
-        },
-      ],
-    },
-    {
-      text: '报表',
-      group: true,
-      icon: 'anticon anticon-table',
-      children: [
-        // 报表列表
-        {
-          reportId: '123',
-          text: '报表一',
-          icon: 'anticon anticon-table',
-          link:  `square/${localStorage.getItem('spaceID')}/report-detail/123`,
-        },
-        {
-          reportId: '456',
-          text: '报表二',
+          isLeaf: false,
           icon: 'anticon anticon-folder',
           children: [
             {
-              reportId: '123',
-              text: '报表一',
-              icon: 'anticon anticon-table',
+              text: '紫金大屏',
+              link: `app/square/${localStorage.getItem(
+                'spaceID',
+              )}/report-manage`,
+              isLeaf: true,
+              icon: 'anticon anticon-appstore-o',
             },
             {
-              reportId: '123',
-              text: '报表一',
-              icon: 'anticon anticon-folder',
-              children: [
-                {
-                  reportId: '123',
-                  text: '报表一',
-                  icon: 'anticon anticon-table',
-                },
-                {
-                  reportId: '123',
-                  text: '报表一',
-                  icon: 'anticon anticon-folder',
-                  children: [
-                    {
-                      text: '报表三',
-                      icon: 'anticon anticon-table',
-                    },
-                  ],
-                },
-              ],
+              text: '紫金大屏二',
+              isLeaf: true,
+              icon: 'anticon anticon-area-chart',
+              link: `app/square/${localStorage.getItem(
+                'spaceID',
+              )}/screen-manage`,
             },
           ],
         },
       ],
     },
+
+    {
+      text: '报表',
+      isGroup: true,
+      children: [
+      ],
+    },
+
     {
       text: '管理中心',
-      group: true,
+      isLeaf: false,
+      isGroup: true,
       children: [
         {
           text: '报表管理',
-          link: `square/${localStorage.getItem('spaceID')}/report-manage`,
+          link: `app/square/${localStorage.getItem('spaceID')}/report-manage`,
+          isLeaf: true,
           icon: 'anticon anticon-appstore-o',
         },
         {
           text: '大屏管理',
+          isLeaf: true,
           icon: 'anticon anticon-area-chart',
-          link: `square/${localStorage.getItem('spaceID')}/screen-manage`,
+          link: `app/square/${localStorage.getItem('spaceID')}/screen-manage`,
         },
         {
           text: '角色管理',
-          icon: 'anticon anticon-user',
-          link: `square/${localStorage.getItem('spaceID')}/role-manage`,
+          isLeaf: true,
+          icon: 'anticon anticon-usergroup-add',
+          link: `app/square/${localStorage.getItem('spaceID')}/role-manage`,
         },
         {
+          isLeaf: true,
           text: '用户管理',
           icon: 'anticon anticon-user',
-          link: `square/${localStorage.getItem('spaceID')}/user-manage`,
+          link: `app/square/${localStorage.getItem('spaceID')}/user-manage`,
         },
         {
           text: '数据源管理',
-          icon: 'anticon anticon-user',
+          isLeaf: true,
+          icon: 'anticon anticon-database',
           link: 'user-message',
         },
         {
           text: '数据表预览',
+          isLeaf: true,
           icon: 'anticon anticon-user',
           link: 'user-message',
         },
         {
           text: 'SQL模型管理',
-          icon: 'anticon anticon-user',
+          isLeaf: true,
+          icon: 'anticon anticon-api',
           link: 'user-message',
         },
         {
           text: '数据值映射管理',
-          icon: 'anticon anticon-user',
+          isLeaf: true,
+          icon: 'anticon anticon-book',
           link: 'user-message',
         },
         {
           text: '空间设置',
-          icon: 'anticon anticon-user',
+          isLeaf: true,
+          icon: 'anticon anticon-setting',
           link: 'user-message',
         },
       ],
     },
   ];
 
-
-  spaceContent = {
-    screenList: [
-      {
-        screenId: '123',
-        screenName: '紫金大屏一',
-        icon: 'anticon anticon-area-chart',
-      },
-      {
-        screenId: '456',
-        screenName: '紫金大屏二',
-        icon: 'anticon anticon-area-chart',
-      },
-      {
-        screenId: '789',
-        screenName: '紫金大屏三',
-        icon: 'anticon anticon-area-chart',
-      },
-      {
-        screenId: '101112',
-        screenName: '紫金大屏四',
-        icon: 'anticon anticon-area-chart',
-      },
-    ],
-    reportList: [
-      {
-        reportId: '123',
-        reportName: '报表一',
-        icon: 'anticon anticon-table',
-      },
-      {
-        reportId: '456',
-        reportName: '报表二',
-        icon: 'anticon anticon-table',
-      },
-      {
-        reportId: '789',
-        reportName: '报表三',
-        icon: 'anticon anticon-table',
-      },
-    ],
-  };
   space = {
     spaceName: 'zangsan',
     spaceId: '123',
@@ -181,36 +126,40 @@ export class SpaceManageComponent implements OnInit {
 
   ngOnInit() {
     this.getReportList();
+    this.getReportTree();
     this.url = this.acRouter.snapshot.params['spaceId'];
-    localStorage.setItem('spaceID', this.url.toString());
 
-    this.spaceContent.screenList.forEach(value => {
-      const item = {
-        text: value.screenName,
-        // isLeaf: true,
-        link: `/app/square/${this.url}/${Math.random()}`,
-        icon: 'anticon anticon-area-chart',
-      };
-      console.log(item.link);
-      this.menu[0]['children'][0]['children'].push(item);
-    });
-    // this.spaceContent.reportList.forEach(value => {
-    //   const item1 = {
-    //     text: value.reportName,
-    //     link: `/app/square/${this.url}/report-detail/${value.reportId}`,
-    //     icon: 'anticon anticon-table',
-    //   };
-    //   this.menu[1]['children'].push(item1);
-    // });
-    // this.menu[2]['children'].map(value => {
-    //   value.link = `/app/square/${this.url}/${value.link}`;
-    // });
-    this.menuService.add(this.menu);
-    // this.sideMenu.setMenu(this.menu);
+    console.log(this.menu);
+
+    this.sideMenu.setMenu(this.menu);
   }
   getReportList() {
     this.spaceManageService.getReportList({}).subscribe(data => {
       console.log(data);
+    });
+  }
+  getReportTree() {
+    const params = {
+      Report: {
+        spaceId: localStorage.getItem('spaceID'),
+      },
+    };
+    this.spaceManageService.qryAllReportList(params).subscribe(data => {
+      const report_menu = data.retTreeList;
+      this.formateTree(report_menu);
+      this.menu[1]['children'] = report_menu;
+    });
+  }
+  formateTree(array: Array<any>) {
+    array.map(value => {
+      value.text = value.reportName;
+      value.link = `square/${value.spaceId}/report-detail/${value.reportId}`;
+      value.isLeaf = value.type == 1 ? true : false;
+      value.icon =
+        value.type == 1 ? 'anticon anticon-file' : 'anticon anticon-folder';
+      if (value.children) {
+        this.formateTree(value.children);
+      }
     });
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { SettingsService } from '@delon/theme';
 import { SideMenuService } from '@shared/side-menu.service';
@@ -6,7 +6,7 @@ import { Menu } from 'app/models/menu';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-a',
-  templateUrl: './cc.html',
+  templateUrl: './aa.html',
   styles: [
     `
       .folder-li {
@@ -22,7 +22,7 @@ import { Router } from '@angular/router';
     `,
   ],
 })
-export class AComponent {
+export class AComponent implements OnDestroy {
   @Input()
   items: {
     isRoot?: Boolean;
@@ -30,10 +30,6 @@ export class AComponent {
     isGroup?: Boolean;
     groupText?: String;
   };
-  @Input()
-  list: any;
-  @Input()
-  flag:any;
   constructor(
     public settings: SettingsService,
     public msgSrv: NzMessageService,
@@ -45,5 +41,8 @@ export class AComponent {
     if (url !== undefined) {
       this.router.navigateByUrl(url);
     }
+  }
+  ngOnDestroy(){
+    console.log("销毁当前实例");
   }
 }

@@ -1,45 +1,47 @@
 <ul *ngIf="items.isRoot" nz-menu [nzTheme]="'light'" [nzMode]="'inline'" [nzInlineCollapsed]="settings.layout.collapsed">
-  <ng-container *ngFor="let option of items.menu">
-    <li *ngIf="!option.isLeaf" nz-submenu>
-      <span title>
-        <i class="{{option.icon}}"></i>
-        <span>
-          {{option.text}}
+    <ng-container *ngFor="let option of items.menu">
+      <li *ngIf="!option.isLeaf" nz-submenu>
+        <span title>
+          <i class="{{option.icon}}"></i>
+          <span>
+            {{option.text}}
+          </span>
         </span>
-      </span>
-      <app-a [items]="{isRoot:false,menu:option.children}"></app-a>
-    </li>
-    <li (click)="go(option.link)" nz-menu-item *ngIf="option.isLeaf&&(option.isGroup===undefined)">
-      <span title>
-        <i class="{{option.icon}}"></i>
-        <span>{{option.text}}</span>
-      </span>
-    </li>
-    <li nz-menu-item *ngIf="option.isGroup" style="padding-bottom:8px" [ngClass]="{'sidebar-nav__item sidebar-nav__group-title': !settings.layout.collapsed}">
-      <span *ngIf="!settings.layout.collapsed">{{option.text}}</span>
-      <!-- <nz-divider style="margin:16px 0"></nz-divider> -->
-    </li>
-  </ng-container>
-</ul>
-<ul *ngIf="!items.isRoot">
-  <ng-container *ngFor="let option of items.menu">
-    <li *ngIf="!option.isLeaf" nz-submenu [ngClass]="{'folder-li': !settings.layout.collapsed}">
-      <span title>
-        <i class="{{option.icon}}"></i>
-        <span>
-          {{option.text}}
+        <app-a [items]="{isRoot:false,menu:option.children}"></app-a>
+      </li>
+      <li (click)="go(option.link)" nz-menu-item *ngIf="option.isLeaf&&(!option.isGroup||option.isGroup==undefined)">
+        <span title>
+          <i class="{{option.icon}}"></i>
+          <span>{{option.text}}</span>
         </span>
-      </span>
-      <app-a [items]="{isRoot:false,menu:option.children}"></app-a>
-    </li>
-    <li (click)="go(option.link)" nz-menu-item *ngIf="option.isLeaf&&(option.isGroup===undefined)">
-      <span title>
-        <i class="{{option.icon}}"></i>
-        <span>{{option.text}}</span>
-      </span>
-    </li>
-    <li *ngIf="option.isGroup" [ngClass]="{'sidebar-nav__item sidebar-nav__group-title': !settings.layout.collapsed}">
-      <span>{{option.text}}</span>
-    </li>
-  </ng-container>
-</ul>
+      </li>
+      <ng-container *ngIf="option.isGroup">
+          <li *ngIf="!settings.layout.collapsed"  [ngClass]="{'group-li': !settings.layout.collapsed}" >
+              <span *ngIf="!settings.layout.collapsed" [ngClass]="{'group-text': !settings.layout.collapsed}" >{{option.text}}</span>
+              <nz-divider style="margin:16px 0"></nz-divider>
+             </li>
+      </ng-container>
+    </ng-container>
+  </ul>
+  <ul *ngIf="!items.isRoot">
+    <ng-container *ngFor="let option of items.menu">
+      <li *ngIf="!option.isLeaf" nz-submenu [ngClass]="{'folder-li': !settings.layout.collapsed}">
+        <span title>
+          <i class="{{option.icon}}"></i>
+          <span>
+            {{option.text}}
+          </span>
+        </span>
+        <app-a [items]="{isRoot:false,menu:option.children}"></app-a>
+      </li>
+      <li (click)="go(option.link)" nz-menu-item *ngIf="option.isLeaf&&(!option.isGroup||option.isGroup==undefined)">
+        <span title>
+          <i class="{{option.icon}}"></i>
+          <span>{{option.text}}</span>
+        </span>
+      </li>
+      <li *ngIf="option.isGroup&&option.isGroup!==undefined" style="padding: 16px">
+       {{option.text}}
+      </li>
+    </ng-container>
+  </ul>

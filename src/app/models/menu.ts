@@ -1,7 +1,7 @@
 export class Menu {
   public text: String;
   public key?: String;
-  public isLeaf: Boolean;
+  public isLeaf?: Boolean;
   public isGroup?: Boolean;
   public icon?: String;
   public link?: String;
