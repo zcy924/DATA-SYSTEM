@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { NzMessageService, NzModalRef } from 'ng-zorro-antd';
 import { SpaceManageService } from '../../../space-manage.service';
-import { Observable, of } from 'rxjs';
+import { ICONS } from 'app/models/icons';
+
 
 @Component({
   templateUrl: './add-screen.html',
@@ -26,6 +27,8 @@ export class AddScreenComponent implements OnInit {
   selected2: Boolean = false;
   selected3: Boolean = false;
   selected4: Boolean = false;
+  ICONS = ICONS;
+  iconTemplate = [1,2,3,4,5,6,7,8,9,10,11,12,13,14];
   constructor(
     private fb: FormBuilder,
     private nzMessage: NzMessageService,
@@ -37,7 +40,7 @@ export class AddScreenComponent implements OnInit {
     this.validateForm = this.fb.group({
       name: [null, [Validators.required]],
       remark: [null],
-      isDev: [false]，
+      isDev: [false],
       icon: [null]
     });
   }
@@ -101,5 +104,8 @@ export class AddScreenComponent implements OnInit {
         this.selected1 = false;
         break;
     }
+  }
+  selectIcon(){
+    
   }
 }
