@@ -4,7 +4,6 @@ import { NzMessageService, NzModalRef } from 'ng-zorro-antd';
 import { SpaceManageService } from '../../../space-manage.service';
 import { ICONS } from 'app/models/icons';
 
-
 @Component({
   templateUrl: './add-screen.html',
   styles: [
@@ -14,6 +13,20 @@ import { ICONS } from 'app/models/icons';
       }
       .selected-card {
         background-color: #23b7e5;
+      }
+      .icon {
+        width: 48px;
+        height: 48px;
+
+        text-align: center;
+        line-height: 56px;
+        float: left;
+      }
+      .icon:hover {
+        background: #1890ff;
+      }
+      .checked {
+        background: #1890ff;
       }
     `,
   ],
@@ -27,8 +40,9 @@ export class AddScreenComponent implements OnInit {
   selected2: Boolean = false;
   selected3: Boolean = false;
   selected4: Boolean = false;
-  ICONS = ICONS;
-  iconTemplate = [1,2,3,4,5,6,7,8,9,10,11,12,13,14];
+  iconId;
+  icons = ICONS;
+  iconsArry = [];
   constructor(
     private fb: FormBuilder,
     private nzMessage: NzMessageService,
@@ -41,8 +55,16 @@ export class AddScreenComponent implements OnInit {
       name: [null, [Validators.required]],
       remark: [null],
       isDev: [false],
-      icon: [null]
     });
+    // tslint:disable-next-line:forin
+    for (let i in this.icons) {
+      const item = {
+        id: i,
+        icon: this.icons[i],
+        checked: false,
+      };
+      this.iconsArry.push(item);
+    }
   }
   submitForm() {
     // tslint:disable-next-line:forin
@@ -58,7 +80,7 @@ export class AddScreenComponent implements OnInit {
       spaceId: this.spaceId,
       name: this.validateForm.controls.name.value,
       remark: this.validateForm.controls.remark.value,
-      icon: this.validateForm.controls.icon.value,
+      icon: this.iconId,
       templetId: 'adasdadasd',
       isDev: this.validateForm.controls.isDev.value ? 'T' : 'F',
     };
@@ -105,7 +127,16 @@ export class AddScreenComponent implements OnInit {
         break;
     }
   }
-  selectIcon(){
-    
+  selectIcon(id) {
+    this.iconId = this.iconsArry[id].icon;
+    // tslint:disable-next-line:forin
+    for (let i in this.iconsArry) {
+      if (id == i) {
+        this.iconsArry.map(value => {
+          value.checked = false;
+        });
+        this.iconsArry[i].checked = true;
+      }
+    }
   }
 }

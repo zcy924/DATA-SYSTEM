@@ -161,8 +161,6 @@ export class SsssComponent implements OnInit, OnDestroy {
 
   private hideAll() {
     const allNode = this.floatingEl.querySelectorAll('.' + FLOATINGCLS);
-    console.log('-----');
-    console.log(allNode);
     for (let i = 0; i < allNode.length; i++) {
       allNode[i].classList.remove(SHOWCLS);
     }
@@ -192,13 +190,10 @@ export class SsssComponent implements OnInit, OnDestroy {
     if (this.collapsed !== true) {
       return;
     }
-    console.log(e);
-    console.log(item);
     e.preventDefault();
     const linkNode = e.target as Element;
     this.genFloatingContainer();
     const subNode = this.genSubNode(linkNode as HTMLLinkElement, item);
-    console.log(subNode);
     this.hideAll();
     subNode.classList.add(SHOWCLS);
     this.calPos(linkNode as HTMLLinkElement, subNode);
@@ -231,13 +226,11 @@ export class SsssComponent implements OnInit, OnDestroy {
 
   @HostListener('document:click')
   _docClick() {
-    console.log('document.click');
     this.hideAll();
   }
 
   ngOnDestroy(): void {
     this.change$.unsubscribe();
-    console.log('我被destroy()了');
     if (this.route$) this.route$.unsubscribe();
     this.clearFloatingContainer();
   }
@@ -266,17 +259,10 @@ export class SsssComponent implements OnInit, OnDestroy {
   }
 
   private openAside(status: boolean) {
+    if (this.items !== undefined) {
+      return;
+    }
     this.settings.setLayout('collapsed', status);
   }
-  tooo(item: any) {
-    if (item._type === 3) {
-      for (const i in item.children) {
-        if (item.children[i]._type === 3) {
-          item.children.splice(i, 1);
-        }
-      }
-    }
-  }
-
   // endregion
 }

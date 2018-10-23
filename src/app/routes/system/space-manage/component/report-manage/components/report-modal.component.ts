@@ -62,8 +62,10 @@ export class ReportModalComponent implements OnInit {
       console.log(res);
       if (res['retCode'] === '00000') {
         this.message.success('添加报表成功！');
+        this.modalRef.destroy('ok');
       } else {
         this.message.error('添加报表失败！');
+        this.modalRef.destroy('error');
       }
     });
   }

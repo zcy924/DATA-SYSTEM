@@ -29,10 +29,14 @@ export class SpaceSquareComponent implements OnInit {
   ngOnInit() {}
 
   openDetail(spaceId) {
+    localStorage.setItem('spaceID', spaceId.toString());
     this.router.navigate(['app/square/' + spaceId]);
   }
 
   getList() {
+    this.public = [];
+    this.onlyRead = [];
+    this.onlyWrite = [];
     const params = { Space: { space_name: this.key || '' } };
     this.spaceService.getSpaceList(params).subscribe(
       res => {

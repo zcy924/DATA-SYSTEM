@@ -2,9 +2,27 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SpaceManageService } from '../../../space-manage.service';
 import { NzMessageService, NzModalRef } from 'ng-zorro-antd';
+import { ICONS } from 'app/models/icons';
 
 @Component({
   templateUrl: './edit-screen.html',
+  styles: [
+    `
+  .icon {
+    width: 48px;
+    height: 48px;
+
+    text-align: center;
+    line-height: 56px;
+    float: left;
+  }
+  .icon:hover {
+    background: #1890ff;
+  }
+  .checked {
+    background: #1890ff;
+  }`,
+  ],
 })
 export class EditScreenComponent implements OnInit {
   validateForm: FormGroup;
@@ -13,6 +31,9 @@ export class EditScreenComponent implements OnInit {
   screenRemark;
   dashboardId;
   spaceId;
+  iconId;
+  icons = ICONS;
+  iconsArry = [];
   constructor(
     private fb: FormBuilder,
     private spaceMangeService: SpaceManageService,
@@ -28,6 +49,15 @@ export class EditScreenComponent implements OnInit {
       isDev: [isdev],
       icon: [''],
     });
+    // tslint:disable-next-line:forin
+    for (let i in this.icons) {
+      const item = {
+        id: i,
+        icon: this.icons[i],
+        checked: false,
+      };
+      this.iconsArry.push(item);
+    }
   }
   submitForm() {
     const params = {
@@ -36,7 +66,7 @@ export class EditScreenComponent implements OnInit {
       name: this.validateForm.controls.name.value,
       remark: this.validateForm.controls.remark.value,
       isDev: this.validateForm.controls.isDev.value === true ? 'T' : 'F',
-      icon: this.validateForm.controls.icon.value,
+      icon: this.iconId,
     };
     this.spaceMangeService.modScreenInfo(params).subscribe(data => {
       if (data.retCode == '00000') {
@@ -48,5 +78,17 @@ export class EditScreenComponent implements OnInit {
     });
 
     console.log(params);
+  }
+  selectIcon(id) {
+    this.iconId = this.iconsArry[id].icon;
+    // tslint:disable-next-line:forin
+    for (let i in this.iconsArry) {
+      if (id == i) {
+        this.iconsArry.map(value => {
+          value.checked = false;
+        });
+        this.iconsArry[i].checked = true;
+      }
+    }
   }
 }
