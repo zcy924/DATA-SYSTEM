@@ -96,7 +96,7 @@ export class RoleManageComponent implements OnInit {
       totalPage: 0,
       totalRow: 0,
       SpaceRole: {
-        space_id: 's_TekPKgkNbpxm_20181017',
+        space_id: spaceID,
       },
     };
     this.service.getRoleList(params).subscribe(res => {
@@ -112,8 +112,8 @@ export class RoleManageComponent implements OnInit {
   updateChecked(role) {
     role.checked = !role.checked;
     this.disabledButton = true;
-    this.roleList.forEach(role=>{
-      if(role.checked){
+    this.roleList.forEach(role => {
+      if (role.checked) {
         this.disabledButton = false;
       }
     });
@@ -159,30 +159,6 @@ export class RoleManageComponent implements OnInit {
 
   // 编辑修改角色
   editRole(role) {
-    // 查询角色对应的用户列表
-    let params1 = {
-      SpaceRole: {
-        roleId: role.role_id,
-      },
-    };
-    let users = [];
-    this.service.qryUserListByRole(params1).subscribe(res => {
-      if (res['retCode'] === '00000') {
-        users = res['retList'];
-      } else {
-        this.message.error('查询角色对应的用户列表失败！');
-      }
-    });
-    // 查询角色对应的报表列表
-    let params2 = {};
-    let reports = [];
-    this.service.qryReportListByRole(params2).subscribe(res => {
-      if (res['retCode'] === '00000') {
-        reports = res['retList'];
-      } else {
-        this.message.error('查询角色对应的报表列表失败！');
-      }
-    });
     const modal = this.nzModal.create({
       nzTitle: '编辑角色',
       nzContent: RoleModalComponent,
@@ -190,8 +166,7 @@ export class RoleManageComponent implements OnInit {
       nzComponentParams: {
         roleName: role.role_name,
         remark: role.remark,
-        users: users,
-        reportList: reports,
+        roleId: role.role_id,
       },
       nzOnOk: ref => {
         return new Promise(res => {

@@ -50,12 +50,13 @@
       <div style="padding: 15px;border: 1px solid #e8e8e8;">
         <nz-tree name="nodes"   #treeCom
           [(ngModel)]="nodes"
-          [nzAsyncData]="true"
-          nzCheckable="true"
-          nzMultiple="true"
-          (nzExpandChange)="openFolder('expand',$event)"
-          (nzCheckBoxChange)="checkTreeNode($event)">
-
+          [nzCheckStrictly]="false"
+                 [nzAsyncData]="true"           (nzExpandChange)="openFolder('expand',$event)"
+          [nzCheckable]="true"
+          [nzMultiple]="true"
+          (nzCheckBoxChange)="checkTreeNode($event)"
+        >
+<!-- [nzAsyncData]="true"           (nzExpandChange)="openFolder('expand',$event)"-->
           <ng-template #nzTreeTemplate let-node>
             <span class="custom-node" draggable="true" aria-grabbed="true" [class.active]="node.isSelected">
               <span  *ngIf="!node.isLeaf">
