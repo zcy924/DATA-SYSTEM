@@ -77,16 +77,6 @@ export class UserSettingComponent implements OnInit {
     );
   }
 
-  // 删除用户的对话框
-  // showDelUserConfirm(userNo: string): void {
-  //   this.nzModel.confirm({
-  //     nzTitle: '是否删除此用户',
-  //     nzOnOk: res => {
-  //       this.delUser(userNo);
-  //     },
-  //   });
-  // }
-
   // 删除用户
   delUser(userNo: string): void {
     const params = {

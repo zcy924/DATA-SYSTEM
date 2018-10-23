@@ -57,6 +57,7 @@ export class RoleManageComponent implements OnInit {
 
   roleList = [];
   disabledButton = true;
+  checkedAll = '全选';
 
   constructor(
     private nzModal: NzModalService,
@@ -125,21 +126,24 @@ export class RoleManageComponent implements OnInit {
         role_id: role.role_id,
       },
     };
-    this.service.delRole(params).subscribe(res => {
-        if (res['retCode'] === '00000') {
-          this.message.success('删除角色成功！');
-        } else {
-          this.message.error('删除角色失败！');
-        }
-      });
+    this.nzModal.confirm({
+      nzTitle: '确认删除当前角色？',
+      nzOnOk: () => {
+        this.service.delRole(params).subscribe(res => {
+          if (res['retCode'] === '00000') {
+            this.message.success('删除角色成功！');
+            this.getRoleList();
+          } else {
+            this.message.error('删除角色失败！');
+          }
+        });
+      },
+    });
   }
 
   // TODO 批量删除
   delAll() {
-
   }
-
-  checkedAll = '全选';
 
   checkAll(checkedAll) {
     if (checkedAll === '全选') {
@@ -158,11 +162,11 @@ export class RoleManageComponent implements OnInit {
     // 查询角色对应的用户列表
     let params1 = {
       SpaceRole: {
-        role_id: role.role_id,
+        roleId: role.role_id,
       },
     };
     let users = [];
-    this.service.qryRoleUser(params1).subscribe(res => {
+    this.service.qryUserListByRole(params1).subscribe(res => {
       if (res['retCode'] === '00000') {
         users = res['retList'];
       } else {
@@ -172,8 +176,12 @@ export class RoleManageComponent implements OnInit {
     // 查询角色对应的报表列表
     let params2 = {};
     let reports = [];
-    this.service.qryRoleUser(params2).subscribe(res => {
-
+    this.service.qryReportListByRole(params2).subscribe(res => {
+      if (res['retCode'] === '00000') {
+        reports = res['retList'];
+      } else {
+        this.message.error('查询角色对应的报表列表失败！');
+      }
     });
     const modal = this.nzModal.create({
       nzTitle: '编辑角色',
@@ -182,8 +190,8 @@ export class RoleManageComponent implements OnInit {
       nzComponentParams: {
         roleName: role.role_name,
         remark: role.remark,
-        users: [],
-        reportList: [],
+        users: users,
+        reportList: reports,
       },
       nzOnOk: ref => {
         return new Promise(res => {
