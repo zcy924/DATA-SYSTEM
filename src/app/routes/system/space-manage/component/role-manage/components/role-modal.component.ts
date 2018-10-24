@@ -249,7 +249,7 @@ export class RoleModalComponent implements OnInit {
         spaceId: spaceID,
       },
     };
-    this.spaceService.qryAllReportList(params).subscribe(res => {
+    this.spaceService.qryReportTree(params).subscribe(res => {
       this.recursiveNode(this.nodes,res['retTreeList']);
       // const a = res['retTreeList'];
       // this.tree(a);

@@ -50,6 +50,13 @@ export class CompanyManageService {
       params,
     );
   }
+
+  delSpace(params): Observable<any> {
+    return this.httpClient.post(
+      this.url + 'company/spaceSquareManage/delSpace',
+      params,
+    );
+  }
   /***************************用户设置**************************/
 
   searchFuzzyUsers(params): Observable<any> {
@@ -70,10 +77,5 @@ export class CompanyManageService {
   delUser(params): Observable<any> {
     return this.httpClient.post(this.url + 'company/companyUserDel', params);
   }
-  delSpace(params): Observable<any> {
-    return this.httpClient.post(
-      this.url + 'company/spaceSquareManage/delSpace',
-      params,
-    ); 
-  }
+
 }

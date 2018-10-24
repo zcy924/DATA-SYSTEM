@@ -1,0 +1,63 @@
+<nz-tabset [nzTabPosition]="'top'" [nzType]="'card'" [nzTabBarStyle]="{margin:0,border:0}">
+  <form nz-form>
+    <nz-tab [nzTitle]="'基本信息'">
+      <div class="b-wrapper" style="padding: 15px;border: 1px solid #e8e8e8;">
+        <nz-form-item nz-row style="margin-top: 16px">
+          <nz-form-label [nzSpan]="5" >用户姓名</nz-form-label>
+          <nz-form-control [nzSpan]="16">
+            <input nz-input name="companyName" [(ngModel)]="user.user_name" disabled>
+            <!--<nz-form-explain *ngIf="validateForm.get('email').dirty && validateForm.get('email').errors">The input is not valid E-mail!</nz-form-explain>-->
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item nz-row>
+          <nz-form-label [nzSpan]="5">用户账号</nz-form-label>
+          <nz-form-control [nzSpan]="16">
+            <input nz-input name="companyAdmin" [(ngModel)]="user.user_no" disabled>
+            <!--<nz-form-explain *ngIf="validateForm.get('email').dirty && validateForm.get('email').errors">The input is not valid E-mail!</nz-form-explain>-->
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <div ><label nz-checkbox  name="checked"  (ngModelChange)="updateChecked()"  [(ngModel)]="adminChecked" >空间管理员</label></div>
+        </nz-form-item>
+      </div>
+    </nz-tab>
+
+    <nz-tab [nzTitle]="'角色配置' ">
+      <div style="padding: 15px;border: 1px solid #e8e8e8;">
+        <div *ngFor="let role of roles">
+          <label nz-checkbox name="{{role.role_name}}" (ngModelChange)="updateChecked(role)" [(ngModel)]="role.checked">
+            {{role.role_name}}
+          </label>
+        </div>
+      </div>
+    </nz-tab>
+
+    <nz-tab [nzTitle]="'权限配置' ">
+      <div style="padding: 15px;border: 1px solid #e8e8e8;">
+        请选择用户可访问的报表：
+        <div  style="padding: 12px;border: 1px solid #e8e8e8;height: 350px;overflow:auto">
+          <nz-tree name="nodes" #treeCom
+                   [(ngModel)]="nodes"
+                   [nzCheckStrictly]="false"
+                   [nzCheckable]="true"
+                   [nzMultiple]="true"
+                   (nzCheckBoxChange)="checkTreeNode($event)"
+          >
+            <!-- [nzAsyncData]="true"           (nzExpandChange)="openFolder('expand',$event)"-->
+            <ng-template #nzTreeTemplate let-node>
+            <span class="custom-node" draggable="true" aria-grabbed="true" [class.active]="node.isSelected">
+              <span *ngIf="!node.isLeaf">
+                <i class="anticon" [ngClass]="node.isExpanded ? 'anticon-folder-open' : 'anticon-folder'"></i> {{node.title}}
+              </span>
+              <span *ngIf="node.isLeaf">
+                <i class="anticon anticon-file"></i> {{node.title}}
+              </span>
+            </span>
+            </ng-template>
+          </nz-tree>
+        </div>
+        推荐通过角色管理权限, 但是还是可以给个人配置独立权限。
+      </div>
+    </nz-tab>
+  </form>
+</nz-tabset>
