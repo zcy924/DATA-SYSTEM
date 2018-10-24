@@ -3,10 +3,7 @@ import { Component, Inject, Optional } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
-import {
-  TokenService,
-  DA_SERVICE_TOKEN,
-} from '@delon/auth';
+import { TokenService, DA_SERVICE_TOKEN } from '@delon/auth';
 import { ReuseTabService } from '@delon/abc';
 import { StartupService } from '@core/startup/startup.service';
 import { LoginService } from './login.service';
@@ -21,17 +18,19 @@ export class LoginComponent {
   validateForm: FormGroup;
   passwordMD5;
 
-  constructor(private fb: FormBuilder,
-              private router: Router,
-              public msg: NzMessageService,
-              private modalSrv: NzModalService,
-              private settingsService: SettingsService,
-              @Optional()
-              @Inject(ReuseTabService)
-              private reuseTabService: ReuseTabService,
-              @Inject(DA_SERVICE_TOKEN) private tokenService: TokenService,
-              private startupSrv: StartupService,
-              private loginService: LoginService) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    public msg: NzMessageService,
+    private modalSrv: NzModalService,
+    private settingsService: SettingsService,
+    @Optional()
+    @Inject(ReuseTabService)
+    private reuseTabService: ReuseTabService,
+    @Inject(DA_SERVICE_TOKEN) private tokenService: TokenService,
+    private startupSrv: StartupService,
+    private loginService: LoginService,
+  ) {
     this.validateForm = this.fb.group({
       userName: [null, [Validators.required]],
       password: [null, [Validators.required]],
@@ -48,7 +47,9 @@ export class LoginComponent {
       return;
     }
     // const params = this.validateForm.value;
-    this.passwordMD5 = Md5.hashStr(this.validateForm.controls.password.value).toString();
+    this.passwordMD5 = Md5.hashStr(
+      this.validateForm.controls.password.value,
+    ).toString();
     const params = {
       userNo: this.validateForm.controls.userName.value,
       password: this.passwordMD5,
@@ -69,6 +70,7 @@ export class LoginComponent {
           companyId: data.companyId,
           companyName: data.companyName,
           companyLogo: data.avatar,
+          isCompanyAdmin: data.isCompanyAdmin === 'T' ? true : false,
         });
         // 重新获取 StartupService 内容，若其包括 User 有关的信息的话
         // this.startupSrv.load().then(() => this.router.navigate(['/']));
@@ -81,22 +83,22 @@ export class LoginComponent {
       }
     });
 
-        // 设置Token信息
-        // this.tokenService.set({
-        //   token: 'asdawdawda',
-        // });
-        // this.settingsService.setUser({
-        //   name: data.retData.userName,
-        //   avatar: data.userIcon,
-        //   account: data.userId,
-        //   companyId: data.companyId,
-        //   companyName: data.companyName,
-        //   companyLogo: data.avatar,
-        // });
-        // 重新获取 StartupService 内容，若其包括 User 有关的信息的话
-        // this.startupSrv.load().then(() => this.router.navigate(['/']));
-        // 否则直接跳转
-        // this.router.navigate(['/app/user']);
+    // 设置Token信息
+    // this.tokenService.set({
+    //   token: 'asdawdawda',
+    // });
+    // this.settingsService.setUser({
+    //   name: data.retData.userName,
+    //   avatar: data.userIcon,
+    //   account: data.userId,
+    //   companyId: data.companyId,
+    //   companyName: data.companyName,
+    //   companyLogo: data.avatar,
+    // });
+    // 重新获取 StartupService 内容，若其包括 User 有关的信息的话
+    // this.startupSrv.load().then(() => this.router.navigate(['/']));
+    // 否则直接跳转
+    // this.router.navigate(['/app/user']);
     // });
   }
 }

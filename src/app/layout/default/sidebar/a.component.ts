@@ -38,11 +38,11 @@ export class AComponent implements OnDestroy {
   ) {}
 
   go(url) {
+    console.log('hjaha');
     if (url !== undefined) {
       this.router.navigateByUrl(url);
     }
   }
-  ngOnDestroy(){
-    console.log("销毁当前实例");
+  ngOnDestroy() {
   }
 }

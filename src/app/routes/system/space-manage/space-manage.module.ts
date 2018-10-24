@@ -14,6 +14,7 @@ import { SpaceManageService } from './space-manage.service';
 import { EditScreenComponent } from './component/screen-manage/component/edit-screen.component';
 import { CompanyManageService } from '../company-manage/company-manage.service';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { ScreenDetailComponent } from './component/screen-detail.component';
 
 const components = [
   ReportDetailComponent,
@@ -21,6 +22,7 @@ const components = [
   RoleManageComponent,
   UserManageComponent,
   ScreenManageComponent,
+  ScreenDetailComponent
 ];
 const modals = [
   ReportModalComponent,

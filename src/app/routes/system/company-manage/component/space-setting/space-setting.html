@@ -39,7 +39,7 @@
           <tbody>
             <tr *ngFor="let data of dataSet">
               <td>{{data.spaceName}}</td>
-              <td><img src="{{data.avatar}}"></td>
+              <td><img src="{{data.avatar}}"/></td>
               <td>{{data.spaceUserNum}}</td>
               <td>
                 <nz-list [nzDataSource]="data.user" nzBordered [nzRenderItem]="item">
@@ -47,9 +47,13 @@
                     <nz-list-item [nzContent]="item.userName.concat('（',item.userNo,'）')"></nz-list-item>
                   </ng-template>
                 </nz-list>
+                <!-- <ng-container *ngFor="let item of data.user">
+                  <a>{{item.userName}}</a>
+                </ng-container> -->
               </td>
               <td>
-                <button nz-button nzType="danger" (click)="changeAdminModal(data.user,data.spaceId)">修改管理员</button>
+                <button nz-button nzType="default" (click)="changeAdminModal(data.user,data.spaceId)">修改管理员</button>
+                <button nz-button nzType="danger" (click)="delete(data.spaceName,data.spaceId)">删除该空间</button>
                 <!--<nz-divider nzType="vertical"></nz-divider>-->
               </td>
             </tr>

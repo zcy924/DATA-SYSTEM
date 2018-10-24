@@ -10,25 +10,17 @@ import { SideMenuService } from '@shared/side-menu.service';
 export class PersonalCenterComponent implements OnInit {
   menu: Array<Menu> = [
     {
-      text: '个人中心',
-      isLeaf: true,
-      isGroup: true,
-    },
-    {
       text: '报表收藏管理',
       link: '/app/user/user-report',
-      isLeaf: true,
       icon: 'anticon anticon-appstore-o',
     },
     {
       text: '大屏收藏管理',
-      isLeaf: true,
       icon: 'anticon anticon-area-chart',
       link: '/app/user/user-screen',
     },
     {
       text: '个人信息管理',
-      isLeaf: true,
       icon: 'anticon anticon-user',
       link: '/app/user/user-message',
     },
@@ -140,5 +132,6 @@ export class PersonalCenterComponent implements OnInit {
 
   ngOnInit() {
     this.sideMenu.setMenu(this.mmm);
+    // this.menuService.add(this.menu);
   }
 }
