@@ -13,8 +13,8 @@ import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
     </div>
     <div nz-menu class="width-sm">
       <div nz-menu-item routerLink="/app/user"><i class="anticon anticon-user mr-sm"></i>个人中心</div>
-      <div nz-menu-item routerLink="/app/company"><i class="anticon anticon-user mr-sm"></i>公司管理</div>
-      <div nz-menu-item routerLink="/app/system"><i class="anticon anticon-user mr-sm"></i>平台管理</div>
+      <div *ngIf="settings['user']['isCompanyAdmin']" nz-menu-item routerLink="/app/company">
+      <i class="anticon anticon-user mr-sm"></i>公司管理</div>
       <li nz-menu-divider></li>
       <div nz-menu-item (click)="logout()"><i class="anticon anticon-setting mr-sm"></i>退出登录</div>
     </div>
@@ -29,7 +29,11 @@ export class HeaderUserComponent {
   ) {}
 
   logout() {
+    // <div nz-menu-item routerLink="/app/system"><i class="anticon anticon-user mr-sm"></i>平台管理</div>
     this.tokenService.clear();
+    localStorage.clear();
+    this.settings.setUser({});
+    this.settings.setApp({});
     this.router.navigateByUrl(this.tokenService.login_url);
   }
 }

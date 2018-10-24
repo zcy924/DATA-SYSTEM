@@ -11,7 +11,6 @@ export class CompanyManageService {
   // url = '10.2.72.22:8080/dvsp/company/';
   constructor(private httpClient: HttpClient) {}
 
-
   /***************************公司设置**************************/
 
   getCompanyInfo(params): Observable<any> {
@@ -25,19 +24,31 @@ export class CompanyManageService {
   /***************************空间设置**************************/
 
   getSpaceList(params): Observable<any> {
-    return this.httpClient.post(this.url + 'company/spaceSquareManage/qrySpaceAdmin', params);
+    return this.httpClient.post(
+      this.url + 'company/spaceSquareManage/qrySpaceAdmin',
+      params,
+    );
   }
 
   searchFuzzySpaceList(params): Observable<any> {
-    return this.httpClient.post(this.url + 'company/spaceSquareManage/qryDimSpaceAdmin', params);
+    return this.httpClient.post(
+      this.url + 'company/spaceSquareManage/qryDimSpaceAdmin',
+      params,
+    );
   }
 
   updateAdmins(params): Observable<any> {
-    return this.httpClient.post(this.url + 'company/spaceSquareManage/spaceAdminUdt', params);
+    return this.httpClient.post(
+      this.url + 'company/spaceSquareManage/spaceAdminUdt',
+      params,
+    );
   }
 
   createSpace(params: any): Observable<any> {
-    return this.httpClient.post(this.url + 'company/spaceSquareManage/addSpace', params);
+    return this.httpClient.post(
+      this.url + 'company/spaceSquareManage/addSpace',
+      params,
+    );
   }
   /***************************用户设置**************************/
 
@@ -46,7 +57,10 @@ export class CompanyManageService {
   }
 
   getUserList(params): Observable<any> {
-    return this.httpClient.post(this.url + 'company/qryCompanyUserList', params);
+    return this.httpClient.post(
+      this.url + 'company/qryCompanyUserList',
+      params,
+    );
   }
 
   createUser(params): Observable<any> {
@@ -56,8 +70,10 @@ export class CompanyManageService {
   delUser(params): Observable<any> {
     return this.httpClient.post(this.url + 'company/companyUserDel', params);
   }
-
-
-
-
+  delSpace(params): Observable<any> {
+    return this.httpClient.post(
+      this.url + 'company/spaceSquareManage/delSpace',
+      params,
+    ); 
+  }
 }

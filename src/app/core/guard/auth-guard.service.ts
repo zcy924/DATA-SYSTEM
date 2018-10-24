@@ -13,9 +13,9 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    console.log('该用户未登陆');
-    const token = this.tokenService.get();
-    console.log(token);
+    // console.log('该用户未登陆');
+    // const token = this.tokenService.get();
+    // console.log(token);
     return true;
   }
 

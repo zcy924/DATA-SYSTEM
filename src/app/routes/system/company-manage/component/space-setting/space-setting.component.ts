@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NzModalRef, NzModalService } from 'ng-zorro-antd';
+import { NzModalRef, NzModalService, NzMessageService } from 'ng-zorro-antd';
 import { CompanyManageService } from '../../company-manage.service';
 import { Page } from '../../../../../models/page';
 import { AdminModalComponent } from './modal/admin-modal.component';
@@ -9,19 +9,17 @@ import { CreateSpaceComponent } from './modal/create-sapce.component';
   selector: 'app-space-setting',
   templateUrl: './space-setting.html',
 })
-
 export class SpaceSettingComponent implements OnInit {
-
   loading = false;
   dataSet = [];
   page = new Page();
-  key='';
+  key = '';
 
   constructor(
     private nzModel: NzModalService,
     private service: CompanyManageService,
-  ) {
-  }
+    private message: NzMessageService,
+  ) {}
 
   ngOnInit() {
     this.getSpaceAndAdminList(true);
@@ -37,7 +35,7 @@ export class SpaceSettingComponent implements OnInit {
       this.page.curPage = 1;
     }
     this.loading = true;
-    let params = {
+    const params = {
       pageSize: this.page.pageSize,
       curPage: this.page.curPage,
       totalPage: this.page.totalPage,
@@ -50,8 +48,8 @@ export class SpaceSettingComponent implements OnInit {
       this.dataSet.forEach(res => {
         if (res.userName !== null && res.userName.length > 0) {
           res['user'] = [];
-          let userNameList = res.userName.split(',');
-          let userNoList = res.userNo.split(',');
+          const userNameList = res.userName.split(',');
+          const userNoList = res.userNo.split(',');
           userNoList.forEach((value, index) => {
             res.user.push({
               userNo: value,
@@ -61,7 +59,7 @@ export class SpaceSettingComponent implements OnInit {
         }
       });
       this.loading = false;
-      });
+    });
   }
 
   // 修改空间管理员
@@ -72,12 +70,12 @@ export class SpaceSettingComponent implements OnInit {
     const modal = this.nzModel.create({
       nzTitle: `修改管理员`,
       nzContent: AdminModalComponent,
-      nzWidth: '50%',
+      nzWidth: '40%',
       nzComponentParams: {
         admins: list,
         spaceId: spaceId,
       },
-      nzOnOk: (ref) => {
+      nzOnOk: ref => {
         ref.updateAdmins();
         this.getSpaceAndAdminList(true);
       },
@@ -91,16 +89,17 @@ export class SpaceSettingComponent implements OnInit {
       nzContent: CreateSpaceComponent,
       nzWidth: '50%',
       nzOnOk: res => {
-        res.createSpace();
+        return new Promise(resolve => {
+          res.createSpace();
+        });
       },
     });
     modal.afterClose.subscribe(res => {
       if (res === 'ok') {
-        // this.getList();
+        this.getSpaceAndAdminList(true);
       }
     });
   }
-
 
   // 模糊查询空间列表与管理员
   searchFuzzy(reset: boolean = false): void {
@@ -112,7 +111,7 @@ export class SpaceSettingComponent implements OnInit {
       this.page.curPage = 1;
     }
     this.loading = true;
-    let params = {
+    const params = {
       key: this.key,
       pageSize: this.page.pageSize,
       curPage: this.page.curPage,
@@ -126,8 +125,8 @@ export class SpaceSettingComponent implements OnInit {
       this.dataSet.forEach(res => {
         if (res.userName !== null && res.userName.length > 0) {
           res['user'] = [];
-          let userNameList = res.userName.split(',');
-          let userNoList = res.userNo.split(',');
+          const userNameList = res.userName.split(',');
+          const userNoList = res.userNo.split(',');
           userNoList.forEach((value, index) => {
             res.user.push({
               userNo: value,
@@ -137,6 +136,26 @@ export class SpaceSettingComponent implements OnInit {
         }
       });
       this.loading = false;
+    });
+  }
+  delete(spname, spid) {
+    const params = {
+      spaceId: spid,
+      spaceName: spname,
+    };
+    const modal = this.nzModel.confirm({
+      nzTitle: '确认要删除该空间？',
+      nzOnOk: () => {
+        this.service.delSpace(params).subscribe(data => {
+          if (data.retCode == '00000') {
+            modal.destroy();
+            this.message.success('删除成功!');
+            this.getSpaceAndAdminList(true);
+          } else {
+            this.message.error(data.retMsg);
+          }
+        });
+      },
     });
   }
 }

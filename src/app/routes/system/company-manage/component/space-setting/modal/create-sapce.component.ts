@@ -38,9 +38,9 @@ export class CreateSpaceComponent implements OnInit {
     });
     let params = {
       Space: {
-        space_name: this.space_name,
+        spaceName: this.space_name,
         remark: this.space_desc,
-        ispublic: this.isPublic,
+        isPublic: this.isPublic,
         status:'T',
         avatar: './assets/default/space.png',
         userList:this.admins

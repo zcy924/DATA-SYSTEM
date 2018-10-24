@@ -36,10 +36,12 @@ export class CreateSpaceComponent implements OnInit {
   createSpace() {
     const params = {
       Space: {
-        space_name: this.space_name,
+        spaceName: this.space_name,
         remark: this.space_desc,
-        ispublic: this.isPublic,
+        isPublic: this.isPublic,
         avatar: './assets/default/space.png',
+        status: 'T',
+        userList: this.admins
       },
     };
 

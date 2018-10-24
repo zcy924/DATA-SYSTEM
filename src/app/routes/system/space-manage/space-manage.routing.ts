@@ -5,12 +5,18 @@ import { ReportManageComponent } from './component/report-manage/report-manage.c
 import { ScreenManageComponent } from './component/screen-manage/screen-manage.component';
 import { RoleManageComponent } from './component/role-manage/role-manage.component';
 import { UserManageComponent } from './component/user-manage/user-manage.component';
+import { ScreenDetailComponent } from './component/screen-detail.component';
 
 const routes: Routes = [
   {
     path: 'report-detail/:reportId',
     component: ReportDetailComponent,
     data: { title: '报表详情' },
+  },
+  {
+    path: 'screen-detail/:screenId',
+    component: ScreenDetailComponent,
+    data: {title: '大屏详情'}
   },
   {
     path: 'report-manage',

@@ -5,8 +5,8 @@
         空间广场
       </div>
       <div nz-col style="float: right">
-        <button nz-button nzType="default"  [routerLink]="['/app/company']" routerLinkActive="router-link-active"><i class="anticon anticon-setting"></i>公司管理</button>
-        <button nz-button [nzType]="'primary'" (click)="showCreateModal('空间')"  style="display:inline-block;margin-left: 16px"><i class="anticon anticon-plus"></i>创建空间</button>
+        <button *ngIf="settings['user']['isCompanyAdmin']" nz-button nzType="default"  [routerLink]="['/app/company']" routerLinkActive="router-link-active"><i class="anticon anticon-setting"></i>公司管理</button>
+        <button *ngIf="settings['user']['isCompanyAdmin']" nz-button [nzType]="'primary'" (click)="showCreateModal('空间')"  style="display:inline-block;margin-left: 16px"><i class="anticon anticon-plus"></i>创建空间</button>
         <nz-input-group nzSearch [nzSuffix]="suffixButton" style="width: 200px; margin-left: 16px">
           <input type="text" name="key" [(ngModel)]="key" nz-input placeholder="搜索空间" />
         </nz-input-group>
@@ -17,9 +17,9 @@
 
     </div>
     <div nz-row style="background-color: #f5f7fa;padding: 16px;">
-      <nz-divider *ngIf="onlyWrite.length>0" nzText="可管理空间" nzOrientation="left"></nz-divider>
+      <nz-divider *ngIf="onlyWrite.length>0" nzText="我的空间" nzOrientation="left"></nz-divider>
       <div nz-row>
-        <div nz-col (click)="openDetail(item.space_id)" *ngFor="let item of onlyWrite" style="width: 300px;float:left;padding-right: 16px">
+        <div nz-col (click)="openDetail(item.space_id,'admin')" *ngFor="let item of onlyWrite" style="width: 300px;float:left;padding-right: 16px">
           <ng-template #avatarTemplate>
             <div style="line-height:60px;">
               <nz-avatar [nzShape]="'square'" nzSrc="./assets/tmp/img/6.png" nzSize="large"></nz-avatar>
@@ -33,9 +33,9 @@
           </ng-template>
         </div>
       </div>
-      <nz-divider *ngIf="onlyRead.length>0" nzText="可查看空间" nzOrientation="left"></nz-divider>
+      <nz-divider *ngIf="onlyRead.length>0" nzText="其他空间" nzOrientation="left"></nz-divider>
       <div nz-row>
-        <div nz-col (click)="openDetail(item.space_id)" *ngFor="let item of onlyRead" style="width: 300px;float:left;padding-right: 16px">
+        <div nz-col (click)="openDetail(item.space_id,'other')" *ngFor="let item of onlyRead" style="width: 300px;float:left;padding-right: 16px">
           <ng-template #avatarTemplate>
             <div style="line-height:60px;">
               <nz-avatar [nzShape]="'square'" nzSrc="./assets/tmp/img/6.png" nzSize="large"></nz-avatar>
@@ -51,7 +51,7 @@
       </div>
       <nz-divider *ngIf="public.length>0" nzText="公开空间" nzOrientation="left"></nz-divider>
       <div nz-row>
-        <div nz-col (click)="openDetail(item.space_id)" *ngFor="let item of public" style="width: 300px;float:left;padding-right: 16px">
+        <div nz-col (click)="openDetail(item.space_id,'public')" *ngFor="let item of public" style="width: 300px;float:left;padding-right: 16px">
           <ng-template #avatarTemplate>
             <div style="line-height:60px;">
               <nz-avatar [nzShape]="'square'" nzSrc="./assets/tmp/img/6.png" nzSize="large"></nz-avatar>

@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SpaceManageService } from './space-manage.service';
 import { SideMenuService } from '@shared/side-menu.service';
 import { Menu } from 'app/models/menu';
+import { Page } from 'app/models/page';
 
 @Component({
   templateUrl: './space-manage.html',
@@ -11,6 +12,7 @@ import { Menu } from 'app/models/menu';
 })
 export class SpaceManageComponent implements OnInit {
   url: String;
+  page = new Page();
   reportTree: any;
   menu: Array<Menu> = [
     {
@@ -21,24 +23,7 @@ export class SpaceManageComponent implements OnInit {
           text: '数据大屏',
           isLeaf: false,
           icon: 'anticon anticon-folder',
-          children: [
-            {
-              text: '紫金大屏',
-              link: `app/square/${localStorage.getItem(
-                'spaceID',
-              )}/report-manage`,
-              isLeaf: true,
-              icon: 'anticon anticon-appstore-o',
-            },
-            {
-              text: '紫金大屏二',
-              isLeaf: true,
-              icon: 'anticon anticon-area-chart',
-              link: `app/square/${localStorage.getItem(
-                'spaceID',
-              )}/screen-manage`,
-            },
-          ],
+          children: [],
         },
       ],
     },
@@ -46,8 +31,7 @@ export class SpaceManageComponent implements OnInit {
     {
       text: '报表',
       isGroup: true,
-      children: [
-      ],
+      children: [],
     },
 
     {
@@ -113,10 +97,6 @@ export class SpaceManageComponent implements OnInit {
     },
   ];
 
-  space = {
-    spaceName: 'zangsan',
-    spaceId: '123',
-  };
   constructor(
     private menuService: MenuService,
     private acRouter: ActivatedRoute,
@@ -125,19 +105,39 @@ export class SpaceManageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getReportList();
     this.getReportTree();
-    this.url = this.acRouter.snapshot.params['spaceId'];
-
-    console.log(this.menu);
-
+    this.getScreenList();
+    const spaceType = localStorage.getItem('spaceType');
+    if (spaceType !== 'admin') {
+      this.menu.splice(2, 1);
+    }
     this.sideMenu.setMenu(this.menu);
   }
-  getReportList() {
-    this.spaceManageService.getReportList({}).subscribe(data => {
-      console.log(data);
+  getScreenList(reset = false) {
+    if (reset) {
+      this.page.curPage = 1;
+    }
+    const params = {
+      spaceId: localStorage.getItem('spaceID'),
+      curPage: this.page.curPage,
+      pageSize: 100,
+      totalPage: this.page.totalPage || '',
+      totalRow: this.page.totalRow || '',
+    };
+    this.spaceManageService.getScreenList(params).subscribe(data => {
+      const dataSet = data['retList'];
+      dataSet.map(value => {
+        value.text = value.name;
+        value.link = `app/square/${value.spaceId}/screen-detail/${
+          value.dashboardId
+        }`;
+        value.isLeaf = true;
+        value.icon = value.icon;
+      });
+      this.menu[0]['children'][0]['children'] = dataSet;
     });
   }
+
   getReportTree() {
     const params = {
       Report: {
@@ -153,7 +153,9 @@ export class SpaceManageComponent implements OnInit {
   formateTree(array: Array<any>) {
     array.map(value => {
       value.text = value.reportName;
-      value.link = `square/${value.spaceId}/report-detail/${value.reportId}`;
+      value.link = `app/square/${value.spaceId}/report-detail/${
+        value.reportId
+      }`;
       value.isLeaf = value.type == 1 ? true : false;
       value.icon =
         value.type == 1 ? 'anticon anticon-file' : 'anticon anticon-folder';

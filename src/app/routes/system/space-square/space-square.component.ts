@@ -4,6 +4,7 @@ import { SpaceSquareService } from './space-square.service';
 import { CreateSpaceComponent } from './component/create-sapce.component';
 import { NzModalService } from 'ng-zorro-antd';
 import { ReportModalComponent } from '../space-manage/component/report-manage/components/report-modal.component';
+import { SettingsService } from '@delon/theme';
 
 @Component({
   selector: 'app-space-aquare',
@@ -22,14 +23,16 @@ export class SpaceSquareComponent implements OnInit {
     private router: Router,
     private spaceService: SpaceSquareService,
     private nzModel: NzModalService,
-  ) {
+    public settings: SettingsService,
+  ) {}
+
+  ngOnInit() {
     this.getList();
   }
 
-  ngOnInit() {}
-
-  openDetail(spaceId) {
+  openDetail(spaceId, spaceType) {
     localStorage.setItem('spaceID', spaceId.toString());
+    localStorage.setItem('spaceType', spaceType);
     this.router.navigate(['app/square/' + spaceId]);
   }
 
