@@ -8,50 +8,38 @@ import { Observable } from 'rxjs';
 export class SpaceManageService {
   url = environment.SERVER_URL;
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+  }
 
   /***********************************大屏************************************/
   addScreen(params): Observable<any> {
-    return this.httpClient.post(
-      this.url + 'spaceManage/dashBoard/increase',
-      params,
-    );
+    return this.httpClient.post(this.url + 'spaceManage/dashBoard/increase', params);
   }
 
   getScreenList(params): Observable<any> {
-    return this.httpClient.post(
-      this.url + 'spaceManage/dashBoard/listQry',
-      params,
-    );
+    return this.httpClient.post(this.url + 'spaceManage/dashBoard/listQry', params);
   }
 
   modScreenInfo(params): Observable<any> {
-    return this.httpClient.post(
-      this.url + 'spaceManage/dashBoard/revise',
-      params,
-    );
+    return this.httpClient.post(this.url + 'spaceManage/dashBoard/revise', params);
   }
 
   delScreen(params): Observable<any> {
-    return this.httpClient.post(
-      this.url + 'spaceManage/dashBoard/delete',
-      params,
-    );
+    return this.httpClient.post(this.url + 'spaceManage/dashBoard/delete', params);
   }
 
   delAllScreen(params): Observable<any> {
-    return this.httpClient.post(
-      this.url + 'spaceManage/dashBoard/alldel',
-      params,
-    );
+    return this.httpClient.post(this.url + 'spaceManage/dashBoard/alldel', params);
   }
 
   /*************************************报表*************************************/
+
+  qryReportTree(params): Observable<any> {
+    return this.httpClient.post(this.url + 'space/report/qryReportListTree', params);
+  }
+
   getReportList(params): Observable<any> {
-    return this.httpClient.post(
-      this.url + 'space/report/qryReportList',
-      params,
-    );
+    return this.httpClient.post(this.url + 'space/report/qryReportList', params);
   }
 
   delReport(params): Observable<any> {
@@ -63,16 +51,7 @@ export class SpaceManageService {
   }
 
   modReport(params): Observable<any> {
-    return this.httpClient.post(
-      this.url + 'space/report/modReportContent',
-      params,
-    );
-  }
-  qryAllReportList(params): Observable<any> {
-    return this.httpClient.post(
-      this.url + 'space/report/qryReportListTree',
-      params,
-    );
+    return this.httpClient.post(this.url + 'space/report/modReportContent', params,);
   }
 
   /************************************角色***********************************/
@@ -94,17 +73,11 @@ export class SpaceManageService {
   }
 
   qryUserListByRole(params): Observable<any> {
-    return this.httpClient.post(
-      this.url + 'space/spaceRole/qryRoleUser',
-      params,
-    );
+    return this.httpClient.post(this.url + 'space/spaceRole/qryRoleUser', params);
   }
 
   qryReportListByRole(params): Observable<any> {
-    return this.httpClient.post(
-      this.url + 'space/spaceUser/qryRoleReportList',
-      params,
-    );
+    return this.httpClient.post(this.url + 'space/spaceRole/qryRoleReportTree', params);
   }
 
   /************************************用户*************************************/

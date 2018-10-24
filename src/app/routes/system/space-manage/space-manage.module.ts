@@ -8,12 +8,13 @@ import { ScreenManageComponent } from './component/screen-manage/screen-manage.c
 import { SpaceManageRoutingModule } from './space-manage.routing';
 import { ReportModalComponent } from './component/report-manage/components/report-modal.component';
 import { RoleModalComponent } from './component/role-manage/components/role-modal.component';
-import { UserModalComponent } from './component/user-manage/components/user-modal.component';
+import { AddUserModalComponent } from './component/user-manage/components/add-user-modal.component';
 import { AddScreenComponent } from './component/screen-manage/component/add-screen.component';
 import { SpaceManageService } from './space-manage.service';
 import { EditScreenComponent } from './component/screen-manage/component/edit-screen.component';
 import { CompanyManageService } from '../company-manage/company-manage.service';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { EditUserModalComponent } from './component/user-manage/components/edit-user-modal.component';
 
 const components = [
   ReportDetailComponent,
@@ -25,7 +26,8 @@ const components = [
 const modals = [
   ReportModalComponent,
   RoleModalComponent,
-  UserModalComponent,
+  AddUserModalComponent,
+  EditUserModalComponent,
   AddScreenComponent,
   EditScreenComponent,
 ];

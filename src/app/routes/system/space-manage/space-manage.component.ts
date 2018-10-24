@@ -144,7 +144,7 @@ export class SpaceManageComponent implements OnInit {
         spaceId: localStorage.getItem('spaceID'),
       },
     };
-    this.spaceManageService.qryAllReportList(params).subscribe(data => {
+    this.spaceManageService.qryReportTree(params).subscribe(data => {
       const report_menu = data.retTreeList;
       this.formateTree(report_menu);
       this.menu[1]['children'] = report_menu;

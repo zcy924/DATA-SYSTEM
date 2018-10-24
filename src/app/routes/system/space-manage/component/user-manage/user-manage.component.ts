@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
-import { UserModalComponent } from './components/user-modal.component';
 import { SpaceManageService } from '../../space-manage.service';
+import { AddUserModalComponent } from './components/add-user-modal.component';
+import { EditUserModalComponent } from './components/edit-user-modal.component';
 
 @Component({
   selector: 'app-user-manage',
@@ -51,6 +52,7 @@ import { SpaceManageService } from '../../space-manage.service';
         text-align: center;
         font-size: larger;
       }
+
       .card-item-checked {
         border-color: #ace4f5;
         background: #d9f3fb;
@@ -77,11 +79,11 @@ export class UserManageComponent implements OnInit {
   }
 
 
-  // 添加角色
+  // 添加用户
   addUser() {
     const modal = this.nzModal.create({
       nzTitle: '新增用户',
-      nzContent: UserModalComponent,
+      nzContent: AddUserModalComponent,
       nzWidth: '50%',
       nzOnOk: ref => {
         return new Promise(res => {
@@ -136,13 +138,18 @@ export class UserManageComponent implements OnInit {
         space_id: spaceID,
       },
     };
-    this.service.delRole(params).subscribe(res => {
-        if (res['retCode'] === '00000') {
-          this.message.success('删除角色成功！');
-        } else {
-          this.message.error('删除角色失败！');
-        }
-      });
+    this.nzModal.confirm({
+      nzTitle: '是否将该用户从空间中移出？',
+      nzOnOk: () => {
+        this.service.delRole(params).subscribe(res => {
+          if (res['retCode'] === '00000') {
+            this.message.success('移出用户成功！');
+          } else {
+            this.message.error('移出用户失败！');
+          }
+        });
+      }
+    });
   }
 
   // TODO 批量删除
@@ -151,6 +158,7 @@ export class UserManageComponent implements OnInit {
   }
 
   checkedAll = '全选';
+
   checkAll(checkedAll) {
     if (checkedAll === '全选') {
       this.userList.forEach(role => role.checked = true);
@@ -166,21 +174,13 @@ export class UserManageComponent implements OnInit {
 
   // 编辑修改用户
   editUser(user) {
-    // TODO 查询角色对应的报表列表
-    let params = {};
-    let reports = [];
-    this.service.qryReportListByUser(params).subscribe(res => {
-
-    });
     const modal = this.nzModal.create({
       nzTitle: '编辑用户',
-      nzContent: UserModalComponent,
+      nzContent: EditUserModalComponent,
       nzWidth: '50%',
       nzComponentParams: {
-        userName: user.user_name,
-        userNo: user.user_no,
-        roles: user.roleList,
-        reportList: reports,
+        user: user,
+        adminChecked: user.is_space_admin === 'T',
       },
       nzOnOk: ref => {
         return new Promise(res => {
@@ -192,7 +192,6 @@ export class UserManageComponent implements OnInit {
       this.getUserList();
     });
   }
-
 
 
 }
