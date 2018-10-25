@@ -12,7 +12,7 @@ export class AddUserModalComponent implements OnInit {
 
   userName;
   userNo;
-  adminChecked;
+  adminChecked=false;
   usersOfSpace=[];
   users = [];
   searchedUsers = [];
@@ -48,9 +48,11 @@ export class AddUserModalComponent implements OnInit {
     let spaceID = localStorage.getItem('spaceID');
     this.roles = this.roles.filter(role=>role.checked);
     this.treeCom.getCheckedNodeList().forEach(node => this.reportList.push({ reportId: node.key }));
+    this.users = this.users.filter(user=>user.checked);
+    this.users.forEach(user=>user.isSpaceAdmin=(this.adminChecked===true)?'T':'F');
     let params = {
       SpaceUser: {
-        userName: this.userName,
+        userList: this.users,
         status: 'T',
         spaceId: spaceID,
         roleList: this.roles,

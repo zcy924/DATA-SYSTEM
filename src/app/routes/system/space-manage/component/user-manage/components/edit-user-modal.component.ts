@@ -52,6 +52,7 @@ export class EditUserModalComponent implements OnInit {
         status: 'T',
         roleList: this.roles,
         reportList: this.reportList,
+        isSpaceAdmin:(this.adminChecked===true)?'T':'F'
       },
     };
     this.spaceService.modUser(params).subscribe(res => {
