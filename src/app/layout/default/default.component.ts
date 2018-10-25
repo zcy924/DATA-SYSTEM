@@ -53,7 +53,7 @@ export class LayoutDefaultComponent implements AfterViewInit, OnDestroy {
         this.isFetching = false;
         if (evt instanceof NavigationError) {
           // flag = false;
-          _message.error(`无法加载${evt.url}路由`, { nzDuration: 1000 * 3 });
+          // _message.error(`无法加载${evt.url}路由`, { nzDuration: 1000 * 3 });
         }
         return;
       }
