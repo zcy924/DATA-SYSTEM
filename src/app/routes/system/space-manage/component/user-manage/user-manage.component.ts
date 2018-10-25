@@ -8,7 +8,7 @@ import { EditUserModalComponent } from './components/edit-user-modal.component';
   selector: 'app-user-manage',
   templateUrl: './user-manage.html',
   styles: [
-    `
+      `
       .title-tab {
         height: 32px;
         line-height: 32px;
@@ -65,12 +65,14 @@ export class UserManageComponent implements OnInit {
   key = '';
   userList = [];
   disabledButton = true;
+  selectedArray = [];
 
   constructor(
     private nzModal: NzModalService,
     private message: NzMessageService,
     private service: SpaceManageService,
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.getUserList();
@@ -82,8 +84,8 @@ export class UserManageComponent implements OnInit {
       nzTitle: '新增用户',
       nzContent: AddUserModalComponent,
       nzWidth: '50%',
-      nzComponentParams:{
-        usersOfSpace:this.userList
+      nzComponentParams: {
+        usersOfSpace: this.userList,
       },
       nzOnOk: ref => {
         return new Promise(res => {
@@ -129,33 +131,37 @@ export class UserManageComponent implements OnInit {
         this.disabledButton = false;
       }
     });
+    this.selectedArray = this.userList.filter(value => value.checked);
   }
 
-  // 删除角色
-  delUser(role) {
+  // 删除一个角色
+  delUser(user) {
+    let title = '该用户';
+    this.delAll([{ userId: user.userId }], title);
+  }
+
+  // 批量删除
+  delAll(list, title = '所选择的用户') {
     let spaceID = localStorage.getItem('spaceID');
     let params = {
-      SpaceRole: {
-        user_id: role.role_id,
-        space_id: spaceID,
+      SpaceUser: {
+        spaceId: spaceID,
+        userList: list,
       },
     };
     this.nzModal.confirm({
-      nzTitle: '是否将该用户从空间中移出？',
+      nzTitle: '是否将' + title + '移出？',
       nzOnOk: () => {
-        this.service.delRole(params).subscribe(res => {
+        this.service.delUser(params).subscribe(res => {
           if (res['retCode'] === '00000') {
-            this.message.success('移出用户成功！');
+            this.message.success('移出' + title + '成功！');
           } else {
-            this.message.error('移出用户失败！');
+            this.message.error('移出' + title + '失败！');
           }
         });
       },
     });
   }
-
-  // TODO 批量删除
-  delAll() {}
 
   checkedAll = '全选';
 
@@ -169,6 +175,7 @@ export class UserManageComponent implements OnInit {
       this.disabledButton = true;
       this.checkedAll = '全选';
     }
+    this.selectedArray = this.userList.filter(value => value.checked);
   }
 
   // 编辑修改用户

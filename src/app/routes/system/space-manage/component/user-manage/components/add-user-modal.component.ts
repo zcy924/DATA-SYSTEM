@@ -46,6 +46,8 @@ export class AddUserModalComponent implements OnInit {
   // 添加空间用户
   createUser() {
     let spaceID = localStorage.getItem('spaceID');
+    this.roles = this.roles.filter(role=>role.checked);
+    this.treeCom.getCheckedNodeList().forEach(node => this.reportList.push({ reportId: node.key }));
     let params = {
       SpaceRole: {
         userName: this.userName,
@@ -94,10 +96,7 @@ export class AddUserModalComponent implements OnInit {
       },
     };
     this.spaceService.qryReportTree(params).subscribe(res => {
-      console.log('遍历完整报表树开始');
       this.recursiveNode(this.nodes, res['retTreeList']);
-      console.log(this.nodes);
-      console.log('遍历完整报表树结束');
     });
   }
 
@@ -110,7 +109,6 @@ export class AddUserModalComponent implements OnInit {
         expanded: true,
         isLeaf: report.type !== '0',
         checked: report.checked === 'T',
-        // disabled: report.checked === 'T',
       });
       nodes.push(node);
       if (!node.isLeaf && report.children) {

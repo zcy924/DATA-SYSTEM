@@ -27,18 +27,14 @@
         <br> <br>
         <nz-form-item nz-row style="padding: 8px">
           <nz-form-control >
-            <div *ngFor="let user of users">
-              <label nz-checkbox name="{{user.userNo}}" [hidden]="!user.checked" (ngModelChange)="updateChecked(user)"  [(ngModel)]="user.checked" >{{user.userName}}（{{user.userNo}}）</label>
-            </div>
-            <nz-input-group nzSearch  [nzSuffix]="suffixButton">
-              <input type="text" name="key" [(ngModel)]="key" nz-input placeholder="输入账号或姓名搜索用户">
+            <div *ngFor="let user of users"><label nz-checkbox name="{{user.userNo}}" (ngModelChange)="updateChecked(user)"
+                                                   [hidden]="!user.checked" [(ngModel)]="user.checked">{{user.userName}}（{{user.userNo}}）</label></div>
+            <nz-input-group nzSuffixIcon="anticon anticon-search">
+              <input type="text" name="key" (keyup)="searchUsers()" [(ngModel)]="key" nz-input placeholder="搜索用户" />
             </nz-input-group>
-            <ng-template #suffixButton>
-              <button nz-button nzType="primary" (click)="searchUsers()"   nzSearch><i class="anticon anticon-search"></i></button>
-            </ng-template>
-            <div *ngFor="let user of searchedUsers">
-              <label nz-checkbox  name="{{user.userNo}}"  (ngModelChange)="searchChecked(user)"  [nzDisabled]="user.checked" [(ngModel)]="user.checked" >{{user.userName}}（{{user.userNo}}）</label>
-            </div>
+
+            <div *ngFor="let user of searchedUsers"><label nz-checkbox name="{{user.userNo}}" (ngModelChange)="searchChecked(user)"
+                                                           [nzDisabled]="user.checked" [(ngModel)]="user.checked">{{user.userName}}（{{user.userNo}}）</label></div>
           </nz-form-control>
         </nz-form-item>
       </div>

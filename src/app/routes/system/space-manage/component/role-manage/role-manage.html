@@ -11,7 +11,7 @@
   <div nz-row style="padding: 16px 0 0 16px">
     <div nz-col nzSpan="6">
       <button nzType="default" (click)="checkAll(checkedAll)" nz-button style="padding-right: 16px" >全选</button>
-      <button nz-button [disabled]="disabledButton" [nzType]="'danger'" (click)="delAll()">批量删除</button>
+      <button nz-button [disabled]="disabledButton" [nzType]="'danger'" (click)="delAll(selectedArray)">批量删除</button>
     </div>
   </div>
   <div nz-row style="padding: 16px">
@@ -22,7 +22,7 @@
 
             <div nz-col nzSpan="22" >
               <div nz-row style="height: 32px">
-                <span style="font-size: 110%">{{role.role_name}}</span>
+                <span style="font-size: 110%">{{role.roleName}}</span>
               </div>
               <div nz-row style="height: 40px">
                 <span>{{role.remark}}</span>
