@@ -64,7 +64,7 @@ export class ReportManageComponent implements OnInit {
   }
 
   // 列表分页查询
-  searchData(reset: boolean = false, data = { parentid: '/', report_name: '根目录' }): void {
+  searchData(reset: boolean = false, data = { parentId: '/', reportName: '根目录' }): void {
     if (reset) {
       this.page.curPage = 1;
     }
@@ -76,8 +76,8 @@ export class ReportManageComponent implements OnInit {
       totalPage: this.page.totalPage,
       totalRow: this.page.totalRow,
       Report: {
-        space_id: spaceID,
-        parentid: data.parentid,
+        spaceId: spaceID,
+        parentId: data.parentId,
       },
     };
     this.spaceManageService.getReportList(params)
@@ -91,15 +91,15 @@ export class ReportManageComponent implements OnInit {
         this.page.totalRow = res['totalRow'];
         this.page.totalPage = res['totalPage'];
 
-        this.folderName = data.report_name;
-        this.folderID = data.parentid;
+        this.folderName = data.reportName;
+        this.folderID = data.parentId;
 
-        if (data.parentid === '/') { // 清除无效目录
+        if (data.parentId === '/') { // 清除无效目录
           this.folders = [];
         } else {
           let delTag = false;
           this.folders = this.folders.filter(value => {
-            if (value['parentid'] === data.parentid) {
+            if (value['parentId'] === data.parentId) {
               delTag = true;
             }
             if (delTag === true) {
@@ -111,8 +111,6 @@ export class ReportManageComponent implements OnInit {
         this.folders.push(data);
         console.log(this.folders);
         this.loading = false;
-      }, err => {
-        console.log(err);
       });
   }
 
@@ -137,7 +135,7 @@ export class ReportManageComponent implements OnInit {
     });
     modal.afterClose.subscribe(res => {
       if (res === 'ok') {
-        this.searchData(true, { parentid: this.folderID, report_name: this.folderName });
+        this.searchData(true, { parentId: this.folderID, reportName: this.folderName });
       }
     });
   }
@@ -158,17 +156,17 @@ export class ReportManageComponent implements OnInit {
       nzComponentParams: {
         folderName: this.folderName,
         folders: this.folders,
-        folderID: data.parentid,
+        folderID: data.parentId,
         isPublic: data.isPublic === this.isPublic,
         isDev: data.isDev === this.isDev,
         remark: data.remark,
-        reportName: data.report_name,
-        report_id: data.report_id,
+        reportName: data.reportName,
+        reportId: data.reportId,
         radioValue: data.type,
       },
       nzOnOk: (res) => {
         res.modReport();
-        this.searchData(true, { parentid: this.folderID, report_name: this.folderName });
+        this.searchData(true, { parentId: this.folderID, reportName: this.folderName });
       },
     });
   }
@@ -177,7 +175,7 @@ export class ReportManageComponent implements OnInit {
   delReport(reportID: string, type: string): void {
     let title = (type === this.isFolder) ? '此文件夹' : '此报表';
     let content = (type === this.isFolder) ? '此操作将会级联删除该文件夹中的子文件' : '';
-    this.delArray([{ 'report_id': reportID }], type, title, content);
+    this.delArray([{ 'reportId': reportID }], type, title, content);
   }
 
   // 批量删除报表
@@ -197,7 +195,7 @@ export class ReportManageComponent implements OnInit {
           .subscribe(res => {
             if (res['retCode'] === '00000') {
               this.message.success('删除' + title + '成功！');
-              this.searchData(true, { parentid: this.folderID, report_name: this.folderName });
+              this.searchData(true, { parentId: this.folderID, reportName: this.folderName });
             } else {
               this.message.error('删除' + title + '失败！');
             }
