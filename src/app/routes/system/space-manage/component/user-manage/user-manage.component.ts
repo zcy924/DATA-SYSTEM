@@ -106,7 +106,7 @@ export class UserManageComponent implements OnInit {
   getUserList() {
     let spaceID = localStorage.getItem('spaceID');
     let params = {
-      pageSize: 100,
+      pageSize: 5000,
       curPage: 0,
       totalPage: 0,
       totalRow: 0,
@@ -159,6 +159,7 @@ export class UserManageComponent implements OnInit {
         this.service.delUser(params).subscribe(res => {
           if (res['retCode'] === '00000') {
             this.message.success('移出' + title + '成功！');
+            this.getUserList();
           } else {
             this.message.error('移出' + title + '失败！');
           }

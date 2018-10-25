@@ -5,22 +5,21 @@
         <nz-form-item nz-row style="margin-top: 16px">
 
           要添加的用户(请搜索并选择用户，已在空间中的用户不可再次选中)：
-            <nz-form-control >
-              <div *ngFor="let user of users"><label nz-checkbox name="{{user.userNo}}" (ngModelChange)="updateUserChecked(user)"
-                                                       [hidden]="!user.checked" [(ngModel)]="user.checked">{{user.userName}}（{{user.userNo}}）</label></div>
-              <nz-input-group nzSuffixIcon="anticon anticon-search">
-                <input type="text" name="key" (keyup)="searchUsers()" [(ngModel)]="key" nz-input placeholder="搜索用户" />
-              </nz-input-group>
+          <nz-form-control>
+            <div *ngFor="let user of users"><label nz-checkbox name="{{user.userNo}}" (ngModelChange)="updateUserChecked(user)"
+                [hidden]="!user.checked" [(ngModel)]="user.checked">{{user.userName}}（{{user.userNo}}）</label></div>
+            <nz-input-group nzSuffixIcon="anticon anticon-search">
+              <input type="text" name="key" (keyup)="searchUsers()" [(ngModel)]="key" nz-input placeholder="搜索用户" />
+            </nz-input-group>
 
-              <div *ngFor="let user of searchedUsers"><label nz-checkbox name="{{user.userNo}}" (ngModelChange)="searchUserChecked(user)"
-                                                               [nzDisabled]="user.checked" [(ngModel)]="user.checked">{{user.userName}}（{{user.userNo}}）</label></div>
-            </nz-form-control>
+            <div *ngFor="let user of searchedUsers"><label nz-checkbox name="{{user.userNo}}" (ngModelChange)="searchUserChecked(user)"
+                [nzDisabled]="user.checked" [(ngModel)]="user.checked">{{user.userName}}（{{user.userNo}}）</label></div>
+          </nz-form-control>
 
         </nz-form-item>
         <nz-divider></nz-divider>
         <nz-form-item>
-          <div><label nz-checkbox name="adminChecked" (ngModelChange)="updateChecked(adminChecked)"
-                      [(ngModel)]="adminChecked">将以上用户设置为空间管理员</label></div>
+          <div><label nz-checkbox name="adminChecked" (ngModelChange)="updateChecked(adminChecked)" [(ngModel)]="adminChecked">将以上用户设置为空间管理员</label></div>
         </nz-form-item>
       </div>
     </nz-tab>
@@ -38,19 +37,15 @@
     <nz-tab [nzTitle]="'权限配置' ">
       <div style="padding: 15px;border: 1px solid #e8e8e8;">
         请选择用户可访问的报表：
-        <div  style="padding: 12px;border: 1px solid #e8e8e8;height: 350px;overflow:auto">
-          <nz-tree name="nodes" #treeCom
-                   [(ngModel)]="nodes"
-                   [nzCheckStrictly]="false"
-                   [nzCheckable]="true"
-                   [nzMultiple]="true"
-                   (nzCheckBoxChange)="checkTreeNode($event)"
-          >
+        <div style="padding: 12px;border: 1px solid #e8e8e8;height: 350px;overflow:auto">
+          <nz-tree name="nodes" #treeCom [(ngModel)]="nodes" [nzCheckStrictly]="false" [nzCheckable]="true"
+            [nzMultiple]="true" (nzCheckBoxChange)="checkTreeNode($event)">
             <!-- [nzAsyncData]="true"           (nzExpandChange)="openFolder('expand',$event)"-->
             <ng-template #nzTreeTemplate let-node>
               <span class="custom-node" draggable="true" aria-grabbed="true" [class.active]="node.isSelected">
                 <span *ngIf="!node.isLeaf">
-                  <i class="anticon" [ngClass]="node.isExpanded ? 'anticon-folder-open' : 'anticon-folder'"></i> {{node.title}}
+                  <i class="anticon" [ngClass]="node.isExpanded ? 'anticon-folder-open' : 'anticon-folder'"></i>
+                  {{node.title}}
                 </span>
                 <span *ngIf="node.isLeaf">
                   <i class="anticon anticon-file"></i> {{node.title}}
