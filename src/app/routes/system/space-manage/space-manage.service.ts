@@ -51,7 +51,7 @@ export class SpaceManageService {
   }
 
   modReport(params): Observable<any> {
-    return this.httpClient.post(this.url + 'space/report/modReportContent', params,);
+    return this.httpClient.post(this.url + 'space/report/modReportContent', params);
   }
 
   /************************************角色***********************************/

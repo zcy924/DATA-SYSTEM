@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NzModalRef, NzModalService, NzMessageService } from 'ng-zorro-antd';
+import { NzModalService, NzMessageService } from 'ng-zorro-antd';
 import { CompanyManageService } from '../../company-manage.service';
 import { Page } from '../../../../../models/page';
 import { AdminModalComponent } from './modal/admin-modal.component';
@@ -76,9 +76,15 @@ export class SpaceSettingComponent implements OnInit {
         spaceId: spaceId,
       },
       nzOnOk: ref => {
-        ref.updateAdmins();
-        this.getSpaceAndAdminList(true);
+        return new Promise(resolve => {
+          ref.updateAdmins();
+        });
       },
+    });
+    modal.afterClose.subscribe(res => {
+      if (res == 'ok') {
+        this.getSpaceAndAdminList(true);
+      }
     });
   }
 
