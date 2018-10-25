@@ -160,7 +160,7 @@ export class AddUserModalComponent implements OnInit {
       this.searchedUsers = res['retList'];
       this.searchedUsers = this.searchedUsers.filter(user=>{
         for(let i of this.usersOfSpace){    // 去除已存在于空间的用户
-          return i.userId === user.userId;
+          return i.userId !== user.userId;
         }
       });
       this.searchedUsers.forEach(i => {
@@ -170,7 +170,6 @@ export class AddUserModalComponent implements OnInit {
             i.checked = !i.checked;
           }
         });
-
       });
     });
   }
