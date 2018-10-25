@@ -8,7 +8,7 @@ import { EditUserModalComponent } from './components/edit-user-modal.component';
   selector: 'app-user-manage',
   templateUrl: './user-manage.html',
   styles: [
-      `
+    `
       .title-tab {
         height: 32px;
         line-height: 32px;
@@ -62,7 +62,6 @@ import { EditUserModalComponent } from './components/edit-user-modal.component';
   ],
 })
 export class UserManageComponent implements OnInit {
-
   key = '';
   userList = [];
   disabledButton = true;
@@ -71,13 +70,11 @@ export class UserManageComponent implements OnInit {
     private nzModal: NzModalService,
     private message: NzMessageService,
     private service: SpaceManageService,
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.getUserList();
   }
-
 
   // 添加用户
   addUser() {
@@ -92,7 +89,9 @@ export class UserManageComponent implements OnInit {
       },
     });
     modal.afterClose.subscribe(res => {
-      this.getUserList();
+      if (res == 'ok') {
+        this.getUserList();
+      }
     });
   }
 
@@ -148,29 +147,26 @@ export class UserManageComponent implements OnInit {
             this.message.error('移出用户失败！');
           }
         });
-      }
+      },
     });
   }
 
   // TODO 批量删除
-  delAll() {
-
-  }
+  delAll() {}
 
   checkedAll = '全选';
 
   checkAll(checkedAll) {
     if (checkedAll === '全选') {
-      this.userList.forEach(role => role.checked = true);
+      this.userList.forEach(role => (role.checked = true));
       this.disabledButton = false;
       this.checkedAll = '取消全选';
     } else {
-      this.userList.forEach(role => role.checked = false);
+      this.userList.forEach(role => (role.checked = false));
       this.disabledButton = true;
       this.checkedAll = '全选';
     }
   }
-
 
   // 编辑修改用户
   editUser(user) {
@@ -192,6 +188,4 @@ export class UserManageComponent implements OnInit {
       this.getUserList();
     });
   }
-
-
 }

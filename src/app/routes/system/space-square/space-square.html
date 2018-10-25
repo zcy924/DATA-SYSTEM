@@ -29,7 +29,7 @@
             <nz-card-meta [nzAvatar]="avatarTemplate" [nzTitle]="title" nzDescription="{{item.remark}}"></nz-card-meta>
           </nz-card>
           <ng-template #title>
-            <span style="color: #1890FF ">{{item.space_name}}</span>
+            <span style="color: #1890FF ">{{item.spaceName}}</span>
           </ng-template>
         </div>
       </div>
@@ -45,13 +45,13 @@
             <nz-card-meta [nzAvatar]="avatarTemplate" [nzTitle]="title" nzDescription="{{item.remark}}"></nz-card-meta>
           </nz-card>
           <ng-template #title>
-            <span style="color: #1890FF ">{{item.space_name}}</span>
+            <span style="color: #1890FF ">{{item.spaceName}}</span>
           </ng-template>
         </div>
       </div>
       <nz-divider *ngIf="public.length>0" nzText="公开空间" nzOrientation="left"></nz-divider>
       <div nz-row>
-        <div nz-col (click)="openDetail(item.space_id,'public')" *ngFor="let item of public" style="width: 300px;float:left;padding-right: 16px">
+        <div nz-col (click)="openDetail(item.spaceId,'public')" *ngFor="let item of public" style="width: 300px;float:left;padding-right: 16px">
           <ng-template #avatarTemplate>
             <div style="line-height:60px;">
               <nz-avatar [nzShape]="'square'" nzSrc="./assets/tmp/img/6.png" nzSize="large"></nz-avatar>
@@ -61,7 +61,7 @@
             <nz-card-meta [nzAvatar]="avatarTemplate" [nzTitle]="title" nzDescription="{{item.remark}}"></nz-card-meta>
           </nz-card>
           <ng-template #title>
-            <span style="color: #1890FF ">{{item.space_name}}</span>
+            <span style="color: #1890FF ">{{item.spaceName}}</span>
           </ng-template>
         </div>
       </div>
