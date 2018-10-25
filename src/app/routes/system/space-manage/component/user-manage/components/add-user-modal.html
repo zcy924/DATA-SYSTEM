@@ -3,22 +3,24 @@
     <nz-tab [nzTitle]="'基本信息'">
       <div class="b-wrapper" style="padding: 15px;border: 1px solid #e8e8e8;">
         <nz-form-item nz-row style="margin-top: 16px">
-          <nz-form-label [nzSpan]="5">用户姓名</nz-form-label>
-          <nz-form-control [nzSpan]="16">
-            <input nz-input name="companyName" [(ngModel)]="userName">
-            <!--<nz-form-explain *ngIf="validateForm.get('email').dirty && validateForm.get('email').errors">The input is not valid E-mail!</nz-form-explain>-->
-          </nz-form-control>
+
+          要添加的用户(请搜索并选择用户，已在空间中的用户不可再次选中)：
+            <nz-form-control >
+              <div *ngFor="let user of users"><label nz-checkbox name="{{user.userNo}}" (ngModelChange)="updateUserChecked(user)"
+                                                       [hidden]="!user.checked" [(ngModel)]="user.checked">{{user.userName}}（{{user.userNo}}）</label></div>
+              <nz-input-group nzSuffixIcon="anticon anticon-search">
+                <input type="text" name="key" (keyup)="searchUsers()" [(ngModel)]="key" nz-input placeholder="搜索用户" />
+              </nz-input-group>
+
+              <div *ngFor="let user of searchedUsers"><label nz-checkbox name="{{user.userNo}}" (ngModelChange)="searchUserChecked(user)"
+                                                               [nzDisabled]="user.checked" [(ngModel)]="user.checked">{{user.userName}}（{{user.userNo}}）</label></div>
+            </nz-form-control>
+
         </nz-form-item>
-        <nz-form-item nz-row>
-          <nz-form-label [nzSpan]="5">用户账号</nz-form-label>
-          <nz-form-control [nzSpan]="16">
-            <input nz-input name="companyAdmin" [(ngModel)]="userNo">
-            <!--<nz-form-explain *ngIf="validateForm.get('email').dirty && validateForm.get('email').errors">The input is not valid E-mail!</nz-form-explain>-->
-          </nz-form-control>
-        </nz-form-item>
+        <nz-divider></nz-divider>
         <nz-form-item>
           <div><label nz-checkbox name="checked" (ngModelChange)="updateChecked()"
-                      [(ngModel)]="adminChecked">空间管理员</label></div>
+                      [(ngModel)]="adminChecked">将以上用户设置为空间管理员</label></div>
         </nz-form-item>
       </div>
     </nz-tab>
@@ -26,8 +28,8 @@
     <nz-tab [nzTitle]="'角色配置' ">
       <div style="padding: 32px;border: 1px solid #e8e8e8;">
         <div *ngFor="let role of roles">
-          <label nz-checkbox name="{{role.role_name}}" (ngModelChange)="updateChecked(role)" [(ngModel)]="role.checked">
-            {{role.role_name}}
+          <label nz-checkbox name="{{role.roleName}}" (ngModelChange)="updateChecked(role)" [(ngModel)]="role.checked">
+            {{role.roleName}}
           </label>
         </div>
       </div>

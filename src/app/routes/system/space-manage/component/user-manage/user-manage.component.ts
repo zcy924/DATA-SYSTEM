@@ -82,6 +82,9 @@ export class UserManageComponent implements OnInit {
       nzTitle: '新增用户',
       nzContent: AddUserModalComponent,
       nzWidth: '50%',
+      nzComponentParams:{
+        usersOfSpace:this.userList
+      },
       nzOnOk: ref => {
         return new Promise(res => {
           ref.createUser();
@@ -104,8 +107,8 @@ export class UserManageComponent implements OnInit {
       totalPage: 0,
       totalRow: 0,
       SpaceUser: {
-        space_id: spaceID,
-        user_name: this.key,
+        spaceId: spaceID,
+        userName: this.key,
       },
     };
     this.service.getUserListWithRoles(params).subscribe(res => {
@@ -176,7 +179,7 @@ export class UserManageComponent implements OnInit {
       nzWidth: '50%',
       nzComponentParams: {
         user: user,
-        adminChecked: user.is_space_admin === 'T',
+        adminChecked: user.isSpaceAdmin === 'T',
       },
       nzOnOk: ref => {
         return new Promise(res => {

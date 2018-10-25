@@ -96,7 +96,7 @@ export class RoleManageComponent implements OnInit {
       totalPage: 0,
       totalRow: 0,
       SpaceRole: {
-        space_id: spaceID,
+        spaceId: spaceID,
       },
     };
     this.service.getRoleList(params).subscribe(res => {

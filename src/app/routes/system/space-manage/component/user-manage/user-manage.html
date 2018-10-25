@@ -33,10 +33,10 @@
                 </div>
                 <div nz-col nzSpan="17">
                   <div nz-row>
-                    <span style="font-size: 150%">{{user.user_name}}</span>
+                    <span style="font-size: 150%">{{user.userName}}</span>
                   </div>
                   <div nz-row>
-                    <span>{{user.user_no}}</span>
+                    <span>{{user.userNo}}</span>
                   </div>
                 </div>
                 <div nz-col nzSpan="2">
@@ -48,8 +48,8 @@
               </div>
               <div nz-row class="card-tabs" >
                 <div nz-col nzSpan="24" >
-                  <nz-tag [nzColor]="'#f50'" *ngIf="user.is_space_admin==='T'" style="display: inline-block; padding-bottom: 3px">管理员</nz-tag>
-                  <nz-tag [nzColor]="role.color" *ngFor="let role of user.roleList" style="display: inline-block; padding-bottom: 3px">{{role.role_name}}</nz-tag>
+                  <nz-tag [nzColor]="'#f50'" *ngIf="user.isSpaceAdmin==='T'" style="display: inline-block; padding-bottom: 3px">管理员</nz-tag>
+                  <nz-tag [nzColor]="role.color" *ngFor="let role of user.roleList" style="display: inline-block; padding-bottom: 3px">{{role.roleName}}</nz-tag>
                 </div>
               </div>
               <div nz-row class="card-handle">

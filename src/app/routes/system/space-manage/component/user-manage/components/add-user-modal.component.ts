@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SpaceManageService } from '../../../space-manage.service';
 import { NzFormatEmitEvent, NzMessageService, NzModalRef, NzTreeNode } from 'ng-zorro-antd';
+import { CompanyManageService } from '../../../../company-manage/company-manage.service';
 
 @Component({
   selector: 'app-add-user',
-  templateUrl: './add-user-modal.html'
+  templateUrl: './add-user-modal.html',
 })
 
 export class AddUserModalComponent implements OnInit {
@@ -12,14 +13,18 @@ export class AddUserModalComponent implements OnInit {
   userName;
   userNo;
   adminChecked;
-
+  usersOfSpace=[];
+  users = [];
+  searchedUsers = [];
   roles = [];
   reportList = [];
 
   constructor(
+    private companyService: CompanyManageService,
     private spaceService: SpaceManageService,
     private message: NzMessageService,
-    private modalRef: NzModalRef,) { }
+    private modalRef: NzModalRef) {
+  }
 
   @ViewChild('treeCom') treeCom;
   nodes = [];
@@ -43,9 +48,9 @@ export class AddUserModalComponent implements OnInit {
     let spaceID = localStorage.getItem('spaceID');
     let params = {
       SpaceRole: {
-        user_name: this.userName,
+        userName: this.userName,
         status: 'T',
-        space_id: spaceID,
+        spaceId: spaceID,
         roleList: this.roles,
         reportList: this.reportList,
       },
@@ -61,7 +66,7 @@ export class AddUserModalComponent implements OnInit {
   }
 
   // 初始化角色列表
-  initRoleList(){
+  initRoleList() {
     let spaceID = localStorage.getItem('spaceID');
     let params = {
       pageSize: 100,
@@ -69,19 +74,19 @@ export class AddUserModalComponent implements OnInit {
       totalPage: 0,
       totalRow: 0,
       SpaceRole: {
-        space_id: spaceID,
+        spaceId: spaceID,
       },
     };
     this.spaceService.getRoleList(params).subscribe(res => {
       this.roles = res['retList'];
-      this.roles.forEach(role=>{
+      this.roles.forEach(role => {
         role.checked = false;
       });
     });
   }
 
   // 初始化报表树
-  initReportTree(){
+  initReportTree() {
     let spaceID = localStorage.getItem('spaceID');
     let params = {
       Report: {
@@ -113,5 +118,64 @@ export class AddUserModalComponent implements OnInit {
       }
     });
   }
+
+
+  /********************模糊查询用户**********************/
+
+  // 用户复选框勾选
+  updateUserChecked(user) {
+    this.users.forEach(res => {    // 将取消勾选的用户置为false
+      if (user.userNo === res.userNo) {
+        res.checked = false;
+      }
+    });
+    this.searchedUsers.forEach(res => {    // 将取消勾选的用户的列表复选框置为false
+      if (user.userNo === res.userNo) {
+        res.checked = false;
+      }
+    });
+  }
+
+  // 模糊查询复选框勾选
+  searchUserChecked(user) {    // 将用户锁定，并加入勾选数组
+    user.checked = !user.checked;
+    this.users = this.users.filter(res => !(res.userNo === user.userNo));
+    this.users.push(user);
+  }
+
+  key = '';
+
+  searchUsers() {
+    if (this.key === '') {
+      this.searchedUsers = [];
+      return;
+    }
+    let params = {
+      key: this.key,
+      pageSize: '100',
+      curPage: '0',
+      totalRow: '0',
+      totalPage: '0',
+    };
+    this.companyService.searchFuzzyUsers(params).subscribe(res => {
+      this.searchedUsers = [];
+      this.searchedUsers = res['retList'];
+      this.searchedUsers = this.searchedUsers.filter(user=>{
+        for(let i of this.usersOfSpace){    // 去除已存在于空间的用户
+          return i.userId === user.userId;
+        }
+      });
+      this.searchedUsers.forEach(i => {
+        i.checked = false;
+        this.users.forEach(j => {           // 查询已被勾选的用户，将其锁定
+          if (i.userNo === j.userNo && j.checked === true) {
+            i.checked = !i.checked;
+          }
+        });
+
+      });
+    });
+  }
+
 
 }

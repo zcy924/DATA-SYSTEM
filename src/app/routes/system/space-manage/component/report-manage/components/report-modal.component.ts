@@ -25,7 +25,7 @@ export class ReportModalComponent implements OnInit {
   NOT_DEV = '0';  // 开发者模式
 
   reportName = '';
-  report_id = '';
+  reportId = '';
   folderName = '';
   folders = [];
   folderID = '';
@@ -48,13 +48,13 @@ export class ReportModalComponent implements OnInit {
     let spaceID = localStorage.getItem('spaceID');
     let params = {
       Report: {
-        ispublic: this.isPublic ? this.PUBLIC : this.NOT_PUBLIC,
-        isdev: this.isDev ? this.DEV : this.NOT_DEV,
+        isPublic: this.isPublic ? this.PUBLIC : this.NOT_PUBLIC,
+        isDev: this.isDev ? this.DEV : this.NOT_DEV,
         remark: this.remark,
-        report_name: this.reportName,
+        reportName: this.reportName,
         type: this.radioValue,
-        space_id: spaceID,
-        parentid: this.folderID,
+        spaceId: spaceID,
+        parentId: this.folderID,
       },
     };
 
@@ -74,14 +74,14 @@ export class ReportModalComponent implements OnInit {
     let spaceID = localStorage.getItem('spaceID');
     let params = {
       Report: {
-        ispublic: this.isPublic ? this.PUBLIC : this.NOT_PUBLIC,
-        isdev: this.isDev ? this.DEV : this.NOT_DEV,
+        isPublic: this.isPublic ? this.PUBLIC : this.NOT_PUBLIC,
+        isdDev: this.isDev ? this.DEV : this.NOT_DEV,
         remark: this.remark,
-        report_name: this.reportName,
+        reportName: this.reportName,
         type: this.radioValue,
-        space_id: spaceID,
-        parentid: this.folderID,
-        report_id: this.report_id,
+        spaceId: spaceID,
+        parentId: this.folderID,
+        reportId: this.reportId,
       },
     };
 

@@ -13,7 +13,7 @@
     <div nz-col naSpan="24">
       <nz-card>
         <nz-breadcrumb style="padding-bottom: 8px">
-          <nz-breadcrumb-item *ngFor="let value of folders"><a (click)="searchData(true,value)">{{value.report_name}}</a></nz-breadcrumb-item>
+          <nz-breadcrumb-item *ngFor="let value of folders"><a (click)="searchData(true,value)">{{value.reportName}}</a></nz-breadcrumb-item>
         </nz-breadcrumb>
         <nz-table #ajaxTable  style="text-align: center" nzShowSizeChanger [nzFrontPagination]="false"
                   [nzData]="dataSet"
@@ -21,8 +21,8 @@
                   [nzTotal]="page.totalRow"
                   [(nzPageIndex)]="page.curPage"
                   [(nzPageSize)]="page.pageSize"
-                  (nzPageIndexChange)="searchData(false,{ parentid: folderID, report_name: folderName })"
-                  (nzPageSizeChange)="searchData(false,{ parentid: folderID, report_name: folderName })"
+                  (nzPageIndexChange)="searchData(false,{ parentId: folderID, reportName: folderName })"
+                  (nzPageSizeChange)="searchData(false,{ parentId: folderID, reportName: folderName })"
                   (nzCurrentPageDataChange)="currentDataChange($event)">
           <thead nzSingleSort>
             <tr>
@@ -37,14 +37,14 @@
           </thead>
           <tbody>
             <tr *ngFor="let data of dataSet">
-              <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="checkLine($event,data.report_id)"></td>
+              <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="checkLine($event,data.reportId)"></td>
               <td>
                 <i class="anticon anticon-file" *ngIf="data.type===isReport"></i>
                 <i class="anticon anticon-folder" *ngIf="data.type===isFolder"></i>
               </td>
               <td>
-                <a *ngIf="data.type===isFolder" (click)="searchData(true,{ parentid: data.report_id, report_name: data.report_name })">{{data.report_name}}</a>
-                <p *ngIf="data.type===isReport">{{data.report_name}}</p>
+                <a *ngIf="data.type===isFolder" (click)="searchData(true,{ parentId: data.reportId, reportName: data.reportName })">{{data.reportName}}</a>
+                <p *ngIf="data.type===isReport">{{data.reportName}}</p>
               </td>
               <td>{{data.remark}}</td>
               <td>{{data.ispublic === isPublic ? '是':'否'}}</td>
@@ -54,7 +54,7 @@
 <span style="padding-right: 12px"><i class="anticon anticon-eye"    nz-tooltip nzTitle="打开报表页面" *ngIf="data.type===isReport" (click)="openReport()" ></i></span>
 <span style="padding-right: 12px"><i class="anticon anticon-copy"   nz-tooltip nzTitle="以此报表为模板新建" *ngIf="data.type===isReport" (click)="addReportByOne(data)"></i></span>
 <span style="padding-right: 12px"><i class="anticon anticon-edit"   nz-tooltip nzTitle="编辑" (click)="editReport(data)"></i></span>
-<span style="padding-right: 0"><i class="anticon anticon-delete" nz-tooltip nzTitle="删除" (click)="delReport(data.report_id,data.type)"></i></span>
+<span style="padding-right: 0"><i class="anticon anticon-delete" nz-tooltip nzTitle="删除" (click)="delReport(data.reportId,data.type)"></i></span>
                 </div>
               </td>
             </tr>
