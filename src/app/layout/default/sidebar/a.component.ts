@@ -38,7 +38,6 @@ export class AComponent implements OnDestroy {
   ) {}
 
   go(url) {
-    console.log('hjaha');
     if (url !== undefined) {
       this.router.navigateByUrl(url);
     }

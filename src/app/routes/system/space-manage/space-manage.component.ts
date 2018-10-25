@@ -16,7 +16,7 @@ export class SpaceManageComponent implements OnInit {
   reportTree: any;
   menu: Array<Menu> = [
     {
-      text: '主导航',
+      text: '大屏',
       isGroup: true,
       children: [
         {
@@ -120,7 +120,7 @@ export class SpaceManageComponent implements OnInit {
     const params = {
       spaceId: localStorage.getItem('spaceID'),
       curPage: this.page.curPage,
-      pageSize: 100,
+      pageSize: 1000,
       totalPage: this.page.totalPage || '',
       totalRow: this.page.totalRow || '',
     };

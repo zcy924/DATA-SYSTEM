@@ -73,6 +73,7 @@ const routes: Routes = [
   },
   {
     path: '',
+    data: {title: '登录'},
     component: LoginComponent
   },
   {

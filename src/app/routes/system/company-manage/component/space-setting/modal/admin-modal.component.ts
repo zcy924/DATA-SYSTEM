@@ -1,11 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NzFormatEmitEvent, NzMessageService, NzModalRef } from 'ng-zorro-antd';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { NzMessageService, NzModalRef } from 'ng-zorro-antd';
 import { CompanyManageService } from '../../../company-manage.service';
 
 @Component({
@@ -64,7 +58,7 @@ export class AdminModalComponent implements OnInit {
       console.log(res);
       if (res['retCode'] === '00000') {
         this.message.success('修改管理员成功！');
-        // this.nzModelRef.destroy('ok');
+        this.nzModelRef.destroy('ok');
       } else {
         this.message.error('修改管理员失败！');
       }

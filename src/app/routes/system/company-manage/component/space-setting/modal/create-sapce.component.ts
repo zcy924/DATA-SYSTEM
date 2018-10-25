@@ -1,11 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NzFormatEmitEvent, NzMessageService, NzModalRef } from 'ng-zorro-antd';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { NzMessageService, NzModalRef } from 'ng-zorro-antd';
 import { CompanyManageService } from '../../../company-manage.service';
 
 @Component({
@@ -14,7 +8,6 @@ import { CompanyManageService } from '../../../company-manage.service';
   styles: [],
 })
 export class CreateSpaceComponent implements OnInit {
-
   isPublic = 'F';
   space_desc = '';
   space_name = '';
@@ -25,15 +18,14 @@ export class CreateSpaceComponent implements OnInit {
   constructor(
     private service: CompanyManageService,
     private message: NzMessageService,
-    private modalRef: NzModalRef) {
-  }
+    private modalRef: NzModalRef,
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   createSpace() {
-    this.admins = this.admins.filter(user=>user.checked);
-    this.admins.forEach(user=>{
+    this.admins = this.admins.filter(user => user.checked);
+    this.admins.forEach(user => {
       user.user_id = user.userId;
     });
     let params = {
@@ -41,9 +33,9 @@ export class CreateSpaceComponent implements OnInit {
         spaceName: this.space_name,
         remark: this.space_desc,
         isPublic: this.isPublic,
-        status:'T',
+        status: 'T',
         avatar: './assets/default/space.png',
-        userList:this.admins
+        userList: this.admins,
       },
     };
     this.service.createSpace(params).subscribe(res => {
@@ -108,5 +100,4 @@ export class CreateSpaceComponent implements OnInit {
       });
     });
   }
-
 }

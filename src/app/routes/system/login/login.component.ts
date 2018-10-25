@@ -17,6 +17,7 @@ import { Md5 } from 'ts-md5';
 export class LoginComponent {
   validateForm: FormGroup;
   passwordMD5;
+  loading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -54,6 +55,7 @@ export class LoginComponent {
       userNo: this.validateForm.controls.userName.value,
       password: this.passwordMD5,
     };
+    this.loading = true;
     this.loginService.login(params).subscribe(data => {
       // if (data['retCode'] === '00000') {
       if (data['retCode'] === '00000') {
@@ -79,7 +81,7 @@ export class LoginComponent {
         this.router.navigate(['/app/user']);
       } else {
         this.msg.error(data.retMsg);
-        // this.loading = false;
+        this.loading = false;
         return;
       }
     });
