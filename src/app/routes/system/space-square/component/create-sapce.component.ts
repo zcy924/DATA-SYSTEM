@@ -1,11 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NzFormatEmitEvent, NzMessageService, NzModalRef } from 'ng-zorro-antd';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { NzMessageService, NzModalRef } from 'ng-zorro-antd';
 import { SpaceSquareService } from '../space-square.service';
 import { CompanyManageService } from '../../company-manage/company-manage.service';
 
