@@ -145,8 +145,10 @@ export class UserManageComponent implements OnInit {
   // 批量删除
   delAll(list, title = '所选择的用户') {
     let spaceID = localStorage.getItem('spaceID');
-    // settingsService.user
-
+    let id = this.settingsService.user.account;
+    console.log(id)
+    console.log(list)
+    list = list.filter(data=>data.userId!==id);
     let params = {
       SpaceUser: {
         spaceId: spaceID,

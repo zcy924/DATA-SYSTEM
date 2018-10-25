@@ -33,9 +33,8 @@ export class EditUserModalComponent implements OnInit {
     this.initReportTree();
   }
 
-  updateChecked(user) {
-    this.adminChecked = !this.adminChecked;
-    this.user.isSpaceAdmin = this.adminChecked?'T':'F';
+  updateChecked(checked) {
+    checked = !checked;
   }
 
 

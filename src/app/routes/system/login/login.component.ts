@@ -69,6 +69,7 @@ export class LoginComponent {
           name: data.userName,
           avatar: data.userIcon,
           userNo: data.userNo,
+          userId: data.userId,
           companyId: data.companyId,
           companyName: data.companyName,
           companyLogo: data.avatar,

@@ -17,7 +17,7 @@
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <div ><label nz-checkbox  name="checked"  (ngModelChange)="updateChecked()"  [(ngModel)]="adminChecked" >空间管理员</label></div>
+          <div ><label nz-checkbox  name="checked"  (ngModelChange)="updateChecked(adminChecked)"  [(ngModel)]="adminChecked" >空间管理员</label></div>
         </nz-form-item>
       </div>
     </nz-tab>
@@ -25,7 +25,7 @@
     <nz-tab [nzTitle]="'角色配置' ">
       <div style="padding: 15px;border: 1px solid #e8e8e8;">
         <div *ngFor="let role of roles">
-          <label nz-checkbox name="{{role.roleName}}" (ngModelChange)="updateChecked(role)" [(ngModel)]="role.checked">
+          <label nz-checkbox name="{{role.roleName}}" (ngModelChange)="updateChecked(role.checked)" [(ngModel)]="role.checked">
             {{role.roleName}}
           </label>
         </div>
