@@ -182,8 +182,8 @@ export class ReportManageComponent implements OnInit {
   delArray(
     list: Array<any> = this.selectedArray,
     type: string,
-    title = '所选择的的文件夹或报表',
-    content = '此操作将会批量删除所选择的的文件夹或报表') {
+    title = '所选择的文件夹或报表',
+    content = '此操作将会批量删除所选择的文件夹或报表') {
     this.nzModel.confirm({
       nzTitle: '是否删除' + title + '?',
       nzContent: content,

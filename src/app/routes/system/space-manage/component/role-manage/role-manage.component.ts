@@ -58,6 +58,7 @@ export class RoleManageComponent implements OnInit {
   roleList = [];
   disabledButton = true;
   checkedAll = '全选';
+  selectedArray=[];
 
   constructor(
     private nzModal: NzModalService,
@@ -117,32 +118,38 @@ export class RoleManageComponent implements OnInit {
         this.disabledButton = false;
       }
     });
+    this.selectedArray = this.roleList.filter(value => value.checked);
   }
 
   // 删除角色
   delRole(role) {
+    let title = '该角色';
+    this.delAll([{ roleId: role.roleId }], title);
+  }
+
+  // 批量删除
+  delAll(list, title = '所选择的角色') {
+    let spaceID = localStorage.getItem('spaceID');
     let params = {
       SpaceRole: {
-        role_id: role.role_id,
+        spaceId: spaceID,
+        roleList: list,
       },
     };
     this.nzModal.confirm({
-      nzTitle: '确认删除当前角色？',
+      nzTitle: '是否将' + title + '移出？',
       nzOnOk: () => {
-        this.service.delRole(params).subscribe(res => {
+        this.service.delRole
+        (params).subscribe(res => {
           if (res['retCode'] === '00000') {
-            this.message.success('删除角色成功！');
+            this.message.success('移出' + title + '成功！');
             this.getRoleList();
           } else {
-            this.message.error('删除角色失败！');
+            this.message.error('移出' + title + '失败！');
           }
         });
       },
     });
-  }
-
-  // TODO 批量删除
-  delAll() {
   }
 
   checkAll(checkedAll) {
@@ -155,6 +162,7 @@ export class RoleManageComponent implements OnInit {
       this.disabledButton = true;
       this.checkedAll = '全选';
     }
+    this.selectedArray = this.roleList.filter(value => value.checked);
   }
 
   // 编辑修改角色
@@ -164,9 +172,9 @@ export class RoleManageComponent implements OnInit {
       nzContent: RoleModalComponent,
       nzWidth: '50%',
       nzComponentParams: {
-        roleName: role.role_name,
+        roleName: role.roleName,
         remark: role.remark,
-        roleId: role.role_id,
+        roleId: role.roleId,
       },
       nzOnOk: ref => {
         return new Promise(res => {

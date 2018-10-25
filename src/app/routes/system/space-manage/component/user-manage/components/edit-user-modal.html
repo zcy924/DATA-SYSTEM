@@ -5,14 +5,14 @@
         <nz-form-item nz-row style="margin-top: 16px">
           <nz-form-label [nzSpan]="5" >用户姓名</nz-form-label>
           <nz-form-control [nzSpan]="16">
-            <input nz-input name="companyName" [(ngModel)]="user.user_name" disabled>
+            <input nz-input name="companyName" [(ngModel)]="user.userName" disabled>
             <!--<nz-form-explain *ngIf="validateForm.get('email').dirty && validateForm.get('email').errors">The input is not valid E-mail!</nz-form-explain>-->
           </nz-form-control>
         </nz-form-item>
         <nz-form-item nz-row>
           <nz-form-label [nzSpan]="5">用户账号</nz-form-label>
           <nz-form-control [nzSpan]="16">
-            <input nz-input name="companyAdmin" [(ngModel)]="user.user_no" disabled>
+            <input nz-input name="companyAdmin" [(ngModel)]="user.userNo" disabled>
             <!--<nz-form-explain *ngIf="validateForm.get('email').dirty && validateForm.get('email').errors">The input is not valid E-mail!</nz-form-explain>-->
           </nz-form-control>
         </nz-form-item>
@@ -25,8 +25,8 @@
     <nz-tab [nzTitle]="'角色配置' ">
       <div style="padding: 15px;border: 1px solid #e8e8e8;">
         <div *ngFor="let role of roles">
-          <label nz-checkbox name="{{role.role_name}}" (ngModelChange)="updateChecked(role)" [(ngModel)]="role.checked">
-            {{role.role_name}}
+          <label nz-checkbox name="{{role.roleName}}" (ngModelChange)="updateChecked(role)" [(ngModel)]="role.checked">
+            {{role.roleName}}
           </label>
         </div>
       </div>

@@ -68,7 +68,7 @@ export class SpaceManageService {
     return this.httpClient.post(this.url + 'space/spaceRole/del', params);
   }
 
-  editRole(params): Observable<any> {
+  modRole(params): Observable<any> {
     return this.httpClient.post(this.url + 'space/spaceRole/mod', params);
   }
 
@@ -83,7 +83,11 @@ export class SpaceManageService {
   /************************************用户*************************************/
 
   addUser(params): Observable<any> {
-    return this.httpClient.post(this.url + '', params);
+    return this.httpClient.post(this.url + 'space/spaceUser/add', params);
+  }
+
+  delUser(params): Observable<any> {
+    return this.httpClient.post(this.url + 'space/spaceUser/del', params);
   }
 
   getUserListWithRoles(params): Observable<any> {
@@ -91,10 +95,10 @@ export class SpaceManageService {
   }
 
   qryReportListByUser(params): Observable<any> {
-    return this.httpClient.post(this.url + '', params);
+    return this.httpClient.post(this.url + 'space/spaceUser/qrySpaceUserReportTree', params);
   }
 
-  editUser(params): Observable<any> {
+  modUser(params): Observable<any> {
     return this.httpClient.post(this.url + 'space/spaceUser/mod', params);
   }
 }

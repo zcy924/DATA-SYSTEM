@@ -33,9 +33,12 @@ export class RoleModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getTree();
+    if (this.roleId === '') {
+      this.getTree();
+    } else {
+      this.initData();
+    }
     // this.openFolder('first', null);
-    // this.initData();
   }
 
   checkTreeNode(event: NzFormatEmitEvent): void {
@@ -43,7 +46,7 @@ export class RoleModalComponent implements OnInit {
     console.log(this.treeCom.getCheckedNodeList());
   }
 
-  // 打开树节点，异步获取报表列表
+  // 异步获取报表列表
   openFolder(name: string, e: NzFormatEmitEvent): void {
     let spaceID = localStorage.getItem('spaceID');
     let parentID = '';
@@ -59,8 +62,8 @@ export class RoleModalComponent implements OnInit {
       totalPage: 0,
       totalRow: 0,
       Report: {
-        space_id: spaceID,
-        parentid: parentID,
+        spaceId: spaceID,
+        parentId: parentID,
       },
     };
 
@@ -69,8 +72,8 @@ export class RoleModalComponent implements OnInit {
       if (name === 'first') {
         data.forEach(report => {
           this.nodes.push(new NzTreeNode({
-            title: report.report_name,
-            key: report.report_id,
+            title: report.reportName,
+            key: report.reportId,
             expanded: false,
             isLeaf: report.type !== '0',
           }));
@@ -80,8 +83,8 @@ export class RoleModalComponent implements OnInit {
       if (e.node.getChildren().length === 0 && e.node.isExpanded) {
         data.forEach(report => {
           e.node.addChildren([{
-              title: report.report_name,
-              key: report.report_id,
+              title: report.reportName,
+              key: report.reportId,
               expanded: false,
               isLeaf: report.type !== '0',
             }],
@@ -90,18 +93,15 @@ export class RoleModalComponent implements OnInit {
       }
       e.node.addChildren([]);
     });
-
   }
 
-  // 空间管理员复选框勾选
+  // 模糊查询复选框取消勾选
   updateChecked(user) {
-    // 将取消勾选的用户置为false
     this.users.forEach(res => {
       if (user.userNo === res.userNo) {
         res.checked = false;
       }
     });
-    // 将取消勾选的用户的列表复选框置为false
     this.searchedUsers.forEach(res => {
       if (user.userNo === res.userNo) {
         res.checked = false;
@@ -146,16 +146,14 @@ export class RoleModalComponent implements OnInit {
     });
   }
 
-  // 创建角色，查询勾选用户，展示树
+  // 创建角色
   createRole() {
     let spaceID = localStorage.getItem('spaceID');
-    this.users.forEach(user => {
-      user.isSpaceAdmin = 'F';
-    });
+    this.users.forEach(user => user.isSpaceAdmin = 'F');
+    this.users = this.users.filter(user => user.checked === true);
     this.reportList = [];
-    this.treeCom.getCheckedNodeList().forEach(node => {
-      this.reportList.push({ reportId: node.key });
-    });
+    this.treeCom.getCheckedNodeList().forEach(node => this.reportList.push({ reportId: node.key }));
+    console.log('reports,' + this.treeCom.getCheckedNodeList());
     let params = {
       SpaceRole: {
         roleName: this.roleName,
@@ -179,19 +177,20 @@ export class RoleModalComponent implements OnInit {
   // 修改更新角色
   editRole() {
     let spaceID = localStorage.getItem('spaceID');
-    this.users.forEach(user => {
-      user.user_id = user.userId;
-    });
+    this.users = this.users.filter(user => user.checked === true);
+    this.reportList = [];
+    this.treeCom.getCheckedNodeList().forEach(node => this.reportList.push({ reportId: node.key }));
     let params = {
       SpaceRole: {
-        role_name: this.roleName,
+        roleName: this.roleName,
+        roleId: this.roleId,
         status: 'T',
-        space_id: spaceID,
+        spaceId: spaceID,
         userList: this.users,
         reportList: this.reportList,
       },
     };
-    this.spaceService.createRole(params).subscribe(res => {
+    this.spaceService.modRole(params).subscribe(res => {
       if (res['retCode'] === '00000') {
         this.message.success('修改角色成功！');
         this.modalRef.destroy('ok');
@@ -201,11 +200,8 @@ export class RoleModalComponent implements OnInit {
     });
   }
 
+  // 修改用户时，数据回显
   initData() {
-    if (this.roleId === '') {
-      return;
-    }
-    // 查询角色对应的用户列表
     let params1 = {
       SpaceRole: {
         roleId: this.roleId,
@@ -219,7 +215,7 @@ export class RoleModalComponent implements OnInit {
         this.message.error('查询角色对应的用户列表失败！');
       }
     });
-    // 查询角色对应的报表列表
+
     let spaceID = localStorage.getItem('spaceID');
     let params3 = {
       SpaceRoleReport: {
@@ -229,20 +225,31 @@ export class RoleModalComponent implements OnInit {
     };
     this.spaceService.qryReportListByRole(params3).subscribe(res => {
       if (res['retCode'] === '00000') {
-        this.reportList = res['roleReportList'];
-        this.reportList.forEach(report=>{
-          if(report.type==='1'){
-            this.recursiveCheckNode(this.nodes,report);
-          }
-        });
+        this.reportList = res['retTreeList'];
+        this.recursiveCheckNode(this.nodes, this.reportList);
       } else {
-        this.message.error('查询角色对应的报表列表失败！');
+        this.message.error('查询角色对应的报表树失败！');
+      }
+    });
+  }
+  recursiveCheckNode(nodes, reports) {
+    reports.forEach(report => {
+      let node = new NzTreeNode({
+        title: report.reportName,
+        key: report.reportId,
+        expanded: true,
+        isLeaf: report.type !== '0',
+        checked: (report.checked === 'T') && (report.type !== '0'),
+      });
+      nodes.push(node);
+      if (!node.isLeaf && report.children) {
+        this.recursiveCheckNode(node.children, report.children);
       }
     });
   }
 
+  // 初始化报表树
   getTree() {
-    // 查询完整报表树
     let spaceID = localStorage.getItem('spaceID');
     let params = {
       Report: {
@@ -250,15 +257,11 @@ export class RoleModalComponent implements OnInit {
       },
     };
     this.spaceService.qryReportTree(params).subscribe(res => {
-      this.recursiveNode(this.nodes,res['retTreeList']);
-      // const a = res['retTreeList'];
-      // this.tree(a);
-      // this.nodes = a;
-      // console.log(this.nodes);
+      this.recursiveNode(this.nodes, res['retTreeList']);
     });
   }
 
-  recursiveNode(nodes,reports) {
+  recursiveNode(nodes, reports) {
     reports.forEach(report => {
       let node = new NzTreeNode({
         title: report.reportName,
@@ -267,33 +270,10 @@ export class RoleModalComponent implements OnInit {
         isLeaf: report.type !== '0',
       });
       nodes.push(node);
-      if(!node.isLeaf && report.children){
-        this.recursiveNode(node.children,report.children);
+      if (!node.isLeaf && report.children) {
+        this.recursiveNode(node.children, report.children);
       }
     });
   }
-  // tree(data: Array<any>){
-  //   data.map(value => {
-  //     value.title= value.reportName;
-  //       value.key= value.reportId;
-  //       value.expanded= true;
-  //       value.isLeaf= value.type!=='0';
-  //       if(value['children']){
-  //         this.tree(value['children']);
-  //       }
-  //   })
-  // }
 
-  recursiveCheckNode(nodes,report) {
-    nodes.forEach(node => {
-      if(node.key === report.reportId){
-        node.isChecked = true;
-        console.log('checked '+ node.title)
-        // node.setChecked(true);
-      }
-      if(!node.isLeaf && report.children){
-        this.recursiveCheckNode(node.children,report);
-      }
-    });
-  }
 }
