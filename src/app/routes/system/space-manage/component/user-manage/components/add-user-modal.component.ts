@@ -12,8 +12,8 @@ export class AddUserModalComponent implements OnInit {
 
   userName;
   userNo;
-  adminChecked;
-  usersOfSpace=[];
+  adminChecked = false;
+  usersOfSpace = [];
   users = [];
   searchedUsers = [];
   roles = [];
@@ -39,18 +39,20 @@ export class AddUserModalComponent implements OnInit {
     this.initReportTree();
   }
 
-  updateChecked(user) {
-    this.adminChecked = !this.adminChecked;
+  updateChecked(checked) {
+    checked = !checked;
   }
 
   // 添加空间用户
   createUser() {
     let spaceID = localStorage.getItem('spaceID');
-    this.roles = this.roles.filter(role=>role.checked);
+    this.roles = this.roles.filter(role => role.checked);
     this.treeCom.getCheckedNodeList().forEach(node => this.reportList.push({ reportId: node.key }));
+    this.users = this.users.filter(user => user.checked);
+    this.users.forEach(user => user.isSpaceAdmin = (this.adminChecked !== true) ? 'F' : 'T');
     let params = {
       SpaceUser: {
-        userName: this.userName,
+        userList: this.users,
         status: 'T',
         spaceId: spaceID,
         roleList: this.roles,
@@ -158,8 +160,8 @@ export class AddUserModalComponent implements OnInit {
     this.companyService.searchFuzzyUsers(params).subscribe(res => {
       this.searchedUsers = [];
       this.searchedUsers = res['retList'];
-      this.searchedUsers = this.searchedUsers.filter(user=>{
-        for(let i of this.usersOfSpace){    // 去除已存在于空间的用户
+      this.searchedUsers = this.searchedUsers.filter(user => {
+        for(let i of this.usersOfSpace) {    // 去除已存在于空间的用户
           return i.userId !== user.userId;
         }
       });
