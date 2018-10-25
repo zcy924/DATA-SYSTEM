@@ -3,6 +3,7 @@ import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { SpaceManageService } from '../../space-manage.service';
 import { AddUserModalComponent } from './components/add-user-modal.component';
 import { EditUserModalComponent } from './components/edit-user-modal.component';
+import { SettingsService } from '@delon/theme';
 
 @Component({
   selector: 'app-user-manage',
@@ -71,6 +72,7 @@ export class UserManageComponent implements OnInit {
     private nzModal: NzModalService,
     private message: NzMessageService,
     private service: SpaceManageService,
+    private settingsService: SettingsService,
   ) {
   }
 
@@ -143,6 +145,8 @@ export class UserManageComponent implements OnInit {
   // 批量删除
   delAll(list, title = '所选择的用户') {
     let spaceID = localStorage.getItem('spaceID');
+    // settingsService.user
+
     let params = {
       SpaceUser: {
         spaceId: spaceID,

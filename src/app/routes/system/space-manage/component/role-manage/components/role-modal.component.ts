@@ -134,6 +134,7 @@ export class RoleModalComponent implements OnInit {
       console.log(res);
       this.searchedUsers = [];
       this.searchedUsers = res['retList'];
+
       this.searchedUsers.forEach(i => {
         i.checked = false;
         // 查询已被勾选的用户，将其锁定
@@ -178,6 +179,7 @@ export class RoleModalComponent implements OnInit {
   editRole() {
     let spaceID = localStorage.getItem('spaceID');
     this.users = this.users.filter(user => user.checked === true);
+    this.users.forEach(user => user.isSpaceAdmin = 'F');
     this.reportList = [];
     this.treeCom.getCheckedNodeList().forEach(node => this.reportList.push({ reportId: node.key }));
     let params = {
