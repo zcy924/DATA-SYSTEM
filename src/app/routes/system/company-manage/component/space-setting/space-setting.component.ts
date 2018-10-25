@@ -46,8 +46,8 @@ export class SpaceSettingComponent implements OnInit {
       this.page.totalRow = res['totalRow'];
       this.page.totalPage = res['totalPage'];
       this.dataSet.forEach(res => {
-        if (res.userName !== null && res.userName.length > 0) {
-          res['user'] = [];
+        res['user'] = [];
+        if (res.userName  && res.userNo) {
           const userNameList = res.userName.split(',');
           const userNoList = res.userNo.split(',');
           userNoList.forEach((value, index) => {
@@ -123,8 +123,8 @@ export class SpaceSettingComponent implements OnInit {
       this.page.totalRow = res['totalRow'];
       this.page.totalPage = res['totalPage'];
       this.dataSet.forEach(res => {
-        if (res.userName !== null && res.userName.length > 0) {
-          res['user'] = [];
+        res['user'] = [];
+        if (res.userName  && res.userNo) {
           const userNameList = res.userName.split(',');
           const userNoList = res.userNo.split(',');
           userNoList.forEach((value, index) => {
