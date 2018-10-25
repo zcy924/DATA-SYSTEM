@@ -49,7 +49,7 @@ export class AddUserModalComponent implements OnInit {
     this.roles = this.roles.filter(role=>role.checked);
     this.treeCom.getCheckedNodeList().forEach(node => this.reportList.push({ reportId: node.key }));
     let params = {
-      SpaceRole: {
+      SpaceUser: {
         userName: this.userName,
         status: 'T',
         spaceId: spaceID,
