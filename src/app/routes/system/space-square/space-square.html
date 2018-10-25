@@ -19,7 +19,7 @@
     <div nz-row style="background-color: #f5f7fa;padding: 16px;">
       <nz-divider *ngIf="onlyWrite.length>0" nzText="我的空间" nzOrientation="left"></nz-divider>
       <div nz-row>
-        <div nz-col (click)="openDetail(item.space_id,'admin')" *ngFor="let item of onlyWrite" style="width: 300px;float:left;padding-right: 16px">
+        <div nz-col (click)="openDetail(item.spaceId,'admin')" *ngFor="let item of onlyWrite" style="width: 300px;float:left;padding-right: 16px">
           <ng-template #avatarTemplate>
             <div style="line-height:60px;">
               <nz-avatar [nzShape]="'square'" nzSrc="./assets/tmp/img/6.png" nzSize="large"></nz-avatar>
@@ -35,7 +35,7 @@
       </div>
       <nz-divider *ngIf="onlyRead.length>0" nzText="其他空间" nzOrientation="left"></nz-divider>
       <div nz-row>
-        <div nz-col (click)="openDetail(item.space_id,'other')" *ngFor="let item of onlyRead" style="width: 300px;float:left;padding-right: 16px">
+        <div nz-col (click)="openDetail(item.spaceId,'other')" *ngFor="let item of onlyRead" style="width: 300px;float:left;padding-right: 16px">
           <ng-template #avatarTemplate>
             <div style="line-height:60px;">
               <nz-avatar [nzShape]="'square'" nzSrc="./assets/tmp/img/6.png" nzSize="large"></nz-avatar>

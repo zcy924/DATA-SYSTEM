@@ -31,7 +31,7 @@ export class SpaceSquareComponent implements OnInit {
   }
 
   openDetail(spaceId, spaceType) {
-    localStorage.setItem('spaceID', spaceId.toString());
+    localStorage.setItem('spaceID', spaceId);
     localStorage.setItem('spaceType', spaceType);
     this.router.navigate(['app/square/' + spaceId]);
   }
