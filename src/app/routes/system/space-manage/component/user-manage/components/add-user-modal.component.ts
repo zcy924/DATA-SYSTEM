@@ -1,15 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SpaceManageService } from '../../../space-manage.service';
-import { NzFormatEmitEvent, NzMessageService, NzModalRef, NzTreeNode } from 'ng-zorro-antd';
+import {
+  NzFormatEmitEvent,
+  NzMessageService,
+  NzModalRef,
+  NzTreeNode,
+} from 'ng-zorro-antd';
 import { CompanyManageService } from '../../../../company-manage/company-manage.service';
 
 @Component({
   selector: 'app-add-user',
   templateUrl: './add-user-modal.html',
 })
-
 export class AddUserModalComponent implements OnInit {
-
   userName;
   userNo;
   adminChecked = false;
@@ -23,10 +26,11 @@ export class AddUserModalComponent implements OnInit {
     private companyService: CompanyManageService,
     private spaceService: SpaceManageService,
     private message: NzMessageService,
-    private modalRef: NzModalRef) {
-  }
+    private modalRef: NzModalRef,
+  ) {}
 
-  @ViewChild('treeCom') treeCom;
+  @ViewChild('treeCom')
+  treeCom;
   nodes = [];
 
   checkTreeNode(event: NzFormatEmitEvent): void {
@@ -47,9 +51,13 @@ export class AddUserModalComponent implements OnInit {
   createUser() {
     let spaceID = localStorage.getItem('spaceID');
     this.roles = this.roles.filter(role => role.checked);
-    this.treeCom.getCheckedNodeList().forEach(node => this.reportList.push({ reportId: node.key }));
+    this.treeCom
+      .getCheckedNodeList()
+      .forEach(node => this.reportList.push({ reportId: node.key }));
     this.users = this.users.filter(user => user.checked);
-    this.users.forEach(user => user.isSpaceAdmin = (this.adminChecked !== true) ? 'F' : 'T');
+    this.users.forEach(
+      user => (user.isSpaceAdmin = this.adminChecked !== true ? 'F' : 'T'),
+    );
     let params = {
       SpaceUser: {
         userList: this.users,
@@ -119,17 +127,18 @@ export class AddUserModalComponent implements OnInit {
     });
   }
 
-
   /********************模糊查询用户**********************/
 
   // 用户复选框勾选
   updateUserChecked(user) {
-    this.users.forEach(res => {    // 将取消勾选的用户置为false
+    this.users.forEach(res => {
+      // 将取消勾选的用户置为false
       if (user.userNo === res.userNo) {
         res.checked = false;
       }
     });
-    this.searchedUsers.forEach(res => {    // 将取消勾选的用户的列表复选框置为false
+    this.searchedUsers.forEach(res => {
+      // 将取消勾选的用户的列表复选框置为false
       if (user.userNo === res.userNo) {
         res.checked = false;
       }
@@ -137,7 +146,8 @@ export class AddUserModalComponent implements OnInit {
   }
 
   // 模糊查询复选框勾选
-  searchUserChecked(user) {    // 将用户锁定，并加入勾选数组
+  searchUserChecked(user) {
+    // 将用户锁定，并加入勾选数组
     user.checked = !user.checked;
     this.users = this.users.filter(res => !(res.userNo === user.userNo));
     this.users.push(user);
@@ -160,14 +170,18 @@ export class AddUserModalComponent implements OnInit {
     this.companyService.searchFuzzyUsers(params).subscribe(res => {
       this.searchedUsers = [];
       this.searchedUsers = res['retList'];
-      this.searchedUsers = this.searchedUsers.filter(user => {
-        for(let i of this.usersOfSpace) {    // 去除已存在于空间的用户
-          return i.userId !== user.userId;
+      for (const i of this.usersOfSpace) {
+        for (const x in this.searchedUsers) {
+          if (this.searchedUsers[x].userId === i.userId) {
+            // tslint:disable-next-line:radix
+            this.searchedUsers.splice(parseInt(x), 1);
+          }
         }
-      });
+      }
       this.searchedUsers.forEach(i => {
         i.checked = false;
-        this.users.forEach(j => {           // 查询已被勾选的用户，将其锁定
+        this.users.forEach(j => {
+          // 查询已被勾选的用户，将其锁定
           if (i.userNo === j.userNo && j.checked === true) {
             i.checked = !i.checked;
           }
@@ -175,6 +189,4 @@ export class AddUserModalComponent implements OnInit {
       });
     });
   }
-
-
 }
