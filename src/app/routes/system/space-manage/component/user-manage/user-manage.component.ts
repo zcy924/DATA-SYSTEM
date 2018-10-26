@@ -4,12 +4,13 @@ import { SpaceManageService } from '../../space-manage.service';
 import { AddUserModalComponent } from './components/add-user-modal.component';
 import { EditUserModalComponent } from './components/edit-user-modal.component';
 import { SettingsService } from '@delon/theme';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-manage',
   templateUrl: './user-manage.html',
   styles: [
-      `
+    `
       .title-tab {
         height: 32px;
         line-height: 32px;
@@ -73,8 +74,7 @@ export class UserManageComponent implements OnInit {
     private message: NzMessageService,
     private service: SpaceManageService,
     private settingsService: SettingsService,
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.getUserList();
@@ -115,14 +115,21 @@ export class UserManageComponent implements OnInit {
         userName: this.key,
       },
     };
-    this.service.getUserListWithRoles(params).subscribe(res => {
-      this.userList = res['retList'];
-      this.userList.forEach(user => {
-        user.roleList.forEach(role => {
-          role.color = '#87d068';
+    this.service.getUserListWithRoles(params).subscribe(
+      res => {
+        this.userList = res['retList'];
+        this.userList.forEach(user => {
+          user.roleList.forEach(role => {
+            role.color = '#87d068';
+          });
         });
-      });
-    });
+      },
+      err => {
+        if (err instanceof HttpResponse) {
+          this.message.error(err.body.retMsg);
+        }
+      },
+    );
   }
 
   updateChecked(role) {
@@ -146,9 +153,9 @@ export class UserManageComponent implements OnInit {
   delAll(list, title = '所选择的用户') {
     let spaceID = localStorage.getItem('spaceID');
     let id = this.settingsService.user.account;
-    console.log(id)
-    console.log(list)
-    list = list.filter(data=>data.userId!==id);
+    console.log(id);
+    console.log(list);
+    list = list.filter(data => data.userId !== id);
     let params = {
       SpaceUser: {
         spaceId: spaceID,
@@ -158,14 +165,21 @@ export class UserManageComponent implements OnInit {
     this.nzModal.confirm({
       nzTitle: '是否将' + title + '移出？',
       nzOnOk: () => {
-        this.service.delUser(params).subscribe(res => {
-          if (res['retCode'] === '00000') {
-            this.message.success('移出' + title + '成功！');
-            this.getUserList();
-          } else {
-            this.message.error('移出' + title + '失败！');
-          }
-        });
+        this.service.delUser(params).subscribe(
+          res => {
+            if (res['retCode'] === '00000') {
+              this.message.success('移出' + title + '成功！');
+              this.getUserList();
+            } else {
+              this.message.error('移出' + title + '失败！');
+            }
+          },
+          err => {
+            if (err instanceof HttpResponse) {
+              this.message.error(err.body.retMsg);
+            }
+          },
+        );
       },
     });
   }

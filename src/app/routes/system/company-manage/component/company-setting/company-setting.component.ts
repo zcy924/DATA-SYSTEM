@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { NzModalService, NzDropdownService, NzMessageService } from 'ng-zorro-antd';
+import {
+  NzModalService,
+  NzDropdownService,
+  NzMessageService,
+} from 'ng-zorro-antd';
 import { CompanyManageService } from '../../company-manage.service';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   templateUrl: './company-setting.html',
   styles: [],
 })
 export class CompanySettingComponent implements OnInit {
-
   companyName = '';
   admins = [];
   searchedAdmins = [];
@@ -17,8 +21,8 @@ export class CompanySettingComponent implements OnInit {
 
   constructor(
     private service: CompanyManageService,
-    private message: NzMessageService) {
-  }
+    private message: NzMessageService,
+  ) {}
 
   ngOnInit() {
     this.getCompanyInfo();
@@ -57,7 +61,7 @@ export class CompanySettingComponent implements OnInit {
         this.admins = res['admins'];
         this.spaceNum = res['spaceNum'];
         this.onlyAdmin = res['onlyAdmin'] === 'T';
-        this.admins.every(value => value.checked = true);
+        this.admins.every(value => (value.checked = true));
       } else {
         this.message.error('查询失败！');
       }
@@ -76,19 +80,26 @@ export class CompanySettingComponent implements OnInit {
       totalRow: '0',
       totalPage: '0',
     };
-    this.service.searchFuzzyUsers(params).subscribe(res => {
-      this.searchedAdmins = [];
-      this.searchedAdmins = res['retList'];
-      this.searchedAdmins.forEach(i => {
-        i.checked = false;
-        // 查询已被勾选的用户，将其锁定
-        this.admins.forEach(j => {
-          if (i.userNo === j.userNo && j.checked === true) {
-            i.checked = !i.checked;
-          }
+    this.service.searchFuzzyUsers(params).subscribe(
+      res => {
+        this.searchedAdmins = [];
+        this.searchedAdmins = res['retList'];
+        this.searchedAdmins.forEach(i => {
+          i.checked = false;
+          // 查询已被勾选的用户，将其锁定
+          this.admins.forEach(j => {
+            if (i.userNo === j.userNo && j.checked === true) {
+              i.checked = !i.checked;
+            }
+          });
         });
-      });
-    });
+      },
+      error => {
+        if (error instanceof HttpResponse) {
+          this.message.error(error.body.retMsg);
+        }
+      },
+    );
   }
 
   updateCompany() {
@@ -98,12 +109,15 @@ export class CompanySettingComponent implements OnInit {
       avatar: './assets/default/company.png',
       admins: this.admins,
     };
-    this.service.updateCompanyInfo(params).subscribe(res => {
-      if (res['retCode'] === '00000') {
+    this.service.updateCompanyInfo(params).subscribe(
+      res => {
         this.message.success('更新公司信息成功！');
-      } else {
-        this.message.error('更新公司信息失败！');
-      }
-    });
+      },
+      error => {
+        if (error instanceof HttpResponse) {
+          this.message.error(error.body.retMsg);
+        }
+      },
+    );
   }
 }

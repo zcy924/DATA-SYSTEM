@@ -7,6 +7,7 @@ import {
   NzTreeNode,
 } from 'ng-zorro-antd';
 import { CompanyManageService } from '../../../../company-manage/company-manage.service';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-user',
@@ -67,14 +68,17 @@ export class AddUserModalComponent implements OnInit {
         reportList: this.reportList,
       },
     };
-    this.spaceService.addUser(params).subscribe(res => {
-      if (res['retCode'] === '00000') {
+    this.spaceService.addUser(params).subscribe(
+      res => {
         this.message.success('添加空间用户成功！');
         this.modalRef.destroy('ok');
-      } else {
-        this.message.error('添加空间用户失败！');
-      }
-    });
+      },
+      err => {
+        if (err instanceof HttpResponse) {
+          this.message.error(err.body.retMsg);
+        }
+      },
+    );
   }
 
   // 初始化角色列表
@@ -89,12 +93,19 @@ export class AddUserModalComponent implements OnInit {
         spaceId: spaceID,
       },
     };
-    this.spaceService.getRoleList(params).subscribe(res => {
-      this.roles = res['retList'];
-      this.roles.forEach(role => {
-        role.checked = false;
-      });
-    });
+    this.spaceService.getRoleList(params).subscribe(
+      res => {
+        this.roles = res['retList'];
+        this.roles.forEach(role => {
+          role.checked = false;
+        });
+      },
+      err => {
+        if (err instanceof HttpResponse) {
+          this.message.error(err.body.retMsg);
+        }
+      },
+    );
   }
 
   // 初始化报表树
@@ -105,9 +116,16 @@ export class AddUserModalComponent implements OnInit {
         spaceId: spaceID,
       },
     };
-    this.spaceService.qryReportTree(params).subscribe(res => {
-      this.recursiveNode(this.nodes, res['retTreeList']);
-    });
+    this.spaceService.qryReportTree(params).subscribe(
+      res => {
+        this.recursiveNode(this.nodes, res['retTreeList']);
+      },
+      err => {
+        if (err instanceof HttpResponse) {
+          this.message.error(err.body.retMsg);
+        }
+      },
+    );
   }
 
   // 遍历组建树
@@ -167,26 +185,33 @@ export class AddUserModalComponent implements OnInit {
       totalRow: '0',
       totalPage: '0',
     };
-    this.companyService.searchFuzzyUsers(params).subscribe(res => {
-      this.searchedUsers = [];
-      this.searchedUsers = res['retList'];
-      for (const i of this.usersOfSpace) {
-        for (const x in this.searchedUsers) {
-          if (this.searchedUsers[x].userId === i.userId) {
-            // tslint:disable-next-line:radix
-            this.searchedUsers.splice(parseInt(x), 1);
+    this.companyService.searchFuzzyUsers(params).subscribe(
+      res => {
+        this.searchedUsers = [];
+        this.searchedUsers = res['retList'];
+        for (const i of this.usersOfSpace) {
+          for (const x in this.searchedUsers) {
+            if (this.searchedUsers[x].userId === i.userId) {
+              // tslint:disable-next-line:radix
+              this.searchedUsers.splice(parseInt(x), 1);
+            }
           }
         }
-      }
-      this.searchedUsers.forEach(i => {
-        i.checked = false;
-        this.users.forEach(j => {
-          // 查询已被勾选的用户，将其锁定
-          if (i.userNo === j.userNo && j.checked === true) {
-            i.checked = !i.checked;
-          }
+        this.searchedUsers.forEach(i => {
+          i.checked = false;
+          this.users.forEach(j => {
+            // 查询已被勾选的用户，将其锁定
+            if (i.userNo === j.userNo && j.checked === true) {
+              i.checked = !i.checked;
+            }
+          });
         });
-      });
-    });
+      },
+      err => {
+        if (err instanceof HttpResponse) {
+          this.message.error(err.body.retMsg);
+        }
+      },
+    );
   }
 }

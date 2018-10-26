@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { RoleModalComponent } from './components/role-modal.component';
 import { SpaceManageService } from '../../space-manage.service';
+import { HttpRequest, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-role-manage',
   templateUrl: './role-manage.html',
   styles: [
-      `
+    `
       .title-tab {
         height: 32px;
         line-height: 32px;
@@ -54,18 +55,16 @@ import { SpaceManageService } from '../../space-manage.service';
   ],
 })
 export class RoleManageComponent implements OnInit {
-
   roleList = [];
   disabledButton = true;
   checkedAll = '全选';
-  selectedArray=[];
+  selectedArray = [];
 
   constructor(
     private nzModal: NzModalService,
     private message: NzMessageService,
     private service: SpaceManageService,
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.getRoleList();
@@ -100,14 +99,21 @@ export class RoleManageComponent implements OnInit {
         spaceId: spaceID,
       },
     };
-    this.service.getRoleList(params).subscribe(res => {
-      this.roleList = res['retList'];
-      this.roleList.forEach(role => {
-        if (role.remark === null || role.remark === '') {
-          role.remark = '暂无说明';
+    this.service.getRoleList(params).subscribe(
+      res => {
+        this.roleList = res['retList'];
+        this.roleList.forEach(role => {
+          if (role.remark === null || role.remark === '') {
+            role.remark = '暂无说明';
+          }
+        });
+      },
+      err => {
+        if (err instanceof HttpRequest) {
+          this.message.error(err.body.retMsg);
         }
-      });
-    });
+      },
+    );
   }
 
   updateChecked(role) {
@@ -139,26 +145,28 @@ export class RoleManageComponent implements OnInit {
     this.nzModal.confirm({
       nzTitle: '是否将' + title + '移出？',
       nzOnOk: () => {
-        this.service.delRole
-        (params).subscribe(res => {
-          if (res['retCode'] === '00000') {
+        this.service.delRole(params).subscribe(
+          res => {
             this.message.success('移出' + title + '成功！');
             this.getRoleList();
-          } else {
-            this.message.error('移出' + title + '失败！');
-          }
-        });
+          },
+          err => {
+            if (err instanceof HttpResponse) {
+              this.message.error(err.body.retMsg);
+            }
+          },
+        );
       },
     });
   }
 
   checkAll(checkedAll) {
     if (checkedAll === '全选') {
-      this.roleList.forEach(role => role.checked = true);
+      this.roleList.forEach(role => (role.checked = true));
       this.disabledButton = false;
       this.checkedAll = '取消全选';
     } else {
-      this.roleList.forEach(role => role.checked = false);
+      this.roleList.forEach(role => (role.checked = false));
       this.disabledButton = true;
       this.checkedAll = '全选';
     }

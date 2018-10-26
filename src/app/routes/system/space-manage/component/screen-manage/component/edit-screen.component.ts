@@ -3,25 +3,27 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SpaceManageService } from '../../../space-manage.service';
 import { NzMessageService, NzModalRef } from 'ng-zorro-antd';
 import { ICONS } from 'app/models/icons';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   templateUrl: './edit-screen.html',
   styles: [
     `
-  .icon {
-    width: 48px;
-    height: 48px;
+      .icon {
+        width: 48px;
+        height: 48px;
 
-    text-align: center;
-    line-height: 56px;
-    float: left;
-  }
-  .icon:hover {
-    background: #1890ff;
-  }
-  .checked {
-    background: #1890ff;
-  }`,
+        text-align: center;
+        line-height: 56px;
+        float: left;
+      }
+      .icon:hover {
+        background: #1890ff;
+      }
+      .checked {
+        background: #1890ff;
+      }
+    `,
   ],
 })
 export class EditScreenComponent implements OnInit {
@@ -68,14 +70,21 @@ export class EditScreenComponent implements OnInit {
       isDev: this.validateForm.controls.isDev.value === true ? 'T' : 'F',
       icon: this.iconId,
     };
-    this.spaceMangeService.modScreenInfo(params).subscribe(data => {
-      if (data.retCode == '00000') {
-        this.nzMessage.success('修改成功!');
-        this.modalRef.destroy();
-      } else {
-        this.nzMessage.error(data.retMsg);
-      }
-    });
+    this.spaceMangeService.modScreenInfo(params).subscribe(
+      data => {
+        if (data.retCode == '00000') {
+          this.nzMessage.success('修改成功!');
+          this.modalRef.destroy();
+        } else {
+          this.nzMessage.error(data.retMsg);
+        }
+      },
+      err => {
+        if (err instanceof HttpResponse) {
+          this.nzMessage.error(err.body.retMsg);
+        }
+      },
+    );
 
     console.log(params);
   }

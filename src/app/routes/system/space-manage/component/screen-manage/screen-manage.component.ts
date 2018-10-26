@@ -127,14 +127,17 @@ export class ScreenManageComponent implements OnInit {
       spaceId: localStorage.getItem('spaceID'),
       dashboardId: screenId,
     };
-    this.spaceManageService.delScreen(params).subscribe(data => {
-      if (data.retCode == '00000') {
+    this.spaceManageService.delScreen(params).subscribe(
+      data => {
         this.nzMessage.success('删除成功!');
         this.getScreenList(true);
-      } else {
-        this.nzMessage.error(data.retMsg);
-      }
-    });
+      },
+      err => {
+        if (err instanceof HttpResponse) {
+          this.nzMessage.error(err.body.retMsg);
+        }
+      },
+    );
   }
   handle() {
     this.nzModal.warning({
@@ -154,14 +157,17 @@ export class ScreenManageComponent implements OnInit {
           }
         });
         const params = { reqList: handleArray };
-        this.spaceManageService.delAllScreen(params).subscribe(data => {
-          if (data.retCode == '00000') {
+        this.spaceManageService.delAllScreen(params).subscribe(
+          data => {
             this.nzMessage.success('批量删除成功!');
             this.getScreenList(true);
-          } else {
-            this.nzMessage.error(data.retMsg);
-          }
-        });
+          },
+          err => {
+            if (err instanceof HttpResponse) {
+              this.nzMessage.error(err.body.retMsg);
+            }
+          },
+        );
       },
     });
   }

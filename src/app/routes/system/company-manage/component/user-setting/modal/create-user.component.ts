@@ -9,6 +9,7 @@ import {
 import { CompanyManageService } from '../../../company-manage.service';
 import { Observable, of } from 'rxjs';
 import { Page } from '../../../../../../models/page';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-user',
@@ -16,33 +17,33 @@ import { Page } from '../../../../../../models/page';
   styles: [],
 })
 export class CreateUserComponent implements OnInit {
-
   userNo = '';
   userName = '';
 
   constructor(
-    private ref :NzModalRef,
+    private ref: NzModalRef,
     private companyManageService: CompanyManageService,
-    private message: NzMessageService) {
-  }
+    private message: NzMessageService,
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  createUser(){
+  createUser() {
     let params = {
       userName: this.userName,
       userNo: this.userNo,
       avatar: '.assets/default/user.png',
     };
-    this.companyManageService.createUser(params).subscribe(res => {
-      console.log(res);
-      if (res['retCode'] === '00000') {
+    this.companyManageService.createUser(params).subscribe(
+      res => {
         this.message.success('添加用户成功！');
         this.ref.destroy('ok');
-      } else {
-        this.message.error('添加用户失败！');
-      }
-    });
+      },
+      err => {
+        if (err instanceof HttpResponse) {
+          this.message.error(err.body.retMsg);
+        }
+      },
+    );
   }
 }

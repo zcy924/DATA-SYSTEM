@@ -1,17 +1,20 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NzFormatEmitEvent, NzMessageService, NzModalRef, NzTreeNode } from 'ng-zorro-antd';
+import {
+  NzFormatEmitEvent,
+  NzMessageService,
+  NzModalRef,
+  NzTreeNode,
+} from 'ng-zorro-antd';
 import { CompanyManageService } from '../../../../company-manage/company-manage.service';
 import { SpaceManageService } from '../../../space-manage.service';
-
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-role',
   templateUrl: './role-modal.html',
   styles: [``],
 })
-
 export class RoleModalComponent implements OnInit {
-
   roleName = '';
   roleId = '';
   remark = '';
@@ -21,7 +24,8 @@ export class RoleModalComponent implements OnInit {
   key = '';
   reportList = [];
 
-  @ViewChild('treeCom') treeCom;
+  @ViewChild('treeCom')
+  treeCom;
   nodes = [];
 
   constructor(
@@ -29,8 +33,7 @@ export class RoleModalComponent implements OnInit {
     private spaceService: SpaceManageService,
     private message: NzMessageService,
     private modalRef: NzModalRef,
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     if (this.roleId === '') {
@@ -51,10 +54,10 @@ export class RoleModalComponent implements OnInit {
     let spaceID = localStorage.getItem('spaceID');
     let parentID = '';
     if (name === 'first') {
-      parentID = '/';         // 加载根目录
+      parentID = '/'; // 加载根目录
     }
     if (name === 'expand') {
-      parentID = e.node.key;  // 加载子目录
+      parentID = e.node.key; // 加载子目录
     }
     let params = {
       curPage: 1,
@@ -70,24 +73,27 @@ export class RoleModalComponent implements OnInit {
       let data = res['retList'];
       if (name === 'first') {
         data.forEach(report => {
-          this.nodes.push(new NzTreeNode({
-            title: report.reportName,
-            key: report.reportId,
-            expanded: false,
-            isLeaf: report.type !== '0',
-          }));
+          this.nodes.push(
+            new NzTreeNode({
+              title: report.reportName,
+              key: report.reportId,
+              expanded: false,
+              isLeaf: report.type !== '0',
+            }),
+          );
         });
         return;
       }
       if (e.node.getChildren().length === 0 && e.node.isExpanded) {
         data.forEach(report => {
-          e.node.addChildren([{
+          e.node.addChildren([
+            {
               title: report.reportName,
               key: report.reportId,
               expanded: false,
               isLeaf: report.type !== '0',
-            }],
-          );
+            },
+          ]);
         });
       }
       e.node.addChildren([]);
@@ -149,10 +155,12 @@ export class RoleModalComponent implements OnInit {
   // 创建角色
   createRole() {
     let spaceID = localStorage.getItem('spaceID');
-    this.users.forEach(user => user.isSpaceAdmin = 'F');
+    this.users.forEach(user => (user.isSpaceAdmin = 'F'));
     this.users = this.users.filter(user => user.checked === true);
     this.reportList = [];
-    this.treeCom.getCheckedNodeList().forEach(node => this.reportList.push({ reportId: node.key }));
+    this.treeCom
+      .getCheckedNodeList()
+      .forEach(node => this.reportList.push({ reportId: node.key }));
     console.log('reports,' + this.treeCom.getCheckedNodeList());
     let params = {
       SpaceRole: {
@@ -178,9 +186,11 @@ export class RoleModalComponent implements OnInit {
   editRole() {
     let spaceID = localStorage.getItem('spaceID');
     this.users = this.users.filter(user => user.checked === true);
-    this.users.forEach(user => user.isSpaceAdmin = 'F');
+    this.users.forEach(user => (user.isSpaceAdmin = 'F'));
     this.reportList = [];
-    this.treeCom.getCheckedNodeList().forEach(node => this.reportList.push({ reportId: node.key }));
+    this.treeCom
+      .getCheckedNodeList()
+      .forEach(node => this.reportList.push({ reportId: node.key }));
     let params = {
       SpaceRole: {
         roleName: this.roleName,
@@ -211,7 +221,7 @@ export class RoleModalComponent implements OnInit {
     this.spaceService.qryUserListByRole(params1).subscribe(res => {
       if (res['retCode'] === '00000') {
         this.users = res['retList'];
-        this.users.forEach(user => user.checked = true);
+        this.users.forEach(user => (user.checked = true));
       } else {
         this.message.error('查询角色对应的用户列表失败！');
       }
@@ -224,14 +234,17 @@ export class RoleModalComponent implements OnInit {
         roleId: this.roleId,
       },
     };
-    this.spaceService.qryReportListByRole(params3).subscribe(res => {
-      if (res['retCode'] === '00000') {
+    this.spaceService.qryReportListByRole(params3).subscribe(
+      res => {
         this.reportList = res['retTreeList'];
         this.recursiveCheckNode(this.nodes, this.reportList);
-      } else {
-        this.message.error('查询角色对应的报表树失败！');
-      }
-    });
+      },
+      err => {
+        if (err instanceof HttpResponse) {
+          this.message.error(err.body.retMsg);
+        }
+      },
+    );
   }
   recursiveCheckNode(nodes, reports) {
     reports.forEach(report => {
@@ -240,7 +253,7 @@ export class RoleModalComponent implements OnInit {
         key: report.reportId,
         expanded: true,
         isLeaf: report.type !== '0',
-        checked: (report.checked === 'T') && (report.type !== '0'),
+        checked: report.checked === 'T' && report.type !== '0',
       });
       nodes.push(node);
       if (!node.isLeaf && report.children) {
@@ -257,9 +270,16 @@ export class RoleModalComponent implements OnInit {
         spaceId: spaceID,
       },
     };
-    this.spaceService.qryReportTree(params).subscribe(res => {
-      this.recursiveNode(this.nodes, res['retTreeList']);
-    });
+    this.spaceService.qryReportTree(params).subscribe(
+      res => {
+        this.recursiveNode(this.nodes, res['retTreeList']);
+      },
+      err => {
+        if (err instanceof HttpResponse) {
+          this.message.error(err.body.retMsg);
+        }
+      },
+    );
   }
 
   recursiveNode(nodes, reports) {
@@ -276,5 +296,4 @@ export class RoleModalComponent implements OnInit {
       }
     });
   }
-
 }

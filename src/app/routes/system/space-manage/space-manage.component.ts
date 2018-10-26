@@ -5,6 +5,8 @@ import { SpaceManageService } from './space-manage.service';
 import { SideMenuService } from '@shared/side-menu.service';
 import { Menu } from 'app/models/menu';
 import { Page } from 'app/models/page';
+import { HttpResponse } from '@angular/common/http';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   templateUrl: './space-manage.html',
@@ -102,6 +104,7 @@ export class SpaceManageComponent implements OnInit {
     private acRouter: ActivatedRoute,
     private spaceManageService: SpaceManageService,
     private sideMenu: SideMenuService,
+    private message: NzMessageService,
   ) {}
 
   ngOnInit() {
@@ -124,18 +127,25 @@ export class SpaceManageComponent implements OnInit {
       totalPage: this.page.totalPage || '',
       totalRow: this.page.totalRow || '',
     };
-    this.spaceManageService.getScreenList(params).subscribe(data => {
-      const dataSet = data['retList'];
-      dataSet.map(value => {
-        value.text = value.name;
-        value.link = `app/square/${value.spaceId}/screen-detail/${
-          value.dashboardId
-        }`;
-        value.isLeaf = true;
-        value.icon = value.icon;
-      });
-      this.menu[0]['children'][0]['children'] = dataSet;
-    });
+    this.spaceManageService.getScreenList(params).subscribe(
+      data => {
+        const dataSet = data['retList'];
+        dataSet.map(value => {
+          value.text = value.name;
+          value.link = `app/square/${value.spaceId}/screen-detail/${
+            value.dashboardId
+          }`;
+          value.isLeaf = true;
+          value.icon = value.icon;
+        });
+        this.menu[0]['children'][0]['children'] = dataSet;
+      },
+      err => {
+        if (err instanceof HttpResponse) {
+          this.message.error(err.body.retMsg);
+        }
+      },
+    );
   }
 
   getReportTree() {
@@ -144,11 +154,18 @@ export class SpaceManageComponent implements OnInit {
         spaceId: localStorage.getItem('spaceID'),
       },
     };
-    this.spaceManageService.qryReportTree(params).subscribe(data => {
-      const report_menu = data.retTreeList;
-      this.formateTree(report_menu);
-      this.menu[1]['children'] = report_menu;
-    });
+    this.spaceManageService.qryReportTree(params).subscribe(
+      data => {
+        const report_menu = data.retTreeList;
+        this.formateTree(report_menu);
+        this.menu[1]['children'] = report_menu;
+      },
+      err => {
+        if (err instanceof HttpResponse) {
+          this.message.error(err.body.retMsg);
+        }
+      },
+    );
   }
   formateTree(array: Array<any>) {
     array.map(value => {

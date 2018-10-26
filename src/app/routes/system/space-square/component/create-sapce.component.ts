@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NzMessageService, NzModalRef } from 'ng-zorro-antd';
 import { SpaceSquareService } from '../space-square.service';
 import { CompanyManageService } from '../../company-manage/company-manage.service';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-space',
@@ -9,7 +10,6 @@ import { CompanyManageService } from '../../company-manage/company-manage.servic
   styles: [],
 })
 export class CreateSpaceComponent implements OnInit {
-
   isPublic = '0';
   space_desc = '';
   space_name = '';
@@ -21,11 +21,10 @@ export class CreateSpaceComponent implements OnInit {
     private service: SpaceSquareService,
     private companyManageService: CompanyManageService,
     private message: NzMessageService,
-    private modalRef: NzModalRef) {
-  }
+    private modalRef: NzModalRef,
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   createSpace() {
     const params = {
@@ -35,19 +34,22 @@ export class CreateSpaceComponent implements OnInit {
         isPublic: this.isPublic,
         avatar: './assets/default/space.png',
         status: 'T',
-        userList: this.admins
+        userList: this.admins,
       },
     };
 
-    this.service.createSpace(params).subscribe(res => {
-      console.log(res);
-      if (res['retCode'] === '00000') {
+    this.service.createSpace(params).subscribe(
+      res => {
+        console.log(res);
         this.message.success('添加空间成功！');
         this.modalRef.destroy('ok');
-      } else {
-        this.message.error('添加空间失败！');
-      }
-    });
+      },
+      err => {
+        if (err instanceof HttpResponse) {
+          this.message.error(err.body.retMsg);
+        }
+      },
+    );
   }
 
   // 空间管理员复选框勾选

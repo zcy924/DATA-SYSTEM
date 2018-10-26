@@ -3,6 +3,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { NzMessageService, NzModalRef } from 'ng-zorro-antd';
 import { SpaceManageService } from '../../../space-manage.service';
 import { ICONS } from 'app/models/icons';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   templateUrl: './add-screen.html',
@@ -84,14 +85,17 @@ export class AddScreenComponent implements OnInit {
       templetId: 'adasdadasd',
       isDev: this.validateForm.controls.isDev.value ? 'T' : 'F',
     };
-    this.spaceManageService.addScreen(params).subscribe(data => {
-      if (data.retCode === '00000') {
+    this.spaceManageService.addScreen(params).subscribe(
+      data => {
         this.nzMessage.success('新增大屏成功!');
         this.modal.destroy('ok');
-      } else {
-        this.nzMessage.error(data.retMsg);
-      }
-    });
+      },
+      err => {
+        if (err instanceof HttpResponse) {
+          this.nzMessage.error(err.body.retMsg);
+        }
+      },
+    );
     // return this.spaceManageService.addScreen(params);
   }
   test() {

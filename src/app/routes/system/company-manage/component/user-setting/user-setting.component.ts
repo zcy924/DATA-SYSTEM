@@ -4,6 +4,7 @@ import { CreateUserComponent } from './modal/create-user.component';
 import { CompanyManageService } from '../../company-manage.service';
 import { Page } from '../../../../../models/page';
 import { SettingsService } from '@delon/theme';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-setting',
@@ -72,7 +73,9 @@ export class UserSettingComponent implements OnInit {
         this.page.totalPage = res['totalPage'];
       },
       err => {
-        console.log(err);
+        if (err instanceof HttpResponse) {
+          this.message.error(err.body.retMsg);
+        }
       },
     );
   }
@@ -92,14 +95,21 @@ export class UserSettingComponent implements OnInit {
       this.nzModel.confirm({
         nzTitle: '确认删除当前用户？',
         nzOnOk: () => {
-          this.companyManageService.delUser(params).subscribe(res => {
-            if (res['retCode'] === '00000') {
+          this.companyManageService.delUser(params).subscribe(
+            res => {
+              // if (res['retCode'] === '00000') {
               this.message.success('删除用户成功！');
               this.searchUserList(true);
-            } else {
-              this.message.error('删除用户失败！');
-            }
-          });
+              // } else {
+              // this.message.error('删除用户失败！');
+              // }
+            },
+            err => {
+              if (err instanceof HttpResponse) {
+                this.message.error(err.body.retMsg);
+              }
+            },
+          );
         },
       });
     }
@@ -131,7 +141,9 @@ export class UserSettingComponent implements OnInit {
         this.page.totalPage = res['totalPage'];
       },
       err => {
-        console.log(err);
+        if (err instanceof HttpResponse) {
+          this.message.error(err.body.retMsg);
+        }
       },
     );
   }
