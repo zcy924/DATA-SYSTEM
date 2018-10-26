@@ -13,8 +13,8 @@
           <nz-form-item nz-row>
             <nz-form-label [nzSpan]="8">公司名称</nz-form-label>
             <nz-form-control [nzSpan]="16">
-              <input nz-input name="companyName" [(ngModel)]="companyName">
-              <!--<nz-form-explain *ngIf="validateForm.get('email').dirty && validateForm.get('email').errors">The input is not valid E-mail!</nz-form-explain>-->
+              <input nz-input name="companyName" nzRequired [(ngModel)]="companyName">
+              <!--<nz-form-explain *ngIf="validateForm.get('companyName').dirty && validateForm.get('companyName').errors">公司名称不能为空</nz-form-explain>-->
             </nz-form-control>
           </nz-form-item>
 
@@ -22,7 +22,6 @@
             <nz-form-label [nzSpan]="8">空间数量</nz-form-label>
             <nz-form-control [nzSpan]="16">
               <h4>{{spaceNum}}</h4>
-              <!--<nz-form-explain *ngIf="validateForm.get('email').dirty && validateForm.get('email').errors">The input is not valid E-mail!</nz-form-explain>-->
             </nz-form-control>
           </nz-form-item>
 
@@ -42,13 +41,9 @@
               <nz-input-group nzSuffixIcon="anticon anticon-search">
                 <input type="text" name="key" (keyup)="searchUsers()" [(ngModel)]="key" nz-input placeholder="搜索用户" />
               </nz-input-group>
-              <!-- <ng-template #suffixButton>
-                <button nz-button nzType="primary" (click)="searchUsers()"  nzSearch><i class="anticon anticon-search"></i></button>
-              </ng-template> -->
 
               <div *ngFor="let admin of searchedAdmins"><label nz-checkbox name="{{admin.userNo}}" (ngModelChange)="searchChecked(admin)"
                   [nzDisabled]="admin.checked" [(ngModel)]="admin.checked">{{admin.userName}}（{{admin.userNo}}）</label></div>
-
 
             </nz-form-control>
           </nz-form-item>

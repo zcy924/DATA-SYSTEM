@@ -76,7 +76,7 @@ export class LoginComponent {
               // userId: data.userId,
               isPlatformAdmin:true
             });
-            this.router.navigate(['/app/user']);
+            this.router.navigate(['/app/platform/companis-manage']);
           }
         }
       );

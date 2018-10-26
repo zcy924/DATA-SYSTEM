@@ -18,7 +18,7 @@ export class ReportManageComponent implements OnInit {
 
   folderName = '根目录'; // 当前目录名称
   folderID = '/'; // 当前目录ID
-  folders: any; // 当前全路径
+  folders: Array<any>; // 当前全路径
 
   loading = false;
   indeterminate = false;
@@ -143,8 +143,10 @@ export class ReportManageComponent implements OnInit {
     });
   }
 
-  // 以此报表作为模板新建
-  addReportByOne(data) {}
+  // TODO 以此报表作为模板新建
+  addReportByOne(data) {
+
+  }
 
   // 编辑报表属性
   editReport(data) {

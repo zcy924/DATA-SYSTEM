@@ -8,7 +8,7 @@
       <button nz-button [nzType]="'primary'" (click)="showCreateModal('空间')"><i class="anticon anticon-plus"></i>创建空间</button>
 
       <nz-input-group nzSearch [nzSuffix]="suffixIconButton" style="padding-left: 16px">
-        <input type="text" name="key" [(ngModel)]="key" nz-input placeholder="搜索空间或管理员">
+        <input type="text" name="key" [(ngModel)]="key" (keyup)="($event.which === 13)?searchFuzzy(true):0 "nz-input placeholder="搜索空间或管理员">
       </nz-input-group>
       <ng-template #suffixIconButton>
         <button nz-button nzType="primary" nzSearch (click)="searchFuzzy(true)"><i class="anticon anticon-search"></i></button>

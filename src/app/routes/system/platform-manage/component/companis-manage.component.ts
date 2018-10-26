@@ -32,7 +32,9 @@ export class CompanisManageComponent implements OnInit {
       nzContent: CreateCompanyComponent,
       nzWidth: '50%',
       nzOnOk: ref => {
-        ref.createCompany();
+        return new Promise(res => {
+          ref.createCompany();
+        });
       },
     });
     modal.afterClose.subscribe(res => {
@@ -55,7 +57,6 @@ export class CompanisManageComponent implements OnInit {
     };
     this.platformManageService.getCompanyList(params).subscribe(
       res => {
-        console.log(res);
         this.dataSet = res['retList'];
         this.page.totalRow = res['totalRow'];
         this.page.totalPage = res['totalPage'];
