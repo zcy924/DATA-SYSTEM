@@ -45,14 +45,12 @@
     <nz-tab [nzTitle]="'权限配置' ">
       <div style="padding: 15px;border: 1px solid #e8e8e8;">
         <nz-tree name="nodes"   #treeCom
-          [(ngModel)]="nodes"
-          [nzCheckStrictly]="false"
-                 [nzAsyncData]="true"           (nzExpandChange)="openFolder('expand',$event)"
+                 [nzData]="nodes"
           [nzCheckable]="true"
           [nzMultiple]="true"
           (nzCheckBoxChange)="checkTreeNode($event)"
         >
-<!-- [nzAsyncData]="true"           (nzExpandChange)="openFolder('expand',$event)"-->
+ <!--[nzAsyncData]="true"           (nzExpandChange)="openFolder('expand',$event)"-->
           <ng-template #nzTreeTemplate let-node>
             <span class="custom-node" draggable="true" aria-grabbed="true" [class.active]="node.isSelected">
               <span  *ngIf="!node.isLeaf">

@@ -38,7 +38,7 @@
       <div style="padding: 15px;border: 1px solid #e8e8e8;">
         请选择用户可访问的报表：
         <div style="padding: 12px;border: 1px solid #e8e8e8;height: 350px;overflow:auto">
-          <nz-tree name="nodes" #treeCom [(ngModel)]="nodes" [nzCheckStrictly]="false" [nzCheckable]="true"
+          <nz-tree name="nodes" #treeCom [nzData]="nodes"  [nzCheckable]="true"
             [nzMultiple]="true" (nzCheckBoxChange)="checkTreeNode($event)">
             <!-- [nzAsyncData]="true"           (nzExpandChange)="openFolder('expand',$event)"-->
             <ng-template #nzTreeTemplate let-node>

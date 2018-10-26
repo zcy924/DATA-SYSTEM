@@ -24,9 +24,8 @@ export class EditUserModalComponent implements OnInit {
     private modalRef: NzModalRef,
   ) {}
 
-  @ViewChild('treeCom')
-  treeCom;
   nodes = [];
+  @ViewChild('treeCom') treeCom;
 
   checkTreeNode(event: NzFormatEmitEvent): void {
     console.log(event);
@@ -84,6 +83,7 @@ export class EditUserModalComponent implements OnInit {
     };
     this.spaceService.qryReportListByUser(params3).subscribe(
       res => {
+        this.nodes=[];// 这个不能删，作用域有用
         this.reportList = res['retTreeList'];
         this.recursiveCheckNode(this.nodes, this.reportList);
       },
@@ -95,19 +95,20 @@ export class EditUserModalComponent implements OnInit {
     );
   }
   recursiveCheckNode(nodes, reports) {
-    reports.forEach(report => {
-      let node = new NzTreeNode({
+    for(let report of reports){
+      let node = {
         title: report.reportName,
         key: report.reportId,
         expanded: true,
         isLeaf: report.type !== '0',
         checked: report.checked === 'T' && report.type !== '0',
-      });
+        children:[]
+      };
       nodes.push(node);
       if (!node.isLeaf && report.children) {
         this.recursiveCheckNode(node.children, report.children);
       }
-    });
+    };
   }
 
   // 回显用户的角色列表
