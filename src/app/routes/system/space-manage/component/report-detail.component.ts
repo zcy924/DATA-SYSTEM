@@ -81,13 +81,12 @@ export class ReportDetailComponent implements OnInit {
   } ];
 
   nzClick(event: NzFormatEmitEvent): void {
-    console.log(event, event.selectedKeys);
+    console.log(event, event.selectedKeys, event.keys, event.nodes);
   }
 
   nzCheck(event: NzFormatEmitEvent): void {
-    console.log(event, event.checkedKeys);
+    console.log(event, event.checkedKeys, event.keys, event.nodes);
   }
-
 
 
 

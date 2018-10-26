@@ -12,9 +12,9 @@ import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
       {{settings.user.name}}
     </div>
     <div nz-menu class="width-sm">
-      <div nz-menu-item routerLink="/app/user"><i class="anticon anticon-user mr-sm"></i>个人中心</div>
+      <div nz-menu-item routerLink="/app/user"><i nz-icon type="user"></i>个人中心</div>
       <div *ngIf="settings['user']['isCompanyAdmin']" nz-menu-item routerLink="/app/company">
-      <i class="anticon anticon-user mr-sm"></i>公司管理</div>
+      <i nz-icon type="home"></i>公司管理</div>
       <li nz-menu-divider></li>
       <div nz-menu-item (click)="logout()"><i class="anticon anticon-setting mr-sm"></i>退出登录</div>
     </div>

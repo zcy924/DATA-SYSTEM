@@ -51,7 +51,13 @@
             <div nz-card-grid class="card" >
               <div>富文本</div>
               <div style="width:370px;height:260px" id="echarts">
-                <!-- <nz-tree
+              </div>
+            </div>
+          </div>
+          <div nz-col nzSpan="8">
+            <div nz-card-grid class="card">
+              Echarts
+              <nz-tree
                 #treeCom
                 [nzData]="nodes"
                 nzCheckable="true"
@@ -61,12 +67,9 @@
                 [nzSelectedKeys]="defaultSelectedKeys"
                 (nzClick)="nzClick($event)"
                 (nzCheckBoxChange)="nzCheck($event)">
-              </nz-tree> -->
-              </div>
+              </nz-tree>
+
             </div>
-          </div>
-          <div nz-col nzSpan="8">
-            <div nz-card-grid class="card">Echarts</div>
           </div>
         </div>
       </div>
