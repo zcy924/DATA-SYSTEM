@@ -12,16 +12,16 @@ export class PersonalCenterComponent implements OnInit {
     {
       text: '报表收藏管理',
       link: '/app/user/user-report',
-      icon: 'anticon anticon-appstore-o',
+      icon: 'appstore-o',
     },
     {
       text: '大屏收藏管理',
-      icon: 'anticon anticon-area-chart',
+      icon: 'area-chart',
       link: '/app/user/user-screen',
     },
     {
       text: '个人信息管理',
-      icon: 'anticon anticon-user',
+      icon: 'user',
       link: '/app/user/user-message',
     },
   ];
@@ -35,18 +35,18 @@ export class PersonalCenterComponent implements OnInit {
           text: '报表收藏管理',
           link: '/app/user/user-report',
           isLeaf: true,
-          icon: 'anticon anticon-appstore-o',
+          icon: 'appstore-o',
         },
         {
           text: '大屏收藏管理',
           isLeaf: true,
-          icon: 'anticon anticon-area-chart',
+          icon: 'area-chart',
           link: '/app/user/user-screen',
         },
         {
           text: '个人信息管理',
           isLeaf: true,
-          icon: 'anticon anticon-user',
+          icon: 'user',
           link: '/app/user/user-message',
         },
       ]

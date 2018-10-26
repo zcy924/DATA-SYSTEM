@@ -2,7 +2,8 @@
     <ng-container *ngFor="let option of items.menu">
       <li *ngIf="!option.isLeaf" nz-submenu>
         <span title>
-          <i class="{{option.icon}}"></i>
+          <!-- <i class="{{option.icon}}"></i> -->
+          <i nz-icon type="{{option.icon}}" theme="fill"></i>
           <span>
             {{option.text}}
           </span>
@@ -11,7 +12,8 @@
       </li>
       <li (click)="go(option.link)" nz-menu-item *ngIf="option.isLeaf&&(!option.isGroup||option.isGroup==undefined)">
         <span title>
-          <i class="{{option.icon}}"></i>
+          <!-- <i class="{{option.icon}}"></i> -->
+          <i nz-icon type="{{option.icon}}" theme="fill"></i>
           <span>{{option.text}}</span>
         </span>
       </li>
@@ -27,7 +29,8 @@
     <ng-container *ngFor="let option of items.menu">
       <li *ngIf="!option.isLeaf" nz-submenu [ngClass]="{'folder-li': !settings.layout.collapsed}">
         <span title>
-          <i class="{{option.icon}}"></i>
+          <!-- <i class="{{option.icon}}"></i> -->
+          <i nz-icon type="{{option.icon}}" theme="fill"></i>
           <span>
             {{option.text}}
           </span>
@@ -36,7 +39,8 @@
       </li>
       <li (click)="go(option.link)" nz-menu-item *ngIf="option.isLeaf&&(!option.isGroup||option.isGroup==undefined)">
         <span title>
-          <i class="{{option.icon}}"></i>
+          <!-- <i class="{{option.icon}}"></i> -->
+          <i nz-icon type="{{option.icon}}" theme="fill"></i>
           <span>{{option.text}}</span>
         </span>
       </li>

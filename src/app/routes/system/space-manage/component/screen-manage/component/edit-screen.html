@@ -28,8 +28,10 @@
     <nz-form-control [nzSm]="21" [nzXs]="24">
       <div style="width:auto;height: 242px;border: 1px solid #D9D9D9;border-radius: 4px">
         <ng-container *ngFor="let item of iconsArry">
-          <div class="icon" [ngClass]="{'checked':item.checked}" (click)="selectIcon(item.id)"><i style="font-size: 2em"
-              class="{{item.icon}}"></i></div>
+          <div class="icon" [ngClass]="{'checked':item.checked}" (click)="selectIcon(item.id)">
+            <!-- <i style="font-size: 2em"class="{{item.icon}}"></i> -->
+            <i style="font-size: 2em" nz-icon type="{{item.icon}}" theme="outline"></i>
+            </div>
         </ng-container>
 
       </div>

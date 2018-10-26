@@ -15,18 +15,18 @@ export class CompanyManageComponent implements OnInit {
         {
           text: '公司设置',
           link: '/app/company/company-setting',
-          icon: 'anticon anticon-team',
+          icon: 'team',
           isLeaf: true,
         },
         {
           text: '空间设置',
-          icon: 'anticon anticon-home',
+          icon: 'home',
           link: '/app/company/space-setting',
           isLeaf: true,
         },
         {
           text: '用户管理',
-          icon: 'anticon anticon-user',
+          icon: 'user',
           link: '/app/company/user-setting',
           isLeaf: true,
         },

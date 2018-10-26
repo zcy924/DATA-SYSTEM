@@ -24,7 +24,7 @@ export class SpaceManageComponent implements OnInit {
         {
           text: '数据大屏',
           isLeaf: false,
-          icon: 'anticon anticon-folder',
+          icon: 'folder',
           children: [],
         },
       ],
@@ -45,54 +45,54 @@ export class SpaceManageComponent implements OnInit {
           text: '报表管理',
           link: `app/square/${localStorage.getItem('spaceID')}/report-manage`,
           isLeaf: true,
-          icon: 'anticon anticon-appstore-o',
+          icon: 'appstore-o',
         },
         {
           text: '大屏管理',
           isLeaf: true,
-          icon: 'anticon anticon-area-chart',
+          icon: 'area-chart',
           link: `app/square/${localStorage.getItem('spaceID')}/screen-manage`,
         },
         {
           text: '角色管理',
           isLeaf: true,
-          icon: 'anticon anticon-usergroup-add',
+          icon: 'usergroup-add',
           link: `app/square/${localStorage.getItem('spaceID')}/role-manage`,
         },
         {
           isLeaf: true,
           text: '用户管理',
-          icon: 'anticon anticon-user',
+          icon: 'user',
           link: `app/square/${localStorage.getItem('spaceID')}/user-manage`,
         },
         {
           text: '数据源管理',
           isLeaf: true,
-          icon: 'anticon anticon-database',
+          icon: 'database',
           link: 'user-message',
         },
         {
           text: '数据表预览',
           isLeaf: true,
-          icon: 'anticon anticon-user',
+          icon: 'user',
           link: 'user-message',
         },
         {
           text: 'SQL模型管理',
           isLeaf: true,
-          icon: 'anticon anticon-api',
+          icon: 'api',
           link: 'user-message',
         },
         {
           text: '数据值映射管理',
           isLeaf: true,
-          icon: 'anticon anticon-book',
+          icon: 'book',
           link: 'user-message',
         },
         {
           text: '空间设置',
           isLeaf: true,
-          icon: 'anticon anticon-setting',
+          icon: 'setting',
           link: 'user-message',
         },
       ],
@@ -175,7 +175,7 @@ export class SpaceManageComponent implements OnInit {
       }`;
       value.isLeaf = value.type == 1 ? true : false;
       value.icon =
-        value.type == 1 ? 'anticon anticon-file' : 'anticon anticon-folder';
+        value.type == 1 ? 'file' : 'folder';
       if (value.children) {
         this.formateTree(value.children);
       }

@@ -6,10 +6,10 @@
           报表名称
         </div>
         <div nz-col>
-         <a><i nz-tooltip nzTitle="页面已公开" nzPlacement="bottom" class="anticon anticon-eye"></i></a>
-         <a><i nz-tooltip nzTitle="页面处于开发模式" nzPlacement="bottom" class="anticon anticon-setting"></i></a>
-         <a><i nz-tooltip nzTitle="收藏" nzPlacement="bottom" class="anticon anticon-heart"></i></a>
-         <a><i nz-tooltip nzTitle="编辑" nzPlacement="bottom" class="anticon anticon-edit"></i></a>
+         <a><i nz-tooltip nzTitle="页面已公开" nzPlacement="bottom" nz-icon type="eye"></i></a>
+         <a><i nz-tooltip nzTitle="页面处于开发模式" nzPlacement="bottom" nz-icon type="setting"></i></a>
+         <a><i nz-tooltip nzTitle="收藏" nzPlacement="bottom" nz-icon type="heart"></i></a>
+         <a><i nz-tooltip nzTitle="编辑" nzPlacement="bottom" nz-icon type="edit"></i></a>
         </div>
       </div>
 
@@ -51,7 +51,17 @@
             <div nz-card-grid class="card" >
               <div>富文本</div>
               <div style="width:370px;height:260px" id="echarts">
-
+                <!-- <nz-tree
+                #treeCom
+                [nzData]="nodes"
+                nzCheckable="true"
+                nzMultiple="true"
+                [nzCheckedKeys]="defaultCheckedKeys"
+                [nzExpandedKeys]="defaultExpandedKeys"
+                [nzSelectedKeys]="defaultSelectedKeys"
+                (nzClick)="nzClick($event)"
+                (nzCheckBoxChange)="nzCheck($event)">
+              </nz-tree> -->
               </div>
             </div>
           </div>

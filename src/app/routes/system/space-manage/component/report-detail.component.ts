@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import * as echarts from 'echarts';
+import { NzFormatEmitEvent, NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd';
 
 @Component({
   templateUrl: './report-detail.html',
@@ -50,9 +51,55 @@ export class ReportDetailComponent implements OnInit {
       address: 'Sidney No. 1 Lake Park'
     }
   ];
+
+
+
+
+  @ViewChild('treeCom') treeCom;
+  defaultCheckedKeys = [ '1001', '1002' ];
+  defaultSelectedKeys = [ '10011' ];
+  defaultExpandedKeys = [ '100', '1001' ];
+
+  nodes: NzTreeNodeOptions[] = [ {
+    title   : 'parent 1',
+    key     : '100',
+    children: [ {
+      title   : 'parent 1-0',
+      key     : '1001',
+      disabled: true,
+      children: [
+        { title: 'leaf 1-0-0', key: '10010', disableCheckbox: true, isLeaf: true },
+        { title: 'leaf 1-0-1', key: '10011', isLeaf: true, checked: true }
+      ]
+    }, {
+      title   : 'parent 1-1',
+      key     : '1002',
+      children: [
+        { title: 'leaf 1-1-0', key: '10020', isLeaf: true }
+      ]
+    } ]
+  } ];
+
+  nzClick(event: NzFormatEmitEvent): void {
+    console.log(event, event.selectedKeys);
+  }
+
+  nzCheck(event: NzFormatEmitEvent): void {
+    console.log(event, event.checkedKeys);
+  }
+
+
+
+
+
+
+
   constructor() {}
 
   ngOnInit() {
+    setTimeout(() => {
+      console.log(this.treeCom.getTreeNodes(), this.treeCom.getCheckedNodeList());
+    }, 500);
     const mycharts = echarts.init(document.getElementById('echarts'));
     const option = {
       title: {

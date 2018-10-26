@@ -11,7 +11,7 @@
               <input type="text" nz-input placeholder="请输入用户名" />
             </nz-input-group>
             <ng-template #suffixIconButton>
-              <button nz-button nzType="primary" nzSearch><i class="anticon anticon-search"></i></button>
+              <button nz-button nzType="primary" nzSearch><i nz-icon type="search"></i></button>
             </ng-template>
         </div>
       </div>
@@ -53,10 +53,10 @@
               </div>
               <div nz-row class="card-handle">
                 <div nz-col nzSpan="12" style="border-right: solid 1px #cccccc; ">
-                  <a><i class="anticon anticon-edit" (click)="editUser(user)"></i></a>
+                  <a><i nz-icon type="edit" (click)="editUser(user)"></i></a>
                 </div>
                 <div nz-col nzSpan="12">
-                  <a><i class="anticon anticon-delete"(click)="delUser(user)"></i></a>
+                  <a><i nz-icon type="delete" (click)="delUser(user)"></i></a>
                 </div>
               </div>
             </div>

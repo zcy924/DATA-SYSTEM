@@ -39,8 +39,8 @@
             <tr *ngFor="let data of dataSet">
               <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="checkLine($event,data.reportId)"></td>
               <td>
-                <i class="anticon anticon-file" *ngIf="data.type===isReport"></i>
-                <i class="anticon anticon-folder" *ngIf="data.type===isFolder"></i>
+                <i nz-icon type="file" *ngIf="data.type===isReport"></i>
+                <i nz-icon type="folder" *ngIf="data.type===isFolder"></i>
               </td>
               <td>
                 <a *ngIf="data.type===isFolder" (click)="searchData(true,{ parentId: data.reportId, reportName: data.reportName })">{{data.reportName}}</a>
@@ -51,10 +51,10 @@
               <td>{{data.isdev === isDev ? '是':'否'}}</td>
               <td>
                 <div style="width: 100px;text-align: right">
-<span style="padding-right: 12px"><i class="anticon anticon-eye"    nz-tooltip nzTitle="打开报表页面" *ngIf="data.type===isReport" (click)="openReport()" ></i></span>
-<span style="padding-right: 12px"><i class="anticon anticon-copy"   nz-tooltip nzTitle="以此报表为模板新建" *ngIf="data.type===isReport" (click)="addReportByOne(data)"></i></span>
-<span style="padding-right: 12px"><i class="anticon anticon-edit"   nz-tooltip nzTitle="编辑" (click)="editReport(data)"></i></span>
-<span style="padding-right: 0"><i class="anticon anticon-delete" nz-tooltip nzTitle="删除" (click)="delReport(data.reportId,data.type)"></i></span>
+<span style="padding-right: 12px"><i nz-icon type="eye"    nz-tooltip nzTitle="打开报表页面" *ngIf="data.type===isReport" (click)="openReport()" ></i></span>
+<span style="padding-right: 12px"><i nz-icon type="copy"  nz-tooltip nzTitle="以此报表为模板新建" *ngIf="data.type===isReport" (click)="addReportByOne(data)"></i></span>
+<span style="padding-right: 12px"><i nz-icon type="edit"   nz-tooltip nzTitle="编辑" (click)="editReport(data)"></i></span>
+<span style="padding-right: 0"><i nz-icon type="delete" nz-tooltip nzTitle="删除" (click)="delReport(data.reportId,data.type)"></i></span>
                 </div>
               </td>
             </tr>
