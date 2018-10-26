@@ -1,14 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { NzTreeNode, NzFormatEmitEvent, NzMessageService, NzModalRef } from 'ng-zorro-antd';
+import {
+  NzTreeNode,
+  NzFormatEmitEvent,
+  NzMessageService,
+  NzModalRef,
+} from 'ng-zorro-antd';
 import { SpaceManageService } from '../../../space-manage.service';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
+import { HttpRequest, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-newpage',
   templateUrl: './report-modal.html',
   styles: [
-      `
+    `
       nz-date-picker ::ng-deep .ant-calendar-picker {
         width: 100%;
       }
@@ -16,13 +22,12 @@ import { Observable, of } from 'rxjs';
   ],
 })
 export class ReportModalComponent implements OnInit {
-
-  REPORT = '1';   // 报表
-  FOLDER = '0';   // 文件夹
-  PUBLIC = '1';   // 公开
-  NOT_PUBLIC = '0';   // 公开
-  DEV = '1';      // 开发者模式
-  NOT_DEV = '0';  // 开发者模式
+  REPORT = '1'; // 报表
+  FOLDER = '0'; // 文件夹
+  PUBLIC = '1'; // 公开
+  NOT_PUBLIC = '0'; // 公开
+  DEV = '1'; // 开发者模式
+  NOT_DEV = '0'; // 开发者模式
 
   reportName = '';
   reportId = '';
@@ -34,15 +39,13 @@ export class ReportModalComponent implements OnInit {
   isPublic = false;
   remark = '';
 
-
   constructor(
     private spaceManageService: SpaceManageService,
     private message: NzMessageService,
-    private modalRef:NzModalRef) {
-  }
+    private modalRef: NzModalRef,
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   createReport() {
     let spaceID = localStorage.getItem('spaceID');
@@ -58,16 +61,17 @@ export class ReportModalComponent implements OnInit {
       },
     };
 
-    this.spaceManageService.createReport(params).subscribe(res => {
-      console.log(res);
-      if (res['retCode'] === '00000') {
+    this.spaceManageService.createReport(params).subscribe(
+      res => {
         this.message.success('添加报表成功！');
         this.modalRef.destroy('ok');
-      } else {
-        this.message.error('添加报表失败！');
-        this.modalRef.destroy('error');
-      }
-    });
+      },
+      err => {
+        if (err instanceof HttpRequest) {
+          this.message.error(err.body.retMsg);
+        }
+      },
+    );
   }
 
   modReport() {
@@ -85,15 +89,16 @@ export class ReportModalComponent implements OnInit {
       },
     };
 
-    this.spaceManageService.modReport(params).subscribe(res => {
-      console.log(res);
-      if (res['retCode'] === '00000') {
+    this.spaceManageService.modReport(params).subscribe(
+      res => {
         this.message.success('修改成功！');
-        this.modalRef.destroy("ok");
-      } else {
-        this.message.error('修改失败！');
-      }
-    });
+        this.modalRef.destroy('ok');
+      },
+      err => {
+        if (err instanceof HttpResponse) {
+          this.message.error(err.body.retMsg);
+        }
+      },
+    );
   }
-
 }

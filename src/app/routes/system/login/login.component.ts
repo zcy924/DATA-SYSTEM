@@ -8,6 +8,7 @@ import { ReuseTabService } from '@delon/abc';
 import { StartupService } from '@core/startup/startup.service';
 import { LoginService } from './login.service';
 import { Md5 } from 'ts-md5';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -56,35 +57,43 @@ export class LoginComponent {
       password: this.passwordMD5,
     };
     this.loading = true;
-    this.loginService.login(params).subscribe(data => {
-      // if (data['retCode'] === '00000') {
-      if (data['retCode'] === '00000') {
-        // 清空路由复用信息
-        this.reuseTabService.clear();
-        // 设置Token信息
-        this.tokenService.set({
-          token: data['retData']['TokenID'],
-        });
-        this.settingsService.setUser({
-          name: data.userName,
-          avatar: data.userIcon,
-          userNo: data.userNo,
-          userId: data.userId,
-          companyId: data.companyId,
-          companyName: data.companyName,
-          companyLogo: data.avatar,
-          isCompanyAdmin: data.isCompanyAdmin === 'T' ? true : false,
-        });
-        // 重新获取 StartupService 内容，若其包括 User 有关的信息的话
-        // this.startupSrv.load().then(() => this.router.navigate(['/']));
-        // 否则直接跳转
-        this.router.navigate(['/app/user']);
-      } else {
-        this.msg.error(data.retMsg);
+    this.loginService.login(params).subscribe(
+      data => {
+        // if (data['retCode'] === '00000') {
+        if (data['retCode'] === '00000') {
+          // 清空路由复用信息
+          this.reuseTabService.clear();
+          // 设置Token信息
+          this.tokenService.set({
+            token: data['retData']['TokenID'],
+          });
+          this.settingsService.setUser({
+            name: data.userName,
+            avatar: data.userIcon,
+            userNo: data.userNo,
+            userId: data.userId,
+            companyId: data.companyId,
+            companyName: data.companyName,
+            companyLogo: data.avatar,
+            isCompanyAdmin: data.isCompanyAdmin === 'T' ? true : false,
+          });
+          // 重新获取 StartupService 内容，若其包括 User 有关的信息的话
+          // this.startupSrv.load().then(() => this.router.navigate(['/']));
+          // 否则直接跳转
+          this.router.navigate(['/app/user']);
+        } else {
+          this.msg.error(data.retMsg);
+          this.loading = false;
+          return;
+        }
+      },
+      (error) => {
         this.loading = false;
-        return;
-      }
-    });
+        if (error instanceof HttpResponse) {
+          this.msg.error(error.body.retMsg);
+        }
+      },
+    );
 
     // 设置Token信息
     // this.tokenService.set({

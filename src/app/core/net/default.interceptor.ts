@@ -11,8 +11,8 @@ import {
   HttpResponse,
   HttpUserEvent,
 } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { mergeMap, catchError } from 'rxjs/operators';
+import { Observable, of, throwError, BehaviorSubject } from 'rxjs';
+import { mergeMap, catchError, debounceTime, filter } from 'rxjs/operators';
 import { NzMessageService } from 'ng-zorro-antd';
 import { _HttpClient } from '@delon/theme';
 import { environment } from '@env/environment';
@@ -25,10 +25,37 @@ import * as moment from 'moment';
  */
 @Injectable()
 export class DefaultInterceptor implements HttpInterceptor {
+  RET_CODE = {
+    SUCCESS: '00000',
+    FAIL: 'FFFFF',
+    PSD_ERROR: '000F0',
+    PSD_EMPTY: '000F2',
+    RESULT_EMPTY: '000F1',
+    EXCEPTION: '000EE',
+    TIMEOUT: '000TT',
+    PARAM_ERROR: '00096',
+    IN_REVIEW: '00099',
+    EXISTED: '00098',
+    RELATION_ERROR: '00094',
+    DELETED: '00097',
+    REPEAT_IP: '00095',
+    RIGHT: '00100',
+    PSW_FIRST: '000FL',
+  };
+  private msgChange$: BehaviorSubject<string> = new BehaviorSubject<string>(
+    null,
+  );
   constructor(
     private injector: Injector,
     @Inject(DA_SERVICE_TOKEN) private tokenService: TokenService,
-  ) {}
+  ) {
+    this.msgChange$
+      .pipe(
+        debounceTime(1000),
+        filter(value => !!value),
+      )
+      .subscribe(msg => this.msg.error(msg));
+  }
 
   get msg(): NzMessageService {
     return this.injector.get(NzMessageService);
@@ -38,53 +65,55 @@ export class DefaultInterceptor implements HttpInterceptor {
     setTimeout(() => this.injector.get(Router).navigateByUrl(url));
   }
 
-  private handleData(
-    event: HttpResponse<any> | HttpErrorResponse,
-  ): Observable<any> {
+  private handleData(event: HttpResponse<any>): Observable<any> {
+    console.log('hahha');
     // 可能会因为 `throw` 导出无法执行 `_HttpClient` 的 `end()` 操作
     this.injector.get(_HttpClient).end();
-    // 业务处理：一些通用操作
+    const body = event.body;
+    if (body && body.retCode) {
+      if (
+        body.retCode !== this.RET_CODE.SUCCESS &&
+        body.retCode !== this.RET_CODE.PSW_FIRST
+      ) {
+        if (body.retCode === this.RET_CODE.TIMEOUT) {
+          // this.session.clear();
+          this.goTo('/401');
+        }
+        // 继续抛出错误中断后续所有 Pipe、subscribe 操作，因此：
+        // this.http.get('/').subscribe() 并不会触发
+        return throwError(event);
+      } else if (
+        body.retCode === this.RET_CODE.SUCCESS &&
+        _.isNumber(body.curPage)
+      ) {
+        body.curPage++;
+      }
+    }
+    return of(event);
+  }
+
+  private handleError(
+    event: HttpResponse<any> | HttpErrorResponse,
+  ): Observable<any> {
     switch (event.status) {
       case 200:
-        // 业务层级错误处理，以下是假定restful有一套统一输出格式（指不管成功与否都有相应的数据格式）情况下进行处理
-        // 例如响应内容：
-        //  错误内容：{ status: 1, msg: '非法参数' }
-        //  正确内容：{ status: 0, response: {  } }
-        // 则以下代码片断可直接适用
-        // if (event instanceof HttpResponse) {
-        //     const body: any = event.body;
-        //     if (body && body.status !== 0) {
-        //         this.msg.error(body.msg);
-        //         // 继续抛出错误中断后续所有 Pipe、subscribe 操作，因此：
-        //         // this.http.get('/').subscribe() 并不会触发
-        //         return throwError({});
-        //     } else {
-        //         // 重新修改 `body` 内容为 `response` 内容，对于绝大多数场景已经无须再关心业务状态码
-        //         return of(new HttpResponse(Object.assign(event, { body: body.response })));
-        //         // 或者依然保持完整的格式
-        //         return of(event);
-        //     }
-        // }
         break;
       case 401: // 未登录状态码
-        this.goTo('/login');
+        this.goTo('');
+        break;
+      case 0:
+        this.msgChange$.next('服务器连接异常');
         break;
       case 403:
       case 404:
       case 500:
         this.goTo(`/${event.status}`);
-        break;
-      default:
-        if (event instanceof HttpErrorResponse) {
-          console.warn(
-            '未可知错误，大部分是由于后端不支持CORS或无效配置引起',
-            event,
-          );
-          this.msg.error(event.message);
-        }
+      case 900:
+      case 901:
+        this.goTo('');
         break;
     }
-    return of(event);
+    return throwError(event);
   }
 
   intercept(
@@ -102,6 +131,7 @@ export class DefaultInterceptor implements HttpInterceptor {
     if (!url.startsWith('https://') && !url.startsWith('http://')) {
       // url = environment.SERVER_URL + url;
       url = 'http://' + url;
+      console.log(url);
     }
     const newReq = req.clone({
       url: url,
@@ -116,7 +146,7 @@ export class DefaultInterceptor implements HttpInterceptor {
         // 若一切都正常，则后续操作
         return of(event);
       }),
-      catchError((err: HttpErrorResponse) => this.handleData(err)),
+      catchError((err: HttpErrorResponse) => this.handleError(err)),
     );
   }
   parseParams(requestBody: any) {

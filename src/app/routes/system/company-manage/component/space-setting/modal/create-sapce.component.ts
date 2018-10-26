@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService, NzModalRef } from 'ng-zorro-antd';
 import { CompanyManageService } from '../../../company-manage.service';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-space',
@@ -38,15 +39,18 @@ export class CreateSpaceComponent implements OnInit {
         userList: this.admins,
       },
     };
-    this.service.createSpace(params).subscribe(res => {
-      console.log(res);
-      if (res['retCode'] === '00000') {
+    this.service.createSpace(params).subscribe(
+      res => {
+        console.log(res);
         this.message.success('添加空间成功！');
         this.modalRef.destroy('ok');
-      } else {
-        this.message.error('添加空间失败！');
-      }
-    });
+      },
+      err => {
+        if (err instanceof HttpResponse) {
+          this.message.error(err.body.retMsg);
+        }
+      },
+    );
   }
 
   // 空间管理员复选框勾选
@@ -85,19 +89,26 @@ export class CreateSpaceComponent implements OnInit {
       totalRow: '0',
       totalPage: '0',
     };
-    this.service.searchFuzzyUsers(params).subscribe(res => {
-      console.log(res);
-      this.searchedAdmins = [];
-      this.searchedAdmins = res['retList'];
-      this.searchedAdmins.forEach(i => {
-        i.checked = false;
-        // 查询已被勾选的用户，将其锁定
-        this.admins.forEach(j => {
-          if (i.userNo === j.userNo && j.checked === true) {
-            i.checked = !i.checked;
-          }
+    this.service.searchFuzzyUsers(params).subscribe(
+      res => {
+        console.log(res);
+        this.searchedAdmins = [];
+        this.searchedAdmins = res['retList'];
+        this.searchedAdmins.forEach(i => {
+          i.checked = false;
+          // 查询已被勾选的用户，将其锁定
+          this.admins.forEach(j => {
+            if (i.userNo === j.userNo && j.checked === true) {
+              i.checked = !i.checked;
+            }
+          });
         });
-      });
-    });
+      },
+      err => {
+        if (err instanceof HttpResponse) {
+          this.message.error(err.body.retMsg);
+        }
+      },
+    );
   }
 }

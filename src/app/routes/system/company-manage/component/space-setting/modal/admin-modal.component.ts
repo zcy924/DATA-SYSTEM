@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService, NzModalRef } from 'ng-zorro-antd';
 import { CompanyManageService } from '../../../company-manage.service';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-modal',
@@ -8,7 +9,6 @@ import { CompanyManageService } from '../../../company-manage.service';
   styles: [],
 })
 export class AdminModalComponent implements OnInit {
-
   admins = [];
   searchedAdmins = [];
   spaceId = '';
@@ -18,11 +18,9 @@ export class AdminModalComponent implements OnInit {
     private companyManageService: CompanyManageService,
     private message: NzMessageService,
     private nzModelRef: NzModalRef,
-  ) {
-  }
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   // 空间管理员复选框勾选
   updateChecked(user) {
@@ -49,20 +47,23 @@ export class AdminModalComponent implements OnInit {
   }
 
   updateAdmins() {
-    this.admins = this.admins.filter(user=>user.checked);
+    this.admins = this.admins.filter(user => user.checked);
     let params = {
       spaceId: this.spaceId,
       admins: this.admins,
     };
-    this.companyManageService.updateAdmins(params).subscribe(res => {
-      console.log(res);
-      if (res['retCode'] === '00000') {
+    this.companyManageService.updateAdmins(params).subscribe(
+      res => {
+        console.log(res);
         this.message.success('修改管理员成功！');
         this.nzModelRef.destroy('ok');
-      } else {
-        this.message.error('修改管理员失败！');
-      }
-    });
+      },
+      err => {
+        if (err instanceof HttpResponse) {
+          this.message.error(err.body.retMsg);
+        }
+      },
+    );
   }
 
   searchUsers() {
@@ -73,18 +74,25 @@ export class AdminModalComponent implements OnInit {
       totalRow: '0',
       totalPage: '0',
     };
-    this.companyManageService.searchFuzzyUsers(params).subscribe(res => {
-      this.searchedAdmins = [];
-      this.searchedAdmins = res['retList'];
-      this.searchedAdmins.forEach(i => {
-        i.checked = false;
-        // 查询已被勾选的用户，将其锁定
-        this.admins.forEach(j => {
-          if (i.userNo === j.userNo && j.checked === true) {
-            i.checked = !i.checked;
-          }
+    this.companyManageService.searchFuzzyUsers(params).subscribe(
+      res => {
+        this.searchedAdmins = [];
+        this.searchedAdmins = res['retList'];
+        this.searchedAdmins.forEach(i => {
+          i.checked = false;
+          // 查询已被勾选的用户，将其锁定
+          this.admins.forEach(j => {
+            if (i.userNo === j.userNo && j.checked === true) {
+              i.checked = !i.checked;
+            }
+          });
         });
-      });
-    });
+      },
+      err => {
+        if (err instanceof HttpResponse) {
+          this.message.error(err.body.retMsg);
+        }
+      },
+    );
   }
 }

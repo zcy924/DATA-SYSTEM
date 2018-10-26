@@ -4,6 +4,7 @@ import { CompanyManageService } from '../../company-manage.service';
 import { Page } from '../../../../../models/page';
 import { AdminModalComponent } from './modal/admin-modal.component';
 import { CreateSpaceComponent } from './modal/create-sapce.component';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-space-setting',
@@ -41,25 +42,32 @@ export class SpaceSettingComponent implements OnInit {
       totalPage: this.page.totalPage,
       totalRow: this.page.totalRow,
     };
-    this.service.getSpaceList(params).subscribe(res => {
-      this.dataSet = res['retList'];
-      this.page.totalRow = res['totalRow'];
-      this.page.totalPage = res['totalPage'];
-      this.dataSet.forEach(res => {
-        res['user'] = [];
-        if (res.userName  && res.userNo) {
-          const userNameList = res.userName.split(',');
-          const userNoList = res.userNo.split(',');
-          userNoList.forEach((value, index) => {
-            res.user.push({
-              userNo: value,
-              userName: userNameList[index],
+    this.service.getSpaceList(params).subscribe(
+      res => {
+        this.dataSet = res['retList'];
+        this.page.totalRow = res['totalRow'];
+        this.page.totalPage = res['totalPage'];
+        this.dataSet.forEach(res => {
+          res['user'] = [];
+          if (res.userName && res.userNo) {
+            const userNameList = res.userName.split(',');
+            const userNoList = res.userNo.split(',');
+            userNoList.forEach((value, index) => {
+              res.user.push({
+                userNo: value,
+                userName: userNameList[index],
+              });
             });
-          });
+          }
+        });
+        this.loading = false;
+      },
+      err => {
+        if (err instanceof HttpResponse) {
+          this.message.error(err.body.retMsg);
         }
-      });
-      this.loading = false;
-    });
+      },
+    );
   }
 
   // 修改空间管理员
@@ -124,25 +132,32 @@ export class SpaceSettingComponent implements OnInit {
       totalPage: this.page.totalPage,
       totalRow: this.page.totalRow,
     };
-    this.service.searchFuzzySpaceList(params).subscribe(res => {
-      this.dataSet = res['retList'];
-      this.page.totalRow = res['totalRow'];
-      this.page.totalPage = res['totalPage'];
-      this.dataSet.forEach(res => {
-        res['user'] = [];
-        if (res.userName  && res.userNo) {
-          const userNameList = res.userName.split(',');
-          const userNoList = res.userNo.split(',');
-          userNoList.forEach((value, index) => {
-            res.user.push({
-              userNo: value,
-              userName: userNameList[index],
+    this.service.searchFuzzySpaceList(params).subscribe(
+      res => {
+        this.dataSet = res['retList'];
+        this.page.totalRow = res['totalRow'];
+        this.page.totalPage = res['totalPage'];
+        this.dataSet.forEach(res => {
+          res['user'] = [];
+          if (res.userName && res.userNo) {
+            const userNameList = res.userName.split(',');
+            const userNoList = res.userNo.split(',');
+            userNoList.forEach((value, index) => {
+              res.user.push({
+                userNo: value,
+                userName: userNameList[index],
+              });
             });
-          });
+          }
+        });
+        this.loading = false;
+      },
+      error => {
+        if (error instanceof HttpResponse) {
+          this.message.error(error.body.retMsg);
         }
-      });
-      this.loading = false;
-    });
+      },
+    );
   }
   delete(spname, spid) {
     const params = {
@@ -152,15 +167,18 @@ export class SpaceSettingComponent implements OnInit {
     const modal = this.nzModel.confirm({
       nzTitle: '确认要删除该空间？',
       nzOnOk: () => {
-        this.service.delSpace(params).subscribe(data => {
-          if (data.retCode == '00000') {
+        this.service.delSpace(params).subscribe(
+          data => {
             modal.destroy();
             this.message.success('删除成功!');
             this.getSpaceAndAdminList(true);
-          } else {
-            this.message.error(data.retMsg);
-          }
-        });
+          },
+          err => {
+            if (err instanceof HttpResponse) {
+              this.message.error(err.body.retMsg);
+            }
+          },
+        );
       },
     });
   }

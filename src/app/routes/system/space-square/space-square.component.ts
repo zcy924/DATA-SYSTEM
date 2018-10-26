@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SpaceSquareService } from './space-square.service';
 import { CreateSpaceComponent } from './component/create-sapce.component';
-import { NzModalService } from 'ng-zorro-antd';
+import { NzModalService, NzMessageService } from 'ng-zorro-antd';
 import { SettingsService } from '@delon/theme';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-space-aquare',
@@ -23,6 +24,7 @@ export class SpaceSquareComponent implements OnInit {
     private spaceService: SpaceSquareService,
     private nzModel: NzModalService,
     public settings: SettingsService,
+    private message: NzMessageService
   ) {}
 
   ngOnInit() {
@@ -55,8 +57,10 @@ export class SpaceSquareComponent implements OnInit {
         });
       },
       err => {
-        console.log(err);
-      },
+        if (err instanceof HttpResponse) {
+          this.message.error(err.body.retMsg);
+        }
+      }
     );
   }
 
