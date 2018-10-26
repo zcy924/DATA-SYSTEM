@@ -35,10 +35,10 @@ export class RoleModalComponent implements OnInit {
   ngOnInit() {
     if (this.roleId === '') {
       this.getTree();
+      // this.openFolder('first', null);
     } else {
       this.initData();
     }
-    // this.openFolder('first', null);
   }
 
   checkTreeNode(event: NzFormatEmitEvent): void {
@@ -66,7 +66,6 @@ export class RoleModalComponent implements OnInit {
         parentId: parentID,
       },
     };
-
     this.spaceService.getReportList(params).subscribe(res => {
       let data = res['retList'];
       if (name === 'first') {
