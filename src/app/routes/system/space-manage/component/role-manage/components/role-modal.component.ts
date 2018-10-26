@@ -24,9 +24,9 @@ export class RoleModalComponent implements OnInit {
   key = '';
   reportList = [];
 
-  @ViewChild('treeCom')
-  treeCom;
-  nodes = [];
+  nodes:Array<any>;
+
+  @ViewChild('treeCom') treeCom;
 
   constructor(
     private companyService: CompanyManageService,
@@ -50,55 +50,54 @@ export class RoleModalComponent implements OnInit {
   }
 
   // 异步获取报表列表
-  openFolder(name: string, e: NzFormatEmitEvent): void {
-    let spaceID = localStorage.getItem('spaceID');
-    let parentID = '';
-    if (name === 'first') {
-      parentID = '/'; // 加载根目录
-    }
-    if (name === 'expand') {
-      parentID = e.node.key; // 加载子目录
-    }
-    let params = {
-      curPage: 1,
-      pageSize: 100,
-      totalPage: 0,
-      totalRow: 0,
-      Report: {
-        spaceId: spaceID,
-        parentId: parentID,
-      },
-    };
-    this.spaceService.getReportList(params).subscribe(res => {
-      let data = res['retList'];
-      if (name === 'first') {
-        data.forEach(report => {
-          this.nodes.push(
-            new NzTreeNode({
-              title: report.reportName,
-              key: report.reportId,
-              expanded: false,
-              isLeaf: report.type !== '0',
-            }),
-          );
-        });
-        return;
-      }
-      if (e.node.getChildren().length === 0 && e.node.isExpanded) {
-        data.forEach(report => {
-          e.node.addChildren([
-            {
-              title: report.reportName,
-              key: report.reportId,
-              expanded: false,
-              isLeaf: report.type !== '0',
-            },
-          ]);
-        });
-      }
-      e.node.addChildren([]);
-    });
-  }
+  // openFolder(name: string, e: NzFormatEmitEvent): void {
+  //   let spaceID = localStorage.getItem('spaceID');
+  //   let parentID = '';
+  //   if (name === 'first') {
+  //     parentID = '/'; // 加载根目录
+  //   }
+  //   if (name === 'expand') {
+  //     parentID = e.node.key; // 加载子目录
+  //   }
+  //   let params = {
+  //     curPage: 1,
+  //     pageSize: 100,
+  //     totalPage: 0,
+  //     totalRow: 0,
+  //     Report: {
+  //       spaceId: spaceID,
+  //       parentId: parentID,
+  //     },
+  //   };
+  //   this.spaceService.getReportList(params).subscribe(res => {
+  //     let data = res['retList'];
+  //     if (name === 'first') {
+  //       data.forEach(report => {
+  //         this.nodes.push({
+  //             title: report.reportName,
+  //             key: report.reportId,
+  //             expanded: false,
+  //             isLeaf: report.type !== '0',
+  //           },
+  //         );
+  //       });
+  //       return;
+  //     }
+  //     if (e.node.getChildren().length === 0 && e.node.isExpanded) {
+  //       data.forEach(report => {
+  //         e.node.addChildren([
+  //           {
+  //             title: report.reportName,
+  //             key: report.reportId,
+  //             expanded: false,
+  //             isLeaf: report.type !== '0',
+  //           },
+  //         ]);
+  //       });
+  //     }
+  //     e.node.addChildren([]);
+  //   });
+  // }
 
   // 模糊查询复选框取消勾选
   updateChecked(user) {
@@ -237,7 +236,9 @@ export class RoleModalComponent implements OnInit {
     this.spaceService.qryReportListByRole(params3).subscribe(
       res => {
         this.reportList = res['retTreeList'];
+        this.nodes=[];// 这个不能删，作用域有用
         this.recursiveCheckNode(this.nodes, this.reportList);
+        console.log(this.nodes);
       },
       err => {
         if (err instanceof HttpResponse) {
@@ -247,19 +248,20 @@ export class RoleModalComponent implements OnInit {
     );
   }
   recursiveCheckNode(nodes, reports) {
-    reports.forEach(report => {
-      let node = new NzTreeNode({
+    for(let report of reports){
+      let node = {
         title: report.reportName,
         key: report.reportId,
         expanded: true,
         isLeaf: report.type !== '0',
         checked: report.checked === 'T' && report.type !== '0',
-      });
+        children: []
+      };
       nodes.push(node);
       if (!node.isLeaf && report.children) {
         this.recursiveCheckNode(node.children, report.children);
       }
-    });
+    }
   }
 
   // 初始化报表树
@@ -272,6 +274,7 @@ export class RoleModalComponent implements OnInit {
     };
     this.spaceService.qryReportTree(params).subscribe(
       res => {
+        this.nodes=[];// 这个不能删，作用域有用
         this.recursiveNode(this.nodes, res['retTreeList']);
       },
       err => {
@@ -283,17 +286,18 @@ export class RoleModalComponent implements OnInit {
   }
 
   recursiveNode(nodes, reports) {
-    reports.forEach(report => {
-      let node = new NzTreeNode({
+    for(let report of reports){
+      let node = {
         title: report.reportName,
         key: report.reportId,
         expanded: true,
         isLeaf: report.type !== '0',
-      });
+        children:[]
+      };
       nodes.push(node);
       if (!node.isLeaf && report.children) {
         this.recursiveNode(node.children, report.children);
       }
-    });
+    }
   }
 }

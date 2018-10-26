@@ -28,11 +28,12 @@ export class AddUserModalComponent implements OnInit {
     private spaceService: SpaceManageService,
     private message: NzMessageService,
     private modalRef: NzModalRef,
-  ) {}
+  ) {
+  }
 
-  @ViewChild('treeCom')
-  treeCom;
-  nodes = [];
+  nodes: Array<any>;
+
+  @ViewChild('treeCom') treeCom;
 
   checkTreeNode(event: NzFormatEmitEvent): void {
     // console.log(event);
@@ -118,7 +119,9 @@ export class AddUserModalComponent implements OnInit {
     };
     this.spaceService.qryReportTree(params).subscribe(
       res => {
-        this.recursiveNode(this.nodes, res['retTreeList']);
+        let list = res['retTreeList'];
+        this.nodes = [];// 这个不能删，作用域有用
+        this.recursiveNode(this.nodes, list);
       },
       err => {
         if (err instanceof HttpResponse) {
@@ -130,19 +133,21 @@ export class AddUserModalComponent implements OnInit {
 
   // 遍历组建树
   recursiveNode(nodes, reports) {
-    reports.forEach(report => {
-      let node = new NzTreeNode({
+    for (let report of reports) {
+      let node = {
         title: report.reportName,
         key: report.reportId,
         expanded: true,
         isLeaf: report.type !== '0',
         checked: report.checked === 'T',
-      });
+        children: [],
+      };
       nodes.push(node);
       if (!node.isLeaf && report.children) {
         this.recursiveNode(node.children, report.children);
       }
-    });
+    }
+    ;
   }
 
   /********************模糊查询用户**********************/
