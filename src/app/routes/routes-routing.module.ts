@@ -51,7 +51,7 @@ const routes: Routes = [
           './system/company-manage/company-manage.module#CompanyManageModule',
       },
       {
-        path: 'system',
+        path: 'platform',
         component: PlatformManageComponent,
         data: { title: '平台管理' },
         loadChildren: './system/platform-manage/platform-manage.module#PlatformManageModule',
@@ -78,6 +78,7 @@ const routes: Routes = [
   },
   {
     path: 'platform',
+    data: {title: '平台管理登录'},
     component: LoginComponent,
     // loadChildren: './passport/passport.module#PassportModule',
   },
