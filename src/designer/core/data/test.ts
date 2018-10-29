@@ -13,7 +13,7 @@ export const array: Array<IDataOptionOption> = [
       type: 'int'
     }],
     config: {
-      intervalTime: 5000,
+      intervalTime: 500000,
       dataGenerator: () => {
         return {
           // 这里指定了维度名的顺序，从而可以利用默认的维度到坐标轴的映射。
@@ -37,7 +37,7 @@ export const array: Array<IDataOptionOption> = [
     comment: '没有任何建议',
     configType: 'mockDynamic',
     config: {
-      intervalTime: 5000,
+      intervalTime: 500000,
       dataGenerator: () => {
         console.log('实时销售额');
         return Math.floor(Math.random() * 10000000);
@@ -73,7 +73,7 @@ export const array: Array<IDataOptionOption> = [
         type: 'int'
       }],
     config: {
-      intervalTime: 5000,
+      intervalTime: 500000,
       dataGenerator: () => {
         return {
           dimensions: [
