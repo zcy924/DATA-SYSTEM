@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnDestroy, Output } from '@angular/core';
 import { graphicFactory } from '@core/node/factory/graphic.factory';
 import { session } from '@core/node/utils/session';
 import * as FileSaver from 'file-saver';
@@ -7,13 +7,14 @@ import { customGraphicMeta, graphicMetaMap, totalGraphicMetaMap } from '@core/no
 import { CommService } from '../service/comm.service';
 import { designerStorage } from '../utils/designer.storage';
 import { Router } from '@angular/router';
+import { Destroyable } from '../interface/destroyable';
 
 @Component({
   selector: 'app-designer-header',
   templateUrl: './designer.header.component.html',
   styleUrls: ['./designer.header.component.less'],
 })
-export class DesignerHeaderComponent implements AfterViewInit {
+export class DesignerHeaderComponent extends Destroyable implements AfterViewInit, OnDestroy {
 
   helperToolsPopup: PopupWrapper;
   filterToolsPopup: PopupWrapper;
@@ -23,14 +24,22 @@ export class DesignerHeaderComponent implements AfterViewInit {
   reportTile: string;
 
   constructor(private _service: CommService, private _router: Router) {
+    super();
   }
 
   ngOnInit() {
-    console.log('ngOnInit header');
-    designerStorage.reportInfo$.subscribe((reportInfo: any) => {
+    const subscription = designerStorage.reportInfo$.subscribe((reportInfo: any) => {
       this.reportTile = reportInfo.name;
       reportInfo.attr ? this.doLoad(reportInfo.attr) : null;
     });
+
+    this.onDestroy(() => {
+      subscription.unsubscribe();
+    });
+  }
+
+  ngOnDestroy() {
+    this.destroy();
   }
 
   mouseEnter(event: MouseEvent, popupWrapper: PopupWrapper, offsetLeft: number) {
@@ -50,9 +59,6 @@ export class DesignerHeaderComponent implements AfterViewInit {
   }
 
   doSave() {
-    // const blob = new Blob([JSON.stringify(session.currentPage.save(), null, 2)], { type: 'text/plain;charset=utf-8' });
-    //
-    // FileSaver.saveAs(blob, `zijin.template.${moment().format('YYYYMMDDHHmmss')}.json`);
     this._service
       .saveScreenContent(Object.assign({},
         designerStorage.reportInfo,
@@ -62,6 +68,12 @@ export class DesignerHeaderComponent implements AfterViewInit {
         })).subscribe((data) => {
       console.log(data);
     });
+  }
+
+  doDownload(){
+    const blob = new Blob([JSON.stringify(session.currentPage.save(), null, 2)], { type: 'text/plain;charset=utf-8' });
+
+    FileSaver.saveAs(blob, `zijin.template.${moment().format('YYYYMMDDHHmmss')}.json`);
   }
 
   doLoad(report: any) {
@@ -78,7 +90,6 @@ export class DesignerHeaderComponent implements AfterViewInit {
     const reader = new FileReader();
     reader.onload = (evt) => {
       const text = (<any>evt.target).result;
-      console.log(text);
       session.currentPage.load(JSON.parse(text));
       (<HTMLFormElement>file.parentElement).reset();
     };
@@ -114,7 +125,7 @@ export class DesignerHeaderComponent implements AfterViewInit {
         option.image.width = (<HTMLImageElement>this).naturalWidth;
         option.image.height = (<HTMLImageElement>this).naturalHeight;
         if (session.currentPage) {
-          const ret = graphicFactory.newGraphicByName('imageAuxiliary', session.currentPage, 200, 200, option);
+          const ret = graphicFactory.newGraphicByName(session.currentPage, 'imageAuxiliary', 200, 200, option);
         }
       };
 

@@ -1,11 +1,11 @@
-import {ReportPageInner} from '@core/node/page/report/page.inner';
-import {session} from '@core/node/utils/session';
-import {PageConfigComponent} from '../../../../components/page.config/page.config.component';
-import {graphicFactory} from '@core/node/factory/graphic.factory';
-import {ComponentRef} from '@angular/core';
-import {PageConfig} from '../../../../components/page.config/page.config';
-import {IReportPage} from '@core/node/page/report/page.interface';
-import {ReportPage} from '@core/node/page/report/page';
+import { ReportPageInner } from '@core/node/page/report/page.inner';
+import { session } from '@core/node/utils/session';
+import { PageConfigComponent } from '../../../../components/page.config/page.config.component';
+import { graphicFactory } from '@core/node/factory/graphic.factory';
+import { ComponentRef } from '@angular/core';
+import { PageConfig } from '../../../../components/page.config/page.config';
+import { IReportPage } from '@core/node/page/report/page.interface';
+import { ReportPage } from '@core/node/page/report/page';
 
 export class PageConfigWrapper {
   constructor(private _inner: ComponentRef<PageConfig> | PageConfig) {
@@ -90,7 +90,7 @@ export class ReportPageOuter {
   save() {
     return {
       option: this.model.exportOption(),
-      children: this._pageInner.regionManager.saveAs()
+      children: this._pageInner.regionManager.saveAs(),
     };
   }
 
