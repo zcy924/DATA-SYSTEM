@@ -70,17 +70,19 @@ const routes: Routes = [
         data: { title: '空间广场' },
         component: SpaceSquareComponent,
       },
-    ]
+    ],
   },
   {
     path: '',
-    data: {title: '登录'},
-    component: LoginComponent
+    data: { title: '登录' },
+    component: LoginComponent,
   },
-  { path: 'designer', component: DesignerComponent },
+  { path: 'designer/:id',
+    data: { title: '设计器' },
+    component: DesignerComponent },
   {
     path: 'platform',
-    data: {title: '平台管理登录'},
+    data: { title: '平台管理登录' },
     component: LoginComponent,
     // loadChildren: './passport/passport.module#PassportModule',
   },
@@ -112,4 +114,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, { useHash: environment.useHash })],
   exports: [RouterModule],
 })
-export class RouteRoutingModule {}
+export class RouteRoutingModule {
+}

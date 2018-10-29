@@ -1,14 +1,16 @@
-import {AfterViewInit, Component, EventEmitter, Output} from '@angular/core';
-import {graphicFactory} from '@core/node/factory/graphic.factory';
-import {session} from '@core/node/utils/session';
+import { AfterViewInit, Component, EventEmitter, Output } from '@angular/core';
+import { graphicFactory } from '@core/node/factory/graphic.factory';
+import { session } from '@core/node/utils/session';
 import * as FileSaver from 'file-saver';
 import * as moment from 'moment';
-import {customGraphicMeta, graphicMetaMap, totalGraphicMetaMap} from '@core/node/config/default.graphic.meta.map';
+import { customGraphicMeta, graphicMetaMap, totalGraphicMetaMap } from '@core/node/config/default.graphic.meta.map';
+import { CommService } from '../service/comm.service';
+import { designerStorage } from '../utils/designer.storage';
 
 @Component({
   selector: 'app-designer-header',
   templateUrl: './designer.header.component.html',
-  styleUrls: ['./designer.header.component.less']
+  styleUrls: ['./designer.header.component.less'],
 })
 export class DesignerHeaderComponent implements AfterViewInit {
 
@@ -16,6 +18,16 @@ export class DesignerHeaderComponent implements AfterViewInit {
   filterToolsPopup: PopupWrapper;
   moreToolsPopup: PopupWrapper;
   @Output() switch = new EventEmitter();
+
+  constructor(private _service: CommService) {
+  }
+
+  ngOnInit() {
+    console.log('ngOnInit header');
+    designerStorage.reportInfo$.subscribe((reportInfo: any) => {
+      reportInfo.attr ? this.doLoad(reportInfo.attr) : null;
+    });
+  }
 
   mouseEnter(event: MouseEvent, popupWrapper: PopupWrapper, offsetLeft: number) {
     popupWrapper.show($(event.currentTarget).offset().left - offsetLeft);
@@ -30,8 +42,22 @@ export class DesignerHeaderComponent implements AfterViewInit {
   }
 
   doSave() {
-    const blob = new Blob([JSON.stringify(session.currentPage.save(), null, 2)], {type: 'text/plain;charset=utf-8'});
-    FileSaver.saveAs(blob, `zijin.template.${moment().format('YYYYMMDDHHmmss')}.json`);
+    // const blob = new Blob([JSON.stringify(session.currentPage.save(), null, 2)], { type: 'text/plain;charset=utf-8' });
+    //
+    // FileSaver.saveAs(blob, `zijin.template.${moment().format('YYYYMMDDHHmmss')}.json`);
+    this._service
+      .saveScreenContent(Object.assign({},
+        designerStorage.reportInfo,
+        {
+          attr: JSON.stringify(session.currentPage.save(), null, 2),
+          spaceId: localStorage.getItem('spaceID'),
+        })).subscribe((data) => {
+      console.log(data);
+    });
+  }
+
+  doLoad(report: any) {
+    session.currentPage.load(report);
   }
 
   templateChange(event: Event) {
@@ -63,8 +89,8 @@ export class DesignerHeaderComponent implements AfterViewInit {
         width: 400,
         height: 300,
         url: '',
-        dataUrl: ''
-      }
+        dataUrl: '',
+      },
     };
     const file: HTMLInputElement = <HTMLInputElement>event.currentTarget;
     if (!file.files || !file.files[0]) {
@@ -76,7 +102,7 @@ export class DesignerHeaderComponent implements AfterViewInit {
       option.image.dataUrl = (<any>evt.target).result;
       const image = new Image();
       image.src = (<any>evt.target).result;
-      image.onload = function () {
+      image.onload = function() {
         option.image.width = (<HTMLImageElement>this).naturalWidth;
         option.image.height = (<HTMLImageElement>this).naturalHeight;
         if (session.currentPage) {
@@ -120,6 +146,7 @@ export class DesignerHeaderComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
+    console.log('ngAfterViewInit header');
     this.helperToolsPopup = helperToolsPopup;
     this.filterToolsPopup = filterToolsPopup;
     this.moreToolsPopup = moreToolsPopup;
@@ -313,7 +340,7 @@ class PopupWrapper {
   }
 
   show(left: number) {
-    this._$element.css({left}).show();
+    this._$element.css({ left }).show();
   }
 
   hide() {
@@ -350,7 +377,7 @@ class GrabHelper {
     width: 300,
     height: 200,
     backgroundImage: 'url("https://ydcdn.nosdn.127.net/dash-online/img/holder-automatic.8f656e5b7d.svg")',
-    backgroundSize: '320px 224px'
+    backgroundSize: '320px 224px',
   };
   private _option;
 
@@ -369,21 +396,21 @@ class GrabHelper {
   show(left: number, top: number, option?: { width: number, height: number, backgroundImage: string }) {
     this._option = option ? option : this._defaultOption;
     this._$element.css(this._option);
-    this._$element.css({backgroundSize: `${this._option.width}px ${this._option.height}px`});
+    this._$element.css({ backgroundSize: `${this._option.width}px ${this._option.height}px` });
     if (!this._state) {
       $('body').append(this._$element);
       this._state = true;
     }
     this._$element.css({
       left: left - this.offsetX,
-      top: top - this.offsetY
+      top: top - this.offsetY,
     });
   }
 
   refresh(left: number, top: number) {
     this._$element.css({
       left: left - this.offsetX,
-      top: top - this.offsetY
+      top: top - this.offsetY,
     });
   }
 

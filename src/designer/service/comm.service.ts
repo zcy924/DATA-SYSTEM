@@ -5,7 +5,7 @@ import { environment } from '@env/environment';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class SpaceManageService {
+export class CommService {
   url = environment.SERVER_URL;
 
   constructor(private httpClient: HttpClient) {
@@ -26,6 +26,10 @@ export class SpaceManageService {
 
   modScreenInfo(params): Observable<any> {
     return this.httpClient.post(this.url + 'spaceManage/dashBoard/revise', params);
+  }
+
+  saveScreenContent(params): Observable<any> {
+    return this.httpClient.post(this.url + 'spaceManage/dashBoard/contentUdt', params);
   }
 
   delScreen(params): Observable<any> {
