@@ -7,6 +7,7 @@ import {
 import { CompanyManageService } from '../../company-manage.service';
 import { HttpResponse } from '@angular/common/http';
 
+
 @Component({
   templateUrl: './company-setting.html',
   styles: [],
@@ -112,6 +113,7 @@ export class CompanySettingComponent implements OnInit {
     this.service.updateCompanyInfo(params).subscribe(
       res => {
         this.message.success('更新公司信息成功！');
+        this.getCompanyInfo();
       },
       error => {
         if (error instanceof HttpResponse) {

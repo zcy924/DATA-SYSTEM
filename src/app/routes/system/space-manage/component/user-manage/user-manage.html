@@ -8,10 +8,10 @@
         <div nz-col style="text-align: right">
           <button nz-button nzType="primary" (click)="addUser()" >添加用户</button>
           <nz-input-group nzSearch [nzSuffix]="suffixIconButton" style="padding-left:16px ">
-              <input type="text" nz-input placeholder="请输入用户名" />
+              <input type="text" [(ngModel)]="key" (keyup)="($event.which === 13)?getUserList():0" nz-input placeholder="请输入用户或账号" />
             </nz-input-group>
             <ng-template #suffixIconButton>
-              <button nz-button nzType="primary" nzSearch><i nz-icon type="search"></i></button>
+              <button nz-button nzType="primary" (click)="getUserList()" nzSearch><i nz-icon type="search"></i></button>
             </ng-template>
         </div>
       </div>

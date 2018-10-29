@@ -10,4 +10,7 @@ export class LoginService {
   login(params): Observable<any> {
     return this.httpClient.post(this.url + 'company/login', params);
   }
+  platformLogin(params): Observable<any> {
+    return this.httpClient.post(this.url + 'system/login', params);
+  }
 }

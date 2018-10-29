@@ -3,7 +3,6 @@
     <nz-tab [nzTitle]="'基本信息'">
       <div class="b-wrapper" style="padding: 15px;border: 1px solid #e8e8e8;">
         <nz-form-item nz-row style="margin-top: 16px">
-
           要添加的用户(请搜索并选择用户，已在空间中的用户不可再次选中)：
           <nz-form-control>
             <div *ngFor="let user of users"><label nz-checkbox name="{{user.userNo}}" (ngModelChange)="updateUserChecked(user)"
@@ -40,7 +39,6 @@
         <div style="padding: 12px;border: 1px solid #e8e8e8;height: 350px;overflow:auto">
           <nz-tree name="nodes" #treeCom [nzData]="nodes"  [nzCheckable]="true"
             [nzMultiple]="true" (nzCheckBoxChange)="checkTreeNode($event)">
-            <!-- [nzAsyncData]="true"           (nzExpandChange)="openFolder('expand',$event)"-->
             <ng-template #nzTreeTemplate let-node>
               <span class="custom-node" draggable="true" aria-grabbed="true" [class.active]="node.isSelected">
                 <span *ngIf="!node.isLeaf">

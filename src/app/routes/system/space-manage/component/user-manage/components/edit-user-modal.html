@@ -40,9 +40,7 @@
                    [nzData]="nodes"
                    [nzCheckable]="true"
                    [nzMultiple]="true"
-                   (nzCheckBoxChange)="checkTreeNode($event)"
-          >
-            <!-- [nzAsyncData]="true"           (nzExpandChange)="openFolder('expand',$event)"-->
+                   (nzCheckBoxChange)="checkTreeNode($event)">
             <ng-template #nzTreeTemplate let-node>
             <span class="custom-node" draggable="true" aria-grabbed="true" [class.active]="node.isSelected">
               <span *ngIf="!node.isLeaf">

@@ -16,7 +16,8 @@ import { SideMenuService } from '@shared/side-menu.service';
 export class ScreenManageComponent implements OnInit {
   page = new Page();
   loading = false;
-  operation;
+  disabledButton = true;
+
   indeterminate = false;
   allChecked = false;
   dataSet = [];
@@ -93,6 +94,7 @@ export class ScreenManageComponent implements OnInit {
   checkLine() {
     const allChecked = this.dataSet.every(value => value.checked === true);
     const allUnChecked = this.dataSet.every(value => !value.checked);
+    this.disabledButton = !this.dataSet.some(value => value.checked);
     this.allChecked = allChecked;
     this.indeterminate = !allChecked && !allUnChecked;
   }
