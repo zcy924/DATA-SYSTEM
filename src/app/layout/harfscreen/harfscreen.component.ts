@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  templateUrl: './harfscreen.html'
+  templateUrl: './harfscreen.html',
 })
 
 export class HarfScreenComponent implements OnInit {
-  constructor() { }
+  isFetching: boolean;
 
-  ngOnInit() { }
+  constructor() {
+  }
+
+  ngOnInit() {
+  }
 }
