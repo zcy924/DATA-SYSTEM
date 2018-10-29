@@ -22,6 +22,7 @@ import { PlatformManageComponent } from './system/platform-manage/platform-manag
 import { LoginComponent } from './system/login/login.component';
 import { Log } from '@angular/core/testing/src/logger';
 import { AuthGuard } from '@core/guard/auth-guard.service';
+import { DesignerComponent } from '../../designer/layout/designer.component';
 
 const routes: Routes = [
   {
@@ -76,6 +77,7 @@ const routes: Routes = [
     data: {title: '登录'},
     component: LoginComponent
   },
+  { path: 'designer', component: DesignerComponent },
   {
     path: 'platform',
     data: {title: '平台管理登录'},
