@@ -24,8 +24,10 @@
     </nz-tab>
 
     <nz-tab [nzTitle]="'角色配置' ">
-      <div style="padding: 32px;border: 1px solid #e8e8e8;">
-        <div *ngFor="let role of roles">
+      <div style="padding: 16px;border: 1px solid #e8e8e8;">
+        <label>请选择用户所属角色：</label>
+        <br> <br>
+        <div *ngFor="let role of roles" style="margin-left: 8px">
           <label nz-checkbox name="{{role.roleName}}" (ngModelChange)="updateChecked(role.checked)" [(ngModel)]="role.checked">
             {{role.roleName}}
           </label>
