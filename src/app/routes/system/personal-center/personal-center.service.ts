@@ -8,10 +8,34 @@ import { Observable } from 'rxjs';
 export class PersonalCenterService {
   url = environment.SERVER_URL;
   constructor(private httpClient: HttpClient) {}
+
   getUser(): Observable<any> {
     return this.httpClient.post('http://127.0.0.1:3000/system/login', {
       username: 'admin',
       password: 'abcd1234',
     });
   }
+
+  /*************************************报表*************************************/
+
+  qryReportTree(params): Observable<any> {
+    return this.httpClient.post(this.url + 'space/report/qryReportListTree', params);
+  }
+
+  getReportList(params): Observable<any> {
+    return this.httpClient.post(this.url + 'space/report/qryReportList', params);
+  }
+
+  delReport(params): Observable<any> {
+    return this.httpClient.post(this.url + 'space/report/del', params);
+  }
+
+  createReport(params): Observable<any> {
+    return this.httpClient.post(this.url + 'space/report/add', params);
+  }
+
+  modReport(params): Observable<any> {
+    return this.httpClient.post(this.url + 'space/report/modReportContent', params);
+  }
+
 }

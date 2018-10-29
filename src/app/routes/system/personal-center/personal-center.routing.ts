@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ReportCollectComponent } from './component/report-collect.component';
-import { ScreenCollectComponent } from './component/screen-collect.component';
-import { UserInfoComponent } from './component/user-info.component';
+import { ReportCollectComponent } from './report-collect/report-collect.component';
+import { ScreenCollectComponent } from './screen-collect/screen-collect.component';
+import { UserInfoComponent } from './user-info/user-info.component';
 const routes: Routes = [
   {
     path: 'user-report',

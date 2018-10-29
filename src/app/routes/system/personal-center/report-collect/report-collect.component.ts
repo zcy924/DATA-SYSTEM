@@ -1,18 +1,18 @@
-import { Component, HostListener, OnInit, TemplateRef } from '@angular/core';
-import { NzModalService, NzMessageService } from 'ng-zorro-antd';
-import { ReportModalComponent } from './components/report-modal.component';
-import { SpaceManageService } from '../../space-manage.service';
-import { Page } from '../../../../../models/page';
-import { HttpResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { NzMessageService, NzModalService } from 'ng-zorro-antd';
+import { MenuService } from '@delon/theme';
+import { Page } from '../../../../models/page';
 import { SideMenuService } from '@shared/side-menu.service';
-import { Subscription } from 'rxjs';
+import { ReportModalComponent } from '../../space-manage/component/report-manage/components/report-modal.component';
+import { HttpResponse } from '@angular/common/http';
+import { PersonalCenterService } from '../personal-center.service';
 
 @Component({
-  selector: 'app-report-manage',
-  templateUrl: './report-manage.html',
-  styleUrls: ['./report-manage.less'],
+  selector: 'app-collect-manage',
+  templateUrl: './report-collect.html',
+  styleUrls: ['./report-collect.less'],
 })
-export class ReportManageComponent implements OnInit {
+export class ReportCollectComponent implements OnInit {
   isReport = '1'; // 报表
   isFolder = '0'; // 文件夹
   isPublic = '1'; // 公开
@@ -35,7 +35,7 @@ export class ReportManageComponent implements OnInit {
   constructor(
     private nzModel: NzModalService,
     private message: NzMessageService,
-    private spaceManageService: SpaceManageService,
+    private spaceManageService: PersonalCenterService,
     private sideMenu: SideMenuService,
   ) {}
 
@@ -260,7 +260,7 @@ export class ReportManageComponent implements OnInit {
       value.text = value.reportName;
       value.link = `app/square/${value.spaceId}/report-detail/${
         value.reportId
-      }`;
+        }`;
       value.isLeaf = value.type == 1 ? true : false;
       value.icon = value.type == 1 ? 'file' : 'folder';
       if (value.children) {
