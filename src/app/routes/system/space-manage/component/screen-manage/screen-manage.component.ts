@@ -6,6 +6,7 @@ import { HttpResponse } from '@angular/common/http';
 import { Page } from 'app/models/page';
 import { EditScreenComponent } from './component/edit-screen.component';
 import { SettingsService } from '@delon/theme';
+import { SideMenuService } from '@shared/side-menu.service';
 
 @Component({
   selector: 'app-screen-manage',
@@ -20,21 +21,23 @@ export class ScreenManageComponent implements OnInit {
   indeterminate = false;
   allChecked = false;
   dataSet = [];
+  menu;
   constructor(
     private nzModal: NzModalService,
     private nzMessage: NzMessageService,
     private spaceManageService: SpaceManageService,
     private settings: SettingsService,
+    private sideMenu: SideMenuService,
   ) {}
   ngOnInit() {
     this.getScreenList();
+    this.menu = this.sideMenu.menu;
   }
   openAdd() {
     const modal = this.nzModal.create({
       nzTitle: `新增大屏`,
       nzContent: AddScreenComponent,
       nzWidth: '600px',
-      nzOkLoading: false,
       nzComponentParams: {
         spaceId: localStorage.getItem('spaceID'),
         companyId: this.settings.user.companyId,
@@ -42,15 +45,12 @@ export class ScreenManageComponent implements OnInit {
       nzOkText: '新增',
       nzCancelText: '取消',
       nzOnOk: i => {
-        return new Promise(res => {
           i.submitForm();
-        });
       },
     });
     modal.afterClose.subscribe(data => {
-      if (data === 'ok') {
         this.getScreenList(true);
-      }
+        this.getScreenTree();
     });
   }
   getScreenList(reset = false) {
@@ -110,8 +110,9 @@ export class ScreenManageComponent implements OnInit {
       nzContent: EditScreenComponent,
       nzWidth: '600px',
       nzOnOk: i => {
-        i.submitForm();
-        this.getScreenList(true);
+        return new Promise(reslove => {
+          i.submitForm();
+        });
       },
       nzComponentParams: {
         screenName: data.name,
@@ -121,6 +122,12 @@ export class ScreenManageComponent implements OnInit {
         spaceId: localStorage.getItem('spaceID'),
       },
     });
+    modal.afterClose.subscribe(data=>{
+      if(data=='ok'){
+        this.getScreenList(true);
+        this.getScreenTree();
+      }
+    })
   }
   public() {}
   copy() {}
@@ -133,6 +140,7 @@ export class ScreenManageComponent implements OnInit {
       data => {
         this.nzMessage.success('删除成功!');
         this.getScreenList(true);
+        this.getScreenTree();
       },
       err => {
         if (err instanceof HttpResponse) {
@@ -163,6 +171,7 @@ export class ScreenManageComponent implements OnInit {
           data => {
             this.nzMessage.success('批量删除成功!');
             this.getScreenList(true);
+            this.getScreenTree();
           },
           err => {
             if (err instanceof HttpResponse) {
@@ -172,5 +181,37 @@ export class ScreenManageComponent implements OnInit {
         );
       },
     });
+  }
+  // 新增大屏时刷新侧边大屏菜单栏
+  getScreenTree(reset = false) {
+    if (reset) {
+      this.page.curPage = 1;
+    }
+    const params = {
+      spaceId: localStorage.getItem('spaceID'),
+      curPage: this.page.curPage,
+      pageSize: 1000,
+      totalPage: this.page.totalPage || '',
+      totalRow: this.page.totalRow || '',
+    };
+    this.spaceManageService.getScreenList(params).subscribe(
+      data => {
+        const dataSet = data['retList'];
+        dataSet.map(value => {
+          value.text = value.name;
+          value.link = `app/square/${value.spaceId}/screen-detail/${
+            value.dashboardId
+          }`;
+          value.isLeaf = true;
+          value.icon = value.icon;
+        });
+        this.menu[0]['children'][0]['children'] = dataSet;
+      },
+      err => {
+        if (err instanceof HttpResponse) {
+          this.nzMessage.error(err.body.retMsg);
+        }
+      },
+    );
   }
 }

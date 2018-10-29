@@ -39,5 +39,6 @@ export class CompanyManageComponent implements OnInit {
 
   ngOnInit() {
     this.sideMenu.setMenu(this.menu);
+    this.sideMenu.setMessage(this.menu);
   }
 }

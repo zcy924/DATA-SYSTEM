@@ -8,7 +8,7 @@ import { HttpResponse } from '@angular/common/http';
 @Component({
   templateUrl: './edit-screen.html',
   styles: [
-    `
+      `
       .icon {
         width: 48px;
         height: 48px;
@@ -17,9 +17,11 @@ import { HttpResponse } from '@angular/common/http';
         line-height: 56px;
         float: left;
       }
+
       .icon:hover {
         background: #1890ff;
       }
+
       .checked {
         background: #1890ff;
       }
@@ -36,12 +38,14 @@ export class EditScreenComponent implements OnInit {
   iconId;
   icons = ICONS;
   iconsArry = [];
+
   constructor(
     private fb: FormBuilder,
     private spaceMangeService: SpaceManageService,
     private nzMessage: NzMessageService,
     private modalRef: NzModalRef,
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     const isdev = this.isDev === 'T' ? true : false;
@@ -61,6 +65,7 @@ export class EditScreenComponent implements OnInit {
       this.iconsArry.push(item);
     }
   }
+
   submitForm() {
     const params = {
       spaceId: this.spaceId,
@@ -72,12 +77,8 @@ export class EditScreenComponent implements OnInit {
     };
     this.spaceMangeService.modScreenInfo(params).subscribe(
       data => {
-        if (data.retCode == '00000') {
-          this.nzMessage.success('修改成功!');
-          this.modalRef.destroy();
-        } else {
-          this.nzMessage.error(data.retMsg);
-        }
+        this.nzMessage.success('修改成功!');
+        this.modalRef.destroy('ok');
       },
       err => {
         if (err instanceof HttpResponse) {
@@ -88,6 +89,7 @@ export class EditScreenComponent implements OnInit {
 
     console.log(params);
   }
+
   selectIcon(id) {
     this.iconId = this.iconsArry[id].icon;
     // tslint:disable-next-line:forin

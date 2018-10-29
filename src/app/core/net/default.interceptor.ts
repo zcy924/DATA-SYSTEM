@@ -66,7 +66,6 @@ export class DefaultInterceptor implements HttpInterceptor {
   }
 
   private handleData(event: HttpResponse<any>): Observable<any> {
-    console.log('hahha');
     // 可能会因为 `throw` 导出无法执行 `_HttpClient` 的 `end()` 操作
     this.injector.get(_HttpClient).end();
     const body = event.body;

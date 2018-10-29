@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import * as echarts from 'echarts';
 import { NzFormatEmitEvent, NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd';
+import { Menu } from 'app/models/menu';
+import { SideMenuService } from '@shared/side-menu.service';
 
 @Component({
   templateUrl: './report-detail.html',
@@ -80,12 +82,96 @@ export class ReportDetailComponent implements OnInit {
     } ]
   } ];
 
+
+  menu: Array<Menu> = [
+    {
+      text: '大屏',
+      isGroup: true,
+      children: [
+        {
+          text: '数据大屏',
+          isLeaf: false,
+          icon: 'folder',
+          children: [],
+        },
+      ],
+    },
+
+    {
+      text: '报表',
+      isGroup: true,
+      children: [],
+    },
+
+    {
+      text: '管理中心',
+      isLeaf: false,
+      isGroup: true,
+      children: [
+        {
+          text: '报表管理',
+          link: `app/square/${localStorage.getItem('spaceID')}/report-manage`,
+          isLeaf: true,
+          icon: 'appstore-o',
+        },
+        {
+          text: '大屏管理',
+          isLeaf: true,
+          icon: 'area-chart',
+          link: `app/square/${localStorage.getItem('spaceID')}/screen-manage`,
+        },
+        {
+          text: '角色管理',
+          isLeaf: true,
+          icon: 'usergroup-add',
+          link: `app/square/${localStorage.getItem('spaceID')}/role-manage`,
+        },
+        {
+          isLeaf: true,
+          text: '用户管理',
+          icon: 'user',
+          link: `app/square/${localStorage.getItem('spaceID')}/user-manage`,
+        },
+        {
+          text: '数据源管理',
+          isLeaf: true,
+          icon: 'database',
+          link: 'user-message',
+        },
+        {
+          text: '数据表预览',
+          isLeaf: true,
+          icon: 'user',
+          link: 'user-message',
+        },
+        {
+          text: 'SQL模型管理',
+          isLeaf: true,
+          icon: 'api',
+          link: 'user-message',
+        },
+        {
+          text: '数据值映射管理',
+          isLeaf: true,
+          icon: 'book',
+          link: 'user-message',
+        },
+        {
+          text: '空间设置',
+          isLeaf: true,
+          icon: 'setting',
+          link: 'user-message',
+        },
+      ],
+    },
+  ];
+
   nzClick(event: NzFormatEmitEvent): void {
-    console.log(event, event.selectedKeys);
+    console.log(event, event.selectedKeys, event.keys, event.nodes);
   }
 
   nzCheck(event: NzFormatEmitEvent): void {
-    console.log(event, event.checkedKeys);
+    console.log(event, event.checkedKeys, event.keys, event.nodes);
   }
 
 
@@ -93,8 +179,7 @@ export class ReportDetailComponent implements OnInit {
 
 
 
-
-  constructor() {}
+  constructor(private sideMenu: SideMenuService) {}
 
   ngOnInit() {
     setTimeout(() => {
@@ -187,4 +272,5 @@ export class ReportDetailComponent implements OnInit {
   mycharts.setOption(option);
 
   }
+  
 }

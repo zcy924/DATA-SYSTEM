@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { SettingsService } from '@delon/theme';
 import { SideMenuService } from '@shared/side-menu.service';
@@ -22,7 +22,7 @@ import { Router } from '@angular/router';
     `,
   ],
 })
-export class AComponent implements OnDestroy {
+export class AComponent implements OnDestroy, OnInit {
   @Input()
   items: {
     isRoot?: Boolean;
@@ -42,6 +42,7 @@ export class AComponent implements OnDestroy {
       this.router.navigateByUrl(url);
     }
   }
-  ngOnDestroy() {
+  ngOnDestroy() {}
+  ngOnInit() {
   }
 }
