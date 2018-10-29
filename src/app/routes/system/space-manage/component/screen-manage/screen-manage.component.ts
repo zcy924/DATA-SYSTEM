@@ -47,7 +47,7 @@ export class ScreenManageComponent implements OnInit {
       nzOnOk: i => {
           i.submitForm();
       },
-    });
+  });
     modal.afterClose.subscribe(data => {
         this.getScreenList(true);
         this.getScreenTree();
