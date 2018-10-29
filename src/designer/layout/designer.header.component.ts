@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { customGraphicMeta, graphicMetaMap, totalGraphicMetaMap } from '@core/node/config/default.graphic.meta.map';
 import { CommService } from '../service/comm.service';
 import { designerStorage } from '../utils/designer.storage';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-designer-header',
@@ -19,12 +20,15 @@ export class DesignerHeaderComponent implements AfterViewInit {
   moreToolsPopup: PopupWrapper;
   @Output() switch = new EventEmitter();
 
-  constructor(private _service: CommService) {
+  reportTile: string;
+
+  constructor(private _service: CommService, private _router: Router) {
   }
 
   ngOnInit() {
     console.log('ngOnInit header');
     designerStorage.reportInfo$.subscribe((reportInfo: any) => {
+      this.reportTile = reportInfo.name;
       reportInfo.attr ? this.doLoad(reportInfo.attr) : null;
     });
   }
@@ -35,6 +39,10 @@ export class DesignerHeaderComponent implements AfterViewInit {
 
   preview() {
     session.currentPage.enterFullScreen();
+  }
+
+  exit() {
+    history.go(-1);
   }
 
   get actionManager() {
