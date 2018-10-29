@@ -191,16 +191,15 @@ export class ReportManageComponent implements OnInit {
 
   // 删除报表
   delReport(reportID: string, type: string): void {
-    let title = type === this.isFolder ? '此文件夹' : '此报表';
+    let title = (type === this.isFolder) ? '此文件夹' : '此报表';
     let content =
-      type === this.isFolder ? '此操作将会级联删除该文件夹中的子文件' : '';
-    this.delArray([{ reportId: reportID }], type, title, content);
+      (type === this.isFolder) ? '此操作将会级联删除该文件夹中的子文件' : '';
+    this.delArray([{ reportId: reportID }], title, content);
   }
 
   // 批量删除报表
   delArray(
     list: Array<any> = this.selectedArray,
-    type: string,
     title = '所选择的文件夹或报表',
     content = '此操作将会批量删除所选择的文件夹或报表',
   ) {
