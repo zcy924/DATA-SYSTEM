@@ -1,0 +1,106 @@
+@import "../common.config.less";
+
+:host {
+  display: block;
+  position: relative;
+  padding: 24px 5px 5px 5px;
+  margin-top: 10px;
+  background-color: #f5f5f5;
+  border: 2px solid #ccc;
+  border-radius: 3px;
+}
+
+:host:before{
+  display: block;
+  position: absolute;
+  width: 50%;
+  left: 50%;
+  top: 0px;
+  transform: translateX(-50%) translateY(-50%);
+  text-align: center;
+  content: attr(seriesName);
+  z-index: 10;
+  background-color: #ccc;
+  color: #666;
+  border-radius: 3px;
+  padding: 2px 5px;
+}
+
+.m-schema-droppable .dropArea {
+  //padding: 8px 6px 8px 7px;
+  //margin: -12px -14px 0px -15px;
+}
+
+.m-schema-droppable .empty {
+  border: 1px dotted #ccc;
+  height: 28px;
+  line-height: 28px;
+  background-color: #fff;
+  text-align: center;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+}
+
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+.animated {
+  animation-duration: 0.4s;
+}
+
+.u-item {
+  //定位
+  position: relative;
+  height: 20px;
+  line-height: 18px;
+
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 100px;
+  //文本及鼠标
+  font-size: 12px;
+  color: #fff;
+  cursor: move;
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+}
+
+.u-item-1 {
+  background-color: #4a90e2;
+}
+
+.u-item-2 {
+  background-color: #40c0a8;
+}
+
+.m-Pill {
+  position: relative;
+  padding: 0 18px;
+  height: 20px;
+  line-height: 20px;
+  border-radius: 100px;
+}
+
+.m-schema-droppable .dropArea .u-item {
+  margin-bottom: 6px;
+}
+
+.m-Pill .text {
+  font-family: "San Francisco", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+  font-size: 12px;
+  line-height: 20px;
+  overflow: hidden;
+  word-wrap: normal;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.wintt {
+  font-size: 14px;
+  color: #888;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding-right: 12px;
+}

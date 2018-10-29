@@ -32,11 +32,28 @@
               }
             ],
             "styles": [
-              "src/styles.less"
+              "src/styles.less",
+              "node_modules/normalize.css/normalize.css",
+              "node_modules/ng-zorro-antd/src/ng-zorro-antd.min.css",
+              "src/designer.main.less"
             ],
             "scripts": [
               "node_modules/ajv/dist/ajv.bundle.js",
-              "node_modules/echarts/dist/echarts.min.js"
+              "node_modules/jquery/dist/jquery.js",
+              "node_modules/echarts/dist/echarts.min.js",
+              "src/designer/lib/fullscreen/fullscreen-api-polyfill.js",
+              "src/designer/lib/ckeditor/ckeditor.js",
+              "src/designer/lib/echarts/plugins/echarts-wordcloud.min.js",
+              "src/designer/lib/echarts/china.js",
+              "src/designer/lib/echarts/province/guangdong.js",
+              "src/designer/lib/echarts/province/shandong.js",
+              "src/designer/lib/echarts/dark.js",
+              "src/designer/lib/echarts/infographic.js",
+              "src/designer/lib/echarts/macarons.js",
+              "src/designer/lib/echarts/roma.js",
+              "src/designer/lib/echarts/shine.js",
+              "src/designer/lib/echarts/vintage.js",
+              "src/designer/lib/echarts/lsd.js"
             ]
           },
           "configurations": {

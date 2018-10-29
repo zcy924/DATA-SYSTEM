@@ -1,0 +1,111 @@
+<nz-tabset ngForm>
+  <nz-tab [nzTitle]="'数据'">
+    <nz-collapse [nzBordered]="false" class="zijin-form">
+      <nz-collapse-panel nzHeader="通用">
+        <div nz-row nzType="flex">
+          <div nz-col style="margin-bottom: 8px;text-align: left;line-height: 24px;padding: 0 4px;" [nzSpan]="12">
+            <span>辅助线</span>
+          </div>
+          <div nz-col style="margin-bottom: 8px;text-align: right;line-height: 24px;padding: 0 4px;" [nzSpan]="12">
+            <label nz-checkbox name="auxiliaryLine" [(ngModel)]="option.auxiliaryLine"></label>
+          </div>
+          <div nz-col style="margin-bottom: 8px;text-align: center" [nzSpan]="24">
+            <nz-radio-group name="dimensionMode" style="width: 100%" [nzSize]="'small'"
+                            (ngModelChange)="dimensionModeChange($event)"
+                            [(ngModel)]="option.dimensionMode">
+              <label nz-radio-button nzValue="standard">标准</label>
+              <label nz-radio-button nzValue="wide">宽幅</label>
+              <label nz-radio-button nzValue="mobile">移动端</label>
+              <label nz-radio-button nzValue="custom">自定义</label>
+            </nz-radio-group>
+          </div>
+          <div nz-col style="margin-bottom: 8px;padding: 0 4px 0 0" [nzSpan]="12">
+            <nz-input-number name="width" [nzFormatter]="formatterWidth" [nzParser]="parserWidth" style="width: 100%"
+                             [nzDisabled]="option.dimensionMode!=='custom'"
+                             [(ngModel)]="option.width" [nzSize]="'small'" [nzMin]="100" [nzMax]="10000"
+                             [nzStep]="10"></nz-input-number>
+          </div>
+          <div nz-col style="margin-bottom: 8px;padding: 0 0 0 4px" [nzSpan]="12">
+            <nz-input-number name="height" [nzFormatter]="formatterHeight" [nzParser]="parserHeight" style="width: 100%"
+                             [nzDisabled]="option.dimensionMode!=='custom'"
+                             [(ngModel)]="option.height" [nzSize]="'small'" [nzMin]="100" [nzMax]="10000"
+                             [nzStep]="10"></nz-input-number>
+          </div>
+        </div>
+      </nz-collapse-panel>
+      <nz-collapse-panel nzHeader="背景图片">
+        <div nz-row nzType="flex">
+          <div nz-col style="margin-bottom: 8px;" [nzSpan]="24">
+            <nz-radio-group name="backgroundMode" [(ngModel)]="option.backgroundMode" [nzSize]="'small'">
+              <label nz-radio [ngStyle]="style" nzValue="built-in">内置背景</label>
+              <label nz-radio [ngStyle]="style" nzValue="custom">自定义背景</label>
+              <label nz-radio [ngStyle]="style" nzValue="only-color">只是用背景色</label>
+            </nz-radio-group>
+          </div>
+          <div nz-col style="margin-bottom: 8px;" [nzSpan]="24">
+            <div [ngSwitch]="option.backgroundMode">
+              <ng-container *ngSwitchCase="'built-in'">
+                <app-build-in name="backgroundClass" [(ngModel)]="option.backgroundClass"></app-build-in>
+              </ng-container>
+              <ng-container *ngSwitchCase="'custom'">
+                <div nz-row nzType="flex">
+                  <div nz-col [nzSpan]="24">
+                    <app-image-select name="backgroundCustom" [(ngModel)]="option.backgroundCustom"></app-image-select>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-container *ngSwitchCase="'only-color'">
+                <div nz-row nzType="flex">
+                  <div nz-col [nzSpan]="12" style="vertical-align: middle;line-height: 28px;margin-bottom: 8px;">背景色
+                  </div>
+                  <div nz-col [nzSpan]="12" style="padding: 0 2px;margin-bottom: 8px;">
+                    <div name="backgroundColor" class="u-color-block"
+                         colorPicker [(ngModel)]="option.backgroundColor"
+                         [cpOutputFormat]="'rgba'"
+                         [cpOKButton]="true"
+                         cpOKButtonClass="ant-btn ant-btn-default"
+                         [cpPresetColors]="['#fff', '#000', '#2889e9', '#e920e9', '#fff500', 'rgb(236,64,64)']">
+                      <div class="color-area" style="border: 1px solid rgb(204, 204, 204);height: 22px;">
+                        <div style="width: 100%;height: 100%;z-index: 2;position: absolute;"
+                             [style.background]="option.backgroundColor"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </nz-collapse-panel>
+      <nz-collapse-panel nzHeader="图表主题">
+        <div nz-row nzType="flex">
+          <div nz-col style="margin-bottom: 8px;" [nzSpan]="24">
+            <nz-radio-group name="themeMode" [(ngModel)]="option.themeMode" [nzSize]="'small'">
+              <label nz-radio [ngStyle]="style" nzValue="dark">dark</label>
+              <label nz-radio [ngStyle]="style" nzValue="infographic">infographic</label>
+              <label nz-radio [ngStyle]="style" nzValue="macarons">macarons</label>
+              <label nz-radio [ngStyle]="style" nzValue="roma">roma</label>
+              <label nz-radio [ngStyle]="style" nzValue="shine">shine</label>
+              <label nz-radio [ngStyle]="style" nzValue="vintage">vintage</label>
+              <label nz-radio [ngStyle]="style" nzValue="lsd">Large Screen Display</label>
+              <label nz-radio [ngStyle]="style" nzValue="">默认</label>
+            </nz-radio-group>
+          </div>
+        </div>
+      </nz-collapse-panel>
+    </nz-collapse>
+  </nz-tab>
+  <nz-tab nzTitle="样式">
+    <nz-collapse [nzBordered]="false" class="zijin-form">
+      <nz-collapse-panel nzHeader="标题">
+
+      </nz-collapse-panel>
+      <nz-collapse-panel nzHeader="绘图区">
+
+      </nz-collapse-panel>
+      <nz-collapse-panel nzHeader="颜色">
+
+      </nz-collapse-panel>
+    </nz-collapse>
+  </nz-tab>
+</nz-tabset>

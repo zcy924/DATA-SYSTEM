@@ -1,0 +1,118 @@
+:host /deep/ .title {
+  position: relative;
+  height: 36px;
+  line-height: 36px;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+  font-size: 14px;
+  color: #282828;
+  font-weight: 500;
+  background-color: #fff;
+}
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+:host /deep/ app-bar-config {
+  display: block;
+  height: ~"calc(100% - 36px)";
+  nz-tabset {
+    height: 100%;
+    .ant-tabs-content {
+      height: ~"calc(100% - 44px)";
+      .ant-tabs-tabpane {
+        overflow-y: auto;
+        &::-webkit-scrollbar{
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+:host /deep/ .u-color-block {
+  width: 100%;
+  height: 100%;
+  padding: 2px;
+  border-radius: 2px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  .color-area {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border: 1px solid rgb(204, 204, 204);
+    &:before {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #eee;
+      background-image: linear-gradient(45deg, #bbb 25%, transparent 0), linear-gradient(45deg, transparent 75%, #bbb 0), linear-gradient(45deg, #bbb 25%, transparent 0), linear-gradient(45deg, transparent 75%, #bbb 0);
+      background-position: 0 0, 5px 5px, 5px 5px, 10px 10px;
+      background-size: 10px 10px;
+      z-index: 1;
+    }
+    &:after {
+      content: "";
+      display: block;
+      width: 0;
+      height: 0;
+      border: 4px solid rgba(0, 0, 0, 0.4);
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      border-left-color: transparent;
+      border-top-color: transparent;
+      z-index: 3;
+    }
+  }
+}
+
+
+:host /deep/ .u-lsicn, .u-lwsicn-dotted, .u-lwsicn-solid, .u-lwsicn-dashed {
+  width: 12px;
+  height: 1px;
+}
+
+:host /deep/ .u-lwsicn-solid {
+  border-bottom: 1px solid #282828;
+}
+
+:host /deep/ .u-lwsicn-dotted {
+  border-bottom: 1px dotted #282828;
+}
+
+:host /deep/ .u-lwsicn-dashed {
+  border-bottom: 1px dashed #282828;
+}
+
+:host /deep/ .u-lwicn, .u-lwsicn-0, .u-lwsicn-1, .u-lwsicn-2, .u-lwsicn-3, .u-lwsicn-4, .u-lwsicn-5 {
+  background: #282828;
+  width: 10px;
+}
+
+:host /deep/ .u-lwsicn-1 {
+  height: 1px;
+}
+
+:host /deep/ .u-lwsicn-2 {
+  height: 2px;
+}
+
+:host /deep/ .u-lwsicn-3 {
+  height: 3px;
+}
+
+:host /deep/ .u-lwsicn-4 {
+  height: 4px;
+}
+
+:host /deep/ .u-lwsicn-5 {
+  height: 5px;
+}
+
