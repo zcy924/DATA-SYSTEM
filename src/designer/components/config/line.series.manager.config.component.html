@@ -1,0 +1,11 @@
+<form [formGroup]="form">
+  <div formArrayName="seriesArray">
+    <ng-container *ngFor="let series of seriesArray.controls; index as i">
+      <app-line-series-config [formControlName]="i">
+      </app-line-series-config>
+    </ng-container>
+  </div>
+  <button class="add-serious" (click)="addSerious()"><span class="u-icn u-icn-add"></span></button>
+</form>
+
+<!--(seriesChange)="seriesChange()"-->

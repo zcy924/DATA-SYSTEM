@@ -19,16 +19,16 @@
     ],
     "paths": {
       "@shared": [
-        "app/shared"
+        "app/shared","designer/shared"
       ],
       "@shared/*": [
-        "app/shared/*"
+        "app/shared/*","designer/shared/*"
       ],
       "@core": [
-        "app/core"
+        "app/core","designer/core"
       ],
       "@core/*": [
-        "app/core/*"
+        "app/core/*","designer/core/*"
       ],
       "@testing": [
         "testing"

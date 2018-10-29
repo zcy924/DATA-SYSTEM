@@ -1,0 +1,54 @@
+@import "fonts/font.youdao.less";
+@import "common.youdata.less";
+@import "rect";
+@import "../core/node/index.less";
+@import "../utils/index.less";
+@import "menu1";
+
+.ant-tabs {
+  overflow: visible;
+}
+
+.g-fill:empty{
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-image: url('../assets/images/holder/holder-automatic.svg');
+}
+
+.m-image:empty{
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-image: url('../assets/images/holder/holder-indicator.svg');
+}
+
+
+.filter-window{
+  .ant-modal-header{
+    padding: 10px 24px;
+  }
+  .ant-tabs-tabpane{
+    padding: 0 20px;
+  }
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: #b8b8b8;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}

@@ -1,0 +1,5 @@
+<ul>
+  <li *ngFor="let item of list" [attr.graphicid]="item?.id">
+    <i class="u-icn {{item?.icon}}"></i>{{item?.displayName}}
+  </li>
+</ul>

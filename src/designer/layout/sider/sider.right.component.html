@@ -1,0 +1,14 @@
+<div class="m-report-dataModel">
+  <h2 class="title">
+    <span>数据模型</span>
+    <i class="u-icn u-icn-panel-close" (click)="closeRightPanel()"></i>
+    <i class="u-icn u-icn-search"></i>
+    <i class="u-icn u-icn-toolbar-more"></i>
+  </h2>
+  <div class="list">
+    <div class="u-btn u-btn-menu" (click)="switchDataModel($event)" [title]="modelName">{{modelName}}</div>
+  </div>
+  <!--<div class="m-schema-pills" schema-pills [modelName]="modelName"> </div>-->
+  <app-dimension-area></app-dimension-area>
+  <app-measure-area></app-measure-area>
+</div>

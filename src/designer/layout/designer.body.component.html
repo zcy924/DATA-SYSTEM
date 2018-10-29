@@ -1,0 +1,26 @@
+<div class="app-body-left" [class.activated]="leftPanelState">
+  <div class="toggle-bar" (click)="leftPanelState=!leftPanelState">
+    <i *ngIf="leftPanelState" class="u-icn u-icn-panel-open"></i>
+    <i *ngIf="!leftPanelState" class="u-icn u-icn-panel-close"></i>
+  </div>
+  <app-designer-body-left ></app-designer-body-left>
+</div>
+
+<div class="app-body-center">
+  <div class="app-content">
+
+  </div>
+  <div class="scale-slide-wrapper">
+    <nz-slider [nzDefaultValue]="100" (nzOnAfterChange)="scaleChange($event)" [nzMax]="200" [nzMin]="10"
+               [nzTipFormatter]="formatter"></nz-slider>
+  </div>
+</div>
+
+<div class="app-body-right">
+  <div class="side-left">
+    <app-sider-left></app-sider-left>
+  </div>
+  <div class="side-right">
+    <app-sider-right></app-sider-right>
+  </div>
+</div>

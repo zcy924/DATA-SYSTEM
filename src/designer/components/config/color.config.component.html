@@ -1,0 +1,14 @@
+<div nz-row nzType="flex">
+  <div nz-col style="margin-bottom: 8px;line-height: 28px" [nzSpan]="24" >
+    <div class="color-select-button" #originFab (click)="displayMenu()">
+      颜色选择
+    </div>
+  </div>
+  <div nz-col style="margin-bottom: 8px;line-height: 28px" [nzSpan]="24">
+    <div class="color-button" *ngFor="let item of option||[];index as i"
+         [style.backgroundColor]="item">
+      <span (click)="deleteColor(i)">x</span>
+    </div>
+  </div>
+</div>
+
