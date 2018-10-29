@@ -45,7 +45,9 @@ export class ReportModalComponent implements OnInit {
     private modalRef: NzModalRef,
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    
+  }
 
   createReport() {
     let spaceID = localStorage.getItem('spaceID');

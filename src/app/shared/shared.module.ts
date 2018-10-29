@@ -11,10 +11,6 @@ import { DelonFormModule } from '@delon/form';
 // region: third libs
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CountdownModule } from 'ngx-countdown';
-// import { SidebarComponent } from '../layout/default/sidebar/sidebar.component';
-import { SideMenuService } from './side-menu.service';
-// import { AComponent } from 'app/layout/default/sidebar/a.component';
-// import { SsssComponent } from 'app/layout/default/sidebar/ssss.component';
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule];
 // endregion
 
@@ -56,6 +52,6 @@ const DIRECTIVES = [];
     ...COMPONENTS,
     ...DIRECTIVES,
   ],
-  providers: [SideMenuService],
+  providers: [],
 })
 export class SharedModule {}

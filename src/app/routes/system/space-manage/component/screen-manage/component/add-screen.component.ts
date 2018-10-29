@@ -88,7 +88,7 @@ export class AddScreenComponent implements OnInit {
     this.spaceManageService.addScreen(params).subscribe(
       data => {
         this.nzMessage.success('新增大屏成功!');
-        this.modal.destroy('ok');
+        // this.modal.destroy('ok');
       },
       err => {
         if (err instanceof HttpResponse) {

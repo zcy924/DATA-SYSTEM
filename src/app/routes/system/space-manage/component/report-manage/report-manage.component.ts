@@ -4,6 +4,9 @@ import { ReportModalComponent } from './components/report-modal.component';
 import { SpaceManageService } from '../../space-manage.service';
 import { Page } from '../../../../../models/page';
 import { HttpResponse } from '@angular/common/http';
+import { Menu, MENUS } from 'app/models/menu';
+import { SideMenuService } from '@shared/side-menu.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-report-manage',
@@ -28,16 +31,19 @@ export class ReportManageComponent implements OnInit {
   dataSet = [];
   page = new Page();
 
+  menu;
+
   constructor(
     private nzModel: NzModalService,
     private message: NzMessageService,
     private spaceManageService: SpaceManageService,
+    private sideMenu: SideMenuService,
   ) {}
 
   ngOnInit(): void {
     this.searchData(true);
+    this.menu = this.sideMenu.menu;
   }
-
   checkAll(value: Boolean) {
     this.dataSet.forEach(data => {
       data.checked = value;
@@ -139,6 +145,7 @@ export class ReportManageComponent implements OnInit {
           parentId: this.folderID,
           reportName: this.folderName,
         });
+        this.getReportTree();
       }
     });
   }
@@ -165,12 +172,19 @@ export class ReportManageComponent implements OnInit {
         radioValue: data.type,
       },
       nzOnOk: res => {
-        res.modReport();
+        return new Promise(reslove => {
+          res.modReport();
+        });
+      },
+    });
+    modal.afterClose.subscribe(data => {
+      if (data == 'ok') {
         this.searchData(true, {
           parentId: this.folderID,
           reportName: this.folderName,
         });
-      },
+        this.getReportTree();
+      }
     });
   }
 
@@ -203,6 +217,7 @@ export class ReportManageComponent implements OnInit {
               parentId: this.folderID,
               reportName: this.folderName,
             });
+            this.getReportTree();
           },
           err => {
             if (err instanceof HttpResponse) {
@@ -217,5 +232,39 @@ export class ReportManageComponent implements OnInit {
   // 打开报表页面
   openReport() {
     // TODO 展示报表内容
+  }
+  //新增或删除报表时更新报表树
+  getReportTree() {
+    const params = {
+      Report: {
+        spaceId: localStorage.getItem('spaceID'),
+      },
+    };
+    this.spaceManageService.qryReportTree(params).subscribe(
+      data => {
+        const report_menu = data.retTreeList;
+        this.formateTree(report_menu);
+        this.menu[1]['children'] = report_menu;
+        this.sideMenu.setMessage(this.menu);
+      },
+      err => {
+        if (err instanceof HttpResponse) {
+          this.message.error(err.body.retMsg);
+        }
+      },
+    );
+  }
+  formateTree(array: Array<any>) {
+    array.map(value => {
+      value.text = value.reportName;
+      value.link = `app/square/${value.spaceId}/report-detail/${
+        value.reportId
+      }`;
+      value.isLeaf = value.type == 1 ? true : false;
+      value.icon = value.type == 1 ? 'file' : 'folder';
+      if (value.children) {
+        this.formateTree(value.children);
+      }
+    });
   }
 }

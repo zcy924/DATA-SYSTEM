@@ -8,6 +8,7 @@ import {
 import { CompanyManageService } from '../../../../company-manage/company-manage.service';
 import { SpaceManageService } from '../../../space-manage.service';
 import { HttpResponse } from '@angular/common/http';
+import { SideMenuService } from '@shared/side-menu.service';
 
 @Component({
   selector: 'app-add-role',
@@ -33,6 +34,7 @@ export class RoleModalComponent implements OnInit {
     private spaceService: SpaceManageService,
     private message: NzMessageService,
     private modalRef: NzModalRef,
+    private sideMenu: SideMenuService
   ) {}
 
   ngOnInit() {
@@ -300,4 +302,5 @@ export class RoleModalComponent implements OnInit {
       }
     }
   }
+  
 }

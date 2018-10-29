@@ -13,7 +13,6 @@ import { AddScreenComponent } from './component/screen-manage/component/add-scre
 import { SpaceManageService } from './space-manage.service';
 import { EditScreenComponent } from './component/screen-manage/component/edit-screen.component';
 import { CompanyManageService } from '../company-manage/company-manage.service';
-import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { EditUserModalComponent } from './component/user-manage/components/edit-user-modal.component';
 import { ScreenDetailComponent } from './component/screen-detail.component';
 

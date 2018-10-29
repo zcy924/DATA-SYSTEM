@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuService } from '@delon/theme';
-import { Menu } from 'app/models/menu';
 import { SideMenuService } from '@shared/side-menu.service';
 
 @Component({
@@ -8,25 +7,8 @@ import { SideMenuService } from '@shared/side-menu.service';
   templateUrl: './personal-center.html',
 })
 export class PersonalCenterComponent implements OnInit {
-  menu: Array<Menu> = [
-    {
-      text: '报表收藏管理',
-      link: '/app/user/user-report',
-      icon: 'appstore-o',
-    },
-    {
-      text: '大屏收藏管理',
-      icon: 'area-chart',
-      link: '/app/user/user-screen',
-    },
-    {
-      text: '个人信息管理',
-      icon: 'user',
-      link: '/app/user/user-message',
-    },
-  ];
 
-  mmm: Array<any>=[
+  menu: Array<any>=[
     {
       text: '个人中心',
       isGroup: true,
@@ -60,7 +42,8 @@ export class PersonalCenterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.sideMenu.setMenu(this.mmm);
+    this.sideMenu.setMessage(this.menu);
+    this.sideMenu.setMenu(this.menu);
     // this.menuService.add(this.menu);
   }
 }
