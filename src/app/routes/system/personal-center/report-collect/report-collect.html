@@ -1,10 +1,10 @@
 <nz-content style="padding:0 16px 16px 16px">
   <div nz-row style="background-color: rgb(246,248,248) ;border-bottom: 1px solid rgb(222,230,231);padding: 8px 0;">
-    <div nz-col nzSpan="4" class="title-tab">报表管理</div>
+    <div nz-col nzSpan="4" class="title-tab">报表收藏夹</div>
     <div nz-col style="float: right">
       <nz-button-group>
-        <button nz-button [disabled]="disabledButton" [nzType]="'danger'" (click)="delArray()">批量删除</button>
-        <button nz-button nzType="primary" (click)="addReport(isReport)">新建报表页面</button>
+        <button nz-button [disabled]="disabledButton" [nzType]="'danger'" (click)="delArray()">批量取消收藏</button>
+        <!--<button nz-button nzType="primary" (click)="addReport(isReport)">新建报表页面</button>-->
         <button nz-button (click)="addReport(isFolder)">新建文件夹</button>
       </nz-button-group>
     </div>
@@ -46,12 +46,9 @@
             <td>{{data.isdev === isDev ? '是':'否'}}</td>
             <td>
               <div style="width: 100px;text-align: right">
-                <a style="padding-right: 12px"><i nz-icon type="eye" nz-tooltip nzTitle="打开报表页面" *ngIf="data.type===isReport"
-                                                  (click)="openReport()"></i></a>
-                <a style="padding-right: 12px"><i nz-icon type="copy" nz-tooltip nzTitle="以此报表为模板新建" *ngIf="data.type===isReport"
-                                                  (click)="addReportByOne(data)"></i></a>
+                <a style="padding-right: 12px"><i nz-icon type="eye" nz-tooltip nzTitle="查看报表页面" *ngIf="data.type===isReport" (click)="openReport()"></i></a>
                 <a style="padding-right: 12px"><i nz-icon type="edit" nz-tooltip nzTitle="编辑" (click)="editReport(data)"></i></a>
-                <a style="padding-right: 0"><i nz-icon type="delete" nz-tooltip nzTitle="删除" (click)="delReport(data.reportId,data.type)"></i></a>
+                <a style="padding-right: 0"><i nz-icon type="delete" nz-tooltip nzTitle="取消收藏" (click)="delReport(data.reportId,data.type)"></i></a>
               </div>
             </td>
           </tr>
