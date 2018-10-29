@@ -53,5 +53,5 @@ const COMPONENTS = [
     ...COMPONENTS
   ]
 })
-export class LayoutModule {
+export class DesignerLayoutModule {
 }

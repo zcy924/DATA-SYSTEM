@@ -7,7 +7,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {NgZorroAntdModule, NZ_I18N, zh_CN} from 'ng-zorro-antd';
 import {registerLocaleData} from '@angular/common';
 import zh from '@angular/common/locales/zh';
-import {LayoutModule} from './layout/layout.module';
+import {DesignerLayoutModule} from './layout/designer.layout.module';
 import {AppRoutingModule} from './app.routing';
 
 registerLocaleData(zh);
@@ -20,7 +20,7 @@ registerLocaleData(zh);
     FormsModule,
     HttpClientModule,
     NgZorroAntdModule,
-    LayoutModule,
+    DesignerLayoutModule,
     AppRoutingModule
   ],
   providers: [{provide: NZ_I18N, useValue: zh_CN}],
