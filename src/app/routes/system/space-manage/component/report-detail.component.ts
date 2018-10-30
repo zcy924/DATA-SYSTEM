@@ -1,16 +1,16 @@
-import {AfterViewInit, Component, ElementRef, KeyValueDiffers, OnInit} from '@angular/core';
-import {session} from '@core/node/utils/session';
-import {ReportPageOuter} from '@core/node/page/report/page.outer';
-import {ActivatedRoute} from "@angular/router";
-import {SpaceManageService} from "../space-manage.service";
-import {switchMap} from "rxjs/operators";
+import { AfterViewInit, Component, ElementRef, KeyValueDiffers, OnDestroy, OnInit } from '@angular/core';
+import { session } from '@core/node/utils/session';
+import { ReportPageOuter } from '@core/node/page/report/page.outer';
+import { ActivatedRoute } from '@angular/router';
+import { SpaceManageService } from '../space-manage.service';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-designer-body',
   templateUrl: './report-detail.html',
-  styleUrls: ['./report-detail.less']
+  styleUrls: ['./report-detail.less'],
 })
-export class ReportDetailComponent implements AfterViewInit, OnInit {
+export class ReportDetailComponent implements AfterViewInit, OnInit, OnDestroy {
 
   report: ReportPageOuter;
   reportId;
@@ -23,10 +23,9 @@ export class ReportDetailComponent implements AfterViewInit, OnInit {
               private spaceManageService: SpaceManageService) {
     session.differs = _differs;
   }
-  ngOnInit(){
-    const report = this.report = session.currentPage = new ReportPageOuter('runtime');
-    $('.app-content').prepend(report.$element);
-    this.getReportContent();
+
+  ngOnInit() {
+
   }
 
   getReportContent() {
@@ -34,24 +33,24 @@ export class ReportDetailComponent implements AfterViewInit, OnInit {
       return this.spaceManageService.qryReportContent({
         Report: {
           reportId: data.reportId,
-          spaceId: localStorage.getItem('spaceID')
-        }
+          spaceId: localStorage.getItem('spaceID'),
+        },
       });
     }));
     reportInfo$.subscribe(data => {
+      this.report.clear();
       this.report.load(data.Report.attr);
-    })
+    });
   }
 
   ngAfterViewInit() {
-    // this.getReportContent();
-    // setTimeout(() => {
-    //   const report = this.report = session.currentPage = new ReportPageOuter('runtime');
-    //   $('.app-content').prepend(report.$element);
-    //   // this.report.load();
-    //   this.getReportContent();
-    // }, 100);
-    // return;
+    const report = this.report = session.currentPage = new ReportPageOuter('runtime');
+    $('.app-content').prepend(report.$element);
+    this.getReportContent();
+  }
+
+  ngOnDestroy() {
+    this.report.destroy();
   }
 
   formatter(value) {

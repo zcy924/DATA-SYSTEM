@@ -7,6 +7,7 @@ import { PageConfig } from '../../../../components/page.config/page.config';
 import { IReportPage } from '@core/node/page/report/page.interface';
 import { ReportPage } from '@core/node/page/report/page';
 import { RuntimePageConfig } from '../../../../components/page.config/runtime.page.config';
+import { RegionController } from '@core/node/region/region.controller';
 
 export class PageConfigWrapper {
   constructor(private _inner: ComponentRef<PageConfig> | PageConfig) {
@@ -55,8 +56,8 @@ export class ReportPageOuter {
   private _pageInner: ReportPageInner;
   private _page: IReportPage;
 
-  constructor(modelType: 'design' | 'runtime') {
-    switch (modelType) {
+  constructor(modeType: 'design' | 'runtime') {
+    switch (modeType) {
       case 'design':
         this._pageConfigWrapper = new PageConfigWrapper(session.siderLeftComponent.forwardCreateCanvasConfig(PageConfigComponent));
         this._pageInner = new ReportPageInner(this._pageConfigWrapper);
@@ -68,7 +69,6 @@ export class ReportPageOuter {
         this._pageInner = new ReportPageInner(this._pageConfigWrapper);
         this._pageInner.init();
         this._page = new ReportPage(this._pageInner);
-        break;
         break;
     }
   }
@@ -84,7 +84,6 @@ export class ReportPageOuter {
   get reportPage(): IReportPage {
     return this._page;
   }
-
 
   get model() {
     return this._pageConfigWrapper.model;
@@ -106,6 +105,12 @@ export class ReportPageOuter {
       option: this.model.exportOption(),
       children: this._pageInner.regionManager.saveAs(),
     };
+  }
+
+  clear() {
+    this._pageInner.regionManager.regionArray.forEach((value: RegionController) => {
+      value.destroy();
+    });
   }
 
   enterFullScreen() {
