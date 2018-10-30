@@ -14,7 +14,7 @@ export interface IReportPage {
 
   regionArray: Array<RegionController>;
 
-  regionArrayAsObservable: Observable<Array<RegionController>>;
+  regionArray$: Observable<Array<RegionController>>;
 
   selectedArray: Array<RegionController>;
 
