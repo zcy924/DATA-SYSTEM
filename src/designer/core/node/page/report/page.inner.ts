@@ -12,6 +12,7 @@ import { dataOptionManager } from '@core/data/data.option.manager';
 import { ActionManager } from '@core/node/operate/action.manager';
 import { PageConfigWrapper } from '@core/node/page/report/page.outer';
 import { AbstractPageView } from '@core/node/page/report/abstract.page.view';
+import { RuntimePageView } from '@core/node/page/report/runtime.page.view';
 
 export class ReportPageInner implements IPage {
 
@@ -26,7 +27,12 @@ export class ReportPageInner implements IPage {
   public actionManager: ActionManager;
 
   constructor(private _mode: 'design' | 'runtime') {
-    this.view = new DesignPageView(this);
+    if (_mode === 'design') {
+      this.view = new DesignPageView(this);
+    } else {
+      this.view = new RuntimePageView(this);
+    }
+
     this.pageConfigWrapper = new PageConfigWrapper(_mode);
     this.regionManager = new RegionManager();
     this.selectManager = new SelectManager();
@@ -43,7 +49,9 @@ export class ReportPageInner implements IPage {
   init() {
     this.accept(this.pageConfigWrapper.model);
     this.view.accept(this.pageConfigWrapper.model);
-    this._init();
+    if (this._mode === 'design') {
+      this._init();
+    }
   }
 
   /**
