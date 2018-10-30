@@ -9,6 +9,8 @@ import { designerStorage } from '../utils/designer.storage';
 import { Router } from '@angular/router';
 import { Destroyable } from '../interface/destroyable';
 import { FilterTools, HelperTools, MoreTools } from './overlay.template';
+import { imageDimensions$ } from './fragment';
+import { Dimensions } from '@core/node/interface';
 
 @Component({
   selector: 'app-designer-header',
@@ -121,16 +123,15 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
     const reader = new FileReader();
     reader.onload = (evt) => {
       option.image.dataUrl = (<any>evt.target).result;
-      const image = new Image();
-      image.src = (<any>evt.target).result;
-      image.onload = function() {
-        option.image.width = (<HTMLImageElement>this).naturalWidth;
-        option.image.height = (<HTMLImageElement>this).naturalHeight;
-        if (session.currentPage) {
-          graphicFactory.newGraphicByName(session.currentPage, 'imageAuxiliary', 200, 200, option);
-        }
-      };
-
+      imageDimensions$((<any>evt.target).result)
+        .subscribe((dimensions: Dimensions) => {
+          Object.assign(option.image, dimensions);
+        }, () => {
+        }, () => {
+          if (session.currentPage) {
+            graphicFactory.newGraphicByName(session.currentPage, 'imageAuxiliary', 200, 200, option);
+          }
+        });
       (<HTMLFormElement>file.parentElement).reset();
 
     };
