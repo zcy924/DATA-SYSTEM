@@ -24,6 +24,7 @@ export class PreviewComponent implements AfterViewInit {
     setTimeout(() => {
       const report = this.report = session.currentPage = new ReportPageOuter('design');
       $('.app-content').prepend(report.$element);
+      // this.report.load();
     }, 100);
     return;
   }
