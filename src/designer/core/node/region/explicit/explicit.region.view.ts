@@ -30,7 +30,10 @@ export class ExplicitRegionView extends RegionView {
 
     // 监听model变化
     this._listenToModel(_model);
-    this._bindEvent();
+
+    if(this._controller.page.mode==='design'){
+      this._bindEvent();
+    }
   }
 
   private _listenToModel(model: RegionModel) {

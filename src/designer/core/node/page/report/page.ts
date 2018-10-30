@@ -1,7 +1,7 @@
-import {ReportPageInner} from '@core/node/page/report/page.inner';
-import {IReportPage} from '@core/node/page/report/page.interface';
-import {RegionController} from '@core/node/region/region.controller';
-import {Observable} from 'rxjs';
+import { ReportPageInner } from '@core/node/page/report/page.inner';
+import { IReportPage } from '@core/node/page/report/page.interface';
+import { RegionController } from '@core/node/region/region.controller';
+import { Observable } from 'rxjs';
 
 
 export class ReportPage implements IReportPage {
@@ -10,6 +10,10 @@ export class ReportPage implements IReportPage {
 
   constructor(private _pageInner: ReportPageInner) {
 
+  }
+
+  get mode() {
+    return this._pageInner.mode;
   }
 
   set scale(value: number) {

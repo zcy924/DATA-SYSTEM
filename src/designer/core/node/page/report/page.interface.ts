@@ -1,10 +1,12 @@
-import {RegionController} from '@core/node/region/region.controller';
-import {Observable} from 'rxjs';
+import { RegionController } from '@core/node/region/region.controller';
+import { Observable } from 'rxjs';
 
 /**
  *
  */
 export interface IReportPage {
+
+  mode: 'design' | 'runtime';
   /**
    * region根据scale计算位移和伸缩
    */
