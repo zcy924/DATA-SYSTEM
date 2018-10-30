@@ -46,7 +46,7 @@
               <td>{{data.isdev === isDev ? '是':'否'}}</td>
               <td>
                 <div style="width: 100px;text-align: right">
-                  <a style="padding-right: 12px"><i nz-icon type="eye" nz-tooltip nzTitle="打开报表页面" *ngIf="data.type===isReport" routerLink="/designer"></i></a>
+                  <a [routerLink]='["/report-designer" , data.reportId]' style="padding-right: 12px"><i nz-icon type="eye" nz-tooltip nzTitle="打开报表页面" *ngIf="data.type===isReport"></i></a>
                   <a style="padding-right: 12px"><i nz-icon type="copy" nz-tooltip nzTitle="以此报表为模板新建" *ngIf="data.type===isReport"
                       (click)="addReportByOne(data)"></i></a>
                   <a style="padding-right: 12px"><i nz-icon type="edit" nz-tooltip nzTitle="编辑" (click)="editReport(data)"></i></a>

@@ -1,16 +1,17 @@
-import { AfterViewInit, Component, EventEmitter, OnDestroy, Output } from '@angular/core';
-import { graphicFactory } from '@core/node/factory/graphic.factory';
-import { session } from '@core/node/utils/session';
+import {AfterViewInit, Component, EventEmitter, Output, OnDestroy} from '@angular/core';
+import {graphicFactory} from '@core/node/factory/graphic.factory';
+import {session} from '@core/node/utils/session';
 import * as FileSaver from 'file-saver';
 import * as moment from 'moment';
-import { customGraphicMeta, graphicMetaMap, totalGraphicMetaMap } from '@core/node/config/default.graphic.meta.map';
-import { CommService } from '../service/comm.service';
-import { designerStorage } from '../utils/designer.storage';
-import { Router } from '@angular/router';
-import { Destroyable } from '../interface/destroyable';
-import { FilterTools, HelperTools, MoreTools } from './overlay.template';
-import { imageDimensions$ } from './fragment';
-import { Dimensions } from '@core/node/interface';
+import {CommService} from '../service/comm.service';
+import {designerStorage} from '../utils/designer.storage';
+import {Destroyable} from '../interface/destroyable';
+import {FilterTools, HelperTools, MoreTools} from './overlay.template';
+import {imageDimensions$} from './fragment';
+import {Dimensions} from '@core/node/interface';
+import {totalGraphicMetaMap} from '@core/node/config/default.graphic.meta.map';
+import {ActivatedRoute} from '@angular/router';
+import {NzMessageService} from "ng-zorro-antd";
 
 @Component({
   selector: 'app-designer-header',
@@ -26,16 +27,23 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
 
   reportTile: string;
 
-  constructor(private _service: CommService, private _router: Router) {
+  constructor(private _service: CommService, private _router: ActivatedRoute, private nzMessage: NzMessageService) {
     super();
   }
 
   ngOnInit() {
+    console.log('ngOnInit header');
+    const url = this._router.snapshot.routeConfig.path;
     const subscription = designerStorage.reportInfo$.subscribe((reportInfo: any) => {
-      this.reportTile = reportInfo.name;
-      reportInfo.attr ? this.doLoad(reportInfo.attr) : null;
-    });
 
+      if (url == 'report-designer/:id') {
+        this.reportTile = reportInfo.Report.reportName;
+        reportInfo.Report ? this.doLoad(reportInfo.Report.attr) : null;
+      } else {
+        this.reportTile = reportInfo.name;
+        reportInfo.attr ? this.doLoad(reportInfo.attr) : null;
+      }
+    });
     this.onDestroy(() => {
       subscription.unsubscribe();
     });
@@ -62,19 +70,35 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
   }
 
   doSave() {
-    this._service
-      .saveScreenContent(Object.assign({},
-        designerStorage.reportInfo,
-        {
-          attr: JSON.stringify(session.currentPage.save(), null, 2),
-          spaceId: localStorage.getItem('spaceID'),
-        })).subscribe((data) => {
-      console.log(data);
-    });
+    // const blob = new Blob([JSON.stringify(session.currentPage.save(), null, 2)], { type: 'text/plain;charset=utf-8' });
+    //
+    // FileSaver.saveAs(blob, `zijin.template.${moment().format('YYYYMMDDHHmmss')}.json`);
+    const url = this._router.snapshot.routeConfig.path;
+    const params = Object.assign({},
+      designerStorage.reportInfo.Report,
+      {
+        attr: JSON.stringify(session.currentPage.save(), null, 2),
+        spaceId: localStorage.getItem('spaceID'),
+      });
+    if (url == 'report-designer/:id') {
+      this._service.modReport({Report: params}).subscribe((data) => {
+        this.nzMessage.success('保存成功!');
+      });
+    } else {
+      this._service
+        .saveScreenContent(Object.assign({},
+          designerStorage.reportInfo,
+          {
+            attr: JSON.stringify(session.currentPage.save(), null, 2),
+            spaceId: localStorage.getItem('spaceID'),
+          })).subscribe((data) => {
+        this.nzMessage.success('保存成功!');
+      });
+    }
   }
 
   doDownload() {
-    const blob = new Blob([JSON.stringify(session.currentPage.save(), null, 2)], { type: 'text/plain;charset=utf-8' });
+    const blob = new Blob([JSON.stringify(session.currentPage.save(), null, 2)], {type: 'text/plain;charset=utf-8'});
 
     FileSaver.saveAs(blob, `zijin.template.${moment().format('YYYYMMDDHHmmss')}.json`);
   }
@@ -218,7 +242,7 @@ class PopupWrapper {
   }
 
   show(left: number) {
-    this._$element.css({ left }).show();
+    this._$element.css({left}).show();
   }
 
   hide() {
@@ -274,7 +298,7 @@ class GrabHelper {
   show(left: number, top: number, option?: { width: number, height: number, backgroundImage: string }) {
     this._option = option ? option : this._defaultOption;
     this._$element.css(this._option);
-    this._$element.css({ backgroundSize: `${this._option.width}px ${this._option.height}px` });
+    this._$element.css({backgroundSize: `${this._option.width}px ${this._option.height}px`});
     if (!this._state) {
       $('body').append(this._$element);
       this._state = true;

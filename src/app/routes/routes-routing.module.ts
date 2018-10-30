@@ -55,7 +55,8 @@ const routes: Routes = [
         path: 'platform',
         component: PlatformManageComponent,
         data: { title: '平台管理' },
-        loadChildren: './system/platform-manage/platform-manage.module#PlatformManageModule',
+        loadChildren:
+          './system/platform-manage/platform-manage.module#PlatformManageModule',
       },
       // 业务子模块
       // { path: 'widgets', loadChildren: './widgets/widgets.module#WidgetsModule' }
@@ -77,9 +78,16 @@ const routes: Routes = [
     data: { title: '登录' },
     component: LoginComponent,
   },
-  { path: 'designer/:id',
+  {
+    path: 'designer/:id',
     data: { title: '设计器' },
-    component: DesignerComponent },
+    component: DesignerComponent,
+  },
+  {
+    path: 'report-designer/:id',
+    data: {title: '报表设计器'},
+    component: DesignerComponent,
+  },
   {
     path: 'platform',
     data: { title: '平台管理登录' },
@@ -114,5 +122,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, { useHash: environment.useHash })],
   exports: [RouterModule],
 })
-export class RouteRoutingModule {
-}
+export class RouteRoutingModule {}

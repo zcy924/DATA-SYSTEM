@@ -1,14 +1,14 @@
-import { AfterViewInit, Component, ElementRef, KeyValueDiffers, OnInit, Type } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, KeyValueDiffers, OnInit, Type} from '@angular/core';
 
 import * as _ from 'lodash';
-import { filterExecutor } from '@core/filter/filter.executor';
-import { session } from '@core/node/utils/session';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/internal/Observable';
-import { switchMap } from 'rxjs/operators';
-import { SpaceManageService } from '../../app/routes/system/space-manage/space-manage.service';
-import { CommService } from '../service/comm.service';
-import { designerStorage } from '../utils/designer.storage';
+import {filterExecutor} from '@core/filter/filter.executor';
+import {session} from '@core/node/utils/session';
+import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs/internal/Observable';
+import {switchMap} from 'rxjs/operators';
+import {SpaceManageService} from '../../app/routes/system/space-manage/space-manage.service';
+import {CommService} from '../service/comm.service';
+import {designerStorage} from '../utils/designer.storage';
 
 @Component({
   selector: 'app-designer',
@@ -27,18 +27,38 @@ export class DesignerComponent implements AfterViewInit, OnInit {
     session.differs = _differs;
   }
 
-  ngOnInit(){
-    this.report$ = this.route.paramMap.pipe(
-      switchMap(params => {
-        // (+) before `params.get()` turns the string into a number
-        this.reportId = params.get('id');
-        designerStorage.reportId = this.reportId;
-        return this._service.getScreenInfo({
-          spaceId: localStorage.getItem('spaceID'),
-          dashboardId: this.reportId,
-        });
-      }),
-    );
+  ngOnInit() {
+    const url = this.route.snapshot.routeConfig.path;
+    if (url == 'report-designer/:id') {
+      this.report$ = this.route.paramMap.pipe(
+        switchMap(params => {
+          console.log(url);
+          // (+) before `params.get()` turns the string into a number
+          this.reportId = params.get('id');
+          designerStorage.reportId = this.reportId;
+          return this._service.qryReportContent({
+            Report: {
+              spaceId: localStorage.getItem('spaceID'),
+              reportId: this.reportId,
+            }
+          });
+        }),
+      );
+    } else {
+      this.report$ = this.route.paramMap.pipe(
+        switchMap(params => {
+          console.log(url);
+          // (+) before `params.get()` turns the string into a number
+          this.reportId = params.get('id');
+          designerStorage.reportId = this.reportId;
+          return this._service.getScreenInfo({
+            spaceId: localStorage.getItem('spaceID'),
+            dashboardId: this.reportId,
+          });
+        }),
+      );
+    }
+
 
     this.report$.subscribe((data) => {
       console.log('app-designer', data);

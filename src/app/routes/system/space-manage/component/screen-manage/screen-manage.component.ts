@@ -22,17 +22,21 @@ export class ScreenManageComponent implements OnInit {
   allChecked = false;
   dataSet = [];
   menu;
+
   constructor(
     private nzModal: NzModalService,
     private nzMessage: NzMessageService,
     private spaceManageService: SpaceManageService,
     private settings: SettingsService,
     private sideMenu: SideMenuService,
-  ) {}
+  ) {
+  }
+
   ngOnInit() {
     this.getScreenList();
     this.menu = this.sideMenu.menu;
   }
+
   openAdd() {
     const modal = this.nzModal.create({
       nzTitle: `新增大屏`,
@@ -45,14 +49,15 @@ export class ScreenManageComponent implements OnInit {
       nzOkText: '新增',
       nzCancelText: '取消',
       nzOnOk: i => {
-          i.submitForm();
+        i.submitForm();
       },
-  });
+    });
     modal.afterClose.subscribe(data => {
-        this.getScreenList(true);
-        this.getScreenTree();
+      this.getScreenList(true);
+      this.getScreenTree();
     });
   }
+
   getScreenList(reset = false) {
     if (reset) {
       this.page.curPage = 1;
@@ -83,6 +88,7 @@ export class ScreenManageComponent implements OnInit {
       },
     );
   }
+
   checkAll(value: Boolean) {
     this.dataSet.forEach(data => {
       // if (!data.checked) {
@@ -91,6 +97,7 @@ export class ScreenManageComponent implements OnInit {
     });
     this.checkLine();
   }
+
   checkLine() {
     const allChecked = this.dataSet.every(value => value.checked === true);
     const allUnChecked = this.dataSet.every(value => !value.checked);
@@ -98,12 +105,15 @@ export class ScreenManageComponent implements OnInit {
     this.allChecked = allChecked;
     this.indeterminate = !allChecked && !allUnChecked;
   }
+
   currentDataChange($event) {
     this.dataSet = $event;
     this.checkLine();
   }
 
-  view() {}
+  view() {
+  }
+
   edit(data) {
     const modal = this.nzModal.create({
       nzTitle: `编辑大屏${data.name}`,
@@ -122,15 +132,20 @@ export class ScreenManageComponent implements OnInit {
         spaceId: localStorage.getItem('spaceID'),
       },
     });
-    modal.afterClose.subscribe(data=>{
-      if(data=='ok'){
+    modal.afterClose.subscribe(data => {
+      if (data == 'ok') {
         this.getScreenList(true);
         this.getScreenTree();
       }
-    })
+    });
   }
-  public() {}
-  copy() {}
+
+  public() {
+  }
+
+  copy() {
+  }
+
   delete(screenId) {
     const params = {
       spaceId: localStorage.getItem('spaceID'),
@@ -149,6 +164,7 @@ export class ScreenManageComponent implements OnInit {
       },
     );
   }
+
   handle() {
     this.nzModal.warning({
       nzTitle: '系统提示',
@@ -182,6 +198,7 @@ export class ScreenManageComponent implements OnInit {
       },
     });
   }
+
   // 新增大屏时刷新侧边大屏菜单栏
   getScreenTree(reset = false) {
     if (reset) {
@@ -201,7 +218,7 @@ export class ScreenManageComponent implements OnInit {
           value.text = value.name;
           value.link = `app/square/${value.spaceId}/screen-detail/${
             value.dashboardId
-          }`;
+            }`;
           value.isLeaf = true;
           value.icon = value.icon;
         });

@@ -6,21 +6,22 @@ import { Menu } from 'app/models/menu';
   selector: 'layout-sidebar',
   templateUrl: './sidebar.component.html',
 })
-export class SidebarComponent implements OnInit,OnDestroy {
+export class SidebarComponent implements OnInit, OnDestroy {
   menu: Menu;
+  subscribtion;
   constructor(
     public settings: SettingsService,
     public sideMenu: SideMenuService,
   ) {}
 
   ngOnInit() {
-    this.sideMenu.getMessage().subscribe(data => {
+    this.subscribtion = this.sideMenu.getMessage().subscribe(data => {
       console.log(data);
       this.menu = data;
       this.sideMenu.setMenu(data);
     });
   }
-  ngOnDestroy(){
-    this.sideMenu.clearMessage();
+  ngOnDestroy() {
+    this.subscribtion.unsubscribe();
   }
 }

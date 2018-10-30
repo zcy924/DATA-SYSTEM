@@ -57,6 +57,9 @@ export class CommService {
   createReport(params): Observable<any> {
     return this.httpClient.post(this.url + 'space/report/add', params);
   }
+  qryReportContent(params):Observable<any>{
+    return this.httpClient.post(this.url + 'space/report/qryReportContent', params);
+  }
 
   modReport(params): Observable<any> {
     return this.httpClient.post(this.url + 'space/report/modReportContent', params);
