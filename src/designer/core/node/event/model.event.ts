@@ -29,6 +29,12 @@ export class ModelEventTarget {
     return this;
   }
 
+  public revoke(eventType: string) {
+    if (this._map.has(eventType)) {
+      this._map.delete(eventType);
+    }
+  }
+
 
   protected _trigger(item: ChangedItem) {
     const { key, oldValue, newValue, option } = item;
