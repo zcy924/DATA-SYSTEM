@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuService } from '@delon/theme';
-import { ActivatedRoute } from '@angular/router';
-import { SpaceManageService } from './space-manage.service';
-import { SideMenuService } from '@shared/side-menu.service';
-import { Menu, MENUS } from 'app/models/menu';
-import { Page } from 'app/models/page';
-import { HttpResponse } from '@angular/common/http';
-import { NzMessageService } from 'ng-zorro-antd';
+import {Component, OnInit} from '@angular/core';
+import {MenuService} from '@delon/theme';
+import {ActivatedRoute} from '@angular/router';
+import {SpaceManageService} from './space-manage.service';
+import {SideMenuService} from '@shared/side-menu.service';
+import {Menu} from 'app/models/menu';
+import {Page} from 'app/models/page';
+import {HttpResponse} from '@angular/common/http';
+import {NzMessageService} from 'ng-zorro-antd';
 
 @Component({
   templateUrl: './space-manage.html',
@@ -16,7 +16,88 @@ export class SpaceManageComponent implements OnInit {
   url: String;
   page = new Page();
   reportTree: any;
-  menu = MENUS;
+  menu: Array<Menu> = [
+    {
+      text: '大屏',
+      isGroup: true,
+      children: [
+        {
+          text: '数据大屏',
+          isLeaf: false,
+          icon: 'folder',
+          children: [],
+        },
+      ],
+    },
+
+    {
+      text: '报表',
+      isGroup: true,
+      children: [],
+    },
+
+    {
+      text: '管理中心',
+      isLeaf: false,
+      isGroup: true,
+      children: [
+        {
+          text: '报表管理',
+          link: `app/square/${localStorage.getItem('spaceID')}/report-manage`,
+          isLeaf: true,
+          icon: 'appstore-o',
+        },
+        {
+          text: '大屏管理',
+          isLeaf: true,
+          icon: 'area-chart',
+          link: `app/square/${localStorage.getItem('spaceID')}/screen-manage`,
+        },
+        {
+          text: '角色管理',
+          isLeaf: true,
+          icon: 'usergroup-add',
+          link: `app/square/${localStorage.getItem('spaceID')}/role-manage`,
+        },
+        {
+          isLeaf: true,
+          text: '用户管理',
+          icon: 'user',
+          link: `app/square/${localStorage.getItem('spaceID')}/user-manage`,
+        },
+        {
+          text: '数据源管理',
+          isLeaf: true,
+          icon: 'database',
+          link: 'user-message',
+        },
+        {
+          text: '数据表预览',
+          isLeaf: true,
+          icon: 'user',
+          link: 'user-message',
+        },
+        {
+          text: 'SQL模型管理',
+          isLeaf: true,
+          icon: 'api',
+          link: 'user-message',
+        },
+        {
+          text: '数据值映射管理',
+          isLeaf: true,
+          icon: 'book',
+          link: 'user-message',
+        },
+        {
+          text: '空间设置',
+          isLeaf: true,
+          icon: 'setting',
+          link: 'user-message',
+        },
+      ],
+    },
+  ];
 
   constructor(
     private menuService: MenuService,
@@ -24,7 +105,9 @@ export class SpaceManageComponent implements OnInit {
     private spaceManageService: SpaceManageService,
     private sideMenu: SideMenuService,
     private message: NzMessageService,
-  ) {}
+  ) {
+  }
+
 
   ngOnInit() {
     this.getReportTree();
@@ -35,7 +118,9 @@ export class SpaceManageComponent implements OnInit {
     }
     this.sideMenu.setMenu(this.menu);
     this.sideMenu.setMessage(this.menu);
+    console.log(this.menu);
   }
+
   getScreenList(reset = false) {
     if (reset) {
       this.page.curPage = 1;
@@ -54,7 +139,7 @@ export class SpaceManageComponent implements OnInit {
           value.text = value.name;
           value.link = `app/square/${value.spaceId}/screen-detail/${
             value.dashboardId
-          }`;
+            }`;
           value.isLeaf = true;
           value.icon = value.icon;
         });
@@ -87,12 +172,13 @@ export class SpaceManageComponent implements OnInit {
       },
     );
   }
+
   formateTree(array: Array<any>) {
     array.map(value => {
       value.text = value.reportName;
       value.link = `app/square/${value.spaceId}/report-detail/${
         value.reportId
-      }`;
+        }`;
       value.isLeaf = value.type == 1 ? true : false;
       value.icon = value.type == 1 ? 'file' : 'folder';
       if (value.children) {

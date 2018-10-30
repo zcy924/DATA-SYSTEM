@@ -31,6 +31,12 @@ export class PersonalCenterComponent implements OnInit {
           icon: 'user',
           link: '/app/user/user-message',
         },
+        {
+          text: '测试路由',
+          isLeaf: true,
+          icon: 'user',
+          link: '/app/user/dsadsad',
+        },
       ]
     },
   ]
