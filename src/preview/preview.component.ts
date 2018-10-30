@@ -1,14 +1,14 @@
-import {AfterViewInit, Component, ElementRef} from '@angular/core';
-import {ReportPageInner} from '@core/node/page/report/page.inner';
-import {session} from '@core/node/utils/session';
+import { AfterViewInit, Component, ElementRef, KeyValueDiffers } from '@angular/core';
+import { ReportPageInner } from '@core/node/page/report/page.inner';
+import { session } from '@core/node/utils/session';
 import * as _ from 'lodash';
 
-import {ReportPageOuter} from '@core/node/page/report/page.outer';
+import { ReportPageOuter } from '@core/node/page/report/page.outer';
 
 @Component({
   selector: 'app-designer-body',
   templateUrl: './preview.component.html',
-  styleUrls: ['./preview.component.less']
+  styleUrls: ['./preview.component.less'],
 })
 export class PreviewComponent implements AfterViewInit {
 
@@ -16,8 +16,8 @@ export class PreviewComponent implements AfterViewInit {
 
   leftPanelState = false;
 
-  constructor(private _elementRef: ElementRef) {
-
+  constructor(private _elementRef: ElementRef, private _differs: KeyValueDiffers) {
+    session.differs = _differs;
   }
 
   ngAfterViewInit() {
