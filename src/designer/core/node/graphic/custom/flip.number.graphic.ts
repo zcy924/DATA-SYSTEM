@@ -1,5 +1,4 @@
 import {RegionController} from '../../region/region.controller';
-import {Chart} from '../../graphic.view/chart/chart';
 import * as _ from 'lodash';
 import {Observable, Subscription} from 'rxjs';
 import {DefaultGraphic} from '@core/node/graphic/default.graphic';
@@ -71,8 +70,6 @@ export class FlipNumberGraphic extends DefaultGraphic {
   }
 
   accept(modelSource: Observable<any>): Subscription {
-    console.log('accept invoke', modelSource);
-
     let lastConfig, lastData;
     return modelSource.subscribe((modelArray: Array<any>) => {
       const [config, data] = modelArray;
@@ -101,7 +98,6 @@ export class FlipNumberGraphic extends DefaultGraphic {
   }
 
   private _handle(num: Number) {
-    console.log(num);
     const numArray = _.toArray(num + '');
     const aa = _.chunk(numArray.reverse(), 3);
     aa.forEach((value, index, array) => {

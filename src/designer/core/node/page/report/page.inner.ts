@@ -10,7 +10,7 @@ import { ActivateManager } from '@core/node/manager/activate.manager';
 import { session } from '@core/node/utils/session';
 import { DataSourceManager } from '@core/data/data.source.manager';
 import { ConfigSourceManager } from '@core/config/config.source.manager';
-import { DataOptionManager } from '@core/data/data.option.manager';
+import { dataOptionManager } from '@core/data/data.option.manager';
 import { ActionManager } from '@core/node/operate/action.manager';
 import { PageConfigWrapper } from '@core/node/page/report/page.outer';
 
@@ -31,7 +31,7 @@ export class ReportPageInner implements IPage {
     this.selectManager = new SelectManager();
     this.activateManager = new ActivateManager(this);
     this.configSourceManager = new ConfigSourceManager(_pageConfigWrapper.mode);
-    this.dataSourceManager = new DataSourceManager(DataOptionManager.getInstance().getDataOptionSet('space1'));
+    this.dataSourceManager = new DataSourceManager(dataOptionManager.getDataOptionSet('space1'));
     this.actionManager = new ActionManager();
   }
 

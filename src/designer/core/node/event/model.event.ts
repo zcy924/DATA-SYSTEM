@@ -64,7 +64,7 @@ export class OuterModelEventTarget extends ModelEventTarget {
   trigger(item: ChangedItem | Array<ChangedItem>) {
     if (_.isArray(item)) {
       this._batchTrigger(item);
-    } else {
+    } else if (!!item) {
       this._trigger(item);
     }
   }

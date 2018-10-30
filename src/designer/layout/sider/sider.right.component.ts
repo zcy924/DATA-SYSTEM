@@ -55,9 +55,6 @@ export class SiderRightComponent implements AfterViewInit, OnInit {
 
 
   ngAfterViewInit() {
-
-    DataOptionManager.getInstance().addDataOptionSet('space1', new DataOptionSet(array));
-
     dataModelManager.dataOptionSet = DataOptionManager.getInstance().getDataOptionSet('space1');
 
     modelPlugin = this;
