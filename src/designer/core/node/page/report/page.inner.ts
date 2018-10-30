@@ -1,18 +1,18 @@
-import {IPage} from '../../interface';
-import {ComponentRef} from '@angular/core';
-import {PageConfig} from '../../../../components/page.config/page.config';
-import {graphicFactory} from '@core/node/factory/graphic.factory';
-import {clipboard} from '@core/node/clipboard';
-import {ISelectManager, SelectManager} from '@core/node/manager/select.manager';
-import {PageView} from '@core/node/page/report/page.view';
-import {RegionManager} from '@core/node/manager/region.manager';
-import {ActivateManager} from '@core/node/manager/activate.manager';
-import {session} from '@core/node/utils/session';
-import {DataSourceManager} from '@core/data/data.source.manager';
-import {ConfigSourceManager} from '@core/config/config.source.manager';
-import {DataOptionManager} from '@core/data/data.option.manager';
-import {ActionManager} from '@core/node/operate/action.manager';
-import {PageConfigWrapper} from '@core/node/page/report/page.outer';
+import { IPage } from '../../interface';
+import { ComponentRef } from '@angular/core';
+import { PageConfig } from '../../../../components/page.config/page.config';
+import { graphicFactory } from '@core/node/factory/graphic.factory';
+import { clipboard } from '@core/node/clipboard';
+import { ISelectManager, SelectManager } from '@core/node/manager/select.manager';
+import { PageView } from '@core/node/page/report/page.view';
+import { RegionManager } from '@core/node/manager/region.manager';
+import { ActivateManager } from '@core/node/manager/activate.manager';
+import { session } from '@core/node/utils/session';
+import { DataSourceManager } from '@core/data/data.source.manager';
+import { ConfigSourceManager } from '@core/config/config.source.manager';
+import { DataOptionManager } from '@core/data/data.option.manager';
+import { ActionManager } from '@core/node/operate/action.manager';
+import { PageConfigWrapper } from '@core/node/page/report/page.outer';
 
 export class ReportPageInner implements IPage {
 
@@ -30,9 +30,13 @@ export class ReportPageInner implements IPage {
     this.regionManager = new RegionManager();
     this.selectManager = new SelectManager();
     this.activateManager = new ActivateManager(this);
-    this.configSourceManager = new ConfigSourceManager('design');
+    this.configSourceManager = new ConfigSourceManager(_pageConfigWrapper.mode);
     this.dataSourceManager = new DataSourceManager(DataOptionManager.getInstance().getDataOptionSet('space1'));
     this.actionManager = new ActionManager();
+  }
+
+  get mode() {
+    return this._pageConfigWrapper.mode;
   }
 
   get model() {
@@ -111,7 +115,7 @@ export class ReportPageInner implements IPage {
                }
              },*/ 'split', {
           displayName: '剪切',
-          shortcut: 'Ctrl+X'
+          shortcut: 'Ctrl+X',
         }, {
           displayName: '粘贴',
           shortcut: 'Ctrl+X',
@@ -120,11 +124,11 @@ export class ReportPageInner implements IPage {
             console.log('粘贴', clipboard.getData());
             graphicFactory.paste(clipboard.getData(), $event.offsetX, $event.offsetY);
             return false;
-          }
+          },
         }, {
           displayName: '删除',
-          shortcut: 'Backspace'
-        }
+          shortcut: 'Backspace',
+        },
       ];
     };
 

@@ -6,9 +6,18 @@ import { ComponentRef } from '@angular/core';
 import { PageConfig } from '../../../../components/page.config/page.config';
 import { IReportPage } from '@core/node/page/report/page.interface';
 import { ReportPage } from '@core/node/page/report/page';
+import { RuntimePageConfig } from '../../../../components/page.config/runtime.page.config';
 
 export class PageConfigWrapper {
   constructor(private _inner: ComponentRef<PageConfig> | PageConfig) {
+  }
+
+  get mode() {
+    if (this._inner instanceof PageConfig) {
+      return 'runtime';
+    } else {
+      return 'design';
+    }
   }
 
   get model(): PageConfig {
@@ -55,6 +64,11 @@ export class ReportPageOuter {
         this._page = new ReportPage(this._pageInner);
         break;
       case 'runtime':
+        this._pageConfigWrapper = new PageConfigWrapper(new RuntimePageConfig());
+        this._pageInner = new ReportPageInner(this._pageConfigWrapper);
+        this._pageInner.init();
+        this._page = new ReportPage(this._pageInner);
+        break;
         break;
     }
   }
