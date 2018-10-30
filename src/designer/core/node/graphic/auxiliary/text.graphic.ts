@@ -1,8 +1,8 @@
-import {TextAuxiliary} from '../../graphic.view/auxiliary/text.auxiliary';
-import {IGraphicView} from '../../graphic.view/graphic.view';
-import {DefaultGraphic} from '../default.graphic';
-import {Observable, Subscription} from 'rxjs';
-import {GraphicWrapper} from '@core/node/graphic/graphic.wrapper';
+import { TextAuxiliary } from '../../graphic.view/auxiliary/text.auxiliary';
+import { IGraphicView } from '../../graphic.view/graphic.view';
+import { DefaultGraphic } from '../default.graphic';
+import { Observable, Subscription } from 'rxjs';
+import { GraphicWrapper } from '@core/node/graphic/graphic.wrapper';
 
 const template = `
 <div class="graphic m-graphic m-graphic-text z-mode-edit">
@@ -25,12 +25,13 @@ export class TextGraphic extends DefaultGraphic {
     this._view = new TextAuxiliary(this);
     this.$element.find('.frame').append(this._view.$element);
     this._modelEventTarget.register('option', (key, oldValue, newValue) => {
+      console.log('option', newValue);
       this.update(newValue);
     });
 
     const accessor = wrapper.optionAccessor;
     wrapper.optionAccessor = () => {
-      return Object.assign(accessor(), {configOption: {text: this._text}});
+      return Object.assign(accessor(), { configOption: { text: this._text } });
     };
 
     this._view.addEventListener('textChanged', (text) => {
@@ -42,6 +43,7 @@ export class TextGraphic extends DefaultGraphic {
     return modelSource.subscribe((modelArray: Array<any>) => {
       const [config, data] = modelArray;
       if (config) {
+        console.log(JSON.stringify(config));
         this._modelEventTarget.trigger(config);
       }
     });

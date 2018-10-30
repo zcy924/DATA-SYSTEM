@@ -49,19 +49,13 @@ export class RuntimeConfigSourceFactory implements IConfigSourceFactory {
           option
         });
       });
-      array.push({
-        key: 'option',
-        oldValue: option,
-        newValue: option,
-        option
-      });
     }
 
     array.push({
       key: 'option',
-      newValue: configSourceOption.configOption,
-      oldValue: configSourceOption.configOption,
-      option: configSourceOption.configOption
+      oldValue: option,
+      newValue: option,
+      option
     });
 
     return new BehaviorSubject(array);

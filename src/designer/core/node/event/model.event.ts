@@ -1,4 +1,5 @@
-import {KeyValueListener} from '@core/node/event/event';
+import { KeyValueListener } from '@core/node/event/event';
+import * as _ from 'lodash';
 
 export interface ChangedItem {
   key: string;
@@ -30,7 +31,7 @@ export class ModelEventTarget {
 
 
   protected _trigger(item: ChangedItem) {
-    const {key, oldValue, newValue, option} = item;
+    const { key, oldValue, newValue, option } = item;
     if (this._map.has(key)) {
       const listener = this._map.get(key);
       listener(key, oldValue, newValue, option);
@@ -54,12 +55,12 @@ export class ModelEventTarget {
 }
 
 export class OuterModelEventTarget extends ModelEventTarget {
-  trigger(item: ChangedItem) {
-    this._trigger(item);
-  }
-
-  batchTrigger(changedItemArray: Array<ChangedItem>) {
-    this._batchTrigger(changedItemArray);
+  trigger(item: ChangedItem | Array<ChangedItem>) {
+    if (_.isArray(item)) {
+      this._batchTrigger(item);
+    } else {
+      this._trigger(item);
+    }
   }
 }
 

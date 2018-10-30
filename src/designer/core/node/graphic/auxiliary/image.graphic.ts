@@ -61,12 +61,7 @@ export class ImageGraphic extends DefaultGraphic {
       console.log('model change');
       const [config, data] = modelArray;
       if (!!config && config !== lastConfig) {
-        console.log('config change', JSON.stringify(config));
-        if (_.isArray(config)) {
-          this._modelEventTarget.batchTrigger(config);
-        } else {
-          this._modelEventTarget.trigger(config);
-        }
+        this._modelEventTarget.trigger(config);
         lastConfig = config;
       }
     });
