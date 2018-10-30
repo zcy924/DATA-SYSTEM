@@ -146,7 +146,8 @@ export class ReportPageInner implements IPage {
   }
 
   destroy() {
-
+    this.view.destroy();
+    this.regionManager
   }
 }
 

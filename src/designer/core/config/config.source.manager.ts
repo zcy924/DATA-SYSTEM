@@ -3,6 +3,9 @@ import {DesignConfigSourceFactory} from '@core/config/design/design.config.sourc
 import {RuntimeConfigSourceFactory} from '@core/config/runtime/runtime.config.source.factory';
 import {Observable} from 'rxjs';
 
+/**
+ *  每个页面对应一个ConfigSourceManager
+ */
 export class ConfigSourceManager {
   private _configSourceFactory: IConfigSourceFactory;
   private _mockConfigSourceFactory: IConfigSourceFactory;

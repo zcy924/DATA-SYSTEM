@@ -25,7 +25,7 @@ export class ReportPage implements IReportPage {
   }
 
   get regionArray$(): Observable<Array<RegionController>> {
-    return this._pageInner.regionManager.regionArrayAsObservable;
+    return this._pageInner.regionManager.regionArray$;
   }
 
   get selectedArray(): Array<RegionController> {
