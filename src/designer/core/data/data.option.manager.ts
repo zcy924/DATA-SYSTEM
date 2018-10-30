@@ -1,4 +1,5 @@
-import {DataOptionSet} from '@core/data/data.option.set';
+import { DataOptionSet } from '@core/data/data.option.set';
+import { array } from '@core/data/test';
 
 /**
  * 管理多个空间的DataOption
@@ -36,6 +37,8 @@ export class DataOptionManager {
   clear() {
   }
 }
+
+DataOptionManager.getInstance().addDataOptionSet('space1', new DataOptionSet(array));
 
 export const dataOptionManager = DataOptionManager.getInstance();
 

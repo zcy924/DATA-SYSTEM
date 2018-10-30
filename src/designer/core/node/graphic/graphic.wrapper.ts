@@ -1,13 +1,13 @@
-import {IGraphic, IGraphicOption} from '@core/node/graphic/graphic';
-import {combineLatest, Observable, Subject, Subscription} from 'rxjs';
-import {RegionController} from '@core/node/region/region.controller';
-import {getParameterName, guid} from '@core/node/utils/tools';
-import {graphicMap} from '@core/node/config/graphic.map';
-import {GraphicConfigManager} from '@core/config/design/graphic.config.manager';
-import {distinctUntilChanged, tap} from 'rxjs/operators';
+import { IGraphic, IGraphicOption } from '@core/node/graphic/graphic';
+import { combineLatest, Observable, Subject, Subscription } from 'rxjs';
+import { RegionController } from '@core/node/region/region.controller';
+import { getParameterName, guid } from '@core/node/utils/tools';
+import { graphicMap } from '@core/node/config/graphic.map';
+import { GraphicConfigManager } from '@core/config/design/graphic.config.manager';
+import { distinctUntilChanged, tap } from 'rxjs/operators';
 import * as _ from 'lodash';
-import {dataModelManager} from '@core/data/data.model.manager';
-import {ChangedItem} from '@core/node/event/model.event';
+import { dataModelManager } from '@core/data/data.model.manager';
+import { ChangedItem } from '@core/node/event/model.event';
 
 
 /**
@@ -50,12 +50,12 @@ export class GraphicWrapper {
   init(graphicOption: IGraphicOption) {
     this._graphicOption = graphicOption;
     console.log(graphicOption);
-    const {graphicId, graphicKey, dataOptionId, configOption} = graphicOption;
+    const { graphicId, graphicKey, dataOptionId, configOption } = graphicOption;
     if (graphicMap.has(graphicKey)) {
       this._graphic = new (graphicMap.get(graphicKey))();
       const paramNameArray = getParameterName(this._graphic.init), map = {
         region: this._region,
-        wrapper: this
+        wrapper: this,
       };
       this._graphic.init(...paramNameArray.map((paramName) => {
         return map[paramName];
@@ -81,7 +81,7 @@ export class GraphicWrapper {
         .getMockConfigSource({
           graphicId: this._uuid,
           graphicKey,
-          configOption
+          configOption,
         });
     } else { // 如果是新建 则肯定是调用设计时的configFactory
       console.log(configOption, 'create 根据实际情况');
@@ -89,7 +89,7 @@ export class GraphicWrapper {
         .getConfigSource({
           graphicId: this._uuid,
           graphicKey,
-          configOption
+          configOption,
         });
     }
     this._dataSource = this._region.page.getDataSource(dataOptionId);
@@ -110,7 +110,7 @@ export class GraphicWrapper {
     this._configSource = this._region.page.getConfigSource({
       graphicId: this._uuid,
       graphicKey: this._graphicOption.graphicKey,
-      configOption: this._graphicOption.configOption
+      configOption: this._graphicOption.configOption,
     });
     this._modelSubscription = this._graphic.accept(combineLatest(this._configSource, this._dataSource)
       .pipe(tap((modelArray: Array<any>) => {
@@ -136,6 +136,7 @@ export class GraphicWrapper {
   activateConfig() {
     this._region.page.focusRegion = this._region;
 
+    // 运行时不需要调用此方法
     dataModelManager.switchDataModel(this._graphicOption.dataOptionId, false);
     if (!GraphicConfigManager.getInstance().has(this._uuid)) {
       this.switchConfigSource();

@@ -1,13 +1,21 @@
-import {AfterViewInit, Component, EventEmitter, KeyValueDiffer, KeyValueDiffers, OnInit, Output, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {PageConfig} from './page.config';
-import {debounceTime} from 'rxjs/operators';
-import {ChangedItem} from '@core/node/event/model.event';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  KeyValueDiffer,
+  KeyValueDiffers,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { PageConfig } from './page.config';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-page-config',
   templateUrl: './page.config.component.html',
-  styleUrls: ['./page.config.component.less']
+  styleUrls: ['./page.config.component.less'],
 })
 export class PageConfigComponent extends PageConfig implements AfterViewInit, OnInit {
 
@@ -28,15 +36,15 @@ export class PageConfigComponent extends PageConfig implements AfterViewInit, On
     backgroundCustom: {
       fileName: '',
       url: '',
-      dataUrl: ''
+      dataUrl: '',
     },
-    themeMode: 'dark'
+    themeMode: 'dark',
   };
 
   style = {
     display: 'block',
     height: '30px',
-    lineHeight: '30px'
+    lineHeight: '30px',
   };
 
   formatterWidth = value => `宽度 ${value}`;
@@ -46,6 +54,10 @@ export class PageConfigComponent extends PageConfig implements AfterViewInit, On
 
   constructor(private _differs: KeyValueDiffers) {
     super();
+  }
+
+  ngOnInit() {
+    this._differ = this._differs.find(this.option).create();
   }
 
   get width() {
@@ -75,25 +87,16 @@ export class PageConfigComponent extends PageConfig implements AfterViewInit, On
     }
   }
 
-  ngOnInit() {
-    this._differ = this._differs.find(this.option).create();
-  }
-
-
   ngAfterViewInit() {
-    console.log('PageConfigComponent ngAfterViewInit');
     this.ngForm.valueChanges.pipe(debounceTime(200)).subscribe((value) => {
-      console.log('PageConfigComponent', value);
-      const array = [];
-      const changes = this._differ.diff(value);
+      const array = [], changes = this._differ.diff(value);
       if (changes) {
         changes.forEachRemovedItem((record) => {
-          console.log('removedItem', JSON.stringify(record.key));
           array.push({
             key: `remove.${record.key}`,
             oldValue: record.previousValue,
             newValue: record.currentValue,
-            option: value
+            option: value,
           });
         });
         changes.forEachAddedItem((record) => {
@@ -101,30 +104,21 @@ export class PageConfigComponent extends PageConfig implements AfterViewInit, On
             key: `add.${record.key}`,
             oldValue: record.previousValue,
             newValue: record.currentValue,
-            option: value
+            option: value,
           });
-          console.log('addedItem', JSON.stringify(record.key));
         });
         changes.forEachChangedItem((record) => {
-          console.log('changedItem', JSON.stringify(record.key));
           array.push({
             key: record.key,
             oldValue: record.previousValue,
             newValue: record.currentValue,
-            option: value
+            option: value,
           });
         });
       }
       if (array.length > 0) {
-        console.log('do page update');
-        this._update(array);
+        this._batchTrigger(array);
       }
-    });
-  }
-
-  private _update(changeItemArray: Array<ChangedItem>) {
-    changeItemArray.forEach((value, index, array) => {
-      this._trigger(value);
     });
   }
 

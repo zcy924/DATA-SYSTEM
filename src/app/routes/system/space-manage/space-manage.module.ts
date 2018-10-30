@@ -15,6 +15,7 @@ import { EditScreenComponent } from './component/screen-manage/component/edit-sc
 import { CompanyManageService } from '../company-manage/company-manage.service';
 import { EditUserModalComponent } from './component/user-manage/components/edit-user-modal.component';
 import { ScreenDetailComponent } from './component/screen-detail.component';
+import { ColorPickerModule } from '@shared/color-picker/color-picker.module';
 
 const components = [
   ReportDetailComponent,
@@ -33,7 +34,7 @@ const modals = [
   EditScreenComponent,
 ];
 @NgModule({
-  imports: [SharedModule, SpaceManageRoutingModule,],
+  imports: [SharedModule, SpaceManageRoutingModule, ColorPickerModule],
   exports: [...components],
   declarations: [...components, ...modals],
   providers: [SpaceManageService,CompanyManageService],

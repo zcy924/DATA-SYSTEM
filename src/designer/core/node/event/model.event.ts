@@ -29,6 +29,12 @@ export class ModelEventTarget {
     return this;
   }
 
+  public revoke(eventType: string) {
+    if (this._map.has(eventType)) {
+      this._map.delete(eventType);
+    }
+  }
+
 
   protected _trigger(item: ChangedItem) {
     const { key, oldValue, newValue, option } = item;
@@ -58,7 +64,7 @@ export class OuterModelEventTarget extends ModelEventTarget {
   trigger(item: ChangedItem | Array<ChangedItem>) {
     if (_.isArray(item)) {
       this._batchTrigger(item);
-    } else {
+    } else if (!!item) {
       this._trigger(item);
     }
   }

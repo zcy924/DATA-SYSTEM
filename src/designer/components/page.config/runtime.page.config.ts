@@ -1,11 +1,8 @@
-import * as _ from 'lodash';
 import {KeyValueDiffer} from '@angular/core';
 import {session} from '@core/node/utils/session';
 import {PageConfig} from './page.config';
-import {ChangedItem} from '@core/node/event/model.event';
 
 export class RuntimePageConfig extends PageConfig {
-  option: any;
   private _differ: KeyValueDiffer<any, any>;
 
   constructor() {
@@ -20,7 +17,6 @@ export class RuntimePageConfig extends PageConfig {
       changes = this._differ.diff(option);
     if (changes) {
       changes.forEachRemovedItem((record) => {
-        console.log('removedItem', JSON.stringify(record.key));
         array.push({
           key: `remove.${record.key}`,
           oldValue: record.previousValue,
@@ -35,10 +31,8 @@ export class RuntimePageConfig extends PageConfig {
           newValue: record.currentValue,
           option
         });
-        console.log('addedItem', JSON.stringify(record.key));
       });
       changes.forEachChangedItem((record) => {
-        console.log('changedItem', JSON.stringify(record.key));
         array.push({
           key: record.key,
           oldValue: record.previousValue,
@@ -54,18 +48,8 @@ export class RuntimePageConfig extends PageConfig {
       });
     }
     if (array.length > 0) {
-      this._update(array);
+      this._batchTrigger(array);
     }
 
-  }
-
-  exportOption() {
-    return _.cloneDeep(this.option);
-  }
-
-  private _update(changeItemArray: Array<ChangedItem>) {
-    changeItemArray.forEach((value, index, array) => {
-      this._trigger(value);
-    });
   }
 }
