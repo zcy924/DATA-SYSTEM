@@ -1,0 +1,9 @@
+<div class="app-body-center">
+  <div class="app-content">
+
+  </div>
+  <div class="scale-slide-wrapper">
+    <nz-slider [nzDefaultValue]="100" (nzOnAfterChange)="scaleChange($event)" [nzMax]="200" [nzMin]="10"
+               [nzTipFormatter]="formatter"></nz-slider>
+  </div>
+</div>
