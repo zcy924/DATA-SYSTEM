@@ -10,6 +10,18 @@ export class RegionManager {
 
   }
 
+  get bottomIndex(): number {
+    return this._children
+      .map(value => value.index)
+      .sort((a, b) => a - b)[0];
+  }
+
+  get topIndex(): number {
+    return this._children
+      .map(value => value.index)
+      .sort((a, b) => b - a)[0];
+  }
+
   has(region: RegionController) {
     return this._children.includes(region);
   }

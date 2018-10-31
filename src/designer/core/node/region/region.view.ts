@@ -1,12 +1,12 @@
-import {View} from '@core/node/structure/view';
-import {fromEvent, Subscription} from 'rxjs';
-import {throttleTime} from 'rxjs/internal/operators';
-import {resizeTipHelper} from '@core/node/helper/resize.tip.helper';
-import {RegionController} from '@core/node/region/region.controller';
-import {CoordinatesAndDimensions} from '@core/node/interface';
-import {closestNum} from '../../../utils/common';
-import {contextMenuHelper, ContextMenuItem} from '../../../utils/contextMenu';
-import {RegionModel} from '@core/node/region/region.model';
+import { View } from '@core/node/structure/view';
+import { fromEvent, Subscription } from 'rxjs';
+import { throttleTime } from 'rxjs/internal/operators';
+import { resizeTipHelper } from '@core/node/helper/resize.tip.helper';
+import { RegionController } from '@core/node/region/region.controller';
+import { CoordinatesAndDimensions } from '@core/node/interface';
+import { closestNum } from '../../../utils/common';
+import { contextMenuHelper, ContextMenuItem } from '../../../utils/contextMenu';
+import { RegionModel } from '@core/node/region/region.model';
 
 type IContextMenuGenerator = () => Array<ContextMenuItem | 'split'>;
 
@@ -27,6 +27,7 @@ export abstract class RegionView extends View {
 
   protected _bindEventForResize() {
     let offsetX, offsetY,
+      scale = 1,
       offset: JQuery.Coordinates,
       snapshot: CoordinatesAndDimensions,
       which: string,
@@ -34,7 +35,7 @@ export abstract class RegionView extends View {
 
     // 进行缩放转换
     const
-      getReal = (num) => Math.round(num / this._controller.scale),
+      getReal = (num) => Math.round(num / scale),
       handleResize = (pageX, pageY) => {
         const model = this._model;
         switch (which) {
@@ -118,6 +119,7 @@ export abstract class RegionView extends View {
 
     this.$element.find('div.u-resize>.draggable')
       .on('dragstart', ($event: JQuery.Event) => {
+        scale = this._controller.page.scale;
         offset = this.$element.offset();
         snapshot = Object.assign(this._model.coordinates, this._model.dimensions);
         which = (<HTMLElement>$event.currentTarget).dataset.which;
@@ -148,8 +150,8 @@ export abstract class RegionView extends View {
    * @private
    */
   protected _bindEventForMover() {
-    let count = 0,
-      subscription: Subscription,
+    let subscription: Subscription,
+      scale,
       originPageX,
       originPageY,
       snapshot: JQuery.Coordinates;
@@ -167,8 +169,8 @@ export abstract class RegionView extends View {
     let timeoutHandle;
     this._$mover
       .on('dragstart', ($event: JQuery.Event) => {
-        count = 0;
         this.$element.addClass('no-transition');
+        scale = this._controller.page.scale;
         originPageX = $event.pageX;
         originPageY = $event.pageY;
         snapshot = this._model.coordinates;
@@ -179,8 +181,8 @@ export abstract class RegionView extends View {
           .subscribe((mouseEvent: MouseEvent) => {
             const offsetLeft = mouseEvent.pageX - originPageX,
               offsetTop = mouseEvent.pageY - originPageY;
-            this._model.left = snapshot.left + Math.round(offsetLeft / this._controller.scale);
-            this._model.top = snapshot.top + Math.round(offsetTop / this._controller.scale);
+            this._model.left = snapshot.left + Math.round(offsetLeft / scale);
+            this._model.top = snapshot.top + Math.round(offsetTop / scale);
             this.refresh();
             resizeTipHelper.refresh(mouseEvent.pageX, mouseEvent.pageY, this._model.left, this._model.top);
           });

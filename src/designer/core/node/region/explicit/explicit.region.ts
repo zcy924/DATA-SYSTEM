@@ -1,8 +1,8 @@
-import {RegionController} from '../region.controller';
-import {clipboard} from '../../clipboard';
-import {RegionModel, RegionState} from '../region.model';
-import {ExplicitRegionView} from './explicit.region.view';
-import {IReportPage} from '@core/node/page/report/page.interface';
+import { RegionController } from '../region.controller';
+import { clipboard } from '../../clipboard';
+import { RegionModel, RegionState } from '../region.model';
+import { ExplicitRegionView } from './explicit.region.view';
+import { IReportPage } from '@core/node/page/report/page.interface';
 
 /**
  *
@@ -67,18 +67,22 @@ export class ExplicitRegion extends RegionController {
     this._view.contextMenuGenerator = () => {
       return [
         {
-        displayName: '复制',
-        shortcut: 'Ctrl+C',
-        callback: () => {
-          console.log('复制');
-          clipboard.saveData(this.getOption());
-          console.log(this.getOption());
-          return false;
-        }
-      },
+          displayName: '复制',
+          shortcut: 'Ctrl+C',
+          callback: () => {
+            clipboard.saveData(this.getOption());
+            console.log('复制:', this.getOption());
+            return false;
+          },
+        },
         {
           displayName: '剪切',
-          shortcut: 'Ctrl+X'
+          shortcut: 'Ctrl+X',
+          callback: () => {
+            clipboard.saveData(this.getOption());
+            this.destroy();
+            return false;
+          },
         },
         {
           displayName: '删除',
@@ -92,10 +96,37 @@ export class ExplicitRegion extends RegionController {
             } else {
               this.destroy();
             }
-
             return false;
-          }
-        }, 'split'];
+          },
+        }, 'split', {
+          displayName: '上移一层',
+          shortcut: 'F',
+          callback: () => {
+            this._model.zIndex = this._model.zIndex + 1;
+            return false;
+          },
+        }, {
+          displayName: '下移一层',
+          shortcut: 'B',
+          callback: () => {
+            this._model.zIndex = this._model.zIndex - 1;
+            return false;
+          },
+        }, {
+          displayName: '置顶',
+          shortcut: 'R',
+          callback: () => {
+            this._model.zIndex = this._page.topIndex + 1;
+            return false;
+          },
+        }, {
+          displayName: '置底',
+          shortcut: 'K',
+          callback: () => {
+            this._model.zIndex = this._page.bottomIndex - 1;
+            return false;
+          },
+        }];
     };
   }
 
@@ -125,7 +156,7 @@ export class ExplicitRegion extends RegionController {
         regionKey: 'explicit.region',
         regionOption: this._model.exportModel(),
       },
-      graphic: this._graphicWrapper.getOption()
+      graphic: this._graphicWrapper.getOption(),
     };
     console.log('XXXXXX ', JSON.stringify(retObj));
     return retObj;

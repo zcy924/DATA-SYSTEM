@@ -1,11 +1,7 @@
-import {KeyValueDiffer} from '@angular/core';
-import {closestNum} from '../../../utils/common';
-import {Dimensions} from '@core/node/interface';
-import {session} from '@core/node/utils/session';
-import {debounceTime} from 'rxjs/operators';
-import {ModelEventTarget} from '@core/node/event/model.event';
+import { closestNum } from '../../../utils/common';
+import { Dimensions } from '@core/node/interface';
+import { ModelEventTarget } from '@core/node/event/model.event';
 import * as _ from 'lodash';
-import {Subject} from 'rxjs';
 
 export enum RegionState {
   default, selected, multiSelected, activated
@@ -39,12 +35,9 @@ interface RegionOption {
  给表达式提供运算时所需的执行环境
  */
 export class RegionModel extends ModelEventTarget {
-  protected _option: RegionOption;
+  private _option: RegionOption;
   // 非持久化状态层
   private _state: RegionState;
-
-  private _subject = new Subject();
-  private _differ: KeyValueDiffer<any, any>;
 
   constructor(
     left: number = 100,
@@ -57,44 +50,16 @@ export class RegionModel extends ModelEventTarget {
       left,
       top,
       width,
-      height
+      height,
     };
     this._state = RegionState.default;
 
-    this._differ = session.differs.find(this).create();
+  }
 
-    // 避免出现添加项
-    this._differ.diff(this._option);
-    this._subject.pipe(debounceTime(30)).subscribe((value) => {
-      const changes = this._differ.diff(this._option), array = [];
-      if (changes) {
-        changes.forEachRemovedItem((record) => {
-          array.push({
-            key: `remove.${record.key}`,
-            oldValue: record.previousValue,
-            newValue: record.currentValue,
-            option: value
-          });
-        });
-        changes.forEachAddedItem((record) => {
-          array.push({
-            key: `add.${record.key}`,
-            oldValue: record.previousValue,
-            newValue: record.currentValue,
-            option: value
-          });
-        });
-        changes.forEachChangedItem((record) => {
-          array.push({
-            key: record.key,
-            oldValue: record.previousValue,
-            newValue: record.currentValue,
-            option: value
-          });
-        });
-        this._batchTrigger(array);
-      }
-    });
+  set zIndex(value: number) {
+    const changedItem = { key: 'z-index', oldValue: this._option.zIndex, newValue: value, option: null };
+    this._option.zIndex = value;
+    this._trigger(changedItem);
   }
 
   get zIndex(): number {
@@ -147,20 +112,20 @@ export class RegionModel extends ModelEventTarget {
 
   set state(param: RegionState) {
     if (this._state !== param) {
-      const changedItem = {key: 'state', oldValue: this._state, newValue: param, option: null};
+      const changedItem = { key: 'state', oldValue: this._state, newValue: param, option: null };
       this._state = param;
       this._trigger(changedItem);
     }
   }
 
   setCoordinates(left: number, top: number) {
-    this.left = left;
-    this.top = top;
+    this._option.left = closestNum(left);
+    this._option.top = closestNum(top);
   }
 
   setDimensions(width: number, height: number) {
-    this.width = width;
-    this.height = height;
+    this._option.width = closestNum(width);
+    this._option.height = closestNum(height);
   }
 
   zoom(width: number, height: number, preserveAspectRatio?: boolean) {
@@ -186,5 +151,8 @@ export class RegionModel extends ModelEventTarget {
   }
 
   destroy() {
+    super.destroy();
+    this._option = null;
+    this._state = null;
   }
 }

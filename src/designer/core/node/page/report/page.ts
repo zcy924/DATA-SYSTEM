@@ -24,6 +24,14 @@ export class ReportPage implements IReportPage {
     return this._pageInner.view.scale;
   }
 
+  get bottomIndex() {
+    return this._pageInner.regionManager.bottomIndex;
+  }
+
+  get topIndex() {
+    return this._pageInner.regionManager.topIndex;
+  }
+
   get regionArray(): Array<RegionController> {
     return this._pageInner.regionManager.regionArray;
   }

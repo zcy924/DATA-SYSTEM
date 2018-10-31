@@ -12,6 +12,10 @@ export interface IReportPage {
    */
   scale: number;
 
+  bottomIndex: number;
+
+  topIndex: number;
+
   focusRegion: RegionController;
 
   regionArray: Array<RegionController>;
