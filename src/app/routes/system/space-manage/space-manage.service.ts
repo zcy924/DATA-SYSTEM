@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
-import { environment } from '@env/environment';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {catchError} from 'rxjs/operators';
+import {environment} from '@env/environment';
+import {Observable} from 'rxjs';
 
 @Injectable()
 export class SpaceManageService {
@@ -36,6 +36,10 @@ export class SpaceManageService {
     return this.httpClient.post(this.url + 'spaceManage/dashBoard/alldel', params);
   }
 
+  collectScreen(params): Observable<any> {
+    return this.httpClient.post(this.url + 'selfCore/keepDashBoard/addKeep', params);
+  }
+
   /*************************************报表*************************************/
 
   qryReportTree(params): Observable<any> {
@@ -57,7 +61,8 @@ export class SpaceManageService {
   modReport(params): Observable<any> {
     return this.httpClient.post(this.url + 'space/report/modReportContent', params);
   }
-  qryReportContent(params):Observable<any>{
+
+  qryReportContent(params): Observable<any> {
     return this.httpClient.post(this.url + 'space/report/qryReportContent', params);
   }
 
