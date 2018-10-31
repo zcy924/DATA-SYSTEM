@@ -24,9 +24,9 @@ export class ExplicitRegionView extends RegionView {
   constructor(protected _controller: RegionController, protected _model: RegionModel) {
     super();
 
-    this.$element = $(template);
-    this.$fill = this.$element.find('.g-fill');
-    this._$mover = this.$element.find('.u-mover');
+    const $element = this.$element = $(template);
+    this.$fill = $element.find('.g-fill');
+    this._$mover = $element.find('.u-mover');
 
     // 监听model变化
     this._listenToModel(_model);
@@ -85,11 +85,11 @@ export class ExplicitRegionView extends RegionView {
       height: this._model.height,
       left: this._model.left,
       top: this._model.top,
-      zIndex: this._model.zIndex
+      zIndex: this._model.zIndex,
     });
     // 激活状态下需要更新辅助元素mask的状态
     if (this._model.state === RegionState.activated) {
-      this._controller.regionResize();
+      this._controller.page.regionResize(this._controller);
     }
   }
 

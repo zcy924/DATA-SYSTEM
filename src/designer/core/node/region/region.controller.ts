@@ -16,6 +16,14 @@ export abstract class RegionController {
 
   private _methodMap: Map<string, Function> = new Map();
 
+  get page(): IReportPage {
+    return this._page;
+  }
+
+  get graphicWrapper(): GraphicWrapper {
+    return this._graphicWrapper;
+  }
+
   get $element() {
     return this._view.$element;
   }
@@ -32,27 +40,8 @@ export abstract class RegionController {
     return this._model.zIndex;
   }
 
-  get page(): IReportPage {
-    return this._page;
-  }
-
-  get graphicWrapper(): GraphicWrapper {
-    return this._graphicWrapper;
-  }
-
   init(regionOption: any) {
 
-  }
-
-  addMethod(name: string, method: Function) {
-    this._methodMap.set(name, method);
-  }
-
-  invoke(...args: Array<any>) {
-    const name = args.shift();
-    if (this._methodMap.has(name)) {
-      return this._methodMap.get(name)(...args);
-    }
   }
 
   /**
@@ -83,14 +72,6 @@ export abstract class RegionController {
 
   abstract getOption();
 
-  get scale() {
-    return this._page.scale;
-  }
-
-  regionResize() {
-    this._page.regionResize(this);
-  }
-
   /**
    * 1、销毁内部对象
    * 2、解除事件绑定
@@ -107,6 +88,17 @@ export abstract class RegionController {
     this._methodMap.clear();
 
     this._view.destroy();
+  }
+
+  addMethod(name: string, method: Function) {
+    this._methodMap.set(name, method);
+  }
+
+  invoke(...args: Array<any>) {
+    const name = args.shift();
+    if (this._methodMap.has(name)) {
+      return this._methodMap.get(name)(...args);
+    }
   }
 }
 

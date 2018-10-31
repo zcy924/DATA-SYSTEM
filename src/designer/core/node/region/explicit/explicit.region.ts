@@ -70,15 +70,19 @@ export class ExplicitRegion extends RegionController {
           displayName: '复制',
           shortcut: 'Ctrl+C',
           callback: () => {
-            console.log('复制');
             clipboard.saveData(this.getOption());
-            console.log(this.getOption());
+            console.log('复制:', this.getOption());
             return false;
           },
         },
         {
           displayName: '剪切',
           shortcut: 'Ctrl+X',
+          callback: () => {
+            clipboard.saveData(this.getOption());
+            this.destroy();
+            return false;
+          },
         },
         {
           displayName: '删除',
@@ -92,38 +96,33 @@ export class ExplicitRegion extends RegionController {
             } else {
               this.destroy();
             }
-
             return false;
           },
         }, 'split', {
           displayName: '上移一层',
-          shortcut: 'Ctrl+C',
+          shortcut: 'F',
           callback: () => {
-            console.log('上移一层');
             this._model.zIndex = this._model.zIndex + 1;
             return false;
           },
         }, {
           displayName: '下移一层',
-          shortcut: 'Ctrl+C',
+          shortcut: 'B',
           callback: () => {
-            console.log('下移一层');
             this._model.zIndex = this._model.zIndex - 1;
             return false;
           },
         }, {
           displayName: '置顶',
-          shortcut: 'Ctrl+C',
+          shortcut: 'R',
           callback: () => {
-            console.log('置顶', this._page.topIndex);
             this._model.zIndex = this._page.topIndex + 1;
             return false;
           },
         }, {
           displayName: '置底',
-          shortcut: 'Ctrl+C',
+          shortcut: 'K',
           callback: () => {
-            console.log('置底', this._page.bottomIndex);
             this._model.zIndex = this._page.bottomIndex - 1;
             return false;
           },

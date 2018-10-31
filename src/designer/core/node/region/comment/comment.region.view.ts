@@ -1,20 +1,20 @@
-import {RegionView} from '../region.view';
-import {RegionState} from '../region.model';
-import {fromEvent, Subscription} from 'rxjs';
-import {BarChartGraphic} from '../../graphic/chart/bar.chart.graphic';
-import {TextAuxiliary} from '../../graphic.view/auxiliary/text.auxiliary';
-import {LinesChartGraphic} from '../../graphic/chart/lines.chart.graphic';
-import {LineChartGraphic} from '../../graphic/chart/line.chart.graphic';
-import {TextGraphic} from '../../graphic/auxiliary/text.graphic';
-import {CoordinatesAndDimensions, Dimensions} from '../../interface';
-import {clipboard} from '../../clipboard';
-import {filter, throttleTime} from 'rxjs/internal/operators';
-import {closestNum} from '../../../../utils/common';
-import {PieChartGraphic} from '../../graphic/chart/pie.chart.graphic';
-import {resizeTipHelper} from '../../helper/resize.tip.helper';
-import {contextMenuHelper} from '../../../../utils/contextMenu';
-import {RegionController} from '../region.controller';
-import {RegionModel} from '@core/node/region/region.model';
+import { RegionView } from '../region.view';
+import { RegionState } from '../region.model';
+import { fromEvent, Subscription } from 'rxjs';
+import { BarChartGraphic } from '../../graphic/chart/bar.chart.graphic';
+import { TextAuxiliary } from '../../graphic.view/auxiliary/text.auxiliary';
+import { LinesChartGraphic } from '../../graphic/chart/lines.chart.graphic';
+import { LineChartGraphic } from '../../graphic/chart/line.chart.graphic';
+import { TextGraphic } from '../../graphic/auxiliary/text.graphic';
+import { CoordinatesAndDimensions, Dimensions } from '../../interface';
+import { clipboard } from '../../clipboard';
+import { filter, throttleTime } from 'rxjs/internal/operators';
+import { closestNum } from '../../../../utils/common';
+import { PieChartGraphic } from '../../graphic/chart/pie.chart.graphic';
+import { resizeTipHelper } from '../../helper/resize.tip.helper';
+import { contextMenuHelper } from '../../../../utils/contextMenu';
+import { RegionController } from '../region.controller';
+import { RegionModel } from '@core/node/region/region.model';
 
 const template = `
 <div class="m-dashbox">
@@ -37,7 +37,7 @@ export class CommentRegionView extends RegionView {
 
   private _defaultDimensions: Dimensions = {
     width: 30,
-    height: 30
+    height: 30,
   };
 
   constructor(protected _controller: RegionController, protected _model: RegionModel) {
@@ -121,18 +121,18 @@ export class CommentRegionView extends RegionView {
         width: this._defaultDimensions.width,
         height: this._defaultDimensions.height,
         left: this._model.left,
-        top: this._model.top
+        top: this._model.top,
       });
     } else if (this._model.state === RegionState.selected) {
       this.$element.css({
         width: this._model.width,
         height: this._model.height,
         left: this._model.left,
-        top: this._model.top
+        top: this._model.top,
       });
     }
     if (this._model.state === RegionState.activated) {
-      this._controller.regionResize();
+      this._controller.page.regionResize(this._controller);
     }
   }
 
