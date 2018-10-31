@@ -36,7 +36,7 @@ export class ExplicitRegion extends RegionController {
     super();
     this._model = new RegionModel();
     this._view = new ExplicitRegionView(this, this._model);
-
+    this.accept(this._model);
     this._page.addChild(this);
 
     this._init();
@@ -130,6 +130,27 @@ export class ExplicitRegion extends RegionController {
     };
   }
 
+  accept(model: RegionModel) {
+    model
+      .register('state', (key, oldValue, newValue, option) => {
+        switch (newValue) {
+          case RegionState.default:
+            if (oldValue === RegionState.activated) {
+              this._graphicWrapper && this._graphicWrapper.deactivate();
+            }
+            break;
+          case RegionState.selected:
+            this._graphicWrapper && this._graphicWrapper.activateConfig();
+            break;
+          case RegionState.multiSelected:
+            break;
+          case RegionState.activated:
+            this._graphicWrapper && this._graphicWrapper.activate();
+            break;
+        }
+      });
+  }
+
   /**
    * 用户单击mover的时候调用select，进入选中状态
    *
@@ -140,13 +161,6 @@ export class ExplicitRegion extends RegionController {
    * 点击mask  当前激活的region调用deactivate
    */
   set state(param: RegionState) {
-    if (param === RegionState.selected && this._graphicWrapper) {
-      this._graphicWrapper.activateConfig();
-    } else if (param === RegionState.activated && this._graphicWrapper) {
-      this._graphicWrapper.activate();
-    } else if (this._model.state === RegionState.activated && param === RegionState.default && this._graphicWrapper) {
-      (<any>this._graphicWrapper).deactivate();
-    }
     this._model.state = param;
   }
 
@@ -158,7 +172,6 @@ export class ExplicitRegion extends RegionController {
       },
       graphic: this._graphicWrapper.getOption(),
     };
-    console.log('XXXXXX ', JSON.stringify(retObj));
     return retObj;
   }
 }

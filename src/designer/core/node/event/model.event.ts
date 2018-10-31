@@ -9,7 +9,7 @@ export interface ChangedItem {
 }
 
 export class ModelEventTarget {
-  private _map = new Map();
+  private _map: Map<string, Array<KeyValueListener>> = new Map();
 
   /**
    * @param {string} eventType  "color color.add color.delete"
@@ -23,7 +23,11 @@ export class ModelEventTarget {
         .replace(/\s+/g, ' ')
         .split(' ');
       eventArray.forEach((value, index, array) => {
-        this._map.set(value, listener);
+        if (this._map.has(value)) {
+          this._map.get(value).push(listener);
+        } else {
+          this._map.set(value, [listener]);
+        }
       });
     }
     return this;
@@ -39,8 +43,14 @@ export class ModelEventTarget {
   protected _trigger(item: ChangedItem) {
     const { key, oldValue, newValue, option } = item;
     if (this._map.has(key)) {
-      const listener = this._map.get(key);
-      listener(key, oldValue, newValue, option);
+      const listeners = this._map.get(key);
+      listeners.forEach((listener) => {
+        try {
+          listener(key, oldValue, newValue, option);
+        }catch (e) {
+          console.log(e)
+        }
+      });
     }
   }
 
