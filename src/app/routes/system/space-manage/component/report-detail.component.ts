@@ -4,6 +4,7 @@ import { ReportPageOuter } from '@core/node/page/report/page.outer';
 import { ActivatedRoute } from '@angular/router';
 import { SpaceManageService } from '../space-manage.service';
 import { switchMap } from 'rxjs/operators';
+import {HttpResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-designer-body',
@@ -39,7 +40,13 @@ export class ReportDetailComponent implements AfterViewInit, OnInit, OnDestroy {
     }));
     reportInfo$.subscribe(data => {
       this.report.clear();
-      this.report.load(data.Report.attr);
+      if(data.Report.attr){
+        this.report.load(data.Report.attr);
+      }
+    },err=>{
+      if(err instanceof HttpResponse){
+        console.log('error');
+      }
     });
   }
 
