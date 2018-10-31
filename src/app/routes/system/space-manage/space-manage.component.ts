@@ -9,7 +9,7 @@ import {HttpResponse} from '@angular/common/http';
 import {NzMessageService} from 'ng-zorro-antd';
 
 @Component({
-  templateUrl: './space-manage.html',
+  template: `<router-outlet></router-outlet>`,
   providers: [SpaceManageService],
 })
 export class SpaceManageComponent implements OnInit {
