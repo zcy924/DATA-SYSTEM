@@ -1,9 +1,9 @@
-import {IGraphic} from '../graphic/graphic';
-import {ReportPageInner} from '@core/node/page/report/page.inner';
-import {RegionModel, RegionState} from '@core/node/region/region.model';
-import {RegionView} from '@core/node/region/region.view';
-import {GraphicWrapper} from '@core/node/graphic/graphic.wrapper';
-import {IReportPage} from '@core/node/page/report/page.interface';
+import { IGraphic } from '../graphic/graphic';
+import { ReportPageInner } from '@core/node/page/report/page.inner';
+import { RegionModel, RegionState } from '@core/node/region/region.model';
+import { RegionView } from '@core/node/region/region.view';
+import { GraphicWrapper } from '@core/node/graphic/graphic.wrapper';
+import { IReportPage } from '@core/node/page/report/page.interface';
 
 
 export abstract class RegionController {
@@ -26,6 +26,10 @@ export abstract class RegionController {
 
   get state() {
     return this._model.state;
+  }
+
+  get index(): number {
+    return this._model.zIndex;
   }
 
   get page(): IReportPage {

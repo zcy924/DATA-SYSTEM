@@ -1,6 +1,6 @@
-import {RegionView} from '../region.view';
-import {RegionModel, RegionState} from '../region.model';
-import {RegionController} from '../region.controller';
+import { RegionView } from '../region.view';
+import { RegionModel, RegionState } from '../region.model';
+import { RegionController } from '../region.controller';
 
 const template = `
 <div class="m-dashbox">
@@ -31,7 +31,7 @@ export class ExplicitRegionView extends RegionView {
     // 监听model变化
     this._listenToModel(_model);
 
-    if(this._controller.page.mode==='design'){
+    if (this._controller.page.mode === 'design') {
       this._bindEvent();
     }
   }
@@ -68,6 +68,9 @@ export class ExplicitRegionView extends RegionView {
       })
       .register('left top width height', (key, oldValue, newValue, option) => {
         this.refresh();
+      })
+      .register('z-index', (key, oldValue, newValue, option) => {
+        this.$element.css('z-index', newValue);
       });
   }
 
@@ -81,7 +84,8 @@ export class ExplicitRegionView extends RegionView {
       width: this._model.width,
       height: this._model.height,
       left: this._model.left,
-      top: this._model.top
+      top: this._model.top,
+      zIndex: this._model.zIndex
     });
     // 激活状态下需要更新辅助元素mask的状态
     if (this._model.state === RegionState.activated) {

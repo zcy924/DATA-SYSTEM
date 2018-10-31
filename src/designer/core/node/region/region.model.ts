@@ -1,11 +1,11 @@
-import {KeyValueDiffer} from '@angular/core';
-import {closestNum} from '../../../utils/common';
-import {Dimensions} from '@core/node/interface';
-import {session} from '@core/node/utils/session';
-import {debounceTime} from 'rxjs/operators';
-import {ModelEventTarget} from '@core/node/event/model.event';
+import { KeyValueDiffer } from '@angular/core';
+import { closestNum } from '../../../utils/common';
+import { Dimensions } from '@core/node/interface';
+import { session } from '@core/node/utils/session';
+import { debounceTime } from 'rxjs/operators';
+import { ModelEventTarget } from '@core/node/event/model.event';
 import * as _ from 'lodash';
-import {Subject} from 'rxjs';
+import { Subject } from 'rxjs';
 
 export enum RegionState {
   default, selected, multiSelected, activated
@@ -57,7 +57,7 @@ export class RegionModel extends ModelEventTarget {
       left,
       top,
       width,
-      height
+      height,
     };
     this._state = RegionState.default;
 
@@ -73,7 +73,7 @@ export class RegionModel extends ModelEventTarget {
             key: `remove.${record.key}`,
             oldValue: record.previousValue,
             newValue: record.currentValue,
-            option: value
+            option: value,
           });
         });
         changes.forEachAddedItem((record) => {
@@ -81,7 +81,7 @@ export class RegionModel extends ModelEventTarget {
             key: `add.${record.key}`,
             oldValue: record.previousValue,
             newValue: record.currentValue,
-            option: value
+            option: value,
           });
         });
         changes.forEachChangedItem((record) => {
@@ -89,12 +89,18 @@ export class RegionModel extends ModelEventTarget {
             key: record.key,
             oldValue: record.previousValue,
             newValue: record.currentValue,
-            option: value
+            option: value,
           });
         });
         this._batchTrigger(array);
       }
     });
+  }
+
+  set zIndex(value: number) {
+    const changedItem = { key: 'z-index', oldValue: this._option.zIndex, newValue: value, option: null };
+    this._option.zIndex = value;
+    this._trigger(changedItem);
   }
 
   get zIndex(): number {
@@ -147,7 +153,7 @@ export class RegionModel extends ModelEventTarget {
 
   set state(param: RegionState) {
     if (this._state !== param) {
-      const changedItem = {key: 'state', oldValue: this._state, newValue: param, option: null};
+      const changedItem = { key: 'state', oldValue: this._state, newValue: param, option: null };
       this._state = param;
       this._trigger(changedItem);
     }
