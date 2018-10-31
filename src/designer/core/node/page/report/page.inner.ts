@@ -1,22 +1,23 @@
 import { IPage } from '../../interface';
-import { ComponentRef } from '@angular/core';
 import { PageConfig } from '../../../../components/page.config/page.config';
 import { graphicFactory } from '@core/node/factory/graphic.factory';
 import { clipboard } from '@core/node/clipboard';
 import { ISelectManager, SelectManager } from '@core/node/manager/select.manager';
-import { PageView } from '@core/node/page/report/page.view';
+import { DesignPageView } from '@core/node/page/report/design,page.view';
 import { RegionManager } from '@core/node/manager/region.manager';
 import { ActivateManager } from '@core/node/manager/activate.manager';
-import { session } from '@core/node/utils/session';
 import { DataSourceManager } from '@core/data/data.source.manager';
 import { ConfigSourceManager } from '@core/config/config.source.manager';
 import { dataOptionManager } from '@core/data/data.option.manager';
 import { ActionManager } from '@core/node/operate/action.manager';
 import { PageConfigWrapper } from '@core/node/page/report/page.outer';
+import { AbstractPageView } from '@core/node/page/report/abstract.page.view';
+import { RuntimePageView } from '@core/node/page/report/runtime.page.view';
 
 export class ReportPageInner implements IPage {
 
-  public view: PageView;
+  public pageConfigWrapper: PageConfigWrapper;
+  public view: AbstractPageView;
   public regionManager: RegionManager;
   public selectManager: ISelectManager;
   public activateManager: ActivateManager;
@@ -25,28 +26,32 @@ export class ReportPageInner implements IPage {
   public dataSourceManager: DataSourceManager;
   public actionManager: ActionManager;
 
-  constructor(private _pageConfigWrapper: PageConfigWrapper) {
-    this.view = new PageView(this);
+  constructor(private _mode: 'design' | 'runtime') {
+    if (_mode === 'design') {
+      this.view = new DesignPageView(this);
+    } else {
+      this.view = new RuntimePageView(this);
+    }
+
+    this.pageConfigWrapper = new PageConfigWrapper(_mode);
     this.regionManager = new RegionManager();
     this.selectManager = new SelectManager();
     this.activateManager = new ActivateManager(this);
-    this.configSourceManager = new ConfigSourceManager(_pageConfigWrapper.mode);
+    this.configSourceManager = new ConfigSourceManager(_mode);
     this.dataSourceManager = new DataSourceManager(dataOptionManager.getDataOptionSet('space1'));
     this.actionManager = new ActionManager();
   }
 
-  get mode() {
-    return this._pageConfigWrapper.mode;
-  }
-
-  get model() {
-    return this._pageConfigWrapper.model;
+  get mode(): 'design' | 'runtime' {
+    return this._mode;
   }
 
   init() {
-    this.accept(this.model);
-    this.view.accept(this.model);
-    this._init();
+    this.accept(this.pageConfigWrapper.model);
+    this.view.accept(this.pageConfigWrapper.model);
+    if (this._mode === 'design') {
+      this._init();
+    }
   }
 
   /**
@@ -71,7 +76,7 @@ export class ReportPageInner implements IPage {
     this.view
       .addEventListener('select', () => {
         this.selectManager.clear();
-        this._pageConfigWrapper.show();
+        this.pageConfigWrapper.show();
       })
       .addEventListener('boxSelect', (left, top, width, height) => {
         const array = this.regionManager.selectByBox(left, top, width, height);
@@ -146,7 +151,8 @@ export class ReportPageInner implements IPage {
   }
 
   destroy() {
-
+    this.view.destroy();
+    this.regionManager;
   }
 }
 

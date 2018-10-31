@@ -1,5 +1,5 @@
-import {RegionController} from '../region/region.controller';
-import {RegionState} from '@core/node/region/region.model';
+import { RegionController } from '../region/region.controller';
+import { RegionState } from '@core/node/region/region.model';
 
 enum SelectStatus {
   default, single, multi
@@ -162,9 +162,9 @@ class StateMultiSelected extends State {
 }
 
 export class SelectManager extends Store implements ISelectManager {
-  private readonly _stateDefault: State;
-  private readonly _stateSelected: State;
-  private readonly _stateMultiSelected: State;
+  private _stateDefault: State;
+  private _stateSelected: State;
+  private _stateMultiSelected: State;
 
   constructor() {
     super();
@@ -191,6 +191,12 @@ export class SelectManager extends Store implements ISelectManager {
   ctrlSelect(region: RegionController) {
     this.state.ctrlSelect(region);
   }
+
+  destroy() {
+    this._stateDefault = null;
+    this._stateSelected = null;
+    this._stateMultiSelected = null;
+  }
 }
 
 export interface ISelectManager {
@@ -205,4 +211,6 @@ export interface ISelectManager {
   delete(region: RegionController);
 
   clear();
+
+  destroy();
 }

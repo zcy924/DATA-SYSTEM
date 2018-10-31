@@ -1,5 +1,5 @@
-import {RegionController} from '../region/region.controller';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import { RegionController } from '../region/region.controller';
+import { Observable, Subject } from 'rxjs';
 
 export class RegionManager {
 
@@ -36,7 +36,7 @@ export class RegionManager {
     return this._children.slice(0);
   }
 
-  get regionArrayAsObservable(): Observable<Array<RegionController>> {
+  get regionArray$(): Observable<Array<RegionController>> {
     return this._subject.asObservable();
   }
 
@@ -65,6 +65,14 @@ export class RegionManager {
       return item.getOption();
     });
     return param === 'string' ? JSON.stringify(arr, null, 2) : arr;
+  }
+
+  destroy() {
+    if (this._subject) {
+      this._subject.unsubscribe();
+      this._subject = null;
+    }
+
   }
 
 }

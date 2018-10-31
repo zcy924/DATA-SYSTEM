@@ -65,7 +65,8 @@ export class ExplicitRegion extends RegionController {
       });
 
     this._view.contextMenuGenerator = () => {
-      return [{
+      return [
+        {
         displayName: '复制',
         shortcut: 'Ctrl+C',
         callback: () => {
@@ -78,7 +79,8 @@ export class ExplicitRegion extends RegionController {
         {
           displayName: '剪切',
           shortcut: 'Ctrl+X'
-        }, {
+        },
+        {
           displayName: '删除',
           shortcut: 'Backspace',
           callback: () => {

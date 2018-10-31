@@ -7,16 +7,20 @@ import { PageConfig } from '../../../../components/page.config/page.config';
 import { IReportPage } from '@core/node/page/report/page.interface';
 import { ReportPage } from '@core/node/page/report/page';
 import { RuntimePageConfig } from '../../../../components/page.config/runtime.page.config';
+import { RegionController } from '@core/node/region/region.controller';
 
 export class PageConfigWrapper {
-  constructor(private _inner: ComponentRef<PageConfig> | PageConfig) {
-  }
 
-  get mode() {
-    if (this._inner instanceof PageConfig) {
-      return 'runtime';
-    } else {
-      return 'design';
+  private _inner: ComponentRef<PageConfig> | PageConfig;
+
+  constructor(mode: 'design' | 'runtime') {
+    switch (mode) {
+      case 'design':
+        this._inner = session.siderLeftComponent.forwardCreateCanvasConfig(PageConfigComponent);
+        break;
+      case 'runtime':
+        this._inner = new RuntimePageConfig();
+        break;
     }
   }
 
@@ -44,6 +48,7 @@ export class PageConfigWrapper {
     if (this._inner instanceof PageConfig) {
     } else {
       this._inner.destroy();
+      this._inner = null;
     }
   }
 }
@@ -51,26 +56,17 @@ export class PageConfigWrapper {
 
 export class ReportPageOuter {
 
-  private _pageConfigWrapper: PageConfigWrapper;
   private _pageInner: ReportPageInner;
   private _page: IReportPage;
 
-  constructor(modelType: 'design' | 'runtime') {
-    switch (modelType) {
-      case 'design':
-        this._pageConfigWrapper = new PageConfigWrapper(session.siderLeftComponent.forwardCreateCanvasConfig(PageConfigComponent));
-        this._pageInner = new ReportPageInner(this._pageConfigWrapper);
-        this._pageInner.init();
-        this._page = new ReportPage(this._pageInner);
-        break;
-      case 'runtime':
-        this._pageConfigWrapper = new PageConfigWrapper(new RuntimePageConfig());
-        this._pageInner = new ReportPageInner(this._pageConfigWrapper);
-        this._pageInner.init();
-        this._page = new ReportPage(this._pageInner);
-        break;
-        break;
-    }
+  constructor(mode: 'design' | 'runtime') {
+    this._pageInner = new ReportPageInner(mode);
+    this._pageInner.init();
+    this._page = new ReportPage(this._pageInner);
+  }
+
+  get mode(): 'design' | 'runtime' {
+    return this._pageInner.mode;
   }
 
   get $element() {
@@ -85,17 +81,12 @@ export class ReportPageOuter {
     return this._page;
   }
 
-
-  get model() {
-    return this._pageConfigWrapper.model;
-  }
-
   get actionManager() {
     return this._pageInner.actionManager;
   }
 
   load(option: any) {
-    this.model.importOption(option.option);
+    this._pageInner.pageConfigWrapper.model.importOption(option.option);
     option.children.forEach((value) => {
       graphicFactory.paste(value);
     });
@@ -103,9 +94,15 @@ export class ReportPageOuter {
 
   save() {
     return {
-      option: this.model.exportOption(),
+      option: this._pageInner.pageConfigWrapper.model.exportOption(),
       children: this._pageInner.regionManager.saveAs(),
     };
+  }
+
+  clear() {
+    this._pageInner.regionManager.regionArray.forEach((value: RegionController) => {
+      value.destroy();
+    });
   }
 
   enterFullScreen() {
@@ -113,15 +110,10 @@ export class ReportPageOuter {
   }
 
   destroy() {
-    if (this._pageConfigWrapper) {
-      this._pageConfigWrapper.destroy();
-      this._pageConfigWrapper = null;
-    }
     if (this._page) {
       this._page.destroy();
       this._page = null;
     }
-
   }
 
 }
