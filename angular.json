@@ -33,10 +33,11 @@
               }
             ],
             "styles": [
-              "src/styles.less",
+
               "node_modules/normalize.css/normalize.css",
               "node_modules/ng-zorro-antd/src/ng-zorro-antd.min.css",
-              "src/designer.main.less"
+              "src/designer.main.less",
+              "src/styles.less",
             ],
             "scripts": [
               "node_modules/ajv/dist/ajv.bundle.js",
