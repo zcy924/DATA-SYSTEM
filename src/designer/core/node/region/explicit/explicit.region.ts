@@ -36,14 +36,20 @@ export class ExplicitRegion extends RegionController {
     super();
     this._model = new RegionModel();
     this._view = new ExplicitRegionView(this, this._model);
-    this.accept(this._model);
-    this._page.addChild(this);
 
-    this._init();
+    this._page.addChild(this);
   }
 
   init(regionOption: any) {
-    this._model.importModel(regionOption);
+    // 事件绑定 监听用户点击
+    this._view.init();
+    // 监听RegionModel
+    this._view.accept(this._model);
+    // 事件绑定 监听RegionView事件
+    this._init();
+    // 监听RegionModel
+    this.accept(this._model);
+    regionOption && this._model.importModel(regionOption);
     this._view.refresh();
   }
 

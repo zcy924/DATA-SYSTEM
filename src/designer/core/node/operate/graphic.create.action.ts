@@ -1,9 +1,9 @@
-import {regionMap} from '@core/node/config/region.map';
-import {RegionController} from '@core/node/region/region.controller';
-import {graphicMetaMap} from '@core/node/config/default.graphic.meta.map';
-import {GraphicWrapper} from '@core/node/graphic/graphic.wrapper';
-import {IAction} from '@core/node/operate/action';
-import {IReportPage} from '@core/node/page/report/page.interface';
+import { regionMap } from '@core/node/config/region.map';
+import { RegionController } from '@core/node/region/region.controller';
+import { graphicMetaMap } from '@core/node/config/default.graphic.meta.map';
+import { GraphicWrapper } from '@core/node/graphic/graphic.wrapper';
+import { IAction } from '@core/node/operate/action';
+import { IReportPage } from '@core/node/page/report/page.interface';
 
 export class GraphicCreateAction implements IAction {
 
@@ -21,15 +21,16 @@ export class GraphicCreateAction implements IAction {
 
       if (regionMap.has(graphicMeta.region.regionKey)) {
         const region: RegionController = new (regionMap.get(graphicMeta.region.regionKey))(this._page);
+        region.init(null);
         region.setCoordinates(this._x, this._y);
         if (graphicMeta.region.regionOption) {
-          const {width, height} = graphicMeta.region.regionOption;
+          const { width, height } = graphicMeta.region.regionOption;
           region.setDimensions(width, height);
         }
 
         const graphicWrapper = new GraphicWrapper(region);
         if (this._configOption) {
-          graphicWrapper.init(Object.assign({}, graphicMeta.graphic, {configOption: JSON.parse(JSON.stringify(this._configOption))}));
+          graphicWrapper.init(Object.assign({}, graphicMeta.graphic, { configOption: JSON.parse(JSON.stringify(this._configOption)) }));
         } else {
           graphicWrapper.init(JSON.parse(JSON.stringify(graphicMeta.graphic)));
         }
@@ -42,7 +43,7 @@ export class GraphicCreateAction implements IAction {
         this._region = region;
 
         return {
-          region, graphicWrapper
+          region, graphicWrapper,
         };
       }
     }

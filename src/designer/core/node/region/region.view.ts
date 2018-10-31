@@ -23,6 +23,10 @@ export abstract class RegionView extends View {
     this._contextMenuGenerator = generator;
   }
 
+  abstract init();
+
+  abstract accept(model:RegionModel);
+
   abstract refresh();
 
   protected _bindEventForResize() {

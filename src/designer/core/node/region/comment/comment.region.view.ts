@@ -52,6 +52,12 @@ export class CommentRegionView extends RegionView {
     this._bindEvent();
   }
 
+  init() {
+  }
+
+  accept() {
+  }
+
   private _initContextMenu() {
     // this.addContextMenu([
     //   {

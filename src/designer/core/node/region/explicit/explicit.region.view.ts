@@ -21,22 +21,27 @@ const template = `
 
 export class ExplicitRegionView extends RegionView {
 
+  private _refresh = () => {
+  };
+
   constructor(protected _controller: RegionController, protected _model: RegionModel) {
     super();
-
     const $element = this.$element = $(template);
     this.$fill = $element.find('.g-fill');
     this._$mover = $element.find('.u-mover');
+  }
 
-    // 监听model变化
-    this._listenToModel(_model);
-
+  /**
+   * 事件绑定
+   */
+  init() {
     if (this._controller.page.mode === 'design') {
       this._bindEvent();
     }
   }
 
-  private _listenToModel(model: RegionModel) {
+  // 监听regionModel
+  accept(model: RegionModel) {
     model
       .register('state', (key, oldValue, newValue, option) => {
         if (oldValue !== newValue) {
@@ -72,6 +77,20 @@ export class ExplicitRegionView extends RegionView {
       .register('z-index', (key, oldValue, newValue, option) => {
         this.$element.css('z-index', newValue);
       });
+
+    this._refresh = () => {
+      this.$element.css({
+        width: model.width,
+        height: model.height,
+        left: model.left,
+        top: model.top,
+        zIndex: model.zIndex,
+      });
+      // 激活状态下需要更新辅助元素mask的状态
+      if (model.state === RegionState.activated) {
+        this._controller.page.regionResize(this._controller);
+      }
+    };
   }
 
   /**
@@ -80,17 +99,7 @@ export class ExplicitRegionView extends RegionView {
    * 1、组件刚创建完成的时候
    */
   refresh() {
-    this.$element.css({
-      width: this._model.width,
-      height: this._model.height,
-      left: this._model.left,
-      top: this._model.top,
-      zIndex: this._model.zIndex,
-    });
-    // 激活状态下需要更新辅助元素mask的状态
-    if (this._model.state === RegionState.activated) {
-      this._controller.page.regionResize(this._controller);
-    }
+    this._refresh();
   }
 
   private _bindEvent() {
@@ -100,6 +109,7 @@ export class ExplicitRegionView extends RegionView {
   }
 
   destroy() {
+    this._refresh = null;
     super.destroy();
   }
 }

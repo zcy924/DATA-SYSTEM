@@ -45,11 +45,7 @@ export class ModelEventTarget {
     if (this._map.has(key)) {
       const listeners = this._map.get(key);
       listeners.forEach((listener) => {
-        try {
-          listener(key, oldValue, newValue, option);
-        }catch (e) {
-          console.log(e)
-        }
+        listener(key, oldValue, newValue, option);
       });
     }
   }
