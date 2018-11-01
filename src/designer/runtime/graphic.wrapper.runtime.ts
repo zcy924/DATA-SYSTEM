@@ -33,7 +33,6 @@ export class GraphicWrapperRuntime {
       this._graphic.init(...paramNameArray.map((paramName) => {
         return map[paramName];
       }));
-      this._region.addChild(this);
     }
 
     this._uuid = graphicId || guid(10, 16);

@@ -1,6 +1,6 @@
-import { GraphicWrapperRuntime } from './graphic.wrapper.runtime';
 import { PageRuntime } from './page.runtime';
-import { RegionOption } from '@core/node/region/region.model';
+import { GraphicWrapperRuntime } from './graphic.wrapper.runtime';
+import { RegionOption } from '../interface/file/region.option';
 
 const template = `
 <div class="m-dashbox">
@@ -10,7 +10,8 @@ const template = `
 
 export class RegionRuntime {
 
-  private _graphicWrapper;
+  private _page: PageRuntime;
+  private _graphicWrapper: GraphicWrapperRuntime;
 
   $element: JQuery;
   private _$fill: JQuery;
@@ -21,7 +22,8 @@ export class RegionRuntime {
     return this._page;
   }
 
-  constructor(private _page: PageRuntime) {
+  constructor(page: PageRuntime) {
+    this._page = page;
     const $element = this.$element = $(template);
     this._$fill = $element.find('.g-fill');
 
@@ -30,28 +32,16 @@ export class RegionRuntime {
 
   init(regionOption: any) {
     this._regionOption = regionOption;
-  }
-
-  addChild(graphic: GraphicWrapperRuntime) {
-    this._graphicWrapper = graphic;
-    this._$fill.append(graphic.$element);
+    this._refresh();
+    const graphicWrapper = this._graphicWrapper = new GraphicWrapperRuntime(this);
+    this._$fill.append(graphicWrapper.$element);
+    graphicWrapper.init(regionOption);
   }
 
   updateTheme(theme: string) {
     if (this._graphicWrapper) {
       this._graphicWrapper.updateTheme(theme);
     }
-  }
-
-  render() {
-    const model = this._regionOption;
-    this.$element.css({
-      width: model.width,
-      height: model.height,
-      left: model.left,
-      top: model.top,
-      zIndex: model.zIndex,
-    });
   }
 
   /**
@@ -69,4 +59,17 @@ export class RegionRuntime {
 
     // this._view.destroy();
   }
+
+  private _refresh() {
+    const model = this._regionOption;
+    this.$element.css({
+      width: model.width,
+      height: model.height,
+      left: model.left,
+      top: model.top,
+      zIndex: model.zIndex,
+    });
+  }
+
+
 }
