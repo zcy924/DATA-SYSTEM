@@ -4,8 +4,11 @@ import { ReportPageOuter } from '@core/node/page/report/page.outer';
 import { ActivatedRoute } from '@angular/router';
 import { SpaceManageService } from '../space-manage.service';
 import { switchMap } from 'rxjs/operators';
-import {HttpResponse} from "@angular/common/http";
-import {NzMessageService} from "ng-zorro-antd";
+import { HttpResponse } from "@angular/common/http";
+import { NzMessageService, NzModalService } from 'ng-zorro-antd';
+import { ReportKeepModalComponent } from './report-keep-modal.component';
+import { PersonalCenterService } from '../../personal-center/personal-center.service';
+
 
 @Component({
   templateUrl: './report-detail.html',
@@ -13,15 +16,21 @@ import {NzMessageService} from "ng-zorro-antd";
 })
 export class ReportDetailComponent implements AfterViewInit, OnInit, OnDestroy {
 
+  heartIconTheme: boolean = false;
+  reportResponse;
+  keepReportId;
+  
   report: ReportPageOuter;
   reportName;
-
+  
   leftPanelState = false;
 
   constructor(private _elementRef: ElementRef,
               private _differs: KeyValueDiffers,
               private _router: ActivatedRoute,
               private _spaceManageService: SpaceManageService,
+              private _personalService:PersonalCenterService,
+              private _nzModel: NzModalService,
               private _nzMessage: NzMessageService) {
     session.differs = _differs;
   }
@@ -40,6 +49,11 @@ export class ReportDetailComponent implements AfterViewInit, OnInit, OnDestroy {
       });
     }));
     reportInfo$.subscribe(data => {
+
+      this.reportResponse = data['Report'];
+      this.heartIconTheme = this.reportResponse.keepFlag === 'T';
+      this.keepReportId = data.keepReportId;
+
       this.report.clear();
       this.reportName = data.Report.reportName;
       if(data.Report.attr){
@@ -72,4 +86,68 @@ export class ReportDetailComponent implements AfterViewInit, OnInit, OnDestroy {
     this.report.reportPage.scale = event;
   }
 
+  // 收藏报表对话框
+  keepSelf() {
+    if (this.heartIconTheme) {
+      // 批量删除报表收藏
+      this._nzModel.confirm({
+        nzTitle: '是否取消收藏?',
+        nzOnOk: res => {
+          let params = {
+            keepReportId: this.keepReportId,
+          };
+          this._personalService.delSelfReport(params).subscribe(
+            res => {
+              this._nzMessage.success('取消收藏成功！');
+              this.heartIconTheme = false;
+            },
+            err => {
+              if (err instanceof HttpResponse) {
+                this._nzMessage.error('取消收藏失败！');
+              }
+            },
+          );
+        },
+      });
+    } else {
+      const modal = this._nzModel.create({
+        nzTitle: `收藏报表`,
+        nzContent: ReportKeepModalComponent,
+        nzWidth: '50%',
+        nzComponentParams: {
+          remark: this.reportResponse.remark,
+          reportName: this.reportResponse.reportName,
+          reportId: this.reportResponse.reportId,
+        },
+        nzFooter: [
+          {
+            label: '新建文件夹',
+            type: 'primary',
+            onClick: res => {
+              res.addFolderInSpace();
+            },
+          },
+          {
+            label: '关闭',
+            shape: 'default',
+            onClick: () => modal.destroy(),
+          },
+          {
+            label: '收藏',
+            type: 'primary',
+            onClick: res => {
+              return new Promise(reslove => {
+                res.keepSelfReportInSpace();
+              });
+            },
+          },
+        ],
+      });
+      modal.afterClose.subscribe(data => {
+        if (data == 'ok') {
+          this.heartIconTheme = true;
+        }
+      });
+    }
+  }
 }

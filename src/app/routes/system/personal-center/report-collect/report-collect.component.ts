@@ -3,9 +3,11 @@ import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { MenuService } from '@delon/theme';
 import { Page } from '../../../../models/page';
 import { SideMenuService } from '@shared/side-menu.service';
-import { ReportModalComponent } from '../../space-manage/component/report-manage/components/report-modal.component';
 import { HttpResponse } from '@angular/common/http';
 import { PersonalCenterService } from '../personal-center.service';
+import { ReportFolderModalComponent } from './modal/report-folder-modal.component';
+import { ReportKeepModalComponent } from './modal/report-keep-modal.component';
+
 
 @Component({
   selector: 'app-collect-manage',
@@ -33,16 +35,18 @@ export class ReportCollectComponent implements OnInit {
   menu;
 
   constructor(
-    private nzModel: NzModalService,
-    private message: NzMessageService,
-    private spaceManageService: PersonalCenterService,
+    private _nzModel: NzModalService,
+    private _message: NzMessageService,
+    private _personalService: PersonalCenterService,
     private sideMenu: SideMenuService,
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.searchData(true);
     this.menu = this.sideMenu.menu;
   }
+
   checkAll(value: Boolean) {
     this.dataSet.forEach(data => {
       data.checked = value;
@@ -80,18 +84,13 @@ export class ReportCollectComponent implements OnInit {
       pageSize: this.page.pageSize,
       totalPage: this.page.totalPage,
       totalRow: this.page.totalRow,
-      Report: {
-        spaceId: spaceID,
-        parentId: data.parentId,
-      },
+      parentId: data.parentId,
     };
-    this.spaceManageService.getReportList(params).subscribe(res => {
+    this._personalService.getSelfReportList(params).subscribe(res => {
       console.log(res);
       this.loading = false;
       this.dataSet = res['retList'];
-      this.dataSet.forEach(value => {
-        value.checked = false;
-      });
+      this.dataSet.forEach(value => value.checked = false);
       this.page.totalRow = res['totalRow'];
       this.page.totalPage = res['totalPage'];
 
@@ -104,13 +103,8 @@ export class ReportCollectComponent implements OnInit {
       } else {
         let delTag = false;
         this.folders = this.folders.filter(value => {
-          if (value['parentId'] === data.parentId) {
-            delTag = true;
-          }
-          if (delTag === true) {
-            return false;
-          }
-          return true;
+          delTag = value['parentId'] === data.parentId;
+          return !(delTag === true);
         });
       }
       this.folders.push(data);
@@ -119,27 +113,19 @@ export class ReportCollectComponent implements OnInit {
     });
   }
 
-  // 新增报表
-  addReport(type) {
-    let title = type === this.isReport ? '报表页面' : '文件夹';
-    const modal = this.nzModel.create({
-      nzTitle: `新建${title}`,
-      nzContent: ReportModalComponent,
-      nzWidth: '50%',
-      nzComponentParams: {
-        folderName: this.folderName,
-        folders: this.folders,
-        folderID: this.folderID,
-        radioValue: type === this.isReport ? this.isReport : this.isFolder,
-      },
-      nzOnOk: res => {
-        return new Promise(i => {
-          res.createReport();
-        });
+  // 新增报表文件夹
+  addReportFolder() {
+    const modal = this._nzModel.create({
+      nzTitle: `新增报表收藏文件夹`,
+      nzContent: ReportFolderModalComponent,
+      nzWidth: '40%',
+      nzOnOk: (res) => {
+        res.addSelfFolder();
       },
     });
     modal.afterClose.subscribe(res => {
       if (res === 'ok') {
+        this._message.success('新增报表收藏文件夹成功！');
         this.searchData(true, {
           parentId: this.folderID,
           reportName: this.folderName,
@@ -149,32 +135,24 @@ export class ReportCollectComponent implements OnInit {
     });
   }
 
-  // TODO 以此报表作为模板新建
-  addReportByOne(data) {
-
-  }
 
   // 编辑报表属性
   editReport(data) {
-    let title = data.type === this.isReport ? '报表页面' : '文件夹';
-    const modal = this.nzModel.create({
+    let title = data.keepReportType === this.isReport ? '报表页面' : '收藏夹';
+    const modal = this._nzModel.create({
       nzTitle: `编辑${title}`,
-      nzContent: ReportModalComponent,
+      nzContent: ReportKeepModalComponent,
       nzWidth: '50%',
       nzComponentParams: {
-        folderName: this.folderName,
-        folders: this.folders,
-        folderID: data.parentId,
-        isPublic: data.isPublic === this.isPublic,
-        isDev: data.isDev === this.isDev,
         remark: data.remark,
-        reportName: data.reportName,
-        reportId: data.reportId,
-        radioValue: data.type,
+        reportName: data.keepReportName,
+        reportId: data.keepReportId,
+        type: data.keepReportType,
+        parentId:data.parentId
       },
       nzOnOk: res => {
         return new Promise(reslove => {
-          res.modReport();
+          res.modSelfReport();
         });
       },
     });
@@ -189,30 +167,30 @@ export class ReportCollectComponent implements OnInit {
     });
   }
 
-  // 删除报表
-  delReport(reportID: string, type: string): void {
-    let title = type === this.isFolder ? '此文件夹' : '此报表';
+  // 删除报表收藏
+  delReport(keepReportId: string, type: string): void {
+    let title = type === this.isFolder ? '此收藏夹' : '此报表收藏';
     let content =
-      type === this.isFolder ? '此操作将会级联删除该文件夹中的子文件' : '';
-    this.delArray([{ reportId: reportID }], title, content);
+      type === this.isFolder ? '此操作将会级联删除该收藏夹中的子文件' : '';
+    this.delArray([{ keepReportId: keepReportId }], title, content);
   }
 
-  // 批量删除报表
+  // 批量删除报表收藏
   delArray(
     list: Array<any> = this.selectedArray,
-    title = '所选择的文件夹或报表',
-    content = '此操作将会批量删除所选择的文件夹或报表',
+    title = '所选择的收藏夹或报表',
+    content = '此操作将会批量删除所选择的收藏夹或报表',
   ) {
-    this.nzModel.confirm({
+    this._nzModel.confirm({
       nzTitle: '是否删除' + title + '?',
       nzContent: content,
       nzOnOk: res => {
         let params = {
-          ReportList: list,
+          keepList: list,
         };
-        this.spaceManageService.delReport(params).subscribe(
+        this._personalService.delSelfReportList(params).subscribe(
           res => {
-            this.message.success('删除' + title + '成功！');
+            this._message.success('删除' + title + '成功！');
             this.searchData(true, {
               parentId: this.folderID,
               reportName: this.folderName,
@@ -221,7 +199,7 @@ export class ReportCollectComponent implements OnInit {
           },
           err => {
             if (err instanceof HttpResponse) {
-              this.message.error('删除' + title + '失败！');
+              this._message.error('删除' + title + '失败！');
             }
           },
         );
@@ -229,10 +207,11 @@ export class ReportCollectComponent implements OnInit {
     });
   }
 
-  // 打开报表页面
+  // 打开收藏报表预览页面
   openReport() {
     // TODO 展示报表内容
   }
+
   //新增或删除报表时更新报表树
   getReportTree() {
     const params = {
@@ -240,7 +219,7 @@ export class ReportCollectComponent implements OnInit {
         spaceId: localStorage.getItem('spaceID'),
       },
     };
-    this.spaceManageService.qryReportTree(params).subscribe(
+    this._personalService.qrySelfReportFolderListTree(params).subscribe(
       data => {
         const report_menu = data.retTreeList;
         this.formateTree(report_menu);
@@ -249,11 +228,12 @@ export class ReportCollectComponent implements OnInit {
       },
       err => {
         if (err instanceof HttpResponse) {
-          this.message.error(err.body.retMsg);
+          this._message.error(err.body.retMsg);
         }
       },
     );
   }
+
   formateTree(array: Array<any>) {
     array.map(value => {
       value.text = value.reportName;

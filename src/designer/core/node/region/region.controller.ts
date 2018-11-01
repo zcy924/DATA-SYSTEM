@@ -72,6 +72,17 @@ export abstract class RegionController {
 
   abstract getOption();
 
+  addMethod(name: string, method: Function) {
+    this._methodMap.set(name, method);
+  }
+
+  invoke(...args: Array<any>) {
+    const name = args.shift();
+    if (this._methodMap.has(name)) {
+      return this._methodMap.get(name)(...args);
+    }
+  }
+
   /**
    * 1、销毁内部对象
    * 2、解除事件绑定
@@ -90,15 +101,6 @@ export abstract class RegionController {
     this._view.destroy();
   }
 
-  addMethod(name: string, method: Function) {
-    this._methodMap.set(name, method);
-  }
 
-  invoke(...args: Array<any>) {
-    const name = args.shift();
-    if (this._methodMap.has(name)) {
-      return this._methodMap.get(name)(...args);
-    }
-  }
 }
 

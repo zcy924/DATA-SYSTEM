@@ -4,8 +4,7 @@
     <div nz-col style="float: right">
       <nz-button-group>
         <button nz-button [disabled]="disabledButton" [nzType]="'danger'" (click)="delArray()">批量取消收藏</button>
-        <!--<button nz-button nzType="primary" (click)="addReport(isReport)">新建报表页面</button>-->
-        <button nz-button (click)="addReport(isFolder)">新建文件夹</button>
+        <button nz-button (click)="addReportFolder()">新建文件夹</button>
       </nz-button-group>
     </div>
   </div>
@@ -25,30 +24,26 @@
             <th>类型</th>
             <th>名称</th>
             <th>备注</th>
-            <th>是否公开</th>
-            <th>开发模式</th>
             <th>操作</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let data of dataSet">
-            <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="checkLine($event,data.reportId)"></td>
+            <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="checkLine($event,data.keepReportId)"></td>
             <td>
-              <i nz-icon type="file" *ngIf="data.type===isReport"></i>
-              <i nz-icon type="folder" *ngIf="data.type===isFolder"></i>
+              <i nz-icon type="file" *ngIf="data.keepReportType===isReport"></i>
+              <i nz-icon type="folder" *ngIf="data.keepReportType===isFolder"></i>
             </td>
             <td>
-              <a *ngIf="data.type===isFolder" (click)="searchData(true,{ parentId: data.reportId, reportName: data.reportName })">{{data.reportName}}</a>
-              <p *ngIf="data.type===isReport">{{data.reportName}}</p>
+              <a *ngIf="data.keepReportType===isFolder" (click)="searchData(true,{ parentId: data.keepReportId, reportName: data.keepReportName })">{{data.keepReportName}}</a>
+              <p *ngIf="data.keepReportType===isReport">{{data.keepReportName}}</p>
             </td>
             <td>{{data.remark}}</td>
-            <td>{{data.ispublic === isPublic ? '是':'否'}}</td>
-            <td>{{data.isdev === isDev ? '是':'否'}}</td>
             <td>
               <div style="width: 100px;text-align: right">
-                <a style="padding-right: 12px"><i nz-icon type="eye" nz-tooltip nzTitle="查看报表页面" *ngIf="data.type===isReport" (click)="openReport()"></i></a>
+                <a style="padding-right: 12px"><i nz-icon type="eye" nz-tooltip nzTitle="查看报表页面" *ngIf="data.keepReportType===isReport" (click)="openReport()"></i></a>
                 <a style="padding-right: 12px"><i nz-icon type="edit" nz-tooltip nzTitle="编辑" (click)="editReport(data)"></i></a>
-                <a style="padding-right: 0"><i nz-icon type="delete" nz-tooltip nzTitle="取消收藏" (click)="delReport(data.reportId,data.type)"></i></a>
+                <a style="padding-right: 0"><i nz-icon type="delete" nz-tooltip nzTitle="取消收藏" (click)="delReport(data.keepReportId,data.keepReportType)"></i></a>
               </div>
             </td>
           </tr>

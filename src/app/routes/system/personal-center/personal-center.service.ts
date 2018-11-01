@@ -8,37 +8,7 @@ import {Observable} from 'rxjs';
 export class PersonalCenterService {
   url = environment.SERVER_URL;
 
-  constructor(private httpClient: HttpClient) {
-  }
-
-  getUser(): Observable<any> {
-    return this.httpClient.post('http://127.0.0.1:3000/system/login', {
-      username: 'admin',
-      password: 'abcd1234',
-    });
-  }
-
-  /*************************************报表*************************************/
-
-  qryReportTree(params): Observable<any> {
-    return this.httpClient.post(this.url + 'space/report/qryReportListTree', params);
-  }
-
-  getReportList(params): Observable<any> {
-    return this.httpClient.post(this.url + 'space/report/qryReportList', params);
-  }
-
-  delReport(params): Observable<any> {
-    return this.httpClient.post(this.url + 'space/report/del', params);
-  }
-
-  createReport(params): Observable<any> {
-    return this.httpClient.post(this.url + 'space/report/add', params);
-  }
-
-  modReport(params): Observable<any> {
-    return this.httpClient.post(this.url + 'space/report/modReportContent', params);
-  }
+  constructor(private httpClient: HttpClient) {}
 
   /*********************************大屏*******************************************/
   modScreenInfo(params): Observable<any> {
@@ -79,4 +49,46 @@ export class PersonalCenterService {
   }
 
 
+  /*************************************报表*************************************/
+
+  getSelfReportList(params): Observable<any> {
+    return this.httpClient.post(this.url + 'selfCore/keepReport/qrySelfReportList', params);
+  }
+
+  qrySelfReportFolderListTree(params):Observable<any>{
+    return this.httpClient.post(this.url + 'selfCore/keepReport/qrySelfReportFolderListTree', params);
+  }
+
+  delSelfReport(params): Observable<any> {
+    return this.httpClient.post(this.url + 'selfCore/keepReport/delSelfReport', params);
+  }
+
+  delSelfReportList(params): Observable<any> {
+    return this.httpClient.post(this.url + 'selfCore/keepReport/alldel', params);
+  }
+
+  modSelfReport(params): Observable<any> {
+    return this.httpClient.post(this.url + 'selfCore/keepReport/modSelfReport', params);
+  }
+
+  addSelfReport(params):Observable<any>{
+    return this.httpClient.post(this.url + 'selfCore/keepReport/addSelfReport', params);
+  }
+
+  addSelfFolder(params):Observable<any>{
+    return this.httpClient.post(this.url + 'selfCore/keepReport/addSelfReportFolder', params);
+  }
+
+  qrySelfReportContent(params):Observable<any>{
+    return this.httpClient.post(this.url + 'selfCore/keepReport/qrySelfReportContent', params);
+  }
+
+  /*************************************用户*************************************/
+
+  getUser(): Observable<any> {
+    return this.httpClient.post('http://127.0.0.1:3000/system/login', {
+      username: 'admin',
+      password: 'abcd1234',
+    });
+  }
 }

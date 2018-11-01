@@ -1,0 +1,30 @@
+<form nz-form>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="4">名称</nz-form-label>
+    <nz-form-control [nzSpan]="20">
+      <input nz-input [(ngModel)]="reportName" name="reportName"/>
+      <!-- <nz-form-explain>Should be combination of numbers & alphabets</nz-form-explain> -->
+    </nz-form-control>
+  </nz-form-item>
+
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="4">描述</nz-form-label>
+    <nz-form-control [nzSpan]="20">
+      <textarea row="4" nz-input [(ngModel)]="remark" name="textarea"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="4">父文件夹</nz-form-label>
+    <nz-form-control [nzSpan]="20">
+
+      <div style="padding: 15px;border: 1px solid #e8e8e8;">
+        <nz-tree name="nodes" #treeCom [nzData]="nodes" (nzClick)="checkTreeNode($event)" [nzShowIcon]="'anticon-folder'">
+        </nz-tree>
+      </div>
+
+    </nz-form-control>
+  </nz-form-item>
+</form>
