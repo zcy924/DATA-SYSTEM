@@ -7,7 +7,7 @@ export enum RegionState {
   default, selected, multiSelected, activated
 }
 
-interface RegionOption {
+export interface RegionOption {
   zIndex: number;
   left: number;
   top: number;
