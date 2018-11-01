@@ -8,7 +8,8 @@ import {Observable} from 'rxjs';
 export class PersonalCenterService {
   url = environment.SERVER_URL;
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+  }
 
   /*********************************大屏*******************************************/
 
@@ -45,6 +46,10 @@ export class PersonalCenterService {
     return this.httpClient.post(this.url + 'selfCore/selfInfo/qrySelfInfo', params);
   }
 
+  modUserInfo(params): Observable<any> {
+    return this.httpClient.post(this.url + 'selfCore/selfInfo/modSelfInfo', params);
+  }
+
 
   /*************************************报表*************************************/
 
@@ -52,7 +57,7 @@ export class PersonalCenterService {
     return this.httpClient.post(this.url + 'selfCore/keepReport/qrySelfReportList', params);
   }
 
-  qrySelfReportFolderListTree(params):Observable<any>{
+  qrySelfReportFolderListTree(params): Observable<any> {
     return this.httpClient.post(this.url + 'selfCore/keepReport/qrySelfReportFolderListTree', params);
   }
 
@@ -68,15 +73,15 @@ export class PersonalCenterService {
     return this.httpClient.post(this.url + 'selfCore/keepReport/modSelfReport', params);
   }
 
-  addSelfReport(params):Observable<any>{
+  addSelfReport(params): Observable<any> {
     return this.httpClient.post(this.url + 'selfCore/keepReport/addSelfReport', params);
   }
 
-  addSelfFolder(params):Observable<any>{
+  addSelfFolder(params): Observable<any> {
     return this.httpClient.post(this.url + 'selfCore/keepReport/addSelfReportFolder', params);
   }
 
-  qrySelfReportContent(params):Observable<any>{
+  qrySelfReportContent(params): Observable<any> {
     return this.httpClient.post(this.url + 'selfCore/keepReport/qrySelfReportContent', params);
   }
 
