@@ -25,7 +25,7 @@ export abstract class RegionView extends View {
 
   abstract init();
 
-  abstract accept(model:RegionModel);
+  abstract accept(model: RegionModel);
 
   abstract refresh();
 
@@ -40,8 +40,8 @@ export abstract class RegionView extends View {
     // 进行缩放转换
     const
       getReal = (num) => Math.round(num / scale),
+      model = this._model,
       handleResize = (pageX, pageY) => {
-        const model = this._model;
         switch (which) {
           case 'resize-left':
             if (pageX < (offset.left + snapshot.width)) {
@@ -60,17 +60,14 @@ export abstract class RegionView extends View {
           case 'resize-right':
             if (pageX > offset.left) {
               model.width = closestNum(getReal(pageX - offset.left));
-              // this.zoom(closestNum(pageX - offset.left), 0, true);
             }
             break;
           case 'resize-topLeft':
             if (pageY < (offset.top + snapshot.height) && pageX < (offset.left + snapshot.width)) {
               offsetX = closestNum(getReal(pageX - offset.left)),
                 offsetY = closestNum(getReal(pageY - offset.top));
-              model.left = snapshot.left + offsetX;
-              model.width = snapshot.width - offsetX;
-              model.top = snapshot.top + offsetY;
-              model.height = snapshot.height - offsetY;
+              model.setCoordinates(snapshot.left + offsetX, snapshot.top + offsetY);
+              model.setDimensions(snapshot.width - offsetX, snapshot.height - offsetY);
             }
             break;
           case 'resize-topRight':
@@ -106,7 +103,6 @@ export abstract class RegionView extends View {
               model.height = getReal(pageY - offset.top);
             }
             break;
-
         }
       },
       dragEndHandler = (event: MouseEvent) => {
@@ -125,9 +121,9 @@ export abstract class RegionView extends View {
       .on('dragstart', ($event: JQuery.Event) => {
         scale = this._controller.page.scale;
         offset = this.$element.offset();
-        snapshot = Object.assign(this._model.coordinates, this._model.dimensions);
+        snapshot = model.snapshot;
         which = (<HTMLElement>$event.currentTarget).dataset.which;
-        resizeTipHelper.show($event.pageX, $event.pageY, this._model.width, this._model.height);
+        resizeTipHelper.show($event.pageX, $event.pageY, model.width, model.height);
         this.$element.addClass('no-transition');
 
         // 监听鼠标移动
@@ -136,7 +132,7 @@ export abstract class RegionView extends View {
             .pipe(throttleTime(30))
             .subscribe((mouseEvent: MouseEvent) => {
               handleResize(mouseEvent.pageX, mouseEvent.pageY);
-              resizeTipHelper.refresh(mouseEvent.pageX, mouseEvent.pageY, this._model.width, this._model.height);
+              resizeTipHelper.refresh(mouseEvent.pageX, mouseEvent.pageY, model.width, model.height);
               this.refresh();
             });
         // 解除对伸缩事件的监听
@@ -158,9 +154,10 @@ export abstract class RegionView extends View {
       scale,
       originPageX,
       originPageY,
-      snapshot: JQuery.Coordinates;
+      snapshot: JQuery.Coordinates,
+      timeoutHandle;
 
-    const dragEndHandler = (event: MouseEvent) => {
+    const model = this._model, dragEndHandler = (event: MouseEvent) => {
       if (subscription) {
         subscription.unsubscribe();
         subscription = null;
@@ -170,14 +167,13 @@ export abstract class RegionView extends View {
       }
     };
 
-    let timeoutHandle;
     this._$mover
       .on('dragstart', ($event: JQuery.Event) => {
         this.$element.addClass('no-transition');
         scale = this._controller.page.scale;
         originPageX = $event.pageX;
         originPageY = $event.pageY;
-        snapshot = this._model.coordinates;
+        snapshot = model.coordinates;
         resizeTipHelper.show(originPageX, originPageY, snapshot.left, snapshot.top);
 
         subscription = fromEvent(document, 'mousemove')
@@ -185,10 +181,10 @@ export abstract class RegionView extends View {
           .subscribe((mouseEvent: MouseEvent) => {
             const offsetLeft = mouseEvent.pageX - originPageX,
               offsetTop = mouseEvent.pageY - originPageY;
-            this._model.left = snapshot.left + Math.round(offsetLeft / scale);
-            this._model.top = snapshot.top + Math.round(offsetTop / scale);
+            model.left = snapshot.left + Math.round(offsetLeft / scale);
+            model.top = snapshot.top + Math.round(offsetTop / scale);
             this.refresh();
-            resizeTipHelper.refresh(mouseEvent.pageX, mouseEvent.pageY, this._model.left, this._model.top);
+            resizeTipHelper.refresh(mouseEvent.pageX, mouseEvent.pageY, model.left, model.top);
           });
         document.addEventListener('mouseup', dragEndHandler);
         return false;
@@ -229,6 +225,9 @@ export abstract class RegionView extends View {
     this.$element.find('div.u-resize>.draggable').off('dragstart');
     this._$mover.off('dragstart click singleClick dblclick contextmenu');
     this.$element.remove();
+    this._contextMenuGenerator = null;
+    this._controller = null;
+    this._model = null;
     super.destroy();
   }
 }

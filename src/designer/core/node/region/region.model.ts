@@ -1,5 +1,5 @@
 import { closestNum } from '../../../utils/common';
-import { Dimensions } from '@core/node/interface';
+import { CoordinatesAndDimensions, Dimensions } from '@core/node/interface';
 import { ModelEventTarget } from '@core/node/event/model.event';
 import * as _ from 'lodash';
 
@@ -72,6 +72,10 @@ export class RegionModel extends ModelEventTarget {
 
   get dimensions(): Dimensions {
     return _.pick(this._option, ['width', 'height']);
+  }
+
+  get snapshot(): CoordinatesAndDimensions {
+    return _.pick(this._option, ['left', 'top', 'width', 'height']);
   }
 
   get left(): number {
