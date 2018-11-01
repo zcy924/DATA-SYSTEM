@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { NzModalService, NzMessageService } from 'ng-zorro-antd';
-import { HttpResponse } from '@angular/common/http';
-import { Page } from 'app/models/page';
-import { EditScreenCollectComponent } from './component/edit-screen-collect.component';
-import { SettingsService } from '@delon/theme';
-import { SideMenuService } from '@shared/side-menu.service';
+import {Component, OnInit} from '@angular/core';
+import {NzModalService, NzMessageService} from 'ng-zorro-antd';
+import {HttpResponse} from '@angular/common/http';
+import {Page} from 'app/models/page';
+import {EditScreenCollectComponent} from './component/edit-screen-collect.component';
+import {SettingsService} from '@delon/theme';
+import {SideMenuService} from '@shared/side-menu.service';
 import {PersonalCenterService} from "../personal-center.service";
 
 @Component({
@@ -95,7 +95,7 @@ export class ScreenCollectComponent implements OnInit {
 
   edit(data) {
     const modal = this.nzModal.create({
-      nzTitle: `编辑大屏${data.name}`,
+      nzTitle: `编辑大屏${data.keepDashBoardName}`,
       nzContent: EditScreenCollectComponent,
       nzWidth: '600px',
       nzOnOk: i => {
@@ -104,10 +104,9 @@ export class ScreenCollectComponent implements OnInit {
         });
       },
       nzComponentParams: {
-        screenName: data.name,
+        screenName: data.keepDashBoardName,
         screenRemark: data.remark,
-        isDev: data.isDev,
-        dashboardId: data.dashboardId,
+        dashboardId: data.keepDashBoardId,
         spaceId: localStorage.getItem('spaceID'),
       },
     });
@@ -119,35 +118,34 @@ export class ScreenCollectComponent implements OnInit {
     });
   }
 
-  public() {
-  }
 
-  copy() {
-  }
-
-  delete(screenId) {
-    const params = {
-      spaceId: localStorage.getItem('spaceID'),
-      dashboardId: screenId,
-    };
-    // this.spaceManageService.delScreen(params).subscribe(
-    //   data => {
-    //     this.nzMessage.success('删除成功!');
-    //     this.getScreenList(true);
-    //     this.getScreenTree();
-    //   },
-    //   err => {
-    //     if (err instanceof HttpResponse) {
-    //       this.nzMessage.error(err.body.retMsg);
-    //     }
-    //   },
-    // );
+  delete(data) {
+    const modal = this.nzModal.confirm({
+      nzTitle: '确定取消收藏吗？',
+      nzOnOk: () => {
+        const params = {
+          keepDashBoardId: data.keepDashBoardId,
+        };
+        this.personService.delSelfScreen(params).subscribe(
+          data => {
+            this.nzMessage.success('删除成功!');
+            this.getScreenList(true);
+            this.getScreenTree();
+          },
+          err => {
+            if (err instanceof HttpResponse) {
+              this.nzMessage.error(err.body.retMsg);
+            }
+          },
+        );
+      }
+    })
   }
 
   handle() {
     this.nzModal.warning({
       nzTitle: '系统提示',
-      nzContent: '确定删除所选大屏吗？',
+      nzContent: '确定不再收藏所选大屏吗？',
       nzOkText: '确认',
       nzCancelText: '取消',
       nzOnOk: () => {
@@ -155,25 +153,24 @@ export class ScreenCollectComponent implements OnInit {
         this.dataSet.forEach(value => {
           if (value.checked) {
             const item = {
-              dashboardId: value.dashboardId,
-              spaceId: localStorage.getItem('spaceID'),
+              keepDashBoardId: value.keepDashBoardId
             };
             handleArray.push(item);
           }
         });
-        const params = { reqList: handleArray };
-        // this.spaceManageService.delAllScreen(params).subscribe(
-        //   data => {
-        //     this.nzMessage.success('批量删除成功!');
-        //     this.getScreenList(true);
-        //     this.getScreenTree();
-        //   },
-        //   err => {
-        //     if (err instanceof HttpResponse) {
-        //       this.nzMessage.error(err.body.retMsg);
-        //     }
-        //   },
-        // );
+        const params = {keepList: handleArray};
+        this.personService.delSelfScreenList(params).subscribe(
+          data => {
+            this.nzMessage.success('批量取消收藏成功!');
+            this.getScreenList(true);
+            this.getScreenTree();
+          },
+          err => {
+            if (err instanceof HttpResponse) {
+              this.nzMessage.error(err.body.retMsg);
+            }
+          },
+        );
       },
     });
   }

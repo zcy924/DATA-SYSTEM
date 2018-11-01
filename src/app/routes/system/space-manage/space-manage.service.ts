@@ -39,6 +39,9 @@ export class SpaceManageService {
   collectScreen(params): Observable<any> {
     return this.httpClient.post(this.url + 'selfCore/keepDashBoard/addKeep', params);
   }
+  uncollectScreen(params): Observable<any>{
+    return this.httpClient.post(this.url+ 'selfCore/keepDashBoard/del', params);
+  }
 
   /*************************************报表*************************************/
 

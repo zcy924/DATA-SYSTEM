@@ -1,0 +1,24 @@
+<nz-layout>
+    <nz-content>
+      <div nz-row style="background-color: #f0f3f4 ;border-bottom: 1px solid rgb(222,230,231);padding: 8px;">
+        <div nz-col nzSpan="4" class="title-tab">
+          {{reportName}}
+        </div>
+        <div nz-col>
+          <a><i nz-tooltip nzTitle="页面已公开" nzPlacement="bottom" nz-icon type="eye"></i></a>
+          <a><i nz-tooltip nzTitle="页面处于开发模式" nzPlacement="bottom" nz-icon type="setting"></i></a>
+          <a><i nz-tooltip nzTitle="收藏" nzPlacement="bottom" nz-icon [theme]="'fill'"  type="heart" (click)="unKeepSelf()"></i></a>
+          <a><i nz-tooltip nzTitle="全屏预览" nzPlacement="bottom" nz-icon type="fullscreen" theme="outline"></i></a>
+        </div>
+      </div>
+      <div class="app-body-center">
+        <div class="app-content"></div>
+        <div class="scale-slide-wrapper">
+          <nz-slider [nzDefaultValue]="100" (nzOnAfterChange)="scaleChange($event)" [nzMax]="200" [nzMin]="10"
+                     [nzTipFormatter]="formatter"></nz-slider>
+        </div>
+      </div>
+
+    </nz-content>
+
+  </nz-layout>

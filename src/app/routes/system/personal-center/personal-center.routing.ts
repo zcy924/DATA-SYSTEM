@@ -3,6 +3,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { ReportCollectComponent } from './report-collect/report-collect.component';
 import { ScreenCollectComponent } from './screen-collect/screen-collect.component';
 import { UserInfoComponent } from './user-info/user-info.component';
+import { DetailScreenComponent } from './screen-collect/component/detail-screen.component';
+import { DetailReportComponent } from './report-detail/detail-report.component';
+
+
 const routes: Routes = [
   {
     path: 'user-report',
@@ -19,10 +23,21 @@ const routes: Routes = [
     component: UserInfoComponent,
     data: { title: '用户信息管理' },
   },
+  {
+    path: 'dashboard-detail',
+    component: DetailScreenComponent,
+    data: { title: '大屏预览' },
+  },
+  {
+    path: 'report-detail',
+    component: DetailReportComponent,
+    data: { title: '报表预览' },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class PersonalCenterRoutingModule { }
+export class PersonalCenterRoutingModule {
+}

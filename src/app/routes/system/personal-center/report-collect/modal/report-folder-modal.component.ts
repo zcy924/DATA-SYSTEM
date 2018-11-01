@@ -33,8 +33,8 @@ export class ReportFolderModalComponent implements OnInit {
 
   constructor(
     private _personalService: PersonalCenterService,
-    private message: NzMessageService,
-    private modalRef: NzModalRef,
+    private _message: NzMessageService,
+    private _modalRef: NzModalRef,
   ) {}
 
   ngOnInit() {
@@ -65,7 +65,7 @@ export class ReportFolderModalComponent implements OnInit {
       },
       err => {
         if (err instanceof HttpResponse) {
-          this.message.error(err.body.retMsg);
+          this._message.error(err.body.retMsg);
         }
       },
     );
@@ -97,11 +97,11 @@ export class ReportFolderModalComponent implements OnInit {
       keepReportType: '0',
     };
     this._personalService.addSelfFolder(params).subscribe(res => {
-      this.message.success('新增报表收藏文件夹成功！');
-      console.log(res);
+      this._message.success('新增报表收藏文件夹成功！');
+      this._modalRef.destroy('ok');
     }, err => {
       if (err instanceof HttpResponse) {
-        this.message.error('新增报表收藏文件夹失败！');
+        this._message.error('新增报表收藏文件夹失败！');
       }
     });
   }

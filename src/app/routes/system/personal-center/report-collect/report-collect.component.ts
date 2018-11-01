@@ -18,7 +18,7 @@ export class ReportCollectComponent implements OnInit {
   isReport = '1'; // 报表
   isFolder = '0'; // 文件夹
   isPublic = '1'; // 公开
-  isDev = '1'; // 开发者模式
+
 
   folderName = '根目录'; // 当前目录名称
   folderID = '/'; // 当前目录ID
@@ -38,13 +38,13 @@ export class ReportCollectComponent implements OnInit {
     private _nzModel: NzModalService,
     private _message: NzMessageService,
     private _personalService: PersonalCenterService,
-    private sideMenu: SideMenuService,
+    private _sideMenu: SideMenuService,
   ) {
   }
 
   ngOnInit(): void {
     this.searchData(true);
-    this.menu = this.sideMenu.menu;
+    this.menu = this._sideMenu.menu;
   }
 
   checkAll(value: Boolean) {
@@ -120,13 +120,14 @@ export class ReportCollectComponent implements OnInit {
       nzContent: ReportFolderModalComponent,
       nzWidth: '40%',
       nzOnOk: (res) => {
-        res.addSelfFolder();
+        return new Promise(reslove => {
+          res.addSelfFolder();
+        });
       },
     });
     modal.afterClose.subscribe(res => {
       if (res === 'ok') {
-        this._message.success('新增报表收藏文件夹成功！');
-        this.searchData(true, {
+        this.searchData(false, {
           parentId: this.folderID,
           reportName: this.folderName,
         });
@@ -158,7 +159,7 @@ export class ReportCollectComponent implements OnInit {
     });
     modal.afterClose.subscribe(data => {
       if (data == 'ok') {
-        this.searchData(true, {
+        this.searchData(false, {
           parentId: this.folderID,
           reportName: this.folderName,
         });
@@ -191,7 +192,7 @@ export class ReportCollectComponent implements OnInit {
         this._personalService.delSelfReportList(params).subscribe(
           res => {
             this._message.success('删除' + title + '成功！');
-            this.searchData(true, {
+            this.searchData(false, {
               parentId: this.folderID,
               reportName: this.folderName,
             });
@@ -212,19 +213,11 @@ export class ReportCollectComponent implements OnInit {
     // TODO 展示报表内容
   }
 
-  //新增或删除报表时更新报表树
+  // 新增或删除报表时更新报表树
   getReportTree() {
-    const params = {
-      Report: {
-        spaceId: localStorage.getItem('spaceID'),
-      },
-    };
-    this._personalService.qrySelfReportFolderListTree(params).subscribe(
-      data => {
-        const report_menu = data.retTreeList;
-        this.formateTree(report_menu);
-        this.menu[1]['children'] = report_menu;
-        this.sideMenu.setMessage(this.menu);
+    this._personalService.qrySelfReportListTree({ parentId: '/' }).subscribe(data => {
+        this.menu[1]['children']=[];
+        this.formatTree(this.menu[1]['children'], data['retTreeList']);
       },
       err => {
         if (err instanceof HttpResponse) {
@@ -234,16 +227,19 @@ export class ReportCollectComponent implements OnInit {
     );
   }
 
-  formateTree(array: Array<any>) {
-    array.map(value => {
-      value.text = value.reportName;
-      value.link = `app/square/${value.spaceId}/report-detail/${
-        value.reportId
-        }`;
-      value.isLeaf = value.type == 1 ? true : false;
-      value.icon = value.type == 1 ? 'file' : 'folder';
+  // 遍历侧边栏报表树
+  formatTree(list, array: Array<any>) {
+    array.forEach(value => {
+      let node = {
+        text: value.keepReportName,
+        link: `app/user/report-detail/${value.keepReportId}`,
+        isLeaf: value.keepReportType == 1,
+        icon: value.keepReportType == 1 ? 'file' : 'folder',
+        children: [],
+      };
+      list.push(node);
       if (value.children) {
-        this.formateTree(value.children);
+        this.formatTree(node.children, value.children);
       }
     });
   }
