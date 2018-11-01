@@ -2,17 +2,10 @@ import { closestNum } from '../../../utils/common';
 import { CoordinatesAndDimensions, Dimensions } from '@core/node/interface';
 import { ModelEventTarget } from '@core/node/event/model.event';
 import * as _ from 'lodash';
+import { RegionOption } from '../../../interface/file/region.option';
 
 export enum RegionState {
   default, selected, multiSelected, activated
-}
-
-export interface RegionOption {
-  zIndex: number;
-  left: number;
-  top: number;
-  width: number;
-  height: number;
 }
 
 // export interface IRegionModel extends IModelEventTarget {

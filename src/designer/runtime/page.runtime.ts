@@ -4,6 +4,8 @@ import { RegionController } from '@core/node/region/region.controller';
 import { regionMap } from '@core/node/config/region.map';
 import { GraphicWrapper } from '@core/node/graphic/graphic.wrapper';
 import { Observable } from 'rxjs/internal/Observable';
+import { RuntimePageConfig } from '../components/page.config/runtime.page.config';
+import { GraphicWrapperRuntime } from './graphic.wrapper.runtime';
 
 const template = `
     <div class="report-region">
@@ -43,6 +45,7 @@ export class PageRuntime {
   }
 
   private _init() {
+    this._model = new RuntimePageConfig();
     this._accept(this._model);
   }
 
@@ -114,11 +117,11 @@ export class PageRuntime {
 
   private _createRegion(graphicMeta: any) {
     if (regionMap.has(graphicMeta.region.regionKey)) {
-      const region: RegionController = new (regionMap.get(graphicMeta.region.regionKey))(this);
+      const region: RegionRuntime = new RegionRuntime(this);
 
       region.init(graphicMeta.region.regionOption);
 
-      const graphic = new GraphicWrapper(region);
+      const graphic = new GraphicWrapperRuntime(region);
       graphic.init(graphicMeta.graphic);
 
       setTimeout(() => {
