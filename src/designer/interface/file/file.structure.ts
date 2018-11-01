@@ -1,22 +1,28 @@
 export interface IFileStructure {
   name: string;
-  creator: {
-    version: string;
-  };
   manifest?: {
     version: string;
-    createBy: string;
     vendor: any;
+    designer: {
+      version: string;
+    };
   };
   dependencies: Array<string>;
   main: {
-    pageOption: any;
-    children: Array<IRegionOption>;
+    option: any;
+    children: Array<IFileElement>;
   };
-
-  page: any;
+  data?: Array<any>;
 }
 
-interface IRegionOption {
-
+interface IFileElement {
+  region: {
+    regionKey: string;
+    regionOption: any
+  };
+  graphic: {
+    graphicKey: string;
+    configOption: any;
+    dataSourceKey: string;
+  }
 }
