@@ -10,12 +10,14 @@ import {DetailScreenComponent} from "./screen-collect/component/detail-screen.co
 import { ReportFolderModalComponent } from './report-collect/modal/report-folder-modal.component';
 import { ReportKeepModalComponent } from './report-collect/modal/report-keep-modal.component';
 import { EditScreenCollectComponent } from "./screen-collect/component/edit-screen-collect.component";
+import { DetailReportComponent } from './report-detail/detail-report.component';
 
 const components = [
   ReportCollectComponent,
   ScreenCollectComponent,
   UserInfoComponent,
-  DetailScreenComponent
+  DetailScreenComponent,
+  DetailReportComponent
 ];
 const modal = [
   EditScreenCollectComponent,

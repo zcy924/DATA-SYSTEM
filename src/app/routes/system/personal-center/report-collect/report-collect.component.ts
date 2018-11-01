@@ -216,6 +216,7 @@ export class ReportCollectComponent implements OnInit {
   // 新增或删除报表时更新报表树
   getReportTree() {
     this._personalService.qrySelfReportListTree({ parentId: '/' }).subscribe(data => {
+        this.menu[1]['children']=[];
         this.formatTree(this.menu[1]['children'], data['retTreeList']);
       },
       err => {

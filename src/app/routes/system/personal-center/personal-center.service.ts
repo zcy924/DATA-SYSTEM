@@ -65,6 +65,10 @@ export class PersonalCenterService {
     return this.httpClient.post(this.url + 'selfCore/keepReport/qrySelfReportListTree', params);
   }
 
+  getSelfReportInfo(params): Observable<any> {
+    return this.httpClient.post(this.url + 'selfCore/keepReport/qrySelfReportContent', params);
+  }
+
   delSelfReport(params): Observable<any> {
     return this.httpClient.post(this.url + 'selfCore/keepReport/delSelfReport', params);
   }
