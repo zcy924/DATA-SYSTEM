@@ -1,18 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {MenuService} from '@delon/theme';
-import {SideMenuService} from '@shared/side-menu.service';
-import {HttpResponse} from "@angular/common/http";
-import {Page} from "../../../models/page";
-import {PersonalCenterService} from "./personal-center.service";
-import {NzMessageService} from "ng-zorro-antd";
+import { Component, OnInit } from '@angular/core';
+import { MenuService } from '@delon/theme';
+import { SideMenuService } from '@shared/side-menu.service';
+import { HttpResponse } from '@angular/common/http';
+import { Page } from '../../../models/page';
+import { PersonalCenterService } from './personal-center.service';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-personal-center',
   templateUrl: './personal-center.html',
-  providers: [PersonalCenterService]
+  providers: [PersonalCenterService],
 })
 export class PersonalCenterComponent implements OnInit {
-  page = new Page()
+  page = new Page();
 
   menu: Array<any> = [
     {
@@ -25,7 +25,12 @@ export class PersonalCenterComponent implements OnInit {
           icon: 'folder',
           children: [],
         },
-      ]
+      ],
+    },
+    {
+      text: '报表',
+      isGroup: true,
+      children: [],
     },
     {
       text: '管理中心',
@@ -55,25 +60,26 @@ export class PersonalCenterComponent implements OnInit {
           icon: 'user',
           link: '/app/user/dsadsad',
         },
-      ]
+      ],
     },
-  ]
+  ];
 
 
   constructor(
-    private menuService: MenuService,
-    private sideMenu: SideMenuService,
-    private personService: PersonalCenterService,
-    private nzMessage: NzMessageService
+    private _menuService: MenuService,
+    private _sideMenu: SideMenuService,
+    private _personalService: PersonalCenterService,
+    private _nzMessage: NzMessageService,
   ) {
   }
 
   ngOnInit() {
 
-    // this.menuService.add(this.menu);
+    // this._menuService.add(this.menu);
     this.getScreenList();
-    this.sideMenu.setMessage(this.menu);
-    this.sideMenu.setMenu(this.menu);
+    this.getReportTree();
+    this._sideMenu.setMessage(this.menu);
+    this._sideMenu.setMenu(this.menu);
   }
 
   getScreenList(reset = false) {
@@ -87,24 +93,55 @@ export class PersonalCenterComponent implements OnInit {
       totalPage: this.page.totalPage || '',
       totalRow: this.page.totalRow || '',
     };
-    this.personService.qryScreenList(params).subscribe(
+    this._personalService.qryScreenList(params).subscribe(
       data => {
         let dataSet = data['retList'];
-        dataSet.forEach(value=>{
+        dataSet.forEach(value => {
           const item = {
             text: value.keepDashBoardName,
             link: `/app/user/dashboard-detail;dashBoardId=${value.dashBoardId};keepDashBoardId=${value.keepDashBoardId}`,
             isLeaf: true,
             icon: value.icon,
-          }
+          };
           this.menu[0]['children'][0]['children'].push(item);
-        })
+        });
       },
       error => {
         if (error instanceof HttpResponse) {
-          this.nzMessage.error(error.body.retMsg);
+          this._nzMessage.error(error.body.retMsg);
         }
       },
     );
+  }
+
+  // 获取侧边栏报表树
+  getReportTree() {
+    this._personalService.qrySelfReportListTree({ parentId: '/' }).subscribe(data => {
+        this.formatTree(this.menu[1]['children'], data['retTreeList']);
+
+      },
+      err => {
+        if (err instanceof HttpResponse) {
+          this._nzMessage.error(err.body.retMsg);
+        }
+      },
+    );
+  }
+
+  // 遍历侧边栏报表树
+  formatTree(list, array: Array<any>) {
+    array.forEach(value => {
+      let node = {
+        text: value.keepReportName,
+        link: `app/user/report-detail/${value.keepReportId}`,
+        isLeaf: value.keepReportType == 1,
+        icon: value.keepReportType == 1 ? 'file' : 'folder',
+        children: [],
+      };
+      list.push(node);
+      if (value.children) {
+        this.formatTree(node.children, value.children);
+      }
+    });
   }
 }
