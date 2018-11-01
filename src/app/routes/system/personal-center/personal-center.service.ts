@@ -49,5 +49,34 @@ export class PersonalCenterService {
     return this.httpClient.post(this.url + 'selfCore/keepDashBoard/qryDashBoardList', params);
   }
 
+  modSelfScreenInfo(params): Observable<any> {
+    return this.httpClient.post(this.url + 'selfCore/keepDashBoard/editDashBoard', params);
+  }
+
+  delSelfScreen(params): Observable<any> {
+    return this.httpClient.post(this.url + 'selfCore/keepDashBoard/del', params);
+  }
+
+  delSelfScreenList(params): Observable<any> {
+    return this.httpClient.post(this.url + 'selfCore/keepDashBoard/alldel', params);
+  }
+
+  getScreenInfo(params): Observable<any> {
+    return this.httpClient.post(this.url + 'selfCore/keepDashBoard/qryDashBoardContent', params);
+  }
+
+  collectScreen(params): Observable<any> {
+    return this.httpClient.post(this.url + 'selfCore/keepDashBoard/addKeep', params);
+  }
+
+  uncollectScreen(params): Observable<any> {
+    return this.httpClient.post(this.url + 'selfCore/keepDashBoard/del', params);
+  }
+
+  /*********************************用户*******************************************/
+  getUserInfo(params): Observable<any> {
+    return this.httpClient.post(this.url + 'selfCore/selfInfo/qrySelfInfo', params);
+  }
+
 
 }

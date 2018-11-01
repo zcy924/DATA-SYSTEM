@@ -31,7 +31,6 @@ import {PersonalCenterService} from "../../personal-center.service";
 export class EditScreenCollectComponent implements OnInit {
   validateForm: FormGroup;
   screenName;
-  isDev;
   screenRemark;
   dashboardId;
   spaceId;
@@ -48,11 +47,9 @@ export class EditScreenCollectComponent implements OnInit {
   }
 
   ngOnInit() {
-    const isdev = this.isDev === 'T' ? true : false;
     this.validateForm = this.fb.group({
       name: [this.screenName, [Validators.required]],
       remark: [this.screenRemark],
-      isDev: [isdev],
       icon: [''],
     });
     // tslint:disable-next-line:forin
@@ -68,14 +65,12 @@ export class EditScreenCollectComponent implements OnInit {
 
   submitForm() {
     const params = {
-      spaceId: this.spaceId,
-      dashboardId: this.dashboardId,
-      name: this.validateForm.controls.name.value,
+      keepDashBoardId: this.dashboardId,
+      keepDashBoardName: this.validateForm.controls.name.value,
       remark: this.validateForm.controls.remark.value,
-      isDev: this.validateForm.controls.isDev.value === true ? 'T' : 'F',
       icon: this.iconId,
     };
-    this.service.modScreenInfo(params).subscribe(
+    this.service.modSelfScreenInfo(params).subscribe(
       data => {
         this.nzMessage.success('修改成功!');
         this.modalRef.destroy('ok');

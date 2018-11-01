@@ -2,12 +2,34 @@
   <nz-card style="width:700px;" nzTitle="修改个人信息">
     <div nz-row>
       <div nz-col nzSpan="2">
+        账号
+      </div>
+    </div>
+    <div nz-row style="padding-top:8px">
+      <div nz-col nzSpan="24">
+        <input nz-input [ngModel]="formModel.userNo" disabled="true" />
+      </div>
+    </div>
+    <nz-divider [nzDashed]="true"></nz-divider>
+    <div nz-row>
+      <div nz-col nzSpan="2">
+        电话
+      </div>
+    </div>
+    <div nz-row style="padding-top:8px">
+      <div nz-col nzSpan="24">
+        <input nz-input [ngModel]="formModel.phone"/>
+      </div>
+    </div>
+    <nz-divider [nzDashed]="true"></nz-divider>
+    <div nz-row>
+      <div nz-col nzSpan="2">
         邮箱
       </div>
     </div>
     <div nz-row style="padding-top:8px">
       <div nz-col nzSpan="24">
-        <input nz-input [ngModel]="'cyzhu@zjft.com'" disabled="true" />
+        <input nz-input [ngModel]="formModel.email"/>
       </div>
     </div>
     <nz-divider [nzDashed]="true"></nz-divider>
@@ -18,7 +40,7 @@
     </div>
     <div nz-row style="padding-top:8px">
       <div nz-col nzSpan="24">
-        <input nz-input [ngModel]="'cyzhu'" />
+        <input nz-input [ngModel]="formModel.userName" />
       </div>
     </div>
     <nz-divider [nzDashed]="true"></nz-divider>
