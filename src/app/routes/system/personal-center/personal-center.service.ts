@@ -11,9 +11,6 @@ export class PersonalCenterService {
   constructor(private httpClient: HttpClient) {}
 
   /*********************************大屏*******************************************/
-  modScreenInfo(params): Observable<any> {
-    return this.httpClient.post(this.url + 'spaceManage/dashBoard/revise', params);
-  }
 
   qryScreenList(params): Observable<any> {
     return this.httpClient.post(this.url + 'selfCore/keepDashBoard/qryDashBoardList', params);
@@ -83,12 +80,5 @@ export class PersonalCenterService {
     return this.httpClient.post(this.url + 'selfCore/keepReport/qrySelfReportContent', params);
   }
 
-  /*************************************用户*************************************/
 
-  getUser(): Observable<any> {
-    return this.httpClient.post('http://127.0.0.1:3000/system/login', {
-      username: 'admin',
-      password: 'abcd1234',
-    });
-  }
 }

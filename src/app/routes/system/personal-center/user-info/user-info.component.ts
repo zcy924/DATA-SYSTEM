@@ -49,11 +49,6 @@ export class UserInfoComponent implements OnInit {
   ngOnInit() {
     this.getUserInfo();
   }
-  test() {
-    this.perService.getUser().subscribe(data => {
-      console.log(data);
-    });
-  }
   getUserInfo(){
     this.personService.getUserInfo({}).subscribe(data=>{
       this.formModel.userNo = data.userNo;
@@ -62,6 +57,10 @@ export class UserInfoComponent implements OnInit {
       this.formModel.phone = data.phone;
       this.formModel.email = data.email;
     })
+
+  }
+  submit(){
+    const params = Object.assign({},this.formModel);
 
   }
 }
