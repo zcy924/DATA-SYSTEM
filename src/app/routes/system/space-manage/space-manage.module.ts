@@ -16,6 +16,10 @@ import { CompanyManageService } from '../company-manage/company-manage.service';
 import { EditUserModalComponent } from './component/user-manage/components/edit-user-modal.component';
 import { ScreenDetailComponent } from './component/screen-detail.component';
 import { ColorPickerModule } from '@shared/color-picker/color-picker.module';
+import { PersonalCenterService } from '../personal-center/personal-center.service';
+
+import { ReportFolderModalComponent } from './component/report-folder-modal.component';
+import { ReportKeepModalComponent } from './component/report-keep-modal.component';
 
 const components = [
   ReportDetailComponent,
@@ -27,6 +31,8 @@ const components = [
 ];
 const modals = [
   ReportModalComponent,
+  ReportKeepModalComponent,
+  ReportFolderModalComponent,
   RoleModalComponent,
   AddUserModalComponent,
   EditUserModalComponent,
@@ -37,7 +43,7 @@ const modals = [
   imports: [SharedModule, SpaceManageRoutingModule, ColorPickerModule],
   exports: [...components],
   declarations: [...components, ...modals],
-  providers: [SpaceManageService,CompanyManageService],
+  providers: [SpaceManageService,CompanyManageService,PersonalCenterService],
   entryComponents: [...modals],
 })
 export class SpaceManageModule {}
