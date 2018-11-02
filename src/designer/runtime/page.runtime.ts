@@ -1,8 +1,6 @@
 import { RegionRuntime } from './region.runtime';
 import { PageConfig } from '../components/page.config/page.config';
-import { RegionController } from '@core/node/region/region.controller';
 import { regionMap } from '@core/node/config/region.map';
-import { GraphicWrapper } from '@core/node/graphic/graphic.wrapper';
 import { Observable } from 'rxjs/internal/Observable';
 import { RuntimePageConfig } from '../components/page.config/runtime.page.config';
 import { GraphicWrapperRuntime } from './graphic.wrapper.runtime';
