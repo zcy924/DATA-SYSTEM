@@ -36,14 +36,13 @@ export class DetailReportComponent implements AfterViewInit, OnInit, OnDestroy {
 
   getReportContent() {
     const reportInfo$ = this._acRouter.params.pipe(switchMap(data => {
+      this.keepReportId = data.keepReportId;
       return this._personalService.getSelfReportInfo({
         reportId: data.reportId,
         keepReportId: data.keepReportId
       });
     }));
     reportInfo$.subscribe(data => {
-      this.keepReportId = data.keepReportId;
-
       this.reportName = data.reportName;
       this.report.clear();
       if(data.attr){

@@ -44,6 +44,7 @@ export class ReportCollectComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchData(true);
+    this.getReportTree();
     this.menu = this._sideMenu.menu;
   }
 
