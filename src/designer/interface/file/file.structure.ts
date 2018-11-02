@@ -2,7 +2,10 @@ export interface IFileStructure {
   name: string;
   manifest?: {
     version: string;
-    vendor: any;
+    vendor: {
+      id: string;
+      name: string;
+    };
     designer: {
       version: string;
     };
