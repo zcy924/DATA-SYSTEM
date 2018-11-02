@@ -1,5 +1,7 @@
 import { IGraphic } from '@core/node/graphic/graphic';
-import { Type } from '@angular/core';
+import { ImageGraphic } from '@core/node/graphic/auxiliary/image.graphic';
+import { Type } from './type';
+import { PaletteItem } from './palette.item';
 
 export class ComponentRepository {
   private _map: Map<string, IGraphic> = new Map<string, IGraphic>();
@@ -12,9 +14,17 @@ export class ComponentRepository {
     return this._name;
   }
 
-  addComponent(key:string,value:Type<IGraphic>) {
+  addComponent(key: string) {
   }
 
   addComponents() {
+  }
+
+  getComponents(): Array<PaletteItem> {
+    return null;
+  }
+
+  getGraphic(key: string): Type<IGraphic> {
+    return ImageGraphic;
   }
 }
