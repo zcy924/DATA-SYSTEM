@@ -2,7 +2,7 @@ import { closestNum } from '../../../utils/common';
 import { CoordinatesAndDimensions, Dimensions } from '@core/node/interface';
 import { ModelEventTarget } from '@core/node/event/model.event';
 import * as _ from 'lodash';
-import { RegionOption } from '../../../interface/file/region.option';
+import { IRegionOption } from '../../../interface/file/region.option';
 
 export enum RegionState {
   default, selected, multiSelected, activated
@@ -28,7 +28,7 @@ export enum RegionState {
  给表达式提供运算时所需的执行环境
  */
 export class RegionModel extends ModelEventTarget {
-  private _option: RegionOption;
+  private _option: IRegionOption;
   // 非持久化状态层
   private _state: RegionState;
 

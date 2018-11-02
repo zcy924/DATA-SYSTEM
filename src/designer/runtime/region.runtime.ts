@@ -1,6 +1,6 @@
 import { PageRuntime } from './page.runtime';
 import { GraphicWrapperRuntime } from './graphic.wrapper.runtime';
-import { RegionOption } from '../interface/file/region.option';
+import { IRegionOption } from '../interface/file/region.option';
 
 const template = `
 <div class="m-dashbox">
@@ -16,7 +16,7 @@ export class RegionRuntime {
   $element: JQuery;
   private _$fill: JQuery;
 
-  private _regionOption: RegionOption;
+  private _regionOption: IRegionOption;
 
   get page(): PageRuntime {
     return this._page;

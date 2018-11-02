@@ -1,7 +1,7 @@
-import {IDataOptionOption} from '@core/data/data.option.interface';
 import {Observable} from 'rxjs';
 import {DataOptionSet} from '@core/data/data.option.set';
 import {DataSourceFactory} from '@core/data/data.source.factory';
+import { IDataSourceOption } from '../../interface/file/data.source.option';
 
 export class DataSourceManager {
   private _dataSourceMap: Map<string, Observable<any>> = new Map();
@@ -10,7 +10,7 @@ export class DataSourceManager {
 
   }
 
-  load(optionArray: Array<IDataOptionOption>) {
+  load(optionArray: Array<IDataSourceOption>) {
 
   }
 

@@ -1,14 +1,14 @@
 import * as _ from 'lodash';
 
-import {IDataOptionOption} from '@core/data/data.option.interface';
 import {DataOption} from '@core/data/data.option';
+import { IDataSourceOption } from '../../interface/file/data.source.option';
 
 export class DataOptionSet {
 
   private _parent: DataOptionSet;
   private _array: Array<DataOption> = [];
 
-  constructor(dataOptionOptionArray?: IDataOptionOption | Array<IDataOptionOption>) {
+  constructor(dataOptionOptionArray?: IDataSourceOption | Array<IDataSourceOption>) {
     if (dataOptionOptionArray) {
       this.load(dataOptionOptionArray);
     }
@@ -32,7 +32,7 @@ export class DataOptionSet {
     }) || (this._parent ? this._parent.getDataOption(id) : null);
   }
 
-  load(dataOptionOptionArray: IDataOptionOption | Array<IDataOptionOption>) {
+  load(dataOptionOptionArray: IDataSourceOption | Array<IDataSourceOption>) {
     if (_.isArray(dataOptionOptionArray)) {
       dataOptionOptionArray.forEach((value) => {
         this._load(value);
@@ -42,7 +42,7 @@ export class DataOptionSet {
     }
   }
 
-  private _load(dataOptionOption: IDataOptionOption) {
+  private _load(dataOptionOption: IDataSourceOption) {
     this._array.push(new DataOption(dataOptionOption));
   }
 }
