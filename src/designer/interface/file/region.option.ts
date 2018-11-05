@@ -1,4 +1,4 @@
-export interface RegionOption {
+export interface IRegionOption {
   zIndex: number;
   left: number;
   top: number;

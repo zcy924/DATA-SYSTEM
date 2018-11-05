@@ -1,11 +1,13 @@
 import { RegionRuntime } from './region.runtime';
 import { PageConfig } from '../components/page.config/page.config';
-import { RegionController } from '@core/node/region/region.controller';
 import { regionMap } from '@core/node/config/region.map';
-import { GraphicWrapper } from '@core/node/graphic/graphic.wrapper';
 import { Observable } from 'rxjs/internal/Observable';
 import { RuntimePageConfig } from '../components/page.config/runtime.page.config';
 import { GraphicWrapperRuntime } from './graphic.wrapper.runtime';
+
+enum PageRuntimeState {
+  created, inited, loaded
+}
 
 const template = `
     <div class="report-region">
@@ -28,6 +30,7 @@ export class PageRuntime {
 
   private _model: PageConfig;
 
+  private _state: PageRuntimeState;
   private _scale = 1;
   private _width: number;
   private _height: number;
@@ -40,20 +43,30 @@ export class PageRuntime {
     this._$canvas = $element.find('.report-canvas');
     this._$box = $element.find('.report-box');
     this._$grid = $element.find('.report-grid');
-
-    this._init();
+    this._state = PageRuntimeState.created;
   }
 
-  private _init() {
-    this._model = new RuntimePageConfig();
-    this._accept(this._model);
+  init() {
+    if (this._state === PageRuntimeState.created) {
+      this._model = new RuntimePageConfig();
+      this._accept(this._model);
+      this._state = PageRuntimeState.inited;
+    } else {
+      throw new Error('init 方法已经调用');
+    }
+
   }
 
   load(option: any) {
-    this._model.importOption(option.option);
-    option.children.forEach((value) => {
-      this._createRegion(value);
-    });
+    if (this._state === PageRuntimeState.inited) {
+      this._model.importOption(option.option);
+      option.children.forEach((value) => {
+        this._createRegion(value);
+      });
+      this._state = PageRuntimeState.loaded;
+    }else{
+      throw new Error('状态不一致  请检查代码！');
+    }
   }
 
   private _accept(model: PageConfig) {

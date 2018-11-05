@@ -1,4 +1,5 @@
 import { IFileStructure } from '../interface/file/file.structure';
+import { PageRuntime } from './page.runtime';
 
 /**
  * 1、支持同时打开多个页面
@@ -6,11 +7,13 @@ import { IFileStructure } from '../interface/file/file.structure';
  */
 export class Runtime {
 
+  private _pageArray: Array<PageRuntime> = [];
+
   public init() {
   }
 
-  open(file: IFileStructure) {
-
+  open(file: IFileStructure): PageRuntime {
+    return this._createFile();
   }
 
   getFiles() {
@@ -26,7 +29,10 @@ export class Runtime {
   destroy() {
   }
 
-  private _createFile() {
+  private _createFile(): PageRuntime {
+    const page = new PageRuntime();
+
+    return page;
   }
 
 }

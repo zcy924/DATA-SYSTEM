@@ -1,3 +1,5 @@
+import { IComponentOption } from './component.option';
+
 export interface IFileStructure {
   name: string;
   manifest?: {
@@ -13,19 +15,9 @@ export interface IFileStructure {
   dependencies: Array<string>;
   main: {
     option: any;
-    children: Array<IFileElement>;
+    children: Array<IComponentOption>;
   };
   data?: Array<any>;
 }
 
-interface IFileElement {
-  region: {
-    regionKey: string;
-    regionOption: any
-  };
-  graphic: {
-    graphicKey: string;
-    configOption: any;
-    dataSourceKey: string;
-  }
-}
+

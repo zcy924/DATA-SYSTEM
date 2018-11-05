@@ -1,6 +1,6 @@
-import {Dimension} from '@core/data/data.model.interface';
+import {Dimension} from '../../core/data/data.model.interface';
 
-export interface IDataOptionOption {
+export interface IDataSourceOption {
   id: string;
   displayName: string;
   configType: string;
