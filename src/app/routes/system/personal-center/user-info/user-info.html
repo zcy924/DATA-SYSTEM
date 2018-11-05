@@ -7,7 +7,7 @@
     </div>
     <div nz-row style="padding-top:8px">
       <div nz-col nzSpan="24">
-        <input nz-input [ngModel]="formModel.userNo" disabled="true" />
+        <input nz-input [(ngModel)]="formModel.userNo" disabled="true" />
       </div>
     </div>
     <nz-divider [nzDashed]="true"></nz-divider>
@@ -18,7 +18,7 @@
     </div>
     <div nz-row style="padding-top:8px">
       <div nz-col nzSpan="24">
-        <input nz-input [ngModel]="formModel.phone"/>
+        <input nz-input [(ngModel)]="formModel.phone"/>
       </div>
     </div>
     <nz-divider [nzDashed]="true"></nz-divider>
@@ -29,7 +29,7 @@
     </div>
     <div nz-row style="padding-top:8px">
       <div nz-col nzSpan="24">
-        <input nz-input [ngModel]="formModel.email"/>
+        <input nz-input [(ngModel)]="formModel.email"/>
       </div>
     </div>
     <nz-divider [nzDashed]="true"></nz-divider>
@@ -40,7 +40,7 @@
     </div>
     <div nz-row style="padding-top:8px">
       <div nz-col nzSpan="24">
-        <input nz-input [ngModel]="formModel.userName" />
+        <input nz-input [(ngModel)]="formModel.userName" />
       </div>
     </div>
     <nz-divider [nzDashed]="true"></nz-divider>
@@ -53,11 +53,13 @@
       <div nz-col nzSpan="24">
         <div class="clearfix">
           <nz-upload
-            nzAction="https://jsonplaceholder.typicode.com/posts/"
+            nzAction="http://10.2.72.22:8080/DVSP/selfCore/selfInfo/pictureTest"
             nzListType="picture-card"
             [(nzFileList)]="fileList"
             [nzShowButton]="fileList.length < 1"
-            [nzPreview]="handlePreview">
+            [nzPreview]="handlePreview"
+            (nzChange)="handleChange($event)"
+          >
             <i nz-icon type="plus"></i>
             <div class="ant-upload-text">Upload</div>
           </nz-upload>
@@ -72,7 +74,7 @@
     <nz-divider></nz-divider>
     <div nz-row>
       <div nz-col nzSpan="2" nzOffset="22">
-        <button nz-button nzType="primary" (click)="test()">提交</button>
+        <button nz-button nzType="primary" (click)="submit()">提交</button>
       </div>
     </div>
   </nz-card>

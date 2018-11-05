@@ -50,7 +50,6 @@ export class PersonalCenterService {
     return this.httpClient.post(this.url + 'selfCore/selfInfo/modSelfInfo', params);
   }
 
-
   /*************************************报表*************************************/
 
   getSelfReportList(params): Observable<any> {
