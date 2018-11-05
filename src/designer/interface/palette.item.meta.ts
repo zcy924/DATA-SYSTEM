@@ -1,4 +1,4 @@
-export interface PaletteItem {
+export interface IPaletteItemMeta {
   displayName: string;
   imageClass?: string;
   grabOption?: {
