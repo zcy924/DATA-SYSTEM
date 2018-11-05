@@ -79,11 +79,18 @@ export class UserInfoComponent implements OnInit {
     this.previewVisible = true;
   };
 
-  // [(nzBeforeUpload)]="beforeUpload"
-  // beforeUpload = (file, fileList)  => {
-  //   this.fileList = fileList;
-  //   return false;
-  // };
+
+  beforeUpload = (file: File) => {
+    const isJPG = (file.type === 'image/jpeg')||(file.type === 'image/png');
+    if (!isJPG) {
+      this.msg.error('You can only upload JPG file!');
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      this.msg.error('Image must smaller than 2MB!');
+    }
+    return isJPG && isLt2M;
+  };
 
   submit() {
     const params = Object.assign({}, this.formModel);

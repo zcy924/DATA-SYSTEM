@@ -59,6 +59,7 @@
             [nzShowButton]="fileList.length < 1"
             [nzPreview]="handlePreview"
             (nzChange)="handleChange($event)"
+            [(nzBeforeUpload)]="beforeUpload"
           >
             <i nz-icon type="plus"></i>
             <div class="ant-upload-text">Upload</div>
