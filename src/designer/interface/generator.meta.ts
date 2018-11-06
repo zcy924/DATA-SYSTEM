@@ -1,4 +1,4 @@
 export interface IDataSourceGeneratorMeta {
-  id: string;
+  key: string;
   generatorDef: any;
 }

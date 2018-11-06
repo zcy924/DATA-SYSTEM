@@ -2,6 +2,8 @@ import { IGraphic } from '@core/node/graphic/graphic';
 import { IComponentMeta, IPaletteMeta } from './component.meta';
 import { Type } from './type';
 import * as _ from 'lodash';
+import { IDataSourceGenerator } from './data.source.generator';
+import { IDataSourceGeneratorMeta } from './generator.meta';
 
 
 /**
@@ -13,7 +15,7 @@ import * as _ from 'lodash';
  *  组件库是不可修改对象  所以
  */
 export class GeneratorRepository {
-  private _map: Map<string, IComponentMeta> = new Map<string, IComponentMeta>();
+  private _map: Map<string, IDataSourceGeneratorMeta> = new Map<string, IDataSourceGeneratorMeta>();
 
   constructor(private _name: string) {
 
@@ -23,27 +25,21 @@ export class GeneratorRepository {
     return this._name;
   }
 
-  register(compMeta: IComponentMeta) {
-    if (compMeta) {
-      this._map.set(compMeta.key, compMeta);
+  register(geneMeta: IDataSourceGeneratorMeta) {
+    if (geneMeta) {
+      this._map.set(geneMeta.key, geneMeta);
     }
   }
 
-  batchRegister(compMetaArray: Array<any>) {
-    if (_.isArray(compMetaArray)) {
-      compMetaArray.forEach((value) => {
+  batchRegister(geneMetaArray: Array<any>) {
+    if (_.isArray(geneMetaArray)) {
+      geneMetaArray.forEach((value) => {
         this.register(value);
       });
     }
   }
 
-  getComponents(convert: Function): Array<IPaletteMeta> {
-    return Array.from(this._map.values(), (v) => {
-      return convert(v);
-    });
-  }
-
-  getGraphicDef(key: string): Type<IGraphic> {
-    return this._map.get(key).graphicDef;
+  getGeneratorDef(key: string): Type<IGraphic> {
+    return this._map.get(key).generatorDef;
   }
 }
