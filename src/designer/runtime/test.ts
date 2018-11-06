@@ -3,4 +3,4 @@ import { Standard } from '../component.packages/standard';
 
 const runtime = new Runtime();
 
-runtime.addCompRepository(Standard);
+runtime.addComponentRepository(Standard);

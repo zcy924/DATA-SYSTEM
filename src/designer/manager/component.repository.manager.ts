@@ -1,16 +1,42 @@
-/**
- * 设计时和运行时都会使用到ComponentRepositoryManager
- *
- */
 import { Type } from '../interface/type';
 import { IGraphic } from '@core/node/graphic/graphic';
 import { ComponentRepository } from '../interface/component.repository';
 
+/**
+ * 设计时和运行时都会使用到ComponentRepositoryManager
+ * 管理设计器或运行时加载的全部组件库
+ *
+ * 设计器只能新建该manager中存在的Graphic
+ * 运行时只能识别该manager中存在的Graphic
+ */
 export class ComponentRepositoryManager {
   private _map: Map<string, ComponentRepository> = new Map();
 
-  addCompRepo() {
+  addComponentRepository(compRepo: ComponentRepository) {
+    if (compRepo) {
+      this._map.set(compRepo.name, compRepo);
+    }
+  }
 
+  includes(array: Array<string>): boolean {
+    const keys = Array.from(this._map.keys());
+    return array.every((value) => {
+      return keys.includes(value);
+    });
+  }
+
+  removeComponentRepository(compRepo: ComponentRepository) {
+    if (this._map.has(compRepo.name)) {
+      this._map.delete(compRepo.name);
+    }
+  }
+
+  getComponentRepository(key: string) {
+    return this._map.get(key);
+  }
+
+  get componentRepositories(): Array<ComponentRepository> {
+    return Array.from(this._map.values());
   }
 
   /**
@@ -28,10 +54,9 @@ export class ComponentRepositoryManager {
   }
 
   destroy() {
-    this._map.forEach((value) => {
-
-    });
-    this._map.clear();
-    this._map = null;
+    if (this._map) {
+      this._map.clear();
+      this._map = null;
+    }
   }
 }

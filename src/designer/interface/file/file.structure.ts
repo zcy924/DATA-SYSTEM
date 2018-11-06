@@ -2,7 +2,7 @@ import { IComponentOption } from './component.option';
 
 export interface IFileStructure {
   name: string;
-  manifest?: {
+  manifest: {
     version: string;
     vendor: {
       id: string;
@@ -12,7 +12,10 @@ export interface IFileStructure {
       version: string;
     };
   };
-  dependencies: Array<string>;
+  dependencies: {
+    componentRepositories: Array<string>;
+    dataSourceGeneratorRepositories: Array<string>;
+  };
   main: {
     option: any;
     children: Array<IComponentOption>;

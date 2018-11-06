@@ -2,6 +2,9 @@ import { IFileStructure } from '../interface/file/file.structure';
 import { PageRuntime } from './page.runtime';
 import { ComponentRepository } from '../interface/component.repository';
 import { ComponentRepositoryManager } from '../manager/component.repository.manager';
+import { PageManagerRuntime } from './page.manager.runtime';
+import * as _ from 'lodash';
+import { GeneratorRepositoryManager } from '../manager/generator.repository.manager';
 
 /**
  * 1、支持同时打开多个页面
@@ -21,32 +24,76 @@ import { ComponentRepositoryManager } from '../manager/component.repository.mana
  */
 export class Runtime {
 
-  private _pageArray: Array<PageRuntime> = [];
+  private static readonly _version = '1.0.0';
+  private static readonly _versionPattern = /^\d+\.\d+\.\d+$/;
+
+  private _pageManager = new PageManagerRuntime();
+  private _compRepoManager = new ComponentRepositoryManager();
+  private _generatorRepoManager = new GeneratorRepositoryManager();
+
+  static accept(versionNo: string): boolean {
+    if (this._versionPattern.test(versionNo)) {
+      const [a, b, c] = versionNo.match(/\d+/g),
+        [ta, tb, tc] = this._version.match(/\d+/g);
+      if (a === ta && parseInt(tb) >= parseInt(b)) {
+        return true;
+      } else {
+        return false;
+      }
+
+    } else {
+      console.log('版本号格式错误:' + versionNo);
+      return false;
+    }
+
+  }
 
   public init() {
   }
 
   open(file: IFileStructure): PageRuntime {
-    return this._createFile();
+    if (this._checkFile(file)) {
+      return this._createFile();
+    }
   }
 
-  getPages(): Array<PageRuntime> {
-    return null;
+  private _checkFile(file: IFileStructure): boolean {
+    return this._checkVersion(file) && this._checkDependencies(file);
   }
 
-  addCompRepository(repo: ComponentRepository) {
-    new ComponentRepositoryManager();
+  private _checkVersion(file: IFileStructure) {
+    return Runtime.accept(_.get(file, 'manifest.version'));
   }
 
-  removeCompRepository() {
+  private _checkDependencies(file: IFileStructure) {
+    const { componentRepositories, dataSourceGeneratorRepositories } =
+      _.get(file, 'dependencies');
+    return this._compRepoManager.includes(componentRepositories)
+      && this._generatorRepoManager.includes(dataSourceGeneratorRepositories);
+  }
+
+  get pages(): Array<PageRuntime> {
+    return this._pageManager.pages;
+  }
+
+  addComponentRepository(repo: ComponentRepository) {
+    this._compRepoManager.addComponentRepository(repo);
+  }
+
+  removeComponentRepository() {
   }
 
   destroy() {
+    if (this._compRepoManager) {
+      this._compRepoManager.destroy();
+      this._compRepoManager = null;
+    }
   }
 
   private _createFile(): PageRuntime {
     const page = new PageRuntime();
 
+    this._pageManager.addPage(page);
     return page;
   }
 
