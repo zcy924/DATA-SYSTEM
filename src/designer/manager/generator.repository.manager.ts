@@ -29,6 +29,10 @@ export class GeneratorRepositoryManager {
     }
   }
 
+  getDataSource() {
+
+  }
+
   getGeneratorRepository(key: string) {
     return this._map.get(key);
   }
