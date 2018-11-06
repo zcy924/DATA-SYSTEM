@@ -16,7 +16,7 @@ export class PlatformManageComponent implements OnInit {
         {
           text: '公司管理',
           isLeaf: true,
-          link: `/app/system/companis-manage`,
+          link: `/app/platform/companis-manage`,
           icon: 'anticon anticon-setting',
         },
       ]
@@ -30,6 +30,6 @@ export class PlatformManageComponent implements OnInit {
 
   ngOnInit() {
     this.sideMenu.setMenu(this.menu);
-
+    this.sideMenu.setMessage(this.menu);
   }
 }
