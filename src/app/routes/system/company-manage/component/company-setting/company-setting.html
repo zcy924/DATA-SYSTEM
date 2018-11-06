@@ -4,51 +4,72 @@
       公司设置
     </div>
   </div>
-
   <div nz-row style="padding-top: 16px">
     <div nz-col nzSpan="24">
-      <nz-card style="width: 60% ;">
+      <nz-card style="width: 50% ;">
 
         <form nz-form>
           <nz-form-item nz-row>
-            <nz-form-label [nzSpan]="8">公司名称</nz-form-label>
+            <nz-form-label class="company-label" [nzSpan]="8">Logo</nz-form-label>
             <nz-form-control [nzSpan]="16">
+              <nz-upload
+                [nzAction]="testUrl"
+                nzListType="picture-card"
+                [(nzFileList)]="fileList"
+                [nzShowButton]="fileList.length < 1"
+                [nzPreview]="handlePreview"
+                (nzChange)="handleChange($event)"
+                [(nzBeforeUpload)]="beforeUpload">
+                <i nz-icon type="plus"></i>
+                <div class="ant-upload-text">Upload</div>
+              </nz-upload>
+              <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible=false">
+                <ng-template #modalContent>
+                  <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }" />
+                </ng-template>
+              </nz-modal>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-divider [nzDashed]="true"></nz-divider>
+
+          <nz-form-item nz-row>
+            <nz-form-label class="company-label" [nzSpan]="8">公司名称</nz-form-label>
+            <nz-form-control [nzSpan]="10">
               <input nz-input name="companyName" nzRequired [(ngModel)]="companyName">
               <!--<nz-form-explain *ngIf="validateForm.get('companyName').dirty && validateForm.get('companyName').errors">公司名称不能为空</nz-form-explain>-->
             </nz-form-control>
           </nz-form-item>
+          <nz-divider [nzDashed]="true"></nz-divider>
 
           <nz-form-item nz-row>
-            <nz-form-label [nzSpan]="8">空间数量</nz-form-label>
+            <nz-form-label class="company-label" [nzSpan]="8">空间数量</nz-form-label>
             <nz-form-control [nzSpan]="16">
               <h4>{{spaceNum}}</h4>
             </nz-form-control>
           </nz-form-item>
+          <nz-divider [nzDashed]="true"></nz-divider>
 
           <nz-form-item nz-row>
-            <nz-form-label [nzSpan]="8">只允许管理员创建空间</nz-form-label>
+            <nz-form-label class="company-label" [nzSpan]="8">只允许管理员创建空间</nz-form-label>
             <nz-form-control [nzSpan]="16">
               <nz-switch name="onlyAdmin" [(ngModel)]="onlyAdmin" ></nz-switch>
             </nz-form-control>
           </nz-form-item>
+          <nz-divider [nzDashed]="true"></nz-divider>
 
           <nz-form-item nz-row>
-            <nz-form-label [nzSpan]="8">公司管理员</nz-form-label>
+            <nz-form-label class="company-label" [nzSpan]="8">公司管理员</nz-form-label>
             <nz-form-control [nzSpan]="16">
-
               <div *ngFor="let admin of admins"><label nz-checkbox name="{{admin.userNo}}" (ngModelChange)="updateChecked(admin)"
                   [hidden]="!admin.checked" [(ngModel)]="admin.checked">{{admin.userName}}（{{admin.userNo}}）</label></div>
               <nz-input-group nzSuffixIcon="anticon anticon-search">
                 <input type="text" name="key" (keyup)="searchUsers()" [(ngModel)]="key" nz-input placeholder="搜索用户" />
               </nz-input-group>
-
               <div *ngFor="let admin of searchedAdmins"><label nz-checkbox name="{{admin.userNo}}" (ngModelChange)="searchChecked(admin)"
                   [nzDisabled]="admin.checked" [(ngModel)]="admin.checked">{{admin.userName}}（{{admin.userNo}}）</label></div>
-
             </nz-form-control>
           </nz-form-item>
-
-          <nz-divider></nz-divider>
+          <nz-divider [nzDashed]="true"></nz-divider>
 
           <div style="float: right">
             <button nz-button [nzType]="'default'" style="margin-right: 12px" (click)="getCompanyInfo()">重置</button>
@@ -56,7 +77,6 @@
           </div>
 
         </form>
-
       </nz-card>
     </div>
   </div>

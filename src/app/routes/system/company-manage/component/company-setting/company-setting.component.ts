@@ -2,15 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import {
   NzModalService,
   NzDropdownService,
-  NzMessageService,
+  NzMessageService, UploadFile,
 } from 'ng-zorro-antd';
 import { CompanyManageService } from '../../company-manage.service';
 import { HttpResponse } from '@angular/common/http';
+import { environment } from '@env/environment';
 
 
 @Component({
   templateUrl: './company-setting.html',
-  styles: [],
+  styles: [`
+    .company-label{
+      text-align:left
+    }
+  
+  `],
 })
 export class CompanySettingComponent implements OnInit {
   companyName = '';
@@ -19,11 +25,13 @@ export class CompanySettingComponent implements OnInit {
   spaceNum = '';
   onlyAdmin;
   key = '';
+  avater = '';
 
   constructor(
-    private service: CompanyManageService,
-    private message: NzMessageService,
-  ) {}
+    private _companyService: CompanyManageService,
+    private _message: NzMessageService,
+  ) {
+  }
 
   ngOnInit() {
     this.getCompanyInfo();
@@ -56,15 +64,22 @@ export class CompanySettingComponent implements OnInit {
   // 查询公司信息
   getCompanyInfo() {
     let params = {};
-    this.service.getCompanyInfo(params).subscribe(res => {
+    this._companyService.getCompanyInfo(params).subscribe(res => {
       if (res['retCode'] === '00000') {
         this.companyName = res['companyName'];
         this.admins = res['admins'];
+        this.avater = res['avatar'];
         this.spaceNum = res['spaceNum'];
         this.onlyAdmin = res['onlyAdmin'] === 'T';
         this.admins.every(value => (value.checked = true));
+        this.fileList.push({
+          uid: -1,
+          name: 'avatar.png',
+          status: 'done',
+          url: this.avater
+        });
       } else {
-        this.message.error('查询失败！');
+        this._message.error('查询失败！');
       }
     });
   }
@@ -81,7 +96,7 @@ export class CompanySettingComponent implements OnInit {
       totalRow: '0',
       totalPage: '0',
     };
-    this.service.searchFuzzyUsers(params).subscribe(
+    this._companyService.searchFuzzyUsers(params).subscribe(
       res => {
         this.searchedAdmins = [];
         this.searchedAdmins = res['retList'];
@@ -97,7 +112,7 @@ export class CompanySettingComponent implements OnInit {
       },
       error => {
         if (error instanceof HttpResponse) {
-          this.message.error(error.body.retMsg);
+          this._message.error(error.body.retMsg);
         }
       },
     );
@@ -107,19 +122,64 @@ export class CompanySettingComponent implements OnInit {
     let params = {
       companyName: this.companyName,
       onlyAdmin: this.onlyAdmin ? 'T' : 'F',
-      avatar: './assets/default/company.png',
+      avatar: this.avater,
       admins: this.admins,
     };
-    this.service.updateCompanyInfo(params).subscribe(
+    this._companyService.updateCompanyInfo(params).subscribe(
       res => {
-        this.message.success('更新公司信息成功！');
+        this._message.success('更新公司信息成功！');
         this.getCompanyInfo();
       },
       error => {
         if (error instanceof HttpResponse) {
-          this.message.error(error.body.retMsg);
+          this._message.error(error.body.retMsg);
         }
       },
     );
   }
+
+
+  fileList = [];
+  testUrl = environment.SERVER_URL + 'selfCore/selfInfo/pictureTest';
+  previewImage = '';
+  previewVisible = false;
+  loading;
+
+  private getBase64(img: File, callback: (img: {}) => void): void {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => callback(reader.result));
+    reader.readAsDataURL(img);
+  }
+
+  handleChange(info: { file: UploadFile }): void {
+    if (info.file.status === 'uploading') {
+      this.loading = true;
+      return;
+    }
+    if (info.file.status === 'done') {
+      this.getBase64(info.file.originFileObj, (img: string) => {
+        this.loading = false;
+        this.avater = img;
+      });
+    }
+  }
+
+  handlePreview = (file: UploadFile) => {
+    this.previewImage = file.url || file.thumbUrl;
+    this.previewVisible = true;
+  };
+
+
+  beforeUpload = (file: File) => {
+    const isJPG = (file.type === 'image/jpeg') || (file.type === 'image/png');
+    if (!isJPG) {
+      this._message.error('You can only upload JPG file!');
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      this._message.error('Image must smaller than 2MB!');
+    }
+    return isJPG && isLt2M;
+  };
+
 }

@@ -1,5 +1,48 @@
 <div style="padding: 16px">
   <nz-card style="width:700px;" nzTitle="修改个人信息">
+
+    <div nz-row>
+      <div nz-col nzSpan="2">
+        头像
+      </div>
+    </div>
+    <div nz-row style="padding-top:8px">
+      <div nz-col nzSpan="24">
+        <div class="clearfix">
+          <nz-upload
+            nzAction="http://10.2.72.22:8080/DVSP/selfCore/selfInfo/pictureTest"
+            nzListType="picture-card"
+            [(nzFileList)]="fileList"
+            [nzShowButton]="fileList.length < 1"
+            [nzPreview]="handlePreview"
+            (nzChange)="handleChange($event)"
+            [(nzBeforeUpload)]="beforeUpload"
+          >
+            <i nz-icon type="plus"></i>
+            <div class="ant-upload-text">Upload</div>
+          </nz-upload>
+          <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible=false">
+            <ng-template #modalContent>
+              <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }" />
+            </ng-template>
+          </nz-modal>
+        </div>
+      </div>
+    </div>
+    <nz-divider [nzDashed]="true"></nz-divider>
+
+    <div nz-row>
+      <div nz-col nzSpan="2">
+        姓名
+      </div>
+    </div>
+    <div nz-row style="padding-top:8px">
+      <div nz-col nzSpan="24">
+        <input nz-input [(ngModel)]="formModel.userName" />
+      </div>
+    </div>
+    <nz-divider [nzDashed]="true"></nz-divider>
+
     <div nz-row>
       <div nz-col nzSpan="2">
         账号
@@ -33,46 +76,8 @@
       </div>
     </div>
     <nz-divider [nzDashed]="true"></nz-divider>
-    <div nz-row>
-      <div nz-col nzSpan="2">
-        姓名
-      </div>
-    </div>
-    <div nz-row style="padding-top:8px">
-      <div nz-col nzSpan="24">
-        <input nz-input [(ngModel)]="formModel.userName" />
-      </div>
-    </div>
-    <nz-divider [nzDashed]="true"></nz-divider>
-    <div nz-row>
-      <div nz-col nzSpan="2">
-        头像
-      </div>
-    </div>
-    <div nz-row style="padding-top:8px">
-      <div nz-col nzSpan="24">
-        <div class="clearfix">
-          <nz-upload
-            nzAction="http://10.2.72.22:8080/DVSP/selfCore/selfInfo/pictureTest"
-            nzListType="picture-card"
-            [(nzFileList)]="fileList"
-            [nzShowButton]="fileList.length < 1"
-            [nzPreview]="handlePreview"
-            (nzChange)="handleChange($event)"
-            [(nzBeforeUpload)]="beforeUpload"
-          >
-            <i nz-icon type="plus"></i>
-            <div class="ant-upload-text">Upload</div>
-          </nz-upload>
-          <nz-modal [nzVisible]="previewVisible" [nzContent]="modalContent" [nzFooter]="null" (nzOnCancel)="previewVisible=false">
-            <ng-template #modalContent>
-              <img [src]="previewImage" [ngStyle]="{ 'width': '100%' }" />
-            </ng-template>
-          </nz-modal>
-        </div>
-      </div>
-    </div>
-    <nz-divider></nz-divider>
+
+
     <div nz-row>
       <div nz-col nzSpan="2" nzOffset="22">
         <button nz-button nzType="primary" (click)="submit()">提交</button>

@@ -39,7 +39,7 @@
           <tbody>
             <tr *ngFor="let data of dataSet">
               <td>{{data.spaceName}}</td>
-              <td><img src="{{data.avatar}}"/></td>
+              <td><img src="{{data.avatar}}" [ngStyle]="{ 'width': '100%' }"/></td>
               <td>{{data.spaceUserNum}}</td>
               <td>
                 <nz-list [nzDataSource]="data.user" nzBordered [nzRenderItem]="item">
