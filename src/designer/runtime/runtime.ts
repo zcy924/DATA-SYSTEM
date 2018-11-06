@@ -1,5 +1,7 @@
 import { IFileStructure } from '../interface/file/file.structure';
 import { PageRuntime } from './page.runtime';
+import { ComponentRepository } from '../interface/component.repository';
+import { ComponentRepositoryManager } from '../manager/component.repository.manager';
 
 /**
  * 1、支持同时打开多个页面
@@ -32,8 +34,8 @@ export class Runtime {
     return null;
   }
 
-  addCompRepository() {
-
+  addCompRepository(repo: ComponentRepository) {
+    new ComponentRepositoryManager();
   }
 
   removeCompRepository() {
