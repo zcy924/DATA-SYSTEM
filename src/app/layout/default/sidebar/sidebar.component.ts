@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SettingsService } from '@delon/theme';
 import { SideMenuService } from '@shared/side-menu.service';
 import { Menu } from 'app/models/menu';
+import {NzMessageService} from "ng-zorro-antd";
 @Component({
   selector: 'layout-sidebar',
   templateUrl: './sidebar.component.html',
@@ -12,6 +13,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   constructor(
     public settings: SettingsService,
     public sideMenu: SideMenuService,
+    public message: NzMessageService
   ) {}
 
   ngOnInit() {

@@ -1,19 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { NzModalService, NzMessageService } from 'ng-zorro-antd';
-import { AddScreenComponent } from './component/add-screen.component';
-import { SpaceManageService } from '../../space-manage.service';
-import { HttpResponse } from '@angular/common/http';
-import { Page } from 'app/models/page';
-import { EditScreenComponent } from './component/edit-screen.component';
-import { SettingsService } from '@delon/theme';
-import { SideMenuService } from '@shared/side-menu.service';
+import {Component, OnInit} from '@angular/core';
+import {SpaceManageService} from "../../space-manage.service";
+import {Page} from "../../../../../models/page";
+import {SettingsService} from "@delon/theme";
+import {SideMenuService} from "@shared/side-menu.service";
+import {AddScreenComponent} from "../screen-manage/component/add-screen.component";
+import {EditScreenComponent} from "../screen-manage/component/edit-screen.component";
+import {NzMessageService, NzModalService} from "ng-zorro-antd";
+import {HttpResponse} from "@angular/common/http";
 
 @Component({
-  selector: 'app-screen-manage',
-  templateUrl: './screen-manage.html',
-  styleUrls: ['./screen-manage.less'],
+  templateUrl: 'api-manage.html',
+  styles: [
+    `
+      .title-tab{
+        height: 32px;
+        line-height: 32px;
+        font-size: x-large;
+      }
+      .title-tab+div{
+        float: right;
+      }
+    `
+  ]
 })
-export class ScreenManageComponent implements OnInit {
+
+export class ApiManageComponent implements OnInit {
   page = new Page();
   loading = false;
   disabledButton = true;

@@ -55,7 +55,6 @@ export class ScreenCollectComponent implements OnInit {
         this.dataSet.forEach(value => {
           value.checked = false;
         });
-        console.log(this.dataSet);
         this.page.totalRow = data['totalRow'];
         this.page.totalPage = data['totalPage'];
         this.loading = false;
@@ -183,28 +182,30 @@ export class ScreenCollectComponent implements OnInit {
     const params = {
       spaceId: localStorage.getItem('spaceID'),
       curPage: this.page.curPage,
-      pageSize: 1000,
+      pageSize: 5000,
       totalPage: this.page.totalPage || '',
       totalRow: this.page.totalRow || '',
     };
-    // this.spaceManageService.getScreenList(params).subscribe(
-    //   data => {
-    //     const dataSet = data['retList'];
-    //     dataSet.map(value => {
-    //       value.text = value.name;
-    //       value.link = `app/square/${value.spaceId}/screen-detail/${
-    //         value.dashboardId
-    //         }`;
-    //       value.isLeaf = true;
-    //       value.icon = value.icon;
-    //     });
-    //     this.menu[0]['children'][0]['children'] = dataSet;
-    //   },
-    //   err => {
-    //     if (err instanceof HttpResponse) {
-    //       this.nzMessage.error(err.body.retMsg);
-    //     }
-    //   },
-    // );
+    this.personService.qryScreenList(params).subscribe(
+      data => {
+        this.menu[0]['children'][0]['children'] = [];
+        let dataSet = data['retList'];
+        dataSet.forEach(value=>{
+          const item = {
+            text: value.keepDashBoardName,
+            link: `/app/user/dashboard-detail;dashBoardId=${value.dashBoardId};keepDashBoardId=${value.keepDashBoardId}`,
+            isLeaf: true,
+            icon: value.icon,
+          }
+          this.menu[0]['children'][0]['children'].push(item);
+          this.sideMenu.setMessage(this.menu);
+        })
+      },
+      error => {
+        if (error instanceof HttpResponse) {
+          this.nzMessage.error(error.body.retMsg);
+        }
+      },
+    );
   }
 }

@@ -72,6 +72,12 @@ export class SpaceManageComponent implements OnInit {
           link: 'user-message',
         },
         {
+          text: 'API管理',
+          isLeaf: true,
+          icon: 'database',
+          link: `app/square/${localStorage.getItem('spaceID')}/api-manage`,
+        },
+        {
           text: '数据表预览',
           isLeaf: true,
           icon: 'user',
@@ -93,7 +99,7 @@ export class SpaceManageComponent implements OnInit {
           text: '空间设置',
           isLeaf: true,
           icon: 'setting',
-          link: 'user-message',
+          link: `app/square/${localStorage.getItem('spaceID')}/space-setting`,
         },
       ],
     },
@@ -137,7 +143,7 @@ export class SpaceManageComponent implements OnInit {
         const dataSet = data['retList'];
         dataSet.map(value => {
           value.text = value.name;
-          value.link = `app/square/${value.spaceId}/screen-detail/${
+          value.link = `app/square/${localStorage.getItem('spaceID')}/screen-detail/${
             value.dashboardId
             }`;
           value.isLeaf = true;
@@ -176,7 +182,7 @@ export class SpaceManageComponent implements OnInit {
   formateTree(array: Array<any>) {
     array.map(value => {
       value.text = value.reportName;
-      value.link = `app/square/${value.spaceId}/report-detail/${
+      value.link = `app/square/${localStorage.getItem('spaceID')}/report-detail/${
         value.reportId
         }`;
       value.isLeaf = value.type == 1 ? true : false;

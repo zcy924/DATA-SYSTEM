@@ -39,8 +39,9 @@ export class SpaceManageService {
   collectScreen(params): Observable<any> {
     return this.httpClient.post(this.url + 'selfCore/keepDashBoard/addKeep', params);
   }
-  uncollectScreen(params): Observable<any>{
-    return this.httpClient.post(this.url+ 'selfCore/keepDashBoard/del', params);
+
+  uncollectScreen(params): Observable<any> {
+    return this.httpClient.post(this.url + 'selfCore/keepDashBoard/del', params);
   }
 
   /*************************************报表*************************************/
@@ -115,5 +116,14 @@ export class SpaceManageService {
 
   modUser(params): Observable<any> {
     return this.httpClient.post(this.url + 'space/spaceUser/mod', params);
+  }
+
+  /*************************************空间设置*************************************/
+  modSpaceInfo(params): Observable<any> {
+    return this.httpClient.post(this.url + 'company/spaceSquareManage/modInfo', params);
+  }
+
+  qrySpaceInfo(params): Observable<any> {
+    return this.httpClient.post(this.url + 'company/spaceSquareManage/qryInfo', params);
   }
 }

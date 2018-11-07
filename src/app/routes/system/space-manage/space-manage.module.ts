@@ -20,6 +20,8 @@ import { PersonalCenterService } from '../personal-center/personal-center.servic
 
 import { ReportFolderModalComponent } from './component/report-folder-modal.component';
 import { ReportKeepModalComponent } from './component/report-keep-modal.component';
+import {SpaceSettingComponent} from "./component/space-setting/space-setting.component";
+import {ApiManageComponent} from "./component/api-manage/api-manage.component";
 
 const components = [
   ReportDetailComponent,
@@ -27,7 +29,9 @@ const components = [
   RoleManageComponent,
   UserManageComponent,
   ScreenManageComponent,
-  ScreenDetailComponent
+  ScreenDetailComponent,
+  SpaceSettingComponent,
+  ApiManageComponent
 ];
 const modals = [
   ReportModalComponent,

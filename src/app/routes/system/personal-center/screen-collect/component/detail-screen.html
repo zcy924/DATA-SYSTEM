@@ -7,7 +7,7 @@
       <div nz-col>
         <a (click)="uncollect()"><i nz-tooltip nzTitle="已收藏" nzPlacement="bottom" nz-icon type="heart" theme="fill"></i></a>
         <a><i nz-tooltip nzTitle="全屏预览" nzPlacement="bottom" nz-icon type="fullscreen" theme="outline"></i></a>
-        <a><i nz-tooltip nzTitle="编辑" nzPlacement="bottom" nz-icon type="edit"></i></a>
+        <a [routerLink]="['/app/square',spaceId,'screen-detail',dashboardId]"><i nz-tooltip nzTitle="编辑" nzPlacement="bottom" nz-icon type="edit"></i></a>
       </div>
     </div>
     <div class="app-body-center">

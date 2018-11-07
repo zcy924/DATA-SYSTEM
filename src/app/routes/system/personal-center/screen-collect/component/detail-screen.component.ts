@@ -18,6 +18,8 @@ export class DetailScreenComponent implements AfterViewInit, OnInit, OnDestroy {
   remark;
   icon;
   keepDashBoardId;
+  spaceId;
+  dashboardId;
 
   constructor(private _elementRef: ElementRef,
               private _differs: KeyValueDiffers,
@@ -35,6 +37,7 @@ export class DetailScreenComponent implements AfterViewInit, OnInit, OnDestroy {
   getReportContent() {
     const reportInfo$ = this._acRouter.params.pipe(switchMap(data => {
       this.keepDashBoardId = data.keepDashBoardId;
+      this.dashboardId = data.dashBoardId;
       return this._personalService.getScreenInfo({
         dashBoardId: data.dashBoardId,
         keepDashBoardId: data.keepDashBoardId
@@ -45,6 +48,8 @@ export class DetailScreenComponent implements AfterViewInit, OnInit, OnDestroy {
       this.screenName = data.name;
       this.remark = data.remark;
       this.icon = data.icon;
+      this.spaceId = data.spaceId;
+      localStorage.setItem('spaceID',this.spaceId);
       if (data.attr) {
         this.report.load(data.attr);
       } else {
