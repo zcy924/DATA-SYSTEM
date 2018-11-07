@@ -8,7 +8,7 @@ import { RegionManager } from '@core/node/manager/region.manager';
 import { ActivateManager } from '@core/node/manager/activate.manager';
 import { DataSourceManager } from '@core/data/data.source.manager';
 import { ConfigSourceManager } from '@core/config/config.source.manager';
-import { dataOptionManager } from '@core/data/data.option.manager';
+import { dataOptionManager } from '@core/data/data.source.config.manager';
 import { ActionManager } from '@core/node/operate/action.manager';
 import { PageConfigWrapper } from '@core/node/page/report/page.outer';
 import { AbstractPageView } from '@core/node/page/report/abstract.page.view';
@@ -38,7 +38,7 @@ export class ReportPageInner implements IPage {
     this.selectManager = new SelectManager();
     this.activateManager = new ActivateManager(this);
     this.configSourceManager = new ConfigSourceManager(_mode);
-    this.dataSourceManager = new DataSourceManager(dataOptionManager.getDataOptionSet('space1'));
+    this.dataSourceManager = new DataSourceManager(dataOptionManager.getDataSourceConfigSet('space1'));
     this.actionManager = new ActionManager();
   }
 
