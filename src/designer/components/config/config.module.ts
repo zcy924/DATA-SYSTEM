@@ -6,7 +6,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 
 import {NgZorroAntdModule} from 'ng-zorro-antd';
-import {ColorPickerModule} from '@shared/color-picker/color-picker.module';
 
 import {TitleConfigComponent} from './title.config.component';
 import {AxisConfigComponent} from './axis.config.component';
@@ -24,6 +23,7 @@ import {PieSeriesManagerConfigComponent} from './pie.series.manager.config.compo
 import {OverlayModule} from '@angular/cdk/overlay';
 import {SimpleColorPickerComponent} from '../common/simple.color.picker.component';
 import {MultiColorInputComponent} from '../common/multi.color.input.component';
+import { ColorPickerModule } from '../shared/color-picker/color-picker.module';
 
 
 const COMPONENTS = [

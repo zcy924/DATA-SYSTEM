@@ -1,7 +1,7 @@
-import { IDataSourceOption } from '../../interface/file/data.source.option';
+import { IDataSourceConfig } from '../../interface/file/data.source.config';
 
 
-export const array: Array<IDataSourceOption> = [
+export const array: Array<IDataSourceConfig> = [
   {
     id: 'num1',
     displayName: '产品近三年销售额',

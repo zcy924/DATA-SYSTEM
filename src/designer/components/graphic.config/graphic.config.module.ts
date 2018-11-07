@@ -9,7 +9,6 @@ import {NgZorroAntdModule} from 'ng-zorro-antd';
 import {HttpClientModule} from '@angular/common/http';
 import {PieConfigComponent} from './chart/pie.config.component';
 import {DataHeaderComponent} from './html/header.component';
-import {ColorPickerModule} from '../../shared/color-picker/color-picker.module';
 
 import {CommentConfigComponent} from './auxiliary/comment.config.component';
 import {TextConfigComponent} from './auxiliary/text.config.component';
@@ -29,6 +28,7 @@ import {FlipBarConfigComponent} from './chart/flip.bar.config.component';
 import {GaugeConfigComponent} from './chart/gauge.config.component';
 import {WordCloudConfigComponent} from './chart/word.cloud.config.component';
 import {TableConfigComponent} from './custom/table.config.component';
+import { ColorPickerModule } from '../shared/color-picker/color-picker.module';
 
 const COMPONENTS = [
   PieConfigComponent,

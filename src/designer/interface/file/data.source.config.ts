@@ -1,6 +1,6 @@
 import {Dimension} from '../../core/data/data.model.interface';
 
-export interface IDataSourceOption {
+export interface IDataSourceConfig {
   id: string;
   displayName: string;
   configType: string;

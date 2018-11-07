@@ -15,13 +15,13 @@ import { EditScreenComponent } from './component/screen-manage/component/edit-sc
 import { CompanyManageService } from '../company-manage/company-manage.service';
 import { EditUserModalComponent } from './component/user-manage/components/edit-user-modal.component';
 import { ScreenDetailComponent } from './component/screen-detail.component';
-import { ColorPickerModule } from '@shared/color-picker/color-picker.module';
 import { PersonalCenterService } from '../personal-center/personal-center.service';
 
 import { ReportFolderModalComponent } from './component/report-folder-modal.component';
 import { ReportKeepModalComponent } from './component/report-keep-modal.component';
 import {SpaceSettingComponent} from "./component/space-setting/space-setting.component";
 import {ApiManageComponent} from "./component/api-manage/api-manage.component";
+import { ColorPickerModule } from '../../../../designer/components/shared/color-picker/color-picker.module';
 
 const components = [
   ReportDetailComponent,
