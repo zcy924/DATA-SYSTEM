@@ -1,27 +1,30 @@
-import {Component, OnInit} from '@angular/core';
-import {SpaceManageService} from "../../space-manage.service";
-import {Page} from "../../../../../models/page";
-import {SettingsService} from "@delon/theme";
-import {SideMenuService} from "@shared/side-menu.service";
-import {AddScreenComponent} from "../screen-manage/component/add-screen.component";
-import {EditScreenComponent} from "../screen-manage/component/edit-screen.component";
-import {NzMessageService, NzModalService} from "ng-zorro-antd";
-import {HttpResponse} from "@angular/common/http";
+import { Component, OnInit } from '@angular/core';
+import { SpaceManageService } from '../../space-manage.service';
+import { Page } from '../../../../../models/page';
+import { SettingsService } from '@delon/theme';
+import { SideMenuService } from '@shared/side-menu.service';
+import { AddScreenComponent } from '../screen-manage/component/add-screen.component';
+import { EditScreenComponent } from '../screen-manage/component/edit-screen.component';
+import { NzMessageService, NzModalService } from 'ng-zorro-antd';
+import { HttpResponse } from '@angular/common/http';
+import { DefaultDataGenerator } from '../../../../../../data-generator/DefaultDataGenerator';
+import { Api } from '../../../../../../data-generator/Api';
 
 @Component({
   templateUrl: 'api-manage.html',
   styles: [
-    `
-      .title-tab{
+      `
+      .title-tab {
         height: 32px;
         line-height: 32px;
         font-size: x-large;
       }
-      .title-tab+div{
+
+      .title-tab + div {
         float: right;
       }
-    `
-  ]
+    `,
+  ],
 })
 
 export class ApiManageComponent implements OnInit {
@@ -49,25 +52,44 @@ export class ApiManageComponent implements OnInit {
   }
 
   openAdd() {
-    const modal = this.nzModal.create({
-      nzTitle: `新增大屏`,
-      nzContent: AddScreenComponent,
-      nzWidth: '600px',
-      nzComponentParams: {
-        spaceId: localStorage.getItem('spaceID'),
-        companyId: this.settings.user.companyId,
+    // const modal = this.nzModal.create({
+    //   nzTitle: `新增大屏`,
+    //   nzContent: AddScreenComponent,
+    //   nzWidth: '600px',
+    //   nzComponentParams: {
+    //     spaceId: localStorage.getItem('spaceID'),
+    //     companyId: this.settings.user.companyId,
+    //   },
+    //   nzOkText: '新增',
+    //   nzCancelText: '取消',
+    //   nzOnOk: i => {
+    //     i.submitForm();
+    //   },
+    // });
+    // modal.afterClose.subscribe(data => {
+    //   this.getScreenList(true);
+    // });
+    //   this.getScreenTree();
+
+
+    const api = new Api(
+      'GET',
+      {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'image/jpeg',
       },
-      nzOkText: '新增',
-      nzCancelText: '取消',
-      nzOnOk: i => {
-        i.submitForm();
-      },
-    });
-    modal.afterClose.subscribe(data => {
-      this.getScreenList(true);
-      this.getScreenTree();
+      'https://jsonplaceholder.typicode.com/posts/?a=b',
+      null,
+      { a: 'b' },
+    );
+
+    const gen = new DefaultDataGenerator(api);
+    // gen.fetchData().subscribe(res=>{
+    gen.fetchData1().subscribe(res => {
+      console.log(res);
     });
   }
+
 
   getScreenList(reset = false) {
     if (reset) {
