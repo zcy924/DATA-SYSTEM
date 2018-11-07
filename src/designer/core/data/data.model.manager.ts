@@ -1,5 +1,5 @@
 import {Dataset, DataModel} from './data.model.interface';
-import {DataOptionSet} from '@core/data/data.option.set';
+import {DataSourceConfigSet} from '@core/data/data.source.config.set';
 import {Observable, Subject} from 'rxjs';
 import {session} from '@core/node/utils/session';
 
@@ -11,11 +11,11 @@ class DataModelManager {
   private _map: Map<string, DataModel> = new Map();
   private _currentDataModel: DataModel;
 
-  private _dataOptionSet: DataOptionSet;
+  private _dataOptionSet: DataSourceConfigSet;
   private _modelNameSubject = new Subject<string>();
   private _dataModelSubject = new Subject<DataModel>();
 
-  set dataOptionSet(value: DataOptionSet) {
+  set dataOptionSet(value: DataSourceConfigSet) {
     if (value) {
       value.dataOptionArray.forEach((dataOption) => {
         this.addDataModel(dataOption.id, dataOption.displayName, dataOption.dimensions);

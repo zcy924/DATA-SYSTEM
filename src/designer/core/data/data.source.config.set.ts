@@ -3,9 +3,9 @@ import * as _ from 'lodash';
 import {DataOption} from '@core/data/data.option';
 import { IDataSourceOption } from '../../interface/file/data.source.option';
 
-export class DataOptionSet {
+export class DataSourceConfigSet {
 
-  private _parent: DataOptionSet;
+  private _parent: DataSourceConfigSet;
   private _array: Array<DataOption> = [];
 
   constructor(dataOptionOptionArray?: IDataSourceOption | Array<IDataSourceOption>) {
@@ -14,7 +14,7 @@ export class DataOptionSet {
     }
   }
 
-  set parent(value: DataOptionSet) {
+  set parent(value: DataSourceConfigSet) {
     this._parent = value;
   }
 
@@ -26,10 +26,10 @@ export class DataOptionSet {
     }
   }
 
-  getDataOption(id: string): DataOption {
+  getDataSourceConfig(id: string): DataOption {
     return this._array.find((value) => {
       return value.id === id;
-    }) || (this._parent ? this._parent.getDataOption(id) : null);
+    }) || (this._parent ? this._parent.getDataSourceConfig(id) : null);
   }
 
   load(dataOptionOptionArray: IDataSourceOption | Array<IDataSourceOption>) {
