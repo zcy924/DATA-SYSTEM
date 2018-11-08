@@ -12,10 +12,10 @@ import { environment } from '@env/environment';
 @Component({
   templateUrl: './company-setting.html',
   styles: [`
-    .company-label{
-      text-align:left
+    .company-label {
+      text-align: left
     }
-  
+
   `],
 })
 export class CompanySettingComponent implements OnInit {
@@ -76,7 +76,7 @@ export class CompanySettingComponent implements OnInit {
           uid: -1,
           name: 'avatar.png',
           status: 'done',
-          url: this.avater
+          url: this.avater,
         });
       } else {
         this._message.error('查询失败！');
@@ -118,12 +118,13 @@ export class CompanySettingComponent implements OnInit {
     );
   }
 
+  // 更新公司信息
   updateCompany() {
     let params = {
       companyName: this.companyName,
       onlyAdmin: this.onlyAdmin ? 'T' : 'F',
       avatar: this.avater,
-      admins: this.admins,
+      admins: this.admins.filter(admin => admin.checked),
     };
     this._companyService.updateCompanyInfo(params).subscribe(
       res => {
