@@ -3,7 +3,7 @@ import { IDataSourceConfig } from '../../shared/file/data.source.config';
 /**
  * DataOption 不可更改
  */
-export class DataOption {
+export class DataSourceConfig {
 
   constructor(private _option: IDataSourceConfig) {
 

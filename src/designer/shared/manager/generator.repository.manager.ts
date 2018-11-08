@@ -12,7 +12,7 @@ export class GeneratorRepositoryManager {
 
   addGeneratorRepository(geneRepo: GeneratorRepository) {
     if (geneRepo) {
-      this._map.set(geneRepo.name, geneRepo);
+      this._map.set(geneRepo.key, geneRepo);
     }
   }
 
@@ -24,13 +24,16 @@ export class GeneratorRepositoryManager {
   }
 
   removeGeneratorRepository(geneRepo: GeneratorRepository) {
-    if (this._map.has(geneRepo.name)) {
-      this._map.delete(geneRepo.name);
+    if (this._map.has(geneRepo.key)) {
+      this._map.delete(geneRepo.key);
     }
   }
 
-  getDataSource() {
-
+  getDataSourceGenerator(path: string) {
+    const [repoKey, geneKey] = path.split('$');
+    if (this._map.has(repoKey)) {
+      return this._map.get(repoKey).getGeneratorDef(geneKey);
+    }
   }
 
   getGeneratorRepository(key: string) {

@@ -17,8 +17,12 @@ import { IDataSourceGeneratorMeta } from '../../../interface/generator.meta';
 export class GeneratorRepository {
   private _map: Map<string, IDataSourceGeneratorMeta> = new Map<string, IDataSourceGeneratorMeta>();
 
-  constructor(private _name: string) {
+  constructor(private _key: string, private _name: string) {
 
+  }
+
+  get key(): string {
+    return this._key;
   }
 
   get name(): string {

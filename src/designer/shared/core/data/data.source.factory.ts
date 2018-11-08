@@ -1,7 +1,7 @@
 import {BehaviorSubject, interval, Observable, of} from 'rxjs';
 import {map, publishBehavior, refCount} from 'rxjs/operators';
-import {MockDynamicDataSourceConfig, MockStaticDataSourceConfig} from './data.source.interface';
-import {DataOption} from '@core/data/data.option';
+import {MockDynamicDataSourceConfig, MockStaticDataSourceConfig} from '../../../core/data/data.source.interface';
+import {DataSourceConfig} from '../../../core/data/data.source.config';
 
 
 export class DataSourceFactory {
@@ -24,7 +24,7 @@ export class DataSourceFactory {
   }
 
 
-  getDataSource(dataOption: DataOption): Observable<any> {
+  getDataSource(dataOption: DataSourceConfig): Observable<any> {
     if (dataOption) {
       const {id, configType, config} = dataOption;
       if (this._dataSourceMap.has(id)) {
@@ -75,11 +75,5 @@ export class DataSourceFactory {
         refCount());
   }
 }
-
-// array.forEach((value, index) => {
-//   dataModelManager
-//     .addDataModel(value.id, value.displayName);
-// });
-
 
 

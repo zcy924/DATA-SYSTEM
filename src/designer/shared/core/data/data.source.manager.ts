@@ -1,11 +1,11 @@
 import { Observable } from 'rxjs';
-import { DataSourceFactory } from '../../../core/data/data.source.factory';
+import { DataSourceFactory } from './data.source.factory';
 import { IDataSourceConfig } from '../../file/data.source.config';
 import { DataSourceConfigSet } from '@shared/core/data/data.source.config.set';
 
 /**
  * 每个页面都有自己的DataSourceManager
- * 如此便于在页面被销毁时，销毁相应的数据源
+ * 如此便于在页面被销毁时，释放相应的数据源
  */
 export class DataSourceManager {
   private _dataSourceMap: Map<string, Observable<any>> = new Map();
@@ -15,10 +15,6 @@ export class DataSourceManager {
   }
 
   load(configArray: Array<IDataSourceConfig>) {
-
-  }
-
-  clear() {
 
   }
 
@@ -34,5 +30,9 @@ export class DataSourceManager {
       return dataSource;
     }
     return null;
+  }
+
+  clear() {
+
   }
 }
