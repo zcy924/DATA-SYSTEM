@@ -1,9 +1,9 @@
-import {DataSourceFactory} from '@core/../../shared/core/data/data.source.factory';
 import {IConfigSourceFactory} from '@core/config/config.source.factory';
 import {DesignConfigSourceFactory} from '@core/config/design/design.config.source.factory';
 import {RuntimeConfigSourceFactory} from '@core/config/runtime/runtime.config.source.factory';
 import {combineLatest, Observable} from 'rxjs';
 import {IConfigSourceOption} from '@core/config/config.source.interface';
+import { DataSourceFactory } from '@shared/core/data/data.source.factory';
 
 export class ModelSourceFactory {
   private static _modelSourceFactoryForDesign: ModelSourceFactory;

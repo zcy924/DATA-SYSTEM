@@ -1,30 +1,32 @@
 import { IDataSourceConfig } from '../../shared/file/data.source.config';
 
-
 export const array: Array<IDataSourceConfig> = [
   {
     id: 'num1',
     displayName: '产品近三年销售额',
     comment: '没有任何建议',
-    configType: 'mockDynamic',
-    dataType: 'array',
-    dimensions: [{ name: 'product', type: 'ordinal' }, { name: '2015', type: 'int' }, { name: '2016', type: 'int' }, {
-      name: '2017',
-      type: 'int',
-    }],
-    config: {
+    metaData: {
+      dataType: 'array',
+      dimensions: [
+        { name: 'product', type: 'ordinal' },
+        { name: '2015', type: 'int' },
+        { name: '2016', type: 'int' },
+        {
+          name: '2017', type: 'int',
+        }],
+    },
+    generatorPath: 'mockDynamic',
+    generatorParams: {
       intervalTime: 500000,
       dataGenerator: () => {
         return {
           // 这里指定了维度名的顺序，从而可以利用默认的维度到坐标轴的映射。
           // 如果不指定 dimensions，也可以通过指定 series.encode 完成映射，参见后文。
-          dimensions: [{ name: 'product', type: 'ordinal' }, { name: '2015', type: 'int' }, {
-            name: '2016',
-            type: 'int',
-          }, {
-            name: '2017',
-            type: 'int',
-          }],
+          dimensions: [
+            { name: 'product', type: 'ordinal' },
+            { name: '2015', type: 'int' },
+            { name: '2016', type: 'int' },
+            { name: '2017', type: 'int' }],
           source: [
             { product: '化学', '2015': 43.3, '2016': 85.8, '2017': 93.7 },
             { product: '牛奶', '2015': Math.random() * 100, '2016': 73.4, '2017': 55.1 },
@@ -38,44 +40,49 @@ export const array: Array<IDataSourceConfig> = [
     id: 'num2',
     displayName: '实时销售额',
     comment: '没有任何建议',
-    configType: 'mockDynamic',
-    config: {
+    metaData: {
+      dataType: 'single',
+    },
+    generatorPath: 'mockDynamic',
+    generatorParams: {
       intervalTime: 500000,
       dataGenerator: () => {
         console.log('实时销售额');
         return Math.floor(Math.random() * 10000000);
       },
     },
-    dataType: 'single',
   }, {
     id: 'num3',
     displayName: '985高校17年毕业生统计',
     comment: '没有任何建议',
-    configType: 'mockDynamic',
-    dimensions: [
-      {
-        name: '学校',
-        type: 'ordinal',
-      }, {
-        name: '省份',
-        type: 'ordinal',
-      }, {
-        name: '城市',
-        type: 'ordinal',
-      }, {
-        name: '本科毕业生人数',
-        type: 'int',
-      }, {
-        name: '硕士毕业生人数',
-        type: 'int',
-      }, {
-        name: '博士毕业生人数',
-        type: 'int',
-      }, {
-        name: '毕业生人数',
-        type: 'int',
-      }],
-    config: {
+    metaData: {
+      dataType: 'array',
+      dimensions: [
+        {
+          name: '学校',
+          type: 'ordinal',
+        }, {
+          name: '省份',
+          type: 'ordinal',
+        }, {
+          name: '城市',
+          type: 'ordinal',
+        }, {
+          name: '本科毕业生人数',
+          type: 'int',
+        }, {
+          name: '硕士毕业生人数',
+          type: 'int',
+        }, {
+          name: '博士毕业生人数',
+          type: 'int',
+        }, {
+          name: '毕业生人数',
+          type: 'int',
+        }],
+    },
+    generatorPath: 'mockDynamic',
+    generatorParams: {
       intervalTime: 500000,
       dataGenerator: () => {
         return {
@@ -450,21 +457,23 @@ export const array: Array<IDataSourceConfig> = [
         };
       },
     },
-    dataType: 'array',
   }, {
     id: 'num4',
     displayName: '紫金大数据及金库条线绩效',
     comment: '没有任何建议',
-    configType: 'mockStatic',
-    dimensions: [
-      {
-        name: '姓名',
-        type: 'ordinal',
-      }, {
-        name: '绩效',
-        type: 'int',
-      }],
-    config: {
+    metaData: {
+      dataType: 'array',
+      dimensions: [
+        {
+          name: '姓名',
+          type: 'ordinal',
+        }, {
+          name: '绩效',
+          type: 'int',
+        }],
+    },
+    generatorPath: 'mockStatic',
+    generatorParams: {
       data: {
         dimensions: [
           {
@@ -513,6 +522,5 @@ export const array: Array<IDataSourceConfig> = [
         ],
       },
     },
-    dataType: 'array',
   },
 ];

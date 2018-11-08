@@ -1,7 +1,7 @@
 import { map, publishBehavior, refCount } from 'rxjs/operators';
 import { interval } from 'rxjs/index';
-import { MockDynamicDataSourceConfig } from '@core/data/data.source.interface';
 import { IDataSourceGenerator } from '../../shared/core/data/data.source.generator';
+import { MockDynamicDataSourceConfig } from './interface';
 
 export class MockDynamicDataSourceGenerator implements IDataSourceGenerator {
   /**

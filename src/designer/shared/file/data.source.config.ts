@@ -1,11 +1,14 @@
-import {Dimension} from '../../core/data/data.model.interface';
+import { Dimension } from '../../core/data/data.model.interface';
 
 export interface IDataSourceConfig {
   id: string;
   displayName: string;
-  configType: string;
-  config: any;
-  dataType: string;
-  dimensions?: Array<Dimension>;
+  comment?: string;
+  metaData: {
+    dataType: string;
+    dimensions?: Array<Dimension>;
+  },
+  generatorPath: string;
+  generatorParams: any;
   [key: string]: any;
 }

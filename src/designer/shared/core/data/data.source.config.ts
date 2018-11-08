@@ -1,4 +1,4 @@
-import { IDataSourceConfig } from '../../shared/file/data.source.config';
+import { IDataSourceConfig } from '../../file/data.source.config';
 
 /**
  * DataOption 不可更改
@@ -17,6 +17,14 @@ export class DataSourceConfig {
     return this._option.displayName;
   }
 
+  get generatorPath() {
+    return this._option.generatorPath;
+  }
+
+  get generatorParams() {
+    return this._option.generatorParams;
+  }
+
   get configType() {
     return this._option.configType;
   }
@@ -26,6 +34,6 @@ export class DataSourceConfig {
   }
 
   get dimensions() {
-    return this._option.dimensions;
+    return this._option.metaData.dimensions;
   }
 }
