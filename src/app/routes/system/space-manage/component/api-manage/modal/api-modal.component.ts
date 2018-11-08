@@ -1,19 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {
   NzTreeNode,
   NzFormatEmitEvent,
   NzMessageService,
   NzModalRef,
 } from 'ng-zorro-antd';
-import { SpaceManageService } from '../../../space-manage.service';
-import { ActivatedRoute } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { HttpRequest, HttpResponse } from '@angular/common/http';
-import { getJSON } from 'ng-alain/utils/json';
-import { Api } from '../../../../../../../data-generator/Api';
-import { GeneratorEnum } from '../../../../../../../data-generator/GeneratorEnum';
-import { DataGenerator } from '../../../../../../../data-generator/DataGenerator';
-import { DefaultDataGenerator } from '../../../../../../../data-generator/DefaultDataGenerator';
+import {SpaceManageService} from '../../../space-manage.service';
+import {ActivatedRoute} from '@angular/router';
+import {Observable, of} from 'rxjs';
+import {HttpRequest, HttpResponse} from '@angular/common/http';
+import {getJSON} from 'ng-alain/utils/json';
+import {Api} from '../../../../../../../data-generator/Api';
+import {GeneratorEnum} from '../../../../../../../data-generator/GeneratorEnum';
+import {DataGenerator} from '../../../../../../../data-generator/DataGenerator';
+import {DefaultDataGenerator} from '../../../../../../../data-generator/DefaultDataGenerator';
 
 @Component({
   selector: 'app-api-modal',
@@ -51,6 +51,31 @@ export class ApiModalComponent implements OnInit {
   interval;
   status;
   type;
+  formData = {
+    headersText: '',
+    bodyText: '',
+    responseText: ''
+  };
+  modMsg;
+  aceConfig = {
+    textChanged: (text, type) => {
+      switch (type) {
+        case 'header':
+          this.headersText = text;
+          break;
+        case 'body':
+          this.bodyText = text;
+          break;
+        default:
+          return;
+      }
+      this.modMsg = text;
+    },
+    options: {
+      printMargin: false
+    }
+  };
+
 
   constructor(
     private _spaceManageService: SpaceManageService,
@@ -71,14 +96,17 @@ export class ApiModalComponent implements OnInit {
       url: this.url,
       method: this.method,
       headers: JSON.parse(this.headersText === '' ? '{}' : this.headersText),
-      body: JSON.parse(this.bodyText === '' ? '{}' : this.bodyText),
+      body: JSON.parse(this.bodyText === '' ? null : this.bodyText),
       generator: GeneratorEnum.DEFAULT,
     };
+    this.formData.headersText = this.headersText;
+    this.formData.bodyText = this.bodyText;
 
     const defaultDataGenerator = new DefaultDataGenerator(api);
     defaultDataGenerator.fetchData().subscribe(data => {
       console.log(data);
       this.responseText = JSON.stringify(data);
+      this.formData.responseText = JSON.stringify(data, null,2);
     });
   }
 
@@ -115,7 +143,7 @@ export class ApiModalComponent implements OnInit {
   // 更新API
   updateApi() {
     let params = {
-      id:this.id,
+      id: this.id,
       spaceId: this.spaceID,
       name: this.name,
       remark: this.remark,
@@ -145,7 +173,7 @@ export class ApiModalComponent implements OnInit {
 
   // 查询api
   qryApi() {
-    this._spaceManageService.queryApi({ id: this.id }).subscribe(
+    this._spaceManageService.queryApi({id: this.id}).subscribe(
       data => {
         this.name = data.name;
         this.remark = data.remark;

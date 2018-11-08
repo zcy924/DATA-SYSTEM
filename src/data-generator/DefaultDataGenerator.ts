@@ -17,7 +17,7 @@ export class DefaultDataGenerator implements IDataGenerator{
       {
         method: this.api.method,
         headers: this.api.headers,
-        body: JSON.stringify(this.api.body)
+        body: this.api.body
       },
     ).then(response=>response.json())).pipe(map(response => {
       return response;

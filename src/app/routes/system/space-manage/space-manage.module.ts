@@ -23,6 +23,7 @@ import {SpaceSettingComponent} from "./component/space-setting/space-setting.com
 import {ApiManageComponent} from "./component/api-manage/api-manage.component";
 import { ColorPickerModule } from '../../../../designer/components/shared/color-picker/color-picker.module';
 import { ApiModalComponent } from './component/api-manage/modal/api-modal.component';
+import {AceEditorDirective} from "./component/api-manage/ace-editor.directive";
 
 const components = [
   ReportDetailComponent,
@@ -32,7 +33,8 @@ const components = [
   ScreenManageComponent,
   ScreenDetailComponent,
   SpaceSettingComponent,
-  ApiManageComponent
+  ApiManageComponent,
+  AceEditorDirective
 ];
 const modals = [
   ReportModalComponent,
