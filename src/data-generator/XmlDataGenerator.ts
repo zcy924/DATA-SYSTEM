@@ -3,7 +3,7 @@ import { Api } from './Api';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { map } from 'rxjs/operators';
 
-export class DefaultDataGenerator implements IDataGenerator {
+export class XmlDataGenerator implements IDataGenerator {
 
   api: Api;
 
@@ -17,7 +17,7 @@ export class DefaultDataGenerator implements IDataGenerator {
       {
         method: this.api.method,
         headers: this.api.headers,
-        body: this.api.body,
+        body: this.api.body
       },
     ));
   }
