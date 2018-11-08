@@ -126,4 +126,29 @@ export class SpaceManageService {
   qrySpaceInfo(params): Observable<any> {
     return this.httpClient.post(this.url + 'company/spaceSquareManage/qryInfo', params);
   }
+
+
+  /************************************* API 接口 *************************************/
+
+  addApi(params): Observable<any> {
+    return this.httpClient.post(this.url + '/DVSP/space/api/add', params);
+  }
+
+  modApi(params): Observable<any> {
+    return this.httpClient.post(this.url + '/DVSP/space/api/mod', params);
+  }
+
+  queryApi(params): Observable<any> {
+    return this.httpClient.post(this.url + '/DVSP/space/api/query', params);
+  }
+
+  qryDimList(params): Observable<any> {
+    return this.httpClient.post(this.url + '/DVSP/space/api/qryDimList', params);
+  }
+
+  alldel(params): Observable<any> {
+    return this.httpClient.post(this.url + '/DVSP/space/api/alldel', params);
+  }
+
+
 }

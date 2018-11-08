@@ -1,0 +1,69 @@
+
+
+  <nz-card style="border: none;margin: 0">
+    <form nz-form>
+      <div>
+        <div class="api-form-content">
+
+          <div nz-row class="api-form-item">
+            <div nz-col [nzSpan]="4">Url</div>
+            <div nz-col  [nzSpan]="16">
+              <input nz-input [ngModel]="api.url" name="url" />
+            </div>
+          </div>
+
+          <div nz-row class="api-form-item">
+            <div nz-col [nzSpan]="4">请求方式</div>
+            <div nz-col  [nzSpan]="16">
+              <nz-radio-group [(ngModel)]="api.method">
+                <label nz-radio nzValue="GET">GET</label>
+                <label nz-radio nzValue="POST">POST</label>
+                <label nz-radio nzValue="PUT">PUT</label>
+              </nz-radio-group>
+            </div>
+          </div>
+
+          <div nz-row class="api-form-item">
+            <div nz-col [nzSpan]="4">请求头</div>
+            <div nz-col  [nzSpan]="16">
+              <textarea nz-input rows="8" [(ngModel)]="headersText" name='headersText' class="textbox"></textarea>
+            </div>
+          </div>
+
+          <div nz-row class="api-form-item">
+            <div nz-col [nzSpan]="4">请求参数</div>
+            <div nz-col  [nzSpan]="16">
+              <textarea nz-input rows="8" [(ngModel)]="bodyText" name='bodyText' class="textbox"></textarea>
+            </div>
+          </div>
+
+        </div>
+        <div class="api-form-content" >
+
+          <div nz-row class="api-form-item">
+            <div nz-col [nzSpan]="4">名称</div>
+            <div nz-col  [nzSpan]="16">
+              <input nz-input [ngModel]="name" name="name" />
+            </div>
+          </div>
+
+          <div nz-row class="api-form-item">
+            <div nz-col [nzSpan]="4">描述</div>
+            <div nz-col  [nzSpan]="16">
+              <input nz-input [ngModel]="remark" name="remark" />
+            </div>
+          </div>
+
+          <div nz-row class="api-form-item">
+            <div nz-col [nzSpan]="4">响应</div>
+            <div nz-col  [nzSpan]="16">
+              <textarea nz-input rows="16" [(ngModel)]="responseText" name='responseText' class="textbox"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </nz-card>
+
+
+

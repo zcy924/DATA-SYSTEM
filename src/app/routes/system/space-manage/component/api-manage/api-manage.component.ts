@@ -3,12 +3,12 @@ import { SpaceManageService } from '../../space-manage.service';
 import { Page } from '../../../../../models/page';
 import { SettingsService } from '@delon/theme';
 import { SideMenuService } from '@shared/side-menu.service';
-import { AddScreenComponent } from '../screen-manage/component/add-screen.component';
 import { EditScreenComponent } from '../screen-manage/component/edit-screen.component';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { HttpResponse } from '@angular/common/http';
 import { DefaultDataGenerator } from '../../../../../../data-generator/DefaultDataGenerator';
 import { Api } from '../../../../../../data-generator/Api';
+import { ApiModalComponent } from './modal/api-modal.component';
 
 @Component({
   templateUrl: 'api-manage.html',
@@ -52,42 +52,39 @@ export class ApiManageComponent implements OnInit {
   }
 
   openAdd() {
-    // const modal = this.nzModal.create({
-    //   nzTitle: `新增大屏`,
-    //   nzContent: AddScreenComponent,
-    //   nzWidth: '600px',
-    //   nzComponentParams: {
-    //     spaceId: localStorage.getItem('spaceID'),
-    //     companyId: this.settings.user.companyId,
-    //   },
-    //   nzOkText: '新增',
-    //   nzCancelText: '取消',
-    //   nzOnOk: i => {
-    //     i.submitForm();
-    //   },
-    // });
-    // modal.afterClose.subscribe(data => {
-    //   this.getScreenList(true);
-    // });
-    //   this.getScreenTree();
-
-
-    const api = new Api(
-      'GET',
-      {
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'image/jpeg',
+    const modal = this.nzModal.create({
+      nzTitle: `新增API`,
+      nzContent: ApiModalComponent,
+      nzStyle: { top: '30px' },
+      nzWidth: '70%',
+      nzOkText: '新增',
+      nzCancelText: '取消',
+      nzOnOk: i => {
+        i.submitForm();
       },
-      'https://jsonplaceholder.typicode.com/posts/?a=b',
-      null,
-      { a: 'b' },
-    );
-
-    const gen = new DefaultDataGenerator(api);
-    // gen.fetchData().subscribe(res=>{
-    gen.fetchData1().subscribe(res => {
-      console.log(res);
     });
+    modal.afterClose.subscribe(data => {
+      // this.getScreenList(true);
+      //   this.getScreenTree();
+    });
+
+
+    // const api = new Api(
+    //   'GET',
+    //   {
+    //     'Access-Control-Allow-Origin': '*',
+    //     'Content-Type': 'image/jpeg',
+    //   },
+    //   'https://jsonplaceholder.typicode.com/posts/?a=b',
+    //   null,
+    //   { a: 'b' },
+    // );
+    //
+    // const gen = new DefaultDataGenerator(api);
+    // // gen.fetchData().subscribe(res=>{
+    // gen.fetchData1().subscribe(res => {
+    //   console.log(res);
+    // });
   }
 
 

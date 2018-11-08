@@ -22,6 +22,7 @@ import { ReportKeepModalComponent } from './component/report-keep-modal.componen
 import {SpaceSettingComponent} from "./component/space-setting/space-setting.component";
 import {ApiManageComponent} from "./component/api-manage/api-manage.component";
 import { ColorPickerModule } from '../../../../designer/components/shared/color-picker/color-picker.module';
+import { ApiModalComponent } from './component/api-manage/modal/api-modal.component';
 
 const components = [
   ReportDetailComponent,
@@ -42,6 +43,7 @@ const modals = [
   EditUserModalComponent,
   AddScreenComponent,
   EditScreenComponent,
+  ApiModalComponent
 ];
 @NgModule({
   imports: [SharedModule, SpaceManageRoutingModule, ColorPickerModule],
