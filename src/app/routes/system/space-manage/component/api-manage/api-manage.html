@@ -1,96 +1,57 @@
 <div style="padding: 0 16px 0 16px">
-  <div nz-row style="background-color: rgb(246,248,248) ;border-bottom: 1px solid rgb(222,230,231);padding: 8px 0px;">
-    <div nz-col nzSpan="4" class="title-tab">
-      API管理
-    </div>
-    <div nz-col style="float: right">
+  <div nz-row style="background-color: rgb(246,248,248) ;border-bottom: 1px solid rgb(222,230,231);padding: 8px 0;">
+    <div nz-col [nzSpan]="8" class="title-tab">API管理</div>
+
+    <div nz-col [nzSpan]="8">
       <nz-button-group>
-        <button nz-button [disabled]="disabledButton" nzType="danger"(click)="handle()">批量删除</button>
-        <button nz-button nzType="primary" (click)="openAdd()">添加新大屏</button>
+        <button nz-button [disabled]="disabledButton" nzType="danger" (click)="deleteAll()">批量删除</button>
+        <button nz-button nzType="primary" (click)="openAdd()">添加API</button>
       </nz-button-group>
 
+      <nz-input-group nzSearch [nzSuffix]="suffixIconButton" style="padding-left:16px ">
+        <input type="text" [(ngModel)]="key" (keyup)="($event.which === 13)?getApiList():0" nz-input
+               placeholder="请输入API名称或描述"/>
+      </nz-input-group>
+      <ng-template #suffixIconButton>
+        <button nz-button nzType="primary" (click)="getApiList()" nzSearch><i nz-icon type="search"></i></button>
+      </ng-template>
     </div>
+
   </div>
 </div>
 <div style="padding: 16px">
   <nz-card>
     <div nz-row>
       <div nz-col nzSpan="24">
-        大屏列表
+        API列表
       </div>
-    </div>
-    <div nz-row>
-      <form nz-form  class="ant-advanced-search-form">
-        <div nz-row >
-          <div nz-col [nzSpan]="8">
-            <nz-form-item>
-              <nz-form-label nz-col [nzSpan]="6">状态 </nz-form-label>
-              <nz-form-control nz-col [nzSpan]="18">
-                <input nz-input placeholder="placeholder">
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-          <div nz-col [nzSpan]="8">
-            <nz-form-item>
-              <nz-form-label nz-col [nzSpan]="6">名称 </nz-form-label>
-              <nz-form-control nz-col [nzSpan]="18">
-                <input nz-input placeholder="placeholder">
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-          <div nz-col [nzSpan]="8">
-            <nz-form-item>
-              <nz-form-label nz-col [nzSpan]="6">描述 </nz-form-label>
-              <nz-form-control nz-col [nzSpan]="18">
-                <input nz-input placeholder="placeholder">
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-        </div>
-        <div nz-row>
-          <div nz-col [nzSpan]="12" style="text-align: right;">
-            <button nz-button [nzType]="'default'">重置</button>
-          </div>
-          <div nz-col [nzSpan]="12" style="text-align: left;padding-left: 16px">
-            <button nz-button [nzType]="'primary'" (click)="test()">查询</button>
-          </div>
-        </div>
-      </form>
     </div>
     <div nz-row style="padding-top: 16px">
       <nz-table #ajaxTable nzShowSizeChanger [nzFrontPagination]="false" [nzData]="dataSet" [nzLoading]="loading"
-                [nzTotal]="page.totalRow" [(nzPageIndex)]="page.curPage" [(nzPageSize)]="page.pageSize" (nzPageIndexChange)="getScreenList()"
-                (nzPageSizeChange)="getScreenList(true)" (nzCurrentPageDataChange)="currentDataChange($event)">
+                [nzTotal]="page.totalRow" [(nzPageIndex)]="page.curPage" [(nzPageSize)]="page.pageSize"
+                (nzPageIndexChange)="getApiList()"
+                (nzPageSizeChange)="getApiList(true)" (nzCurrentPageDataChange)="currentDataChange($event)">
         <thead nzSingleSort>
         <tr>
-          <th nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
-          <th>大屏</th>
-          <th>备注</th>
-          <th><span>发布状态</span></th>
-          <th><span>发布连接</span></th>
-          <th><span>开发模式</span></th>
-          <th><span>操作</span></th>
+          <th nzShowCheckbox [(nzChecked)]="allChecked" [nzIndeterminate]="indeterminate"
+              (nzCheckedChange)="checkAll($event)"></th>
+          <th>名称</th>
+          <th>描述</th>
+          <th>刷新间隔（秒）</th>
+          <th>操作</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let data of ajaxTable.data">
           <td nzShowCheckbox [(nzChecked)]="data.checked" (nzCheckedChange)="checkLine($event,data.dashboardId)"></td>
-          <td><i nz-icon type="{{data.icon}}"></i>&nbsp;&nbsp;{{data.name}}</td>
+          <td>{{data.name}}</td>
           <td>{{data.remark}}</td>
-          <td><span *ngIf="data.isPublic=='F'">未发布</span><span *ngIf="data.isPublic=='T'">已发布</span></td>
-          <td>{{data.token}}</td>
-          <td><span *ngIf="data.isDev=='F'">否</span><span *ngIf="data.isDev=='T'">是</span></td>
+          <td>{{data.interval}}</td>
           <td>
-            <a  nz-tooltip nzTitle="查看大屏页面" [routerLink]='["/designer" , data.dashboardId]'><i class="anticon anticon-eye"></i></a>
+            <a (click)="edit(data)" nz-tooltip nzTitle="编辑"><i class="anticon anticon-edit"></i></a>
             <nz-divider nzType="vertical"></nz-divider>
-            <a (click)="edit(data)" nz-tooltip nzTitle="编辑页面属性"><i class="anticon anticon-edit"></i></a>
-            <nz-divider nzType="vertical"></nz-divider>
-            <a (click)="public()" nz-tooltip nzTitle="发布管理"><i class="anticon anticon-share-alt"></i></a>
-            <nz-divider nzType="vertical"></nz-divider>
-            <a (click)="copy()" nz-tooltip nzTitle="以此大屏为模板新建"><i class="anticon anticon-copy"></i></a>
-            <nz-divider nzType="vertical"></nz-divider>
-            <a nz-popconfirm nzTitle="确认删除该大屏？" (nzOnConfirm)="delete(data.dashboardId)"><i nz-tooltip nzTitle="删除"
-                                                                                            class="anticon anticon-delete"></i></a>
+            <a nz-popconfirm nzTitle="确认删除该API？" (nzOnConfirm)="deleteOne(data)">
+              <i nz-tooltip nzTitle="删除" class="anticon anticon-delete"></i></a>
           </td>
         </tr>
         </tbody>

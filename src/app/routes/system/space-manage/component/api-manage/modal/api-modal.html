@@ -6,20 +6,21 @@
         <div class="api-form-content">
 
           <div nz-row class="api-form-item">
-            <div nz-col [nzSpan]="4">Url</div>
+            <div nz-col [nzSpan]="4">请求路径</div>
             <div nz-col  [nzSpan]="16">
-              <input nz-input [ngModel]="api.url" name="url" />
+              <input nz-input [(ngModel)]="url" name="url" />
             </div>
           </div>
 
           <div nz-row class="api-form-item">
             <div nz-col [nzSpan]="4">请求方式</div>
             <div nz-col  [nzSpan]="16">
-              <nz-radio-group [(ngModel)]="api.method">
+              <nz-radio-group [(ngModel)]="method" name="method">
                 <label nz-radio nzValue="GET">GET</label>
                 <label nz-radio nzValue="POST">POST</label>
                 <label nz-radio nzValue="PUT">PUT</label>
               </nz-radio-group>
+              <button nz-button nzType="default" (click)="sendRequest()">发送请求</button>
             </div>
           </div>
 
@@ -43,14 +44,14 @@
           <div nz-row class="api-form-item">
             <div nz-col [nzSpan]="4">名称</div>
             <div nz-col  [nzSpan]="16">
-              <input nz-input [ngModel]="name" name="name" />
+              <input nz-input [(ngModel)]="name" name="name" />
             </div>
           </div>
 
           <div nz-row class="api-form-item">
             <div nz-col [nzSpan]="4">描述</div>
             <div nz-col  [nzSpan]="16">
-              <input nz-input [ngModel]="remark" name="remark" />
+              <input nz-input [(ngModel)]="remark" name="remark" />
             </div>
           </div>
 

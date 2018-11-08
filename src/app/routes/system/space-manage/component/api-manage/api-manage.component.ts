@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { SpaceManageService } from '../../space-manage.service';
 import { Page } from '../../../../../models/page';
 import { SettingsService } from '@delon/theme';
-import { SideMenuService } from '@shared/side-menu.service';
-import { EditScreenComponent } from '../screen-manage/component/edit-screen.component';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { HttpResponse } from '@angular/common/http';
 import { DefaultDataGenerator } from '../../../../../../data-generator/DefaultDataGenerator';
@@ -35,20 +33,19 @@ export class ApiManageComponent implements OnInit {
   indeterminate = false;
   allChecked = false;
   dataSet = [];
-  menu;
+
+  key = '';
 
   constructor(
     private nzModal: NzModalService,
     private nzMessage: NzMessageService,
     private spaceManageService: SpaceManageService,
-    private settings: SettingsService,
-    private sideMenu: SideMenuService,
+
   ) {
   }
 
   ngOnInit() {
-    this.getScreenList();
-    this.menu = this.sideMenu.menu;
+    this.getApiList();
   }
 
   openAdd() {
@@ -60,53 +57,38 @@ export class ApiManageComponent implements OnInit {
       nzOkText: '新增',
       nzCancelText: '取消',
       nzOnOk: i => {
-        i.submitForm();
+        return new Promise(reslove => {
+          i.submitForm();
+        });
       },
     });
     modal.afterClose.subscribe(data => {
-      // this.getScreenList(true);
-      //   this.getScreenTree();
+      if (data == 'ok') {
+        this.getApiList(true);
+      }
     });
 
-
-    // const api = new Api(
-    //   'GET',
-    //   {
-    //     'Access-Control-Allow-Origin': '*',
-    //     'Content-Type': 'image/jpeg',
-    //   },
-    //   'https://jsonplaceholder.typicode.com/posts/?a=b',
-    //   null,
-    //   { a: 'b' },
-    // );
-    //
-    // const gen = new DefaultDataGenerator(api);
-    // // gen.fetchData().subscribe(res=>{
-    // gen.fetchData1().subscribe(res => {
-    //   console.log(res);
-    // });
   }
 
-
-  getScreenList(reset = false) {
+  // 模糊查询列表
+  getApiList(reset = false) {
     if (reset) {
       this.page.curPage = 1;
     }
     this.loading = true;
     const params = {
+      key: this.key,
       spaceId: localStorage.getItem('spaceID'),
+      status: 'T',
       curPage: this.page.curPage,
       pageSize: this.page.pageSize,
       totalPage: this.page.totalPage || '',
       totalRow: this.page.totalRow || '',
     };
-    this.spaceManageService.getScreenList(params).subscribe(
+    this.spaceManageService.qryDimList(params).subscribe(
       data => {
         this.dataSet = data['retList'];
-        this.dataSet.forEach(value => {
-          value.checked = false;
-        });
-        console.log(this.dataSet);
+        this.dataSet.forEach(value => value.checked = false);
         this.page.totalRow = data['totalRow'];
         this.page.totalPage = data['totalPage'];
         this.loading = false;
@@ -141,51 +123,40 @@ export class ApiManageComponent implements OnInit {
     this.checkLine();
   }
 
-  view() {
-  }
-
+  // 编辑API
   edit(data) {
     const modal = this.nzModal.create({
-      nzTitle: `编辑大屏${data.name}`,
-      nzContent: EditScreenComponent,
-      nzWidth: '600px',
+      nzTitle: `编辑API`,
+      nzContent: ApiModalComponent,
+      nzStyle: { top: '30px' },
+      nzWidth: '70%',
+      nzOkText: '保存',
+      nzCancelText: '取消',
       nzOnOk: i => {
-        return new Promise(reslove => {
-          i.submitForm();
+        return new Promise(() => {
+          i.updateApi();
         });
       },
       nzComponentParams: {
-        screenName: data.name,
-        screenRemark: data.remark,
-        isDev: data.isDev,
-        dashboardId: data.dashboardId,
-        spaceId: localStorage.getItem('spaceID'),
+        id:data.id
       },
     });
     modal.afterClose.subscribe(data => {
       if (data == 'ok') {
-        this.getScreenList(true);
-        this.getScreenTree();
+        this.getApiList(true);
       }
     });
   }
 
-  public() {
-  }
 
-  copy() {
-  }
-
-  delete(screenId) {
+  delete(list, success) {
     const params = {
-      spaceId: localStorage.getItem('spaceID'),
-      dashboardId: screenId,
+      reqList: list,
     };
-    this.spaceManageService.delScreen(params).subscribe(
+    this.spaceManageService.delAll(params).subscribe(
       data => {
-        this.nzMessage.success('删除成功!');
-        this.getScreenList(true);
-        this.getScreenTree();
+        this.nzMessage.success(success);
+        this.getApiList(true);
       },
       err => {
         if (err instanceof HttpResponse) {
@@ -195,70 +166,22 @@ export class ApiManageComponent implements OnInit {
     );
   }
 
-  handle() {
+  deleteOne(data) {
+    this.delete([{ 'id': data.id }], '删除成功!');
+  }
+
+  deleteAll() {
     this.nzModal.warning({
       nzTitle: '系统提示',
-      nzContent: '确定删除所选大屏吗？',
+      nzContent: '确定删除所选API吗？',
       nzOkText: '确认',
       nzCancelText: '取消',
       nzOnOk: () => {
-        const handleArray = [];
-        this.dataSet.forEach(value => {
-          if (value.checked) {
-            const item = {
-              dashboardId: value.dashboardId,
-              spaceId: localStorage.getItem('spaceID'),
-            };
-            handleArray.push(item);
-          }
-        });
-        const params = { reqList: handleArray };
-        this.spaceManageService.delAllScreen(params).subscribe(
-          data => {
-            this.nzMessage.success('批量删除成功!');
-            this.getScreenList(true);
-            this.getScreenTree();
-          },
-          err => {
-            if (err instanceof HttpResponse) {
-              this.nzMessage.error(err.body.retMsg);
-            }
-          },
-        );
+        const delList = this.dataSet.filter(value => value.checked);
+        this.delete(delList, '删除所选API成功!');
       },
     });
   }
 
-  // 新增大屏时刷新侧边大屏菜单栏
-  getScreenTree(reset = false) {
-    if (reset) {
-      this.page.curPage = 1;
-    }
-    const params = {
-      spaceId: localStorage.getItem('spaceID'),
-      curPage: this.page.curPage,
-      pageSize: 1000,
-      totalPage: this.page.totalPage || '',
-      totalRow: this.page.totalRow || '',
-    };
-    this.spaceManageService.getScreenList(params).subscribe(
-      data => {
-        const dataSet = data['retList'];
-        dataSet.map(value => {
-          value.text = value.name;
-          value.link = `app/square/${localStorage.getItem('spaceID')}/screen-detail/${
-            value.dashboardId
-            }`;
-          value.isLeaf = true;
-          value.icon = value.icon;
-        });
-        this.menu[0]['children'][0]['children'] = dataSet;
-      },
-      err => {
-        if (err instanceof HttpResponse) {
-          this.nzMessage.error(err.body.retMsg);
-        }
-      },
-    );
-  }
+
 }
