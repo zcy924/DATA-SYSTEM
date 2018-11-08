@@ -1,16 +1,16 @@
 import * as _ from 'lodash';
 
 import {DataOption} from '@core/data/data.option';
-import { IDataSourceOption } from '../../interface/file/data.source.option';
+import { IDataSourceConfig } from '../../shared/file/data.source.config';
 
 export class DataSourceConfigSet {
 
   private _parent: DataSourceConfigSet;
   private _array: Array<DataOption> = [];
 
-  constructor(dataOptionOptionArray?: IDataSourceOption | Array<IDataSourceOption>) {
-    if (dataOptionOptionArray) {
-      this.load(dataOptionOptionArray);
+  constructor(dataSourceConfigArray?: IDataSourceConfig | Array<IDataSourceConfig>) {
+    if (dataSourceConfigArray) {
+      this.load(dataSourceConfigArray);
     }
   }
 
@@ -32,7 +32,7 @@ export class DataSourceConfigSet {
     }) || (this._parent ? this._parent.getDataSourceConfig(id) : null);
   }
 
-  load(dataOptionOptionArray: IDataSourceOption | Array<IDataSourceOption>) {
+  load(dataOptionOptionArray: IDataSourceConfig | Array<IDataSourceConfig>) {
     if (_.isArray(dataOptionOptionArray)) {
       dataOptionOptionArray.forEach((value) => {
         this._load(value);
@@ -42,7 +42,7 @@ export class DataSourceConfigSet {
     }
   }
 
-  private _load(dataOptionOption: IDataSourceOption) {
+  private _load(dataOptionOption: IDataSourceConfig) {
     this._array.push(new DataOption(dataOptionOption));
   }
 }

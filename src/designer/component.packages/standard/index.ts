@@ -1,4 +1,4 @@
-import { ComponentRepository } from '../../interface/component.repository';
+import { ComponentRepository } from '../../shared/core/repository/component.repository';
 
 const compRepo = new ComponentRepository('标准组件库');
 

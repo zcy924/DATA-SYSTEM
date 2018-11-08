@@ -1,11 +1,11 @@
-import { IDataSourceOption } from '../../interface/file/data.source.option';
+import { IDataSourceConfig } from '../../shared/file/data.source.config';
 
 /**
  * DataOption 不可更改
  */
 export class DataOption {
 
-  constructor(private _option: IDataSourceOption) {
+  constructor(private _option: IDataSourceConfig) {
 
   }
 

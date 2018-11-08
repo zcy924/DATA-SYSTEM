@@ -9,7 +9,6 @@ import { SiderLeftComponent } from './sider/sider.left.component';
 import { FormsModule } from '@angular/forms';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { HttpClientModule } from '@angular/common/http';
-import { ColorPickerModule } from '@shared/color-picker/color-picker.module';
 import { SiderRightComponent } from './sider/sider.right.component';
 import { ConfigModule } from '../components/config/config.module';
 import { GraphicConfigModule } from '../components/graphic.config/graphic.config.module';
@@ -20,6 +19,7 @@ import { DesignerBodyLeftComponent } from './designer.body.left.component';
 import { PaletteComponent } from './part/palette.component';
 import { OutlineComponent } from './part/outline.component';
 import { CommService } from '../service/comm.service';
+import { ColorPickerModule } from '../components/shared/color-picker/color-picker.module';
 
 const COMPONENTS = [
   DesignerComponent,

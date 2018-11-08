@@ -1,5 +1,3 @@
-import { IRegionOption } from './region.option';
-
 export interface IComponentOption {
   region: {
     regionKey: string;
@@ -11,3 +9,12 @@ export interface IComponentOption {
     dataSourceKey: string;
   }
 }
+
+export interface IRegionOption {
+  zIndex: number;
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+}
+

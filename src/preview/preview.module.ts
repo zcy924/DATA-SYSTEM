@@ -8,7 +8,7 @@ import { PreviewComponent } from './preview.component';
 import { FormsModule } from '@angular/forms';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { HttpClientModule } from '@angular/common/http';
-import { ColorPickerModule } from '@shared/color-picker/color-picker.module';
+import { ColorPickerModule } from '../designer/components/shared/color-picker/color-picker.module';
 
 
 const COMPONENTS = [

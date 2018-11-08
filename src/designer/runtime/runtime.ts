@@ -1,10 +1,10 @@
-import { IFileStructure } from '../interface/file/file.structure';
+import { IFileStructure } from '../shared/file/file.structure';
 import { PageRuntime } from './page.runtime';
-import { ComponentRepository } from '../interface/component.repository';
-import { ComponentRepositoryManager } from '../manager/component.repository.manager';
+import { ComponentRepository } from '../shared/core/repository/component.repository';
+import { ComponentRepositoryManager } from '../shared/manager/component.repository.manager';
 import { PageManagerRuntime } from './page.manager.runtime';
 import * as _ from 'lodash';
-import { GeneratorRepositoryManager } from '../manager/generator.repository.manager';
+import { GeneratorRepositoryManager } from '../shared/manager/generator.repository.manager';
 
 /**
  * 1、支持同时打开多个页面

@@ -1,6 +1,6 @@
-import { Type } from '../interface/type';
-import { IGraphic } from '@core/node/graphic/graphic';
-import { ComponentRepository } from '../interface/component.repository';
+import { Type } from '../../interface/type';
+import { IGraphic } from '../../core/node/graphic/graphic';
+import { ComponentRepository } from '../core/repository/component.repository';
 
 /**
  * 设计时和运行时都会使用到ComponentRepositoryManager

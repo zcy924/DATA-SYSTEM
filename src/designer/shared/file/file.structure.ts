@@ -1,4 +1,5 @@
 import { IComponentOption } from './component.option';
+import { IDataSourceConfig } from './data.source.config';
 
 export interface IFileStructure {
   name: string;
@@ -20,7 +21,7 @@ export interface IFileStructure {
     option: any;
     children: Array<IComponentOption>;
   };
-  data?: Array<any>;
+  data?: Array<IDataSourceConfig>;
 }
 
 

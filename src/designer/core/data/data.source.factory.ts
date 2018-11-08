@@ -2,8 +2,7 @@ import {BehaviorSubject, interval, Observable, of} from 'rxjs';
 import {map, publishBehavior, refCount} from 'rxjs/operators';
 import {MockDynamicDataSourceConfig, MockStaticDataSourceConfig} from './data.source.interface';
 import {DataOption} from '@core/data/data.option';
-import {dataModelManager} from '@core/data/data.model.manager';
-import {array} from '@core/data/test';
+
 
 export class DataSourceFactory {
 
