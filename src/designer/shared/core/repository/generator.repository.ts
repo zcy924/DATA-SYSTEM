@@ -31,6 +31,10 @@ export class GeneratorRepository {
     return this._name;
   }
 
+  has(key: string) {
+    return this._map.has(key);
+  }
+
   register(geneMeta: IDataSourceGeneratorMeta) {
     if (geneMeta) {
       this._map.set(geneMeta.key, geneMeta);
@@ -45,7 +49,14 @@ export class GeneratorRepository {
     }
   }
 
-  getGeneratorDef(key: string): Type<IGraphic> {
+  getGenerator(key: string): IDataSourceGenerator {
+    if (this._map.has(key)) {
+      const meta = this._map.get(key);
+      return meta.generator || (meta.generator = new meta.generatorDef());
+    }
+  }
+
+  getGeneratorDef(key: string): Type<IDataSourceGenerator> {
     return this._map.get(key).generatorDef;
   }
 }

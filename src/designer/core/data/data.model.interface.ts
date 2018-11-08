@@ -1,5 +1,3 @@
-import {IDataSource} from '../source/data.source/data.source';
-
 export interface Dimension {
   name: string;
   displayName?: string;

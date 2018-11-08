@@ -11,6 +11,7 @@ import { DataSourceConfigSet } from '@shared/core/data/data.source.config.set';
  */
 export class DataSourceManager {
   private _dataSourceMap: Map<string, Observable<any>> = new Map();
+  private _dataSourceFactory = DataSourceFactory.getInstance();
 
   constructor(private _dataSourceConfigSet: DataSourceConfigSet) {
 
@@ -21,12 +22,12 @@ export class DataSourceManager {
   }
 
   getDataSourceByID(id: string): Observable<any> {
+    console.log('获取数据源：');
     const dataSourceMap = this._dataSourceMap;
     if (dataSourceMap.has(id)) {
       return dataSourceMap.get(id);
     } else if (this._dataSourceConfigSet.getDataSourceConfig(id)) {
-      const dataSource = DataSourceFactory
-        .getInstance()
+      const dataSource = this._dataSourceFactory
         .getDataSource(this._dataSourceConfigSet.getDataSourceConfig(id));
       dataSourceMap.set(id, dataSource);
       return dataSource;

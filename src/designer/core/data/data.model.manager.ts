@@ -17,8 +17,8 @@ class DataModelManager {
 
   set dataOptionSet(value: DataSourceConfigSet) {
     if (value) {
-      value.dataOptionArray.forEach((dataOption) => {
-        this.addDataModel(dataOption.id, dataOption.displayName, dataOption.dimensions);
+      value.values.forEach((dataSourceConfig) => {
+        this.addDataModel(dataSourceConfig.id, dataSourceConfig.displayName, dataSourceConfig.dimensions);
       });
       this._dataOptionSet = value;
     }

@@ -1,4 +1,5 @@
 import { GeneratorRepository } from '../core/repository/generator.repository';
+import { standardGeneratorRepo } from '../../data.source.packages/mock';
 
 /**
  * 设计时和运行时都会使用到ComponentRepositoryManager
@@ -14,7 +15,8 @@ export class GeneratorRepositoryManager {
 
   static getInstance() {
     if (!this._manager) {
-      this._manager = new GeneratorRepositoryManager();
+      const manager = this._manager = new GeneratorRepositoryManager();
+      manager.addGeneratorRepository(standardGeneratorRepo);
     }
     return this._manager;
   }
@@ -41,10 +43,19 @@ export class GeneratorRepositoryManager {
     }
   }
 
-  getDataSourceGenerator(path: string) {
+  has(path: string) {
     const [repoKey, geneKey] = path.split('$');
     if (this._map.has(repoKey)) {
-      return this._map.get(repoKey).getGeneratorDef(geneKey);
+      return this._map.get(repoKey).has(geneKey);
+    } else {
+      return false;
+    }
+  }
+
+  getDataSourceGeneratorByPath(path: string) {
+    const [repoKey, geneKey] = path.split('$');
+    if (this._map.has(repoKey)) {
+      return this._map.get(repoKey).getGenerator(geneKey);
     }
   }
 

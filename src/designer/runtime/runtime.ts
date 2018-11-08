@@ -6,7 +6,7 @@ import { PageManagerRuntime } from './page.manager.runtime';
 import * as _ from 'lodash';
 import { GeneratorRepositoryManager } from '../shared/manager/generator.repository.manager';
 import { GeneratorRepository } from '@shared/core/repository/generator.repository';
-import { DataSourceConfig } from '@core/data/data.source.config';
+import { DataSourceConfig } from '@core/../shared/core/data/data.source.config';
 import { DataSourceConfigSet } from '@shared/core/data/data.source.config.set';
 import { DataSourceManager } from '@shared/core/data/data.source.manager';
 
