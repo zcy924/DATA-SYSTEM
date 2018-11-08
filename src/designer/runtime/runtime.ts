@@ -5,6 +5,10 @@ import { ComponentRepositoryManager } from '../shared/manager/component.reposito
 import { PageManagerRuntime } from './page.manager.runtime';
 import * as _ from 'lodash';
 import { GeneratorRepositoryManager } from '../shared/manager/generator.repository.manager';
+import { GeneratorRepository } from '@shared/core/repository/generator.repository';
+import { DataSourceConfig } from '@core/data/data.source.config';
+import { DataSourceConfigSet } from '@shared/core/data/data.source.config.set';
+import { DataSourceManager } from '@shared/core/data/data.source.manager';
 
 /**
  * 1、支持同时打开多个页面
@@ -24,12 +28,21 @@ import { GeneratorRepositoryManager } from '../shared/manager/generator.reposito
  */
 export class Runtime {
 
+  private static _runtime: Runtime;
   private static readonly _version = '1.0.0';
   private static readonly _versionPattern = /^\d+\.\d+\.\d+$/;
 
   private _pageManager = new PageManagerRuntime();
-  private _compRepoManager = new ComponentRepositoryManager();
-  private _generatorRepoManager = new GeneratorRepositoryManager();
+  private _compRepoManager = ComponentRepositoryManager.getInstance();
+  private _geneRepoManager = GeneratorRepositoryManager.getInstance();
+
+  static getInstance() {
+    if (!this._runtime) {
+      this._runtime = new Runtime();
+    }
+    return this._runtime;
+  }
+
 
   static accept(versionNo: string): boolean {
     if (this._versionPattern.test(versionNo)) {
@@ -53,7 +66,7 @@ export class Runtime {
 
   open(file: IFileStructure): PageRuntime {
     if (this._checkFile(file)) {
-      return this._createFile();
+      return this._createFile(file);
     }
   }
 
@@ -69,7 +82,7 @@ export class Runtime {
     const { componentRepositories, dataSourceGeneratorRepositories } =
       _.get(file, 'dependencies');
     return this._compRepoManager.includes(componentRepositories)
-      && this._generatorRepoManager.includes(dataSourceGeneratorRepositories);
+      && this._geneRepoManager.includes(dataSourceGeneratorRepositories);
   }
 
   get pages(): Array<PageRuntime> {
@@ -83,6 +96,17 @@ export class Runtime {
   removeComponentRepository() {
   }
 
+  addGeneretorRepository(geneRepo: GeneratorRepository | Array<GeneratorRepository>) {
+    if (_.isArray(geneRepo)) {
+      geneRepo
+        .forEach(value => this._geneRepoManager
+          .addGeneratorRepository(value));
+    } else {
+      this._geneRepoManager.addGeneratorRepository(geneRepo);
+    }
+
+  }
+
   destroy() {
     if (this._compRepoManager) {
       this._compRepoManager.destroy();
@@ -90,8 +114,10 @@ export class Runtime {
     }
   }
 
-  private _createFile(): PageRuntime {
-    const page = new PageRuntime();
+  private _createFile(file: IFileStructure): PageRuntime {
+    const dataSourceConfigSet = new DataSourceConfigSet(file.data),
+      dataSourceManager = new DataSourceManager(dataSourceConfigSet),
+      page = new PageRuntime();
 
     this._pageManager.addPage(page);
     return page;

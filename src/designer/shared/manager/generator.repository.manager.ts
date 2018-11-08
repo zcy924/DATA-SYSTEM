@@ -8,7 +8,19 @@ import { GeneratorRepository } from '../core/repository/generator.repository';
  * 运行时只能识别该manager中存在的Graphic
  */
 export class GeneratorRepositoryManager {
+  private static _manager: GeneratorRepositoryManager;
+
   private _map: Map<string, GeneratorRepository> = new Map();
+
+  static getInstance() {
+    if (!this._manager) {
+      this._manager = new GeneratorRepositoryManager();
+    }
+    return this._manager;
+  }
+
+  private constructor() {
+  }
 
   addGeneratorRepository(geneRepo: GeneratorRepository) {
     if (geneRepo) {

@@ -4,6 +4,7 @@ import { regionMap } from '@core/node/config/region.map';
 import { Observable } from 'rxjs/internal/Observable';
 import { RuntimePageConfig } from '../components/page.config/runtime.page.config';
 import { GraphicWrapperRuntime } from './graphic.wrapper.runtime';
+import { DataSourceManager } from '@shared/core/data/data.source.manager';
 
 enum PageRuntimeState {
   created, inited, loaded
@@ -37,6 +38,8 @@ export class PageRuntime {
 
   private _regionArray: Array<RegionRuntime> = [];
 
+  private _dataSourceManager: DataSourceManager;
+
   constructor() {
     const $element = this.$element = $(template);
 
@@ -64,7 +67,7 @@ export class PageRuntime {
         this._createRegion(value);
       });
       this._state = PageRuntimeState.loaded;
-    }else{
+    } else {
       throw new Error('状态不一致  请检查代码！');
     }
   }
