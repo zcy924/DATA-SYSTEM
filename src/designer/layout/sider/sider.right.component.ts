@@ -3,9 +3,7 @@ import {NgForm} from '@angular/forms';
 import {DesignerBodyComponent} from '../designer.body.component';
 import {dataModelList} from '../../utils/dataModel';
 import {dataModelManager} from '@core/data/data.model.manager';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {array} from '@core/data/test';
-import {DataSourceConfigSet} from '@core/data/data.source.config.set';
+import {HttpClient} from '@angular/common/http';
 import {DataSourceConfigManager} from '@core/data/data.source.config.manager';
 
 export let modelPlugin = null;

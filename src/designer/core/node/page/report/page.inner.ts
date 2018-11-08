@@ -6,13 +6,13 @@ import { ISelectManager, SelectManager } from '@core/node/manager/select.manager
 import { DesignPageView } from '@core/node/page/report/design,page.view';
 import { RegionManager } from '@core/node/manager/region.manager';
 import { ActivateManager } from '@core/node/manager/activate.manager';
-import { DataSourceManager } from '@core/data/data.source.manager';
 import { ConfigSourceManager } from '@core/config/config.source.manager';
 import { dataOptionManager } from '@core/data/data.source.config.manager';
 import { ActionManager } from '@core/node/operate/action.manager';
 import { PageConfigWrapper } from '@core/node/page/report/page.outer';
 import { AbstractPageView } from '@core/node/page/report/abstract.page.view';
 import { RuntimePageView } from '@core/node/page/report/runtime.page.view';
+import { DataSourceManager } from '@shared/core/data/data.source.manager';
 
 export class ReportPageInner implements IPage {
 

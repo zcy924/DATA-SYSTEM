@@ -1,7 +1,7 @@
 import {Dataset, DataModel} from './data.model.interface';
-import {DataSourceConfigSet} from '@core/data/data.source.config.set';
 import {Observable, Subject} from 'rxjs';
 import {session} from '@core/node/utils/session';
+import { DataSourceConfigSet } from '@shared/core/data/data.source.config.set';
 
 /**
  * 该类不可以跟DataSourceManager合并 DataModelPlugin只认DataModelManager说话

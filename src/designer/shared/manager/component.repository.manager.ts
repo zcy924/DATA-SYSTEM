@@ -10,7 +10,19 @@ import { ComponentRepository } from '../core/repository/component.repository';
  * 运行时只能识别该manager中存在的Graphic
  */
 export class ComponentRepositoryManager {
+  private static _manager: ComponentRepositoryManager;
+
   private _map: Map<string, ComponentRepository> = new Map();
+
+  static getInstance() {
+    if (!this._manager) {
+      this._manager = new ComponentRepositoryManager();
+    }
+    return this._manager;
+  }
+
+  private constructor() {
+  }
 
   addComponentRepository(compRepo: ComponentRepository) {
     if (compRepo) {

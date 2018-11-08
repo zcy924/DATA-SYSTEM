@@ -1,14 +1,12 @@
-import {BehaviorSubject, interval, Observable, of} from 'rxjs';
-import {map, publishBehavior, refCount} from 'rxjs/operators';
-import {MockDynamicDataSourceConfig, MockStaticDataSourceConfig} from './data.source.interface';
-import {DataOption} from '@core/data/data.option';
+import { BehaviorSubject, interval, Observable } from 'rxjs';
+import { map, publishBehavior, refCount } from 'rxjs/operators';
+import { MockDynamicDataSourceConfig, MockStaticDataSourceConfig } from '../../../core/data/data.source.interface';
+import { DataSourceConfig } from '../../../core/data/data.source.config';
 
 
 export class DataSourceFactory {
 
   private static _dataSourceFactory: DataSourceFactory;
-
-  private _dataSourceMap = new Map<string, Observable<any>>();
 
   // 这里指定了维度名的顺序，从而可以利用默认的维度到坐标轴的映射。
   // 如果不指定 dimensions，也可以通过指定 series.encode 完成映射，参见后文。
@@ -24,24 +22,19 @@ export class DataSourceFactory {
   }
 
 
-  getDataSource(dataOption: DataOption): Observable<any> {
+  getDataSource(dataOption: DataSourceConfig): Observable<any> {
     if (dataOption) {
-      const {id, configType, config} = dataOption;
-      if (this._dataSourceMap.has(id)) {
-        return this._dataSourceMap.get(id);
-      } else {
-        let dataSource;
-        switch (configType) {
-          case 'mockStatic':
-            dataSource = this._createMockStaticDataSource(config);
-            break;
-          case 'mockDynamic':
-            dataSource = this._createMockDynamicDataSource(config);
-            break;
-        }
-        this._dataSourceMap.set(id, dataSource);
-        return dataSource;
+      const { id, configType, config } = dataOption;
+      let dataSource;
+      switch (configType) {
+        case 'mockStatic':
+          dataSource = this._createMockStaticDataSource(config);
+          break;
+        case 'mockDynamic':
+          dataSource = this._createMockDynamicDataSource(config);
+          break;
       }
+      return dataSource;
     }
   }
 
@@ -63,7 +56,7 @@ export class DataSourceFactory {
    * @private
    */
   private _createMockDynamicDataSource(config: MockDynamicDataSourceConfig) {
-    const {intervalTime = 5000, dataGenerator} = config;
+    const { intervalTime = 5000, dataGenerator } = config;
     const ticker = interval(intervalTime);
     return ticker
       .pipe(
@@ -75,11 +68,5 @@ export class DataSourceFactory {
         refCount());
   }
 }
-
-// array.forEach((value, index) => {
-//   dataModelManager
-//     .addDataModel(value.id, value.displayName);
-// });
-
 
 

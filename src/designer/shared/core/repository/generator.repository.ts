@@ -2,8 +2,9 @@ import { IGraphic } from '../../../core/node/graphic/graphic';
 import { IComponentMeta, IPaletteMeta } from '../../../interface/component.meta';
 import { Type } from '../../../interface/type';
 import * as _ from 'lodash';
-import { IDataSourceGenerator } from '../../../interface/data.source.generator';
+import { IDataSourceGenerator } from '../data/data.source.generator';
 import { IDataSourceGeneratorMeta } from '../../../interface/generator.meta';
+import { DataSourceFactory } from '@shared/core/data/data.source.factory';
 
 
 /**
@@ -15,10 +16,15 @@ import { IDataSourceGeneratorMeta } from '../../../interface/generator.meta';
  *  组件库是不可修改对象  所以
  */
 export class GeneratorRepository {
+
   private _map: Map<string, IDataSourceGeneratorMeta> = new Map<string, IDataSourceGeneratorMeta>();
 
-  constructor(private _name: string) {
+  constructor(private _key: string, private _name: string) {
 
+  }
+
+  get key(): string {
+    return this._key;
   }
 
   get name(): string {

@@ -8,11 +8,23 @@ import { GeneratorRepository } from '../core/repository/generator.repository';
  * 运行时只能识别该manager中存在的Graphic
  */
 export class GeneratorRepositoryManager {
+  private static _manager: GeneratorRepositoryManager;
+
   private _map: Map<string, GeneratorRepository> = new Map();
+
+  static getInstance() {
+    if (!this._manager) {
+      this._manager = new GeneratorRepositoryManager();
+    }
+    return this._manager;
+  }
+
+  private constructor() {
+  }
 
   addGeneratorRepository(geneRepo: GeneratorRepository) {
     if (geneRepo) {
-      this._map.set(geneRepo.name, geneRepo);
+      this._map.set(geneRepo.key, geneRepo);
     }
   }
 
@@ -24,13 +36,16 @@ export class GeneratorRepositoryManager {
   }
 
   removeGeneratorRepository(geneRepo: GeneratorRepository) {
-    if (this._map.has(geneRepo.name)) {
-      this._map.delete(geneRepo.name);
+    if (this._map.has(geneRepo.key)) {
+      this._map.delete(geneRepo.key);
     }
   }
 
-  getDataSource() {
-
+  getDataSourceGenerator(path: string) {
+    const [repoKey, geneKey] = path.split('$');
+    if (this._map.has(repoKey)) {
+      return this._map.get(repoKey).getGeneratorDef(geneKey);
+    }
   }
 
   getGeneratorRepository(key: string) {

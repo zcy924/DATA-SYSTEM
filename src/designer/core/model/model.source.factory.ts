@@ -1,4 +1,4 @@
-import {DataSourceFactory} from '@core/data/data.source.factory';
+import {DataSourceFactory} from '@core/../../shared/core/data/data.source.factory';
 import {IConfigSourceFactory} from '@core/config/config.source.factory';
 import {DesignConfigSourceFactory} from '@core/config/design/design.config.source.factory';
 import {RuntimeConfigSourceFactory} from '@core/config/runtime/runtime.config.source.factory';
