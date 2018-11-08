@@ -1,10 +1,7 @@
-import { IGraphic } from '../../../core/node/graphic/graphic';
-import { IComponentMeta, IPaletteMeta } from '../../../interface/component.meta';
 import { Type } from '../../../interface/type';
 import * as _ from 'lodash';
 import { IDataSourceGenerator } from '../data/data.source.generator';
 import { IDataSourceGeneratorMeta } from '../../../interface/generator.meta';
-import { DataSourceFactory } from '@shared/core/data/data.source.factory';
 
 
 /**

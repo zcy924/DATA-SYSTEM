@@ -1,4 +1,3 @@
-import { IGraphic } from '@core/node/graphic/graphic';
 import { combineLatest, Observable, Subject, Subscription } from 'rxjs';
 import { RegionController } from '@core/node/region/region.controller';
 import { getParameterName, guid } from '@core/node/utils/tools';
@@ -9,6 +8,7 @@ import * as _ from 'lodash';
 import { dataModelManager } from '@core/data/data.model.manager';
 import { ChangedItem } from '@core/node/event/model.event';
 import { IGraphicOption } from '@shared/file/component.option';
+import { IGraphic } from '@shared/core/graphic/graphic';
 
 
 /**

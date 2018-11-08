@@ -1,5 +1,6 @@
-import {IGraphic} from '@core/node/graphic/graphic';
+
 import {DefaultGraphicView} from '@core/node/graphic.view/default.graphic.view';
+import { IGraphic } from '@shared/core/graphic/graphic';
 
 interface ImageOption {
   alt?: string;
