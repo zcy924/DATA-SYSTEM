@@ -2,7 +2,7 @@ import { IGraphic } from '../../../core/node/graphic/graphic';
 import { IComponentMeta, IPaletteMeta } from '../../../interface/component.meta';
 import { Type } from '../../../interface/type';
 import * as _ from 'lodash';
-import { IDataSourceGenerator } from '../../../interface/data.source.generator';
+import { IDataSourceGenerator } from '../data/data.source.generator';
 import { IDataSourceGeneratorMeta } from '../../../interface/generator.meta';
 
 

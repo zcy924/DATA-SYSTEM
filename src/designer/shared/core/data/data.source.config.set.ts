@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 
-import {DataOption} from '@core/data/data.option';
-import { IDataSourceConfig } from '../../shared/file/data.source.config';
+import {DataOption} from '../../../core/data/data.option';
+import { IDataSourceConfig } from '../../file/data.source.config';
 
 export class DataSourceConfigSet {
 
