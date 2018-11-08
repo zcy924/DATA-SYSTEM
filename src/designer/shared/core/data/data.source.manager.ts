@@ -22,6 +22,7 @@ export class DataSourceManager {
   }
 
   getDataSourceByID(id: string): Observable<any> {
+    console.log('获取数据源：');
     const dataSourceMap = this._dataSourceMap;
     if (dataSourceMap.has(id)) {
       return dataSourceMap.get(id);

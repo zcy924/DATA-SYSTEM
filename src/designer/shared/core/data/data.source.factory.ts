@@ -21,9 +21,9 @@ export class DataSourceFactory {
   private constructor() {
   }
 
-  getDataSource(dataOption: DataSourceConfig): Observable<any> {
-    if (dataOption) {
-      const { generatorPath, generatorParams } = dataOption;
+  getDataSource(dataSourceConfig: DataSourceConfig): Observable<any> {
+    if (dataSourceConfig) {
+      const { generatorPath, generatorParams } = dataSourceConfig;
       if (this._geneRepoManager.has(generatorPath)) {
         return this._geneRepoManager
           .getDataSourceGeneratorByPath(generatorPath)
