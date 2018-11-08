@@ -79,10 +79,10 @@ export class Runtime {
   }
 
   private _checkDependencies(file: IFileStructure) {
-    const { componentRepositories, dataSourceGeneratorRepositories } =
+    const { componentRepositories, generatorRepositories } =
       _.get(file, 'dependencies');
     return this._compRepoManager.includes(componentRepositories)
-      && this._geneRepoManager.includes(dataSourceGeneratorRepositories);
+      && this._geneRepoManager.includes(generatorRepositories);
   }
 
   get pages(): Array<PageRuntime> {

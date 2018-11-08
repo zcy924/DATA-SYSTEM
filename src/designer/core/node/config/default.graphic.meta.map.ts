@@ -9,7 +9,7 @@ interface GraphicMeta {
   graphic: {
     graphicKey: string,
     configOption: any,
-    dataOptionId: string
+    dataSourceKey: string
   };
   regionOption?: any;
   grabOption?: {
@@ -37,7 +37,7 @@ export const stdGraphicMeta: GraphicMetaMap = {
     graphic: {
       graphicKey: 'bar.chart.graphic',
       configOption: null,
-      dataOptionId: 'num1'
+      dataSourceKey: 'num1'
     }
   },
   lineChart: {
@@ -47,7 +47,7 @@ export const stdGraphicMeta: GraphicMetaMap = {
     graphic: {
       graphicKey: 'line.chart.graphic',
       configOption: null,
-      dataOptionId: 'num3'
+      dataSourceKey: 'num3'
     },
     grabOption: {
       width: 300,
@@ -62,7 +62,7 @@ export const stdGraphicMeta: GraphicMetaMap = {
     graphic: {
       graphicKey: 'pie.chart.graphic',
       configOption: null,
-      dataOptionId: 'num1'
+      dataSourceKey: 'num1'
     }
   },
   textAuxiliary: {
@@ -72,7 +72,7 @@ export const stdGraphicMeta: GraphicMetaMap = {
     graphic: {
       graphicKey: 'text.graphic',
       configOption: null,
-      dataOptionId: 'num2'
+      dataSourceKey: 'num2'
     }
   },
   commentAuxiliary: {
@@ -82,7 +82,7 @@ export const stdGraphicMeta: GraphicMetaMap = {
     graphic: {
       graphicKey: 'comment.graphic',
       configOption: null,
-      dataOptionId: 'num1'
+      dataSourceKey: 'num1'
     }
   },
   imageAuxiliary: {
@@ -92,7 +92,7 @@ export const stdGraphicMeta: GraphicMetaMap = {
     graphic: {
       graphicKey: 'image.graphic',
       configOption: null,
-      dataOptionId: 'num1'
+      dataSourceKey: 'num1'
     }
   }
 };
@@ -116,7 +116,7 @@ export const customGraphicMeta: GraphicMetaMap = {
     graphic: {
       graphicKey: 'clock.graphic',
       configOption: null,
-      dataOptionId: 'num1'
+      dataSourceKey: 'num1'
     }
   },
   info2: {
@@ -132,7 +132,7 @@ export const customGraphicMeta: GraphicMetaMap = {
     graphic: {
       graphicKey: 'flip.number.graphic',
       configOption: null,
-      dataOptionId: 'num2'
+      dataSourceKey: 'num2'
     }
   },
   table: {
@@ -144,7 +144,7 @@ export const customGraphicMeta: GraphicMetaMap = {
     graphic: {
       graphicKey: 'table.graphic',
       configOption: null,
-      dataOptionId: 'num1'
+      dataSourceKey: 'num1'
     }
   },
   mapProvince: {
@@ -160,7 +160,7 @@ export const customGraphicMeta: GraphicMetaMap = {
     graphic: {
       graphicKey: 'map.chart.graphic',
       configOption: null,
-      dataOptionId: 'num1'
+      dataSourceKey: 'num1'
     }
   },
   mapCity: {
@@ -172,7 +172,7 @@ export const customGraphicMeta: GraphicMetaMap = {
     graphic: {
       graphicKey: 'ring.chart.graphic',
       configOption: null,
-      dataOptionId: 'num1'
+      dataSourceKey: 'num1'
     }
   },
   mapCityHeat: {
@@ -184,7 +184,7 @@ export const customGraphicMeta: GraphicMetaMap = {
     graphic: {
       graphicKey: 'ring.chart.graphic',
       configOption: null,
-      dataOptionId: 'num1'
+      dataSourceKey: 'num1'
     }
   },
   info6: {
@@ -196,7 +196,7 @@ export const customGraphicMeta: GraphicMetaMap = {
     graphic: {
       graphicKey: 'ring.chart.graphic',
       configOption: null,
-      dataOptionId: 'num1'
+      dataSourceKey: 'num1'
     }
   },
   info5: {
@@ -208,7 +208,7 @@ export const customGraphicMeta: GraphicMetaMap = {
     graphic: {
       graphicKey: 'ring.chart.graphic',  // FlipBarChartGraphic
       configOption: null,
-      dataOptionId: 'num1'
+      dataSourceKey: 'num1'
     }
   },
   ring: {
@@ -220,7 +220,7 @@ export const customGraphicMeta: GraphicMetaMap = {
     graphic: {
       graphicKey: 'ring.chart.graphic',
       configOption: null,
-      dataOptionId: 'num1'
+      dataSourceKey: 'num1'
     }
   },
   gauge: {
@@ -232,7 +232,7 @@ export const customGraphicMeta: GraphicMetaMap = {
     graphic: {
       graphicKey: 'gauge.chart.graphic',
       configOption: null,
-      dataOptionId: 'num1'
+      dataSourceKey: 'num1'
     }
   },
   info3: {
@@ -244,7 +244,7 @@ export const customGraphicMeta: GraphicMetaMap = {
     graphic: {
       graphicKey: 'ring.chart.graphic',
       configOption: null,
-      dataOptionId: 'num1'
+      dataSourceKey: 'num1'
     }
   },
   info4: {
@@ -256,7 +256,7 @@ export const customGraphicMeta: GraphicMetaMap = {
     graphic: {
       graphicKey: 'ring.chart.graphic',
       configOption: null,
-      dataOptionId: 'num1'
+      dataSourceKey: 'num1'
     }
   },
   wordCloud: {
@@ -268,7 +268,7 @@ export const customGraphicMeta: GraphicMetaMap = {
     graphic: {
       graphicKey: 'wordCloud.chart.graphic',
       configOption: null,
-      dataOptionId: 'num4'
+      dataSourceKey: 'num4'
     }
   },
   dashboard: {
@@ -280,7 +280,7 @@ export const customGraphicMeta: GraphicMetaMap = {
     graphic: {
       graphicKey: 'ring.chart.graphic',
       configOption: null,
-      dataOptionId: 'num1'
+      dataSourceKey: 'num1'
     }
   }
 };

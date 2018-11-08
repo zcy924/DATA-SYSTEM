@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import { DataSourceFactory } from './data.source.factory';
 import { IDataSourceConfig } from '../../file/data.source.config';
 import { DataSourceConfigSet } from '@shared/core/data/data.source.config.set';
+import * as _ from 'lodash';
 
 /**
  * 每个页面都有自己的DataSourceManager
@@ -19,6 +20,14 @@ export class DataSourceManager {
 
   load(configArray: Array<IDataSourceConfig>) {
 
+  }
+
+  getDependencies(arrayOfID: Array<string>): Array<string> {
+    let ret;
+    ret = arrayOfID.map(id => {
+      return this._dataSourceConfigSet.has(id) ? this._dataSourceConfigSet.getDataSourceConfig(id).repositoryKey : null;
+    });
+    return _.uniq(_.compact(ret));
   }
 
   getDataSourceByID(id: string): Observable<any> {

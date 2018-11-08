@@ -1,8 +1,9 @@
 import { combineLatest, Observable, Subscription } from 'rxjs/index';
-import { IGraphic, IGraphicOption } from '@core/node/graphic/graphic';
+import { IGraphic } from '@core/node/graphic/graphic';
 import { getParameterName, guid } from '@core/node/utils/tools';
 import { graphicMap } from '@core/node/config/graphic.map';
 import { RegionRuntime } from './region.runtime';
+import { IGraphicOption } from '@shared/file/component.option';
 
 export class GraphicWrapperRuntime {
   private _uuid: string;
@@ -23,7 +24,7 @@ export class GraphicWrapperRuntime {
 
   init(graphicOption: IGraphicOption) {
     this._graphicOption = graphicOption;
-    const { graphicId, graphicKey, dataOptionId, configOption } = graphicOption;
+    const { graphicId, graphicKey, dataSourceKey, configOption } = graphicOption;
     if (graphicMap.has(graphicKey)) {
       this._graphic = new (graphicMap.get(graphicKey))();
       const paramNameArray = getParameterName(this._graphic.init), map = {
@@ -45,7 +46,7 @@ export class GraphicWrapperRuntime {
         configOption,
       });
 
-    this._dataSource = this._region.page.getDataSource(dataOptionId);
+    this._dataSource = this._region.page.getDataSource(dataSourceKey);
 
     // 两个组件必须同时打开  不然收不到信息
     this._modelSubscription = this._graphic
