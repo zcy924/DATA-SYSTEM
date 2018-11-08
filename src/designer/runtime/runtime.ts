@@ -1,6 +1,6 @@
-import { IFileStructure } from '../interface/file/file.structure';
+import { IFileStructure } from '../shared/file/file.structure';
 import { PageRuntime } from './page.runtime';
-import { ComponentRepository } from '../interface/component.repository';
+import { ComponentRepository } from '../shared/core/repository/component.repository';
 import { ComponentRepositoryManager } from '../shared/manager/component.repository.manager';
 import { PageManagerRuntime } from './page.manager.runtime';
 import * as _ from 'lodash';

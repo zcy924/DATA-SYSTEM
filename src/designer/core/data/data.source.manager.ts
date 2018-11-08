@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { DataSourceConfigSet } from '@core/data/data.source.config.set';
 import { DataSourceFactory } from '@core/data/data.source.factory';
-import { IDataSourceConfig } from '../../interface/file/data.source.config';
+import { IDataSourceConfig } from '../../shared/file/data.source.config';
 
 /**
  * 每个页面都有自己的DataSourceManager

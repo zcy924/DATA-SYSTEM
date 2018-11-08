@@ -1,4 +1,4 @@
-import { GeneratorRepository } from '../../interface/generator.repository';
+import { GeneratorRepository } from '../core/repository/generator.repository';
 
 /**
  * 设计时和运行时都会使用到ComponentRepositoryManager

@@ -1,4 +1,4 @@
-import { IDataSourceConfig } from '../../interface/file/data.source.config';
+import { IDataSourceConfig } from '../../shared/file/data.source.config';
 
 
 export const array: Array<IDataSourceConfig> = [
