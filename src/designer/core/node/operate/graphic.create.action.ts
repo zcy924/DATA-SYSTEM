@@ -4,6 +4,8 @@ import { graphicMetaMap } from '@core/node/config/default.graphic.meta.map';
 import { GraphicWrapper } from '@core/node/graphic/graphic.wrapper';
 import { IAction } from '@core/node/operate/action';
 import { IReportPage } from '@core/node/page/report/page.interface';
+import { ComponentRepositoryManager } from '@shared/manager/component.repository.manager';
+import { IComponentOption } from '@shared/file/component.option';
 
 export class GraphicCreateAction implements IAction {
 
@@ -15,24 +17,26 @@ export class GraphicCreateAction implements IAction {
   }
 
   forward() {
+    const compRepoManager = ComponentRepositoryManager.getInstance();
+    console.log('XXXXXX', compRepoManager.has('standard$bar.chart.graphic'));
     // 是否存在图表的默认定义
-    if (graphicMetaMap.has(this._graphicName)) {
-      const graphicMeta = graphicMetaMap.get(this._graphicName);
+    if (compRepoManager.has(this._graphicName)) {
+      const componentOption: IComponentOption = compRepoManager.getComponentOptionByPath(this._graphicName);
 
-      if (regionMap.has(graphicMeta.region.regionKey)) {
-        const region: RegionController = new (regionMap.get(graphicMeta.region.regionKey))(this._page);
+      if (regionMap.has(componentOption.region.regionKey)) {
+        const region: RegionController = new (regionMap.get(componentOption.region.regionKey))(this._page);
         region.init(null);
         region.setCoordinates(this._x, this._y);
-        if (graphicMeta.region.regionOption) {
-          const { width, height } = graphicMeta.region.regionOption;
+        if (componentOption.region.regionOption) {
+          const { width, height } = componentOption.region.regionOption;
           region.setDimensions(width, height);
         }
 
         const graphicWrapper = new GraphicWrapper(region);
         if (this._configOption) {
-          graphicWrapper.init(Object.assign({}, graphicMeta.graphic, { configOption: JSON.parse(JSON.stringify(this._configOption)) }));
+          graphicWrapper.init(Object.assign({}, componentOption.graphic, { configOption: JSON.parse(JSON.stringify(this._configOption)) }));
         } else {
-          graphicWrapper.init(JSON.parse(JSON.stringify(graphicMeta.graphic)));
+          graphicWrapper.init(JSON.parse(JSON.stringify(componentOption.graphic)));
         }
 
 

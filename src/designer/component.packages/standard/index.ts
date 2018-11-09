@@ -15,14 +15,14 @@ import { RingChartGraphic } from './chart/ring.chart.graphic';
 import { FlipNumberGraphic } from '../custom/flip.number.graphic';
 import { LinesChartGraphic } from './chart/lines.chart.graphic';
 
-const compRepo = new ComponentRepository('标准组件库');
+const compRepo = new ComponentRepository('standard', '标准组件库');
 
 compRepo.batchRegister([
   {
     key: 'bar.chart.graphic',
     componentOption: {
       region: {
-        regionKey: 'explicit.region'
+        regionKey: 'explicit.region',
       },
       graphic: {
         graphicKey: 'bar.chart.graphic',
@@ -233,7 +233,7 @@ compRepo.batchRegister([
         dataSourceKey: 'num1',
       },
     },
-    graphicDef:BarChartGraphic
+    graphicDef: BarChartGraphic,
   },
   {
     key: 'bbbb',
@@ -251,7 +251,7 @@ compRepo.batchRegister([
         dataSourceKey: 'num1',
       },
     },
-    graphicDef:BarChartGraphic
+    graphicDef: BarChartGraphic,
   },
   {
     key: 'flip.bar.chart.graphic',
@@ -380,4 +380,4 @@ compRepo.batchRegister([
     graphicDef: BarChartGraphic,
   }]);
 
-export const Standard = compRepo;
+export const StandardCompRepo = compRepo;

@@ -15,12 +15,20 @@ import * as _ from 'lodash';
 export class ComponentRepository {
   private _map: Map<string, IComponentMeta> = new Map<string, IComponentMeta>();
 
-  constructor(private _name: string) {
+  constructor(private _key: string, private _name: string) {
 
+  }
+
+  get key(): string {
+    return this._key;
   }
 
   get name(): string {
     return this._name;
+  }
+
+  has(key: string): boolean {
+    return this._map.has(key);
   }
 
   register(compMeta: IComponentMeta) {
@@ -41,6 +49,10 @@ export class ComponentRepository {
     return Array.from(this._map.values(), (v) => {
       return convert(v);
     });
+  }
+
+  getComponentOption(key: string) {
+    return this._map.get(key).componentOption;
   }
 
   getGraphicDef(key: string): Type<IGraphic> {
