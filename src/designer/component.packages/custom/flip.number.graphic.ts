@@ -1,7 +1,7 @@
-import {RegionController} from '../../region/region.controller';
+import {RegionController} from '../../core/node/region/region.controller';
 import * as _ from 'lodash';
 import {Observable, Subscription} from 'rxjs';
-import {DefaultGraphic} from '@core/node/graphic/default.graphic';
+import { DefaultGraphic } from '../../shared/core/graphic/default.graphic';
 
 const template = `
 <div class="flip-number-wrapper" style="justify-content: center;">

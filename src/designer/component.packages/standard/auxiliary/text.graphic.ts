@@ -1,8 +1,8 @@
-import { TextAuxiliary } from '../../graphic.view/auxiliary/text.auxiliary';
-import { IGraphicView } from '../../graphic.view/graphic.view';
-import { DefaultGraphic } from '../default.graphic';
+import { TextAuxiliary } from '../../../core/node/graphic.view/auxiliary/text.auxiliary';
+import { IGraphicView } from '../../../core/node/graphic.view/graphic.view';
+import { DefaultGraphic } from '../../../shared/core/graphic/default.graphic';
 import { Observable, Subscription } from 'rxjs';
-import { GraphicWrapper } from '@core/node/graphic/graphic.wrapper';
+import { GraphicWrapper } from '../../../core/node/graphic/graphic.wrapper';
 
 const template = `
 <div class="graphic m-graphic m-graphic-text z-mode-edit">

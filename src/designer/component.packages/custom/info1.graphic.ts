@@ -1,20 +1,20 @@
 import {ComponentRef} from '@angular/core';
-import {RegionController} from '../../region/region.controller';
-import {IGraphic} from '../../../../shared/core/graphic/graphic';
-import {Chart} from '../../graphic.view/chart/chart';
+import {RegionController} from '../../core/node/region/region.controller';
+import {IGraphic} from '../../shared/core/graphic/graphic';
+import {Chart} from '../../core/node/graphic.view/chart/chart';
 
-import {DesignGraphicConfig} from '../../../source/config.source/design.config.source';
+import {DesignGraphicConfig} from '../../core/source/config.source/design.config.source';
 
 import * as moment from 'moment';
-import {BarConfigComponent} from '../../../../components/graphic.config/chart/bar.config.component';
-import {session} from '../../utils/session';
+import {BarConfigComponent} from '../../components/graphic.config/chart/bar.config.component';
+import {session} from '../../core/node/utils/session';
 import {Observable} from 'rxjs';
 
 const template = `
 <div class="time-chart-container" 
 style='font-family: "Microsoft Yahei", Arial, sans-serif; 
 font-size: 20px; color: rgb(255, 255, 255); font-weight: normal; justify-content:flex-start;'>
-<img src="../../../../assets/images/templet/pic-4.png" style="margin-right: 15px;">
+<img src="../../assets/images/templet/pic-4.png" style="margin-right: 15px;">
 <span></span></div>
 `;
 

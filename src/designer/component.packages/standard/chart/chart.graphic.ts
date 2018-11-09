@@ -1,14 +1,14 @@
 import {Type} from '@angular/core';
 import {Observable} from 'rxjs';
 import * as _ from 'lodash';
-import {RegionController} from '../../region/region.controller';
-import {IGraphic} from '../../../../shared/core/graphic/graphic';
-import {Chart} from '../../graphic.view/chart/chart';
+import {RegionController} from '../../../core/node/region/region.controller';
+import {IGraphic} from '../../../shared/core/graphic/graphic';
+import {Chart} from '../../../core/node/graphic.view/chart/chart';
 
-import {contextMenuHelper} from '../../../../utils/contextMenu';
+import {contextMenuHelper} from '../../../utils/contextMenu';
 
-import {DesignGraphicConfig} from '../../../source/config.source/design.config.source';
-import {OuterModelEventTarget} from '../../event/model.event';
+import {DesignGraphicConfig} from '../../../core/source/config.source/design.config.source';
+import {OuterModelEventTarget} from '../../../core/node/event/model.event';
 
 
 const template = `

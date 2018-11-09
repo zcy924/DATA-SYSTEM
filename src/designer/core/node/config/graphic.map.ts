@@ -1,16 +1,3 @@
-import {BarChartGraphic} from '@core/node/graphic/chart/bar.chart.graphic';
-import {LineChartGraphic} from '@core/node/graphic/chart/line.chart.graphic';
-import {PieChartGraphic} from '@core/node/graphic/chart/pie.chart.graphic';
-import {LinesChartGraphic} from '@core/node/graphic/chart/lines.chart.graphic';
-import {ImageGraphic} from '@core/node/graphic/auxiliary/image.graphic';
-import {TextGraphic} from '@core/node/graphic/auxiliary/text.graphic';
-import {ClockGraphic} from '@core/node/graphic/custom/clock.graphic';
-import {FlipNumberGraphic} from '@core/node/graphic/custom/flip.number.graphic';
-import {GaugeChartGraphic} from '@core/node/graphic/chart/gauge.chart.graphic';
-import {RingChartGraphic} from '@core/node/graphic/chart/ring.chart.graphic';
-import {WordCloudChartGraphic} from '@core/node/graphic/chart/word.cloud.chart.graphic';
-import {MapChartGraphic} from '@core/node/graphic/chart/map.chart.graphic';
-import {TableGraphic} from '@core/node/graphic/custom/table.graphic';
 import {BarConfigComponent} from '../../../components/graphic.config/chart/bar.config.component';
 import {ImageConfigComponent} from '../../../components/graphic.config/auxiliary/image.config.component';
 import {LineConfigComponent} from '../../../components/graphic.config/chart/line.config.component';
@@ -20,6 +7,19 @@ import {GaugeConfigComponent} from '../../../components/graphic.config/chart/gau
 import {RingConfigComponent} from '../../../components/graphic.config/chart/ring.config.component';
 import {MapConfigComponent} from '../../../components/graphic.config/chart/map.config.component';
 import {WordCloudConfigComponent} from '../../../components/graphic.config/chart/word.cloud.config.component';
+import { BarChartGraphic } from '../../../component.packages/standard/chart/bar.chart.graphic';
+import { PieChartGraphic } from '../../../component.packages/standard/chart/pie.chart.graphic';
+import { LineChartGraphic } from '../../../component.packages/standard/chart/line.chart.graphic';
+import { LinesChartGraphic } from '../../../component.packages/standard/chart/lines.chart.graphic';
+import { ImageGraphic } from '../../../component.packages/standard/auxiliary/image.graphic';
+import { TextGraphic } from '../../../component.packages/standard/auxiliary/text.graphic';
+import { ClockGraphic } from '../../../component.packages/custom/clock.graphic';
+import { TableGraphic } from '../../../component.packages/custom/table.graphic';
+import { FlipNumberGraphic } from '../../../component.packages/custom/flip.number.graphic';
+import { GaugeChartGraphic } from '../../../component.packages/standard/chart/gauge.chart.graphic';
+import { RingChartGraphic } from '../../../component.packages/standard/chart/ring.chart.graphic';
+import { MapChartGraphic } from '../../../component.packages/standard/chart/map.chart.graphic';
+import { WordCloudChartGraphic } from '../../../component.packages/standard/chart/word.cloud.chart.graphic';
 
 const map = new Map();
 map.set('bar.chart.graphic', BarChartGraphic);

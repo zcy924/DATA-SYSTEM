@@ -1,8 +1,8 @@
 import {Observable, Subscription} from 'rxjs';
-import {ImageAuxiliary} from '../../graphic.view/auxiliary/image.auxiliary';
-import {IGraphicView} from '../../graphic.view/graphic.view';
-import {DefaultGraphic} from '../default.graphic';
-import {RegionController} from '@core/node/region/region.controller';
+import {ImageAuxiliary} from '../../../core/node/graphic.view/auxiliary/image.auxiliary';
+import {IGraphicView} from '../../../core/node/graphic.view/graphic.view';
+import {DefaultGraphic} from '../../../shared/core/graphic/default.graphic';
+import {RegionController} from '../../../core/node/region/region.controller';
 import * as _ from 'lodash';
 
 const template = `

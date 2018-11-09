@@ -1,8 +1,8 @@
 import * as moment from 'moment';
 import {Observable} from 'rxjs';
-import {RegionController} from '../../region/region.controller';
-import {Chart} from '../../graphic.view/chart/chart';
-import {DefaultGraphic} from '@core/node/graphic/default.graphic';
+import {RegionController} from '../../core/node/region/region.controller';
+import {Chart} from '../../core/node/graphic.view/chart/chart';
+import { DefaultGraphic } from '../../shared/core/graphic/default.graphic';
 
 const template = `
 <div class="time-chart-container" 
