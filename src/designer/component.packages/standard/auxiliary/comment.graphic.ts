@@ -1,6 +1,6 @@
-import {CommentAuxiliary} from '../../graphic.view/auxiliary/comment.auxiliary';
-import {RegionController} from '../../region/region.controller';
-import {DefaultGraphic} from '../default.graphic';
+import {CommentAuxiliary} from '../../../core/node/graphic.view/auxiliary/comment.auxiliary';
+import {RegionController} from '../../../core/node/region/region.controller';
+import {DefaultGraphic} from '../../../shared/core/graphic/default.graphic';
 import {Observable, Subscription} from 'rxjs';
 
 const template = `

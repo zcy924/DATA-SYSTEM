@@ -29,7 +29,7 @@ export class ComponentRepository {
     }
   }
 
-  batchRegister(compMetaArray: Array<any>) {
+  batchRegister(compMetaArray: Array<IComponentMeta>) {
     if (_.isArray(compMetaArray)) {
       compMetaArray.forEach((value) => {
         this.register(value);

@@ -12,7 +12,7 @@ import {NgForm} from '@angular/forms';
 import {dataModelManager} from '../../../core/data/data.model.manager';
 
 import {DesignGraphicConfig} from '../../../core/source/config.source/design.config.source';
-import {ChartLineOption} from '../../../core/node/graphic/chart/line.chart.graphic';
+import {ChartLineOption} from '../../../component.packages/standard/chart/line.chart.graphic';
 import {debounceTime} from 'rxjs/operators';
 import {removeUndefined} from '../../../utils/common';
 

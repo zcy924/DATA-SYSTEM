@@ -1,12 +1,12 @@
 import {ComponentRef} from '@angular/core';
-import {RegionController} from '../../region/region.controller';
-import {Chart} from '../../graphic.view/chart/chart';
+import {RegionController} from '../../core/node/region/region.controller';
+import {Chart} from '../../core/node/graphic.view/chart/chart';
 
-import {DesignGraphicConfig} from '../../../source/config.source/design.config.source';
+import {DesignGraphicConfig} from '../../core/source/config.source/design.config.source';
 
-import {TableDataSubject} from '../../../source/data.source/mock/table.data.subject';
+import {TableDataSubject} from '../../core/source/data.source/mock/table.data.subject';
 import {Observable, Subscription} from 'rxjs';
-import {DefaultGraphic} from '@core/node/graphic/default.graphic';
+import { DefaultGraphic } from '../../shared/core/graphic/default.graphic';
 
 const template = `
 <div class="demo">
