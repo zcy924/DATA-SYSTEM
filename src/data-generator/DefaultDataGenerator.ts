@@ -16,7 +16,7 @@ export class DefaultDataGenerator implements IDataGenerator {
   fetchData() {
     if (this.api.headers === null) {
       this.api.headers = {
-        Accept: 'application/json, text/plain, */*',
+        Accept: '*/*',
       }
     }
     if (this.api.method === 'GET') {

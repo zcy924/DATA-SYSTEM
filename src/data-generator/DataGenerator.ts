@@ -11,7 +11,7 @@ export class DataGenerator {
     this.api = api;
   }
 
-  useDataGenerator(api: Api):Observable<any> {
+  getResponse$(api: Api):Observable<any> {
     switch (api.generator) {
       case 'xmlDataGenerator':
         const xmlDataGenerator = new XmlDataGenerator(api);
