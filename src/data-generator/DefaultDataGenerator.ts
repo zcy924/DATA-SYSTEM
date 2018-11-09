@@ -12,14 +12,20 @@ export class DefaultDataGenerator implements IDataGenerator {
   constructor(api: Api) {
     this.api = api;
   }
+
   fetchData() {
+    if (this.api.headers === null) {
+      this.api.headers = {
+        Accept: 'application/json, text/plain, */*',
+      }
+    }
     if (this.api.method === 'GET') {
       const options = Object.assign({}, this.api);
       delete options.generator;
       let url = options.url;
       delete options.url;
       let paramsArray = [];
-      if(options.params!==null){
+      if (options.params !== null) {
         Object.keys(options.params).forEach(key => paramsArray.push(key + '=' + options.params[key]));
         if (url.search(/\?/) === -1) {
           url += '?' + paramsArray.join('&');

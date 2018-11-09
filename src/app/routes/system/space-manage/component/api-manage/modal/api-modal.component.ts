@@ -45,7 +45,7 @@ export class ApiModalComponent implements OnInit {
   headersText: string = '';
   bodyText: string = '';
   responseText: any;
-  method: string;
+  method: string = 'GET';
   spaceID = localStorage.getItem('spaceID');
   id;
   interval;
@@ -179,8 +179,8 @@ export class ApiModalComponent implements OnInit {
         this.status = data.status;
         this.type = data.type;
         this.headersText = JSON.stringify(data.api.headers);
-        this.bodyText = JSON.stringify(data.api.body);
-        this.formData.bodyText = JSON.stringify(data.api.body,null,2);
+        this.bodyText = JSON.stringify(data.api.params);
+        this.formData.bodyText = JSON.stringify(data.api.params,null,2);
         this.formData.headersText = JSON.stringify(data.api.headers,null,2);
       },
       err => {
