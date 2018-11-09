@@ -2,6 +2,9 @@ import { Type } from '../../interface/type';
 import { IGraphic } from '../core/graphic/graphic';
 import { ComponentRepository } from '../core/repository/component.repository';
 import { StandardCompRepo } from '../../component.packages/standard';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { delay } from 'rxjs/operators';
+import { CustomCompRepo } from '../../component.packages/custom';
 
 /**
  * 设计时和运行时都会使用到ComponentRepositoryManager
@@ -14,11 +17,13 @@ export class ComponentRepositoryManager {
   private static _manager: ComponentRepositoryManager;
 
   private _map: Map<string, ComponentRepository> = new Map();
+  private _paletteConfig$ = new BehaviorSubject(null);
 
   static getInstance() {
     if (!this._manager) {
       this._manager = new ComponentRepositoryManager();
       this._manager.addComponentRepository(StandardCompRepo);
+      this._manager.addComponentRepository(CustomCompRepo)
     }
     return this._manager;
   }
@@ -29,6 +34,7 @@ export class ComponentRepositoryManager {
   addComponentRepository(compRepo: ComponentRepository) {
     if (compRepo) {
       this._map.set(compRepo.key, compRepo);
+      this._updatePaletteConfig();
     }
   }
 
@@ -60,6 +66,17 @@ export class ComponentRepositoryManager {
 
   get componentRepositories(): Array<ComponentRepository> {
     return Array.from(this._map.values());
+  }
+
+  get paletteConfig$() {
+    return this._paletteConfig$.asObservable().pipe(delay(100));
+  }
+
+  private _updatePaletteConfig() {
+    this._paletteConfig$.next(Array.from(this._map.values()).map(value => {
+      return value.paletteConfig;
+    }));
+
   }
 
   getComponentMetaByPath(path: string) {

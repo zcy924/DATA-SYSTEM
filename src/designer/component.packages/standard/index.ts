@@ -36,6 +36,7 @@ compRepo.batchRegister([
 
     key: 'line.chart.graphic',
     paletteMeta: {
+      show:false,
       grabOption: {
         width: 300,
         height: 200,
@@ -113,6 +114,7 @@ compRepo.batchRegister([
   {
     key: 'clock.graphic',
     paletteMeta: {
+      show:true,
       displayName: '实时时间',
       imageClass: 'baidu-time',
       grabOption: {
@@ -140,6 +142,7 @@ compRepo.batchRegister([
   {
     key: 'flip.number.graphic',
     paletteMeta: {
+      show:true,
       displayName: '数字翻牌器',
       imageClass: 'baidu-chart-flip-number',
     },
@@ -162,6 +165,7 @@ compRepo.batchRegister([
   {
     key: 'table.graphic',
     paletteMeta: {
+      show:true,
       displayName: '带边框表格',
       imageClass: 'baidu-table',
     },
@@ -180,6 +184,7 @@ compRepo.batchRegister([
   {
     key: 'map.chart.graphic',
     paletteMeta: {
+      show:true,
       displayName: '省份数据',
       imageClass: 'baidu-map-province',
     },
@@ -202,6 +207,7 @@ compRepo.batchRegister([
   {
     key: 'lines.chart.graphic',
     paletteMeta: {
+      show:true,
       displayName: '城市数据',
       imageClass: 'baidu-map-city',
     },
@@ -220,6 +226,7 @@ compRepo.batchRegister([
   {
     key: 'hot.map',
     paletteMeta: {
+      show:true,
       displayName: '热力地图',
       imageClass: 'baidu-map-city-heat',
     },
@@ -238,6 +245,7 @@ compRepo.batchRegister([
   {
     key: 'bbbb',
     paletteMeta: {
+      show:true,
       displayName: '柱状图',
       imageClass: 'baidu-chart-bar',
     },
@@ -256,6 +264,7 @@ compRepo.batchRegister([
   {
     key: 'flip.bar.chart.graphic',
     paletteMeta: {
+      show:true,
       displayName: '横向柱图',
       imageClass: 'baidu-chart-flip-bar',
     },
@@ -274,6 +283,7 @@ compRepo.batchRegister([
   {
     key: 'ring.chart.graphic',
     paletteMeta: {
+      show:true,
       displayName: '环形饼图',
       imageClass: 'baidu-chart-ring',
     },
@@ -292,6 +302,7 @@ compRepo.batchRegister([
   {
     key: 'gauge.chart.graphic',
     paletteMeta: {
+      show:true,
       displayName: '仪表盘',
       imageClass: 'baidu-chart-dashboard',
     },
@@ -310,6 +321,7 @@ compRepo.batchRegister([
   {
     key: 'funnel.chart',
     paletteMeta: {
+      show:true,
       displayName: '漏斗图',
       imageClass: 'baidu-chart-funnel',
     },
@@ -328,6 +340,7 @@ compRepo.batchRegister([
   {
     key: 'scatter.chart',
     paletteMeta: {
+      show:true,
       displayName: '散点图',
       imageClass: 'baidu-chart-scatter',
     },
@@ -346,6 +359,7 @@ compRepo.batchRegister([
   {
     key: 'wordCloud.chart.graphic',
     paletteMeta: {
+      show:true,
       displayName: '词云',
       imageClass: 'baidu-chart-word-cloud',
     },
@@ -364,6 +378,7 @@ compRepo.batchRegister([
   {
     key: 'demo',
     paletteMeta: {
+      show:true,
       displayName: 'demo',
       imageClass: 'baidu-chart-line',
     },

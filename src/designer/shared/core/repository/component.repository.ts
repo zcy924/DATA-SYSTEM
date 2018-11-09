@@ -51,7 +51,15 @@ export class ComponentRepository {
     });
   }
 
-  getComponentMeta(key: string) {
+  get paletteConfig() {
+    return {
+      key: this._key,
+      name: this._name,
+      children: _.compact(Array.from(this._map.values()).map(value => value.paletteMeta)),
+    };
+  }
+
+  getComponentMeta(key: string): ComponentMeta {
     return this._map.get(key);
   }
 
@@ -71,6 +79,19 @@ export class ComponentRepository {
 export class ComponentMeta {
   constructor(private _meta: IComponentMeta) {
 
+  }
+
+  get paletteMeta() {
+    const paletteMeta = this._meta.paletteMeta;
+    if (paletteMeta && paletteMeta.show) {
+      const { displayName, imageClass, grabOption } = paletteMeta;
+      return {
+        key: this._meta.key,
+        displayName, imageClass, grabOption,
+      };
+    } else {
+      return null;
+    }
   }
 
   get grabOption() {

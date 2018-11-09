@@ -1,14 +1,15 @@
-import {AfterViewInit, Component} from '@angular/core';
-import {session} from '@core/node/utils/session';
-import {graphicFactory} from '@core/node/factory/graphic.factory';
+import { AfterViewInit, Component } from '@angular/core';
+import { session } from '@core/node/utils/session';
+import { graphicFactory } from '@core/node/factory/graphic.factory';
 import * as _ from 'lodash';
-import {grabHelper} from '../designer.header.component';
-import {customGraphicMeta} from '@core/node/config/default.graphic.meta.map';
+import { grabHelper } from '../designer.header.component';
+import { customGraphicMeta } from '@core/node/config/default.graphic.meta.map';
+import { ComponentRepositoryManager } from '@shared/manager/component.repository.manager';
 
 @Component({
   selector: 'app-palette',
   templateUrl: './palette.component.html',
-  styleUrls: ['./palette.component.less']
+  styleUrls: ['./palette.component.less'],
 })
 export class PaletteComponent implements AfterViewInit {
 
@@ -17,6 +18,8 @@ export class PaletteComponent implements AfterViewInit {
   constructor() {
 
   }
+
+  repoList: any;
 
   get customComponentList() {
     return _.toPairs(customGraphicMeta);
@@ -42,11 +45,14 @@ export class PaletteComponent implements AfterViewInit {
     document.addEventListener('mousemove', mouseMove);
     document.addEventListener('mouseup', mouseUp);
 
-    grabHelper.show(dragEvent.pageX, dragEvent.pageY, customGraphicMeta[componentName].grabOption);
+    grabHelper.show(dragEvent.pageX, dragEvent.pageY, ComponentRepositoryManager.getInstance().getComponentMetaByPath(componentName).grabOption);
     return false;
   }
 
   ngAfterViewInit() {
+    ComponentRepositoryManager.getInstance().paletteConfig$.subscribe((value) => {
+      this.repoList = value;
+    });
   }
 }
 
