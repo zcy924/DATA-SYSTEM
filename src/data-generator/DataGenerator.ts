@@ -2,24 +2,31 @@ import {DefaultDataGenerator} from "./DefaultDataGenerator";
 import {TextDataGenerator} from "./TextDataGenerator";
 import {XmlDataGenerator} from "./XmlDataGenerator";
 import {Api} from "./Api";
+import {Observable} from "rxjs/internal/Observable";
 
 export class DataGenerator {
-  constructor() {
+  api: Api;
+
+  constructor(api: Api) {
+    this.api = api;
   }
 
-  useDataGenerator(api: Api) {
-    switch (api.generator){
+  useDataGenerator(api: Api):Observable<any> {
+    switch (api.generator) {
       case 'xmlDataGenerator':
         const xmlDataGenerator = new XmlDataGenerator(api);
-        xmlDataGenerator.fetchData();
+        return xmlDataGenerator.fetchData();
         break;
       case 'textDataGenerator':
         const textDataGenerator = new TextDataGenerator(api);
-        textDataGenerator.fetchData();
+        return textDataGenerator.fetchData();
         break;
       case  'defaultDataGenerator':
         const defaultDataGenerator = new DefaultDataGenerator(api);
-        defaultDataGenerator.fetchData();
+        return defaultDataGenerator.fetchData();
+      default:
+        const DataGenerator = new DefaultDataGenerator(api);
+        return DataGenerator.fetchData();
     }
   }
 

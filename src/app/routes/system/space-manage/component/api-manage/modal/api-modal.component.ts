@@ -99,11 +99,16 @@ export class ApiModalComponent implements OnInit {
       params: JSON.parse(this.bodyText === '' ? null : this.bodyText),
       generator: GeneratorEnum.DEFAULT,
     };
-    const defaultDataGenerator = new DefaultDataGenerator(api);
-    defaultDataGenerator.fetchData().subscribe(data => {
+    const httpGenerator = new DataGenerator(api);
+    httpGenerator.useDataGenerator(api).subscribe(data=>{
       this.responseText = JSON.stringify(data);
       this.formData.responseText = JSON.stringify(data, null,2);
     });
+    // const defaultDataGenerator = new DefaultDataGenerator(api);
+    // defaultDataGenerator.fetchData().subscribe(data => {
+    //   this.responseText = JSON.stringify(data);
+    //   this.formData.responseText = JSON.stringify(data, null,2);
+    // });
   }
 
   // 新增API

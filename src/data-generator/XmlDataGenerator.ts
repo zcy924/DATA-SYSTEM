@@ -3,6 +3,7 @@ import { Api } from './Api';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { map } from 'rxjs/operators';
 import {Observable} from "rxjs/internal/Observable";
+import * as X2JS from 'x2js';
 
 export class XmlDataGenerator implements IDataGenerator {
 
@@ -42,7 +43,11 @@ export class XmlDataGenerator implements IDataGenerator {
       delete options.url;
       options['body'] = JSON.stringify(this.api.params);
       delete options.params;
-      this.http$ = fromPromise(fetch(url, options).then(response => response.json())).pipe(map(response => response));
+      this.http$ = fromPromise(fetch(url, options).then(response => response.json())).pipe(map(response => {
+        let x2js = new X2JS();
+        const data = x2js.xml2js(response);
+        return data;
+      }));
     }
     return this.http$;
   }
