@@ -6,7 +6,7 @@ import { ComponentRef } from '@angular/core';
 import { PageConfig } from '../../../../components/page.config/page.config';
 import { IReportPage } from '@core/node/page/report/page.interface';
 import { ReportPage } from '@core/node/page/report/page';
-import { RuntimePageConfig } from '../../../../components/page.config/runtime.page.config';
+import { RuntimePageConfig } from '../../../../runtime/runtime.page.config';
 import { RegionController } from '@core/node/region/region.controller';
 import * as _ from 'lodash';
 
@@ -99,13 +99,19 @@ export class ReportPageOuter {
       children: this._pageInner.regionManager.saveAs(),
     };
     let keys = _.uniq(main.children.map((value, index, array) => {
-      return value.graphic.dataSourceKey;
-    }));
-    console.log(JSON.stringify(keys));
+        return value.graphic.dataSourceKey;
+      })),
+      paths = _.uniq(main.children.map((value, index, array) => {
+        return value.graphic.graphicPath;
+      }));
+
     keys = this._pageInner.dataSourceManager.getDependencies(keys);
+    paths = _.uniq(paths.map(value => value.split('$')[0]));
+    console.log(JSON.stringify(keys), paths);
     return {
       dependencies: {
         generatorRepositories: keys,
+        componentRepositories: paths,
       },
       main,
     };

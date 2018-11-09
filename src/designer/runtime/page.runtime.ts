@@ -2,7 +2,7 @@ import { RegionRuntime } from './region.runtime';
 import { PageConfig } from '../components/page.config/page.config';
 import { regionMap } from '@core/node/config/region.map';
 import { Observable } from 'rxjs/internal/Observable';
-import { RuntimePageConfig } from '../components/page.config/runtime.page.config';
+import { RuntimePageConfig } from './runtime.page.config';
 import { GraphicWrapperRuntime } from './graphic.wrapper.runtime';
 import { DataSourceManager } from '@shared/core/data/data.source.manager';
 
