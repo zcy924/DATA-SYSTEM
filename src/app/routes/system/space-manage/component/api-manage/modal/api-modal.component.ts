@@ -45,7 +45,7 @@ export class ApiModalComponent implements OnInit {
   headersText: string = '';
   bodyText: string = '';
   responseText: any;
-  method: string = 'GET';
+  method: string;
   spaceID = localStorage.getItem('spaceID');
   id;
   interval;
@@ -92,15 +92,15 @@ export class ApiModalComponent implements OnInit {
 
   // 数据源生成器，发送请求，获取响应
   sendRequest() {
+    console.log(this.headersText);
     let api: Api = {
       url: this.url,
       method: this.method,
-      headers: JSON.parse(this.headersText === '' ? '{}' : this.headersText),
-      body: JSON.parse(this.bodyText === '' ? null : this.bodyText),
+      headers: JSON.parse(this.headersText === '' ? null : this.headersText),
+      params: JSON.parse(this.bodyText === '' ? null : this.bodyText),
       generator: GeneratorEnum.DEFAULT,
     };
-    this.formData.headersText = this.headersText;
-    this.formData.bodyText = this.bodyText;
+    console.log(api);
 
     const defaultDataGenerator = new DefaultDataGenerator(api);
     defaultDataGenerator.fetchData().subscribe(data => {
@@ -123,7 +123,7 @@ export class ApiModalComponent implements OnInit {
         url: this.url,
         method: this.method,
         headers: JSON.parse(this.headersText === '' ? '{}' : this.headersText),
-        body: JSON.parse(this.bodyText === '' ? '{}' : this.bodyText),
+        params: JSON.parse(this.bodyText === '' ? '{}' : this.bodyText),
       },
     };
 
@@ -154,7 +154,7 @@ export class ApiModalComponent implements OnInit {
         url: this.url,
         method: this.method,
         headers: JSON.parse(this.headersText === '' ? '{}' : this.headersText),
-        body: JSON.parse(this.bodyText === '' ? '{}' : this.bodyText),
+        params: JSON.parse(this.bodyText === '' ? '{}' : this.bodyText),
       },
     };
 
@@ -182,8 +182,10 @@ export class ApiModalComponent implements OnInit {
         this.interval = data.interval;
         this.status = data.status;
         this.type = data.type;
-        this.headersText = '';
-        this.bodyText = '';
+        this.headersText = JSON.stringify(data.api.headers);
+        this.bodyText = JSON.stringify(data.api.body);
+        this.formData.bodyText = JSON.stringify(data.api.body,null,2);
+        this.formData.headersText = JSON.stringify(data.api.headers,null,2);
       },
       err => {
         if (err instanceof HttpRequest) {

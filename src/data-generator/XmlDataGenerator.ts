@@ -17,7 +17,7 @@ export class XmlDataGenerator implements IDataGenerator {
       {
         method: this.api.method,
         headers: this.api.headers,
-        body: this.api.body
+        body: this.api.params
       },
     ));
   }
