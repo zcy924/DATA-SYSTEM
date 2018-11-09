@@ -45,7 +45,7 @@ export class PaletteComponent implements AfterViewInit {
     document.addEventListener('mousemove', mouseMove);
     document.addEventListener('mouseup', mouseUp);
 
-    grabHelper.show(dragEvent.pageX, dragEvent.pageY, ComponentRepositoryManager.getInstance().getComponentMetaByPath(componentName).grabOption);
+    grabHelper.show(dragEvent.pageX, dragEvent.pageY, ComponentRepositoryManager.getInstance().getComponentMeta(componentName).grabOption);
     return false;
   }
 

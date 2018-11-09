@@ -3,6 +3,16 @@
   height: 100%;
 }
 
+.repo {
+  .repo-title {
+    line-height: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    padding-left: 12px;
+  }
+}
+
 ul.component-lib {
   li {
     cursor: pointer;
@@ -35,6 +45,14 @@ ul.component-lib {
         text-align: center;
       }
     }
+  }
+  &:before,
+  &:after {
+    content: "";
+    display: table;
+  }
+  &:after {
+    clear: both;
   }
 }
 

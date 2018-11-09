@@ -27,7 +27,6 @@ compRepo.batchRegister([
         },
       },
       graphic: {
-        graphicKey: 'clock.graphic',
         configOption: null,
         dataSourceKey: 'num1',
       },
@@ -50,7 +49,6 @@ compRepo.batchRegister([
         },
       },
       graphic: {
-        graphicKey: 'flip.number.graphic',
         configOption: null,
         dataSourceKey: 'num2',
       },
@@ -69,7 +67,60 @@ compRepo.batchRegister([
         regionKey: 'explicit.region',
       },
       graphic: {
-        graphicKey: 'table.graphic',
+        configOption: null,
+        dataSourceKey: 'num1',
+      },
+    },
+    graphicDef: TableGraphic,
+  },
+  {
+    key: 'table.graphic1',
+    paletteMeta: {
+      show: true,
+      displayName: '带边框表格',
+      imageClass: 'baidu-table',
+    },
+    componentOption: {
+      region: {
+        regionKey: 'explicit.region',
+      },
+      graphic: {
+        configOption: null,
+        dataSourceKey: 'num1',
+      },
+    },
+    graphicDef: TableGraphic,
+  },
+  {
+    key: 'table.graphic2',
+    paletteMeta: {
+      show: true,
+      displayName: '带边框表格',
+      imageClass: 'baidu-table',
+    },
+    componentOption: {
+      region: {
+        regionKey: 'explicit.region',
+      },
+      graphic: {
+        configOption: null,
+        dataSourceKey: 'num1',
+      },
+    },
+    graphicDef: TableGraphic,
+  },
+  {
+    key: 'table.graphic3',
+    paletteMeta: {
+      show: true,
+      displayName: '带边框表格',
+      imageClass: 'baidu-table',
+    },
+    componentOption: {
+      region: {
+        regionKey: 'explicit.region',
+      },
+      graphic: {
         configOption: null,
         dataSourceKey: 'num1',
       },

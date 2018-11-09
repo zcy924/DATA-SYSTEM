@@ -184,7 +184,7 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
     document.addEventListener('mouseup', mouseUp);
     componentName = (<HTMLElement>event.target).dataset.componentName;
     grabHelper.show(dragEvent.pageX, dragEvent.pageY,
-      ComponentRepositoryManager.getInstance().getComponentMetaByPath(componentName).grabOption);
+      ComponentRepositoryManager.getInstance().getComponentMeta(componentName).grabOption);
     return false;
   }
 

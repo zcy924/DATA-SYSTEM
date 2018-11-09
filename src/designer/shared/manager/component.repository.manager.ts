@@ -23,7 +23,7 @@ export class ComponentRepositoryManager {
     if (!this._manager) {
       this._manager = new ComponentRepositoryManager();
       this._manager.addComponentRepository(StandardCompRepo);
-      this._manager.addComponentRepository(CustomCompRepo)
+      this._manager.addComponentRepository(CustomCompRepo);
     }
     return this._manager;
   }
@@ -36,6 +36,16 @@ export class ComponentRepositoryManager {
       this._map.set(compRepo.key, compRepo);
       this._updatePaletteConfig();
     }
+  }
+
+  removeComponentRepository(compRepo: ComponentRepository) {
+    if (compRepo && this._map.has(compRepo.key)) {
+      this._map.delete(compRepo.key);
+    }
+  }
+
+  getComponentRepository(key: string) {
+    return this._map.get(key);
   }
 
   has(path: string) {
@@ -54,16 +64,6 @@ export class ComponentRepositoryManager {
     });
   }
 
-  removeComponentRepository(compRepo: ComponentRepository) {
-    if (this._map.has(compRepo.key)) {
-      this._map.delete(compRepo.key);
-    }
-  }
-
-  getComponentRepository(key: string) {
-    return this._map.get(key);
-  }
-
   get componentRepositories(): Array<ComponentRepository> {
     return Array.from(this._map.values());
   }
@@ -79,35 +79,19 @@ export class ComponentRepositoryManager {
 
   }
 
-  getComponentMetaByPath(path: string) {
-    const [repoKey, graphicKey] = path.split('$');
-    if (this._map.has(repoKey)) {
-      return this._map.get(repoKey).getComponentMeta(graphicKey);
-    } else {
-      return null;
-    }
-  }
-
   /**
-   * 根据图表路径获取
-   *
-   * standard$echart.bar
+   * 根据路径信息获取组件元数据
+   * @param {string} path
+   * @returns {any}
    */
-  getGraphicDefByPath(path: string): Type<IGraphic> {
-    const [repoKey, graphicKey] = path.split('$');
-    if (this._map.has(repoKey)) {
-      return this._map.get(repoKey).getGraphicDef(graphicKey);
-    } else {
-      return null;
-    }
-  }
-
-  getComponentOptionByPath(path: string) {
-    const [repoKey, graphicKey] = path.split('$');
-    if (this._map.has(repoKey)) {
-      return this._map.get(repoKey).getComponentOption(graphicKey);
-    } else {
-      return null;
+  getComponentMeta(path: string) {
+    if(path){
+      const [repoKey, graphicKey] = path.split('$');
+      if (this._map.has(repoKey)) {
+        return this._map.get(repoKey).getComponentMeta(graphicKey);
+      } else {
+        return null;
+      }
     }
   }
 

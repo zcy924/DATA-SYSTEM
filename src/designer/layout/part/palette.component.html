@@ -1,5 +1,5 @@
-<div *ngFor="let item of repoList||[]">
-  <p>{{item.name}}</p>
+<div class="repo" *ngFor="let item of repoList||[]">
+  <p class="repo-title">{{item.name}}</p>
   <ul class="component-lib">
     <li *ngFor="let comp of item.children" draggable="true" (dragstart)="dragstart($event)"
         [attr.componentName]="item.key+'$'+comp.key">
