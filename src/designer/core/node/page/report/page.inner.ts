@@ -13,6 +13,8 @@ import { PageConfigWrapper } from '@core/node/page/report/page.outer';
 import { AbstractPageView } from '@core/node/page/report/abstract.page.view';
 import { RuntimePageView } from '@core/node/page/report/runtime.page.view';
 import { DataSourceManager } from '@shared/core/data/data.source.manager';
+import { GeneratorRepositoryManager } from '@shared/manager/generator.repository.manager';
+import { ComponentRepositoryManager } from '@shared/manager/component.repository.manager';
 
 export class ReportPageInner implements IPage {
 
@@ -25,6 +27,10 @@ export class ReportPageInner implements IPage {
   public configSourceManager: ConfigSourceManager;
   public dataSourceManager: DataSourceManager;
   public actionManager: ActionManager;
+
+  public compRepoManager = ComponentRepositoryManager.getInstance();
+  public geneRepoManager = GeneratorRepositoryManager.getInstance();
+
 
   constructor(private _mode: 'design' | 'runtime') {
     if (_mode === 'design') {

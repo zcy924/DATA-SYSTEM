@@ -9,6 +9,8 @@ import { ReportPage } from '@core/node/page/report/page';
 import { RuntimePageConfig } from '../../../../runtime/runtime.page.config';
 import { RegionController } from '@core/node/region/region.controller';
 import * as _ from 'lodash';
+import { Runtime } from '../../../../runtime/runtime';
+import { IFileStructure } from '@shared/file/file.structure';
 
 export class PageConfigWrapper {
 
@@ -57,8 +59,27 @@ export class PageConfigWrapper {
 
 export class ReportPageOuter {
 
+  private static readonly _version = '1.0.0';
+  private static readonly _versionPattern = /^\d+\.\d+\.\d+$/;
   private _pageInner: ReportPageInner;
   private _page: IReportPage;
+
+  static accept(versionNo: string): boolean {
+    if (this._versionPattern.test(versionNo)) {
+      const [a, b, c] = versionNo.match(/\d+/g),
+        [ta, tb, tc] = this._version.match(/\d+/g);
+      if (a === ta && parseInt(tb) >= parseInt(b)) {
+        return true;
+      } else {
+        return false;
+      }
+
+    } else {
+      console.log('版本号格式错误:' + versionNo);
+      return false;
+    }
+
+  }
 
   constructor(mode: 'design' | 'runtime') {
     this._pageInner = new ReportPageInner(mode);
@@ -86,11 +107,29 @@ export class ReportPageOuter {
     return this._pageInner.actionManager;
   }
 
-  load(option: any) {
-    option.option && this._pageInner.pageConfigWrapper.model.importOption(option.option);
-    option.children && option.children.forEach((value) => {
-      graphicFactory.paste(value);
-    });
+  load(file: IFileStructure) {
+    if (file.main && this._checkFile(file)) {
+      file.main.option && this._pageInner.pageConfigWrapper.model.importOption(file.main.option);
+      file.main.children && file.main.children.forEach((value) => {
+        graphicFactory.paste(value);
+      });
+    }
+
+  }
+
+  private _checkFile(file: IFileStructure): boolean {
+    return this._checkVersion(file) && this._checkDependencies(file);
+  }
+
+  private _checkVersion(file: IFileStructure) {
+    return ReportPageOuter.accept(_.get(file, 'manifest.version'));
+  }
+
+  private _checkDependencies(file: IFileStructure) {
+    const { componentRepositories, generatorRepositories } =
+      _.get(file, 'dependencies');
+    return this._pageInner.compRepoManager.includes(componentRepositories)
+      && this._pageInner.geneRepoManager.includes(generatorRepositories);
   }
 
   save() {
@@ -109,6 +148,9 @@ export class ReportPageOuter {
     paths = _.uniq(paths.map(value => value.split('$')[0]));
     console.log(JSON.stringify(keys), paths);
     return {
+      manifest: {
+        version: ReportPageOuter._version,
+      },
       dependencies: {
         generatorRepositories: keys,
         componentRepositories: paths,
