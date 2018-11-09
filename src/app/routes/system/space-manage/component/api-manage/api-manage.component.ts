@@ -53,7 +53,7 @@ export class ApiManageComponent implements OnInit {
       nzTitle: `新增API`,
       nzContent: ApiModalComponent,
       nzStyle: { top: '30px' },
-      nzWidth: '70%',
+      nzWidth: '80%',
       nzOkText: '新增',
       nzCancelText: '取消',
       nzOnOk: i => {
@@ -129,7 +129,7 @@ export class ApiManageComponent implements OnInit {
       nzTitle: `编辑API`,
       nzContent: ApiModalComponent,
       nzStyle: { top: '30px' },
-      nzWidth: '70%',
+      nzWidth: '80%',
       nzOkText: '保存',
       nzCancelText: '取消',
       nzOnOk: i => {

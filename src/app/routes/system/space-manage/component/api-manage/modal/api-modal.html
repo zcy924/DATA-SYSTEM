@@ -6,15 +6,15 @@
         <div class="api-form-content">
 
           <div nz-row class="api-form-item">
-            <div nz-col [nzSpan]="4">请求路径</div>
-            <div nz-col  [nzSpan]="16">
+            <div nz-col [nzSpan]="3">请求路径</div>
+            <div nz-col  [nzSpan]="19">
               <input nz-input [(ngModel)]="url" name="url" />
             </div>
           </div>
 
           <div nz-row class="api-form-item">
-            <div nz-col [nzSpan]="4">请求方式</div>
-            <div nz-col  [nzSpan]="16">
+            <div nz-col [nzSpan]="3">请求方式</div>
+            <div nz-col  [nzSpan]="19">
               <nz-radio-group [(ngModel)]="method" name="method">
                 <label nz-radio nzValue="GET">GET</label>
                 <label nz-radio nzValue="POST">POST</label>
@@ -25,8 +25,8 @@
           </div>
 
           <div nz-row class="api-form-item">
-            <div nz-col [nzSpan]="4">请求头</div>
-            <div nz-col  [nzSpan]="16">
+            <div nz-col [nzSpan]="3">请求头</div>
+            <div nz-col  [nzSpan]="19">
               <div
                 [theme]="'clouds'"
                 [options]="aceConfig.options"
@@ -41,8 +41,8 @@
           </div>
 
           <div nz-row class="api-form-item">
-            <div nz-col [nzSpan]="4">请求参数</div>
-            <div nz-col  [nzSpan]="16">
+            <div nz-col [nzSpan]="3">请求参数</div>
+            <div nz-col  [nzSpan]="19">
               <div
                 [theme]="'clouds'"
                 [options]="aceConfig.options"
@@ -60,22 +60,22 @@
         <div class="api-form-content" >
 
           <div nz-row class="api-form-item">
-            <div nz-col [nzSpan]="4">名称</div>
-            <div nz-col  [nzSpan]="16">
+            <div nz-col [nzSpan]="3">名称</div>
+            <div nz-col  [nzSpan]="19">
               <input nz-input [(ngModel)]="name" name="name" />
             </div>
           </div>
 
           <div nz-row class="api-form-item">
-            <div nz-col [nzSpan]="4">描述</div>
-            <div nz-col  [nzSpan]="16">
+            <div nz-col [nzSpan]="3">描述</div>
+            <div nz-col  [nzSpan]="19">
               <input nz-input [(ngModel)]="remark" name="remark" />
             </div>
           </div>
 
           <div nz-row class="api-form-item">
-            <div nz-col [nzSpan]="4">响应</div>
-            <div nz-col  [nzSpan]="16">
+            <div nz-col [nzSpan]="3">响应</div>
+            <div nz-col  [nzSpan]="19">
               <div [mode]="'json'"
                    [options]="aceConfig.options"
                    [text]="formData.responseText"
