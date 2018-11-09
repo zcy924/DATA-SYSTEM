@@ -13,7 +13,7 @@ import * as _ from 'lodash';
  *  组件库是不可修改对象  所以
  */
 export class ComponentRepository {
-  private _map: Map<string, IComponentMeta> = new Map<string, IComponentMeta>();
+  private _map: Map<string, ComponentMeta> = new Map<string, ComponentMeta>();
 
   constructor(private _key: string, private _name: string) {
 
@@ -33,7 +33,7 @@ export class ComponentRepository {
 
   register(compMeta: IComponentMeta) {
     if (compMeta) {
-      this._map.set(compMeta.key, compMeta);
+      this._map.set(compMeta.key, new ComponentMeta(compMeta));
     }
   }
 
@@ -51,11 +51,37 @@ export class ComponentRepository {
     });
   }
 
+  getComponentMeta(key: string) {
+    return this._map.get(key);
+  }
+
+  getGrabOption(key: string) {
+    return this._map.get(key).grabOption;
+  }
+
   getComponentOption(key: string) {
     return this._map.get(key).componentOption;
   }
 
   getGraphicDef(key: string): Type<IGraphic> {
     return this._map.get(key).graphicDef;
+  }
+}
+
+export class ComponentMeta {
+  constructor(private _meta: IComponentMeta) {
+
+  }
+
+  get grabOption() {
+    return this._meta.paletteMeta ? this._meta.paletteMeta.grabOption : null;
+  }
+
+  get componentOption() {
+    return this._meta.componentOption;
+  }
+
+  get graphicDef() {
+    return this._meta.graphicDef;
   }
 }

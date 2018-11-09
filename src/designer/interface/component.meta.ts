@@ -14,9 +14,9 @@ export interface IPaletteMeta {
   displayName?: string;
   imageClass?: string;
   grabOption?: {
-    width?: number,
-    height?: number,
-    backgroundImage?: string
+    width: number,
+    height: number,
+    backgroundImage: string
   };
 }
 

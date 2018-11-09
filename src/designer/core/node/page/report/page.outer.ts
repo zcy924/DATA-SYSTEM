@@ -87,8 +87,8 @@ export class ReportPageOuter {
   }
 
   load(option: any) {
-    this._pageInner.pageConfigWrapper.model.importOption(option.option);
-    option.children.forEach((value) => {
+    option.option && this._pageInner.pageConfigWrapper.model.importOption(option.option);
+    option.children && option.children.forEach((value) => {
       graphicFactory.paste(value);
     });
   }

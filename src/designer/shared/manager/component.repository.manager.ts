@@ -32,7 +32,7 @@ export class ComponentRepositoryManager {
     }
   }
 
-  has(path:string){
+  has(path: string) {
     const [repoKey, graphicKey] = path.split('$');
     if (this._map.has(repoKey)) {
       return this._map.get(repoKey).has(graphicKey);
@@ -62,6 +62,15 @@ export class ComponentRepositoryManager {
     return Array.from(this._map.values());
   }
 
+  getComponentMetaByPath(path: string) {
+    const [repoKey, graphicKey] = path.split('$');
+    if (this._map.has(repoKey)) {
+      return this._map.get(repoKey).getComponentMeta(graphicKey);
+    } else {
+      return null;
+    }
+  }
+
   /**
    * 根据图表路径获取
    *
@@ -76,7 +85,7 @@ export class ComponentRepositoryManager {
     }
   }
 
-  getComponentOptionByPath(path: string){
+  getComponentOptionByPath(path: string) {
     const [repoKey, graphicKey] = path.split('$');
     if (this._map.has(repoKey)) {
       return this._map.get(repoKey).getComponentOption(graphicKey);
