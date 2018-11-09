@@ -1,6 +1,7 @@
 import { Type } from '../../interface/type';
 import { IGraphic } from '../core/graphic/graphic';
 import { ComponentRepository } from '../core/repository/component.repository';
+import { StandardCompRepo } from '../../component.packages/standard';
 
 /**
  * 设计时和运行时都会使用到ComponentRepositoryManager
@@ -17,6 +18,7 @@ export class ComponentRepositoryManager {
   static getInstance() {
     if (!this._manager) {
       this._manager = new ComponentRepositoryManager();
+      this._manager.addComponentRepository(StandardCompRepo);
     }
     return this._manager;
   }
@@ -26,7 +28,16 @@ export class ComponentRepositoryManager {
 
   addComponentRepository(compRepo: ComponentRepository) {
     if (compRepo) {
-      this._map.set(compRepo.name, compRepo);
+      this._map.set(compRepo.key, compRepo);
+    }
+  }
+
+  has(path:string){
+    const [repoKey, graphicKey] = path.split('$');
+    if (this._map.has(repoKey)) {
+      return this._map.get(repoKey).has(graphicKey);
+    } else {
+      return false;
     }
   }
 
@@ -38,8 +49,8 @@ export class ComponentRepositoryManager {
   }
 
   removeComponentRepository(compRepo: ComponentRepository) {
-    if (this._map.has(compRepo.name)) {
-      this._map.delete(compRepo.name);
+    if (this._map.has(compRepo.key)) {
+      this._map.delete(compRepo.key);
     }
   }
 
@@ -64,6 +75,16 @@ export class ComponentRepositoryManager {
       return null;
     }
   }
+
+  getComponentOptionByPath(path: string){
+    const [repoKey, graphicKey] = path.split('$');
+    if (this._map.has(repoKey)) {
+      return this._map.get(repoKey).getComponentOption(graphicKey);
+    } else {
+      return null;
+    }
+  }
+
 
   destroy() {
     if (this._map) {
