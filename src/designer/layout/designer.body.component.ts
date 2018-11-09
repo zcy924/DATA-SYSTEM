@@ -61,7 +61,7 @@ export class DesignerBodyComponent implements AfterViewInit {
     setTimeout(() => {
       const report = this.report = session.currentPage = new ReportPageOuter('design');
       $('.app-content').prepend(report.$element);
-    }, 100);
+    }, 10);
 
     // const runtime = new Runtime($('.app-content')[0]);
     //

@@ -1,17 +1,18 @@
-import {AfterViewInit, Component, EventEmitter, Output, OnDestroy} from '@angular/core';
-import {graphicFactory} from '@core/node/factory/graphic.factory';
-import {session} from '@core/node/utils/session';
+import { AfterViewInit, Component, EventEmitter, Output, OnDestroy } from '@angular/core';
+import { graphicFactory } from '@core/node/factory/graphic.factory';
+import { session } from '@core/node/utils/session';
 import * as FileSaver from 'file-saver';
 import * as moment from 'moment';
-import {CommService} from '../service/comm.service';
-import {designerStorage} from '../utils/designer.storage';
-import {Destroyable} from '../interface/destroyable';
-import {FilterTools, HelperTools, MoreTools} from './overlay.template';
-import {imageDimensions$} from './fragment';
-import {Dimensions} from '@core/node/interface';
-import {totalGraphicMetaMap} from '@core/node/config/default.graphic.meta.map';
-import {ActivatedRoute} from '@angular/router';
-import {NzMessageService} from "ng-zorro-antd";
+import { CommService } from '../service/comm.service';
+import { designerStorage } from '../utils/designer.storage';
+import { Destroyable } from '../interface/destroyable';
+import { FilterTools, HelperTools, MoreTools } from './overlay.template';
+import { imageDimensions$ } from './fragment';
+import { Dimensions } from '@core/node/interface';
+import { totalGraphicMetaMap } from '@core/node/config/default.graphic.meta.map';
+import { ActivatedRoute } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd';
+import { ComponentRepositoryManager } from '@shared/manager/component.repository.manager';
 
 @Component({
   selector: 'app-designer-header',
@@ -81,7 +82,7 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
         spaceId: localStorage.getItem('spaceID'),
       });
     if (url == 'report-designer/:id') {
-      this._service.modReport({Report: params}).subscribe((data) => {
+      this._service.modReport({ Report: params }).subscribe((data) => {
         this.nzMessage.success('保存成功!');
       });
     } else {
@@ -98,7 +99,7 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
   }
 
   doDownload() {
-    const blob = new Blob([JSON.stringify(session.currentPage.save(), null, 2)], {type: 'text/plain;charset=utf-8'});
+    const blob = new Blob([JSON.stringify(session.currentPage.save(), null, 2)], { type: 'text/plain;charset=utf-8' });
 
     FileSaver.saveAs(blob, `zijin.template.${moment().format('YYYYMMDDHHmmss')}.json`);
   }
@@ -183,7 +184,7 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
     document.addEventListener('mouseup', mouseUp);
     componentName = (<HTMLElement>event.target).dataset.componentName;
     grabHelper.show(dragEvent.pageX, dragEvent.pageY,
-      totalGraphicMetaMap[componentName].grabOption);
+      ComponentRepositoryManager.getInstance().getComponentMetaByPath(componentName).grabOption);
     return false;
   }
 
@@ -242,7 +243,7 @@ class PopupWrapper {
   }
 
   show(left: number) {
-    this._$element.css({left}).show();
+    this._$element.css({ left }).show();
   }
 
   hide() {
@@ -298,7 +299,7 @@ class GrabHelper {
   show(left: number, top: number, option?: { width: number, height: number, backgroundImage: string }) {
     this._option = option ? option : this._defaultOption;
     this._$element.css(this._option);
-    this._$element.css({backgroundSize: `${this._option.width}px ${this._option.height}px`});
+    this._$element.css({ backgroundSize: `${this._option.width}px ${this._option.height}px` });
     if (!this._state) {
       $('body').append(this._$element);
       this._state = true;
