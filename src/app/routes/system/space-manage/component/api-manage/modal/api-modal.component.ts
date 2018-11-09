@@ -1,19 +1,19 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   NzTreeNode,
   NzFormatEmitEvent,
   NzMessageService,
   NzModalRef,
 } from 'ng-zorro-antd';
-import {SpaceManageService} from '../../../space-manage.service';
-import {ActivatedRoute} from '@angular/router';
-import {Observable, of} from 'rxjs';
-import {HttpRequest, HttpResponse} from '@angular/common/http';
-import {getJSON} from 'ng-alain/utils/json';
-import {Api} from '../../../../../../../data-generator/Api';
-import {GeneratorEnum} from '../../../../../../../data-generator/GeneratorEnum';
-import {DataGenerator} from '../../../../../../../data-generator/DataGenerator';
-import {DefaultDataGenerator} from '../../../../../../../data-generator/DefaultDataGenerator';
+import { SpaceManageService } from '../../../space-manage.service';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { HttpRequest, HttpResponse } from '@angular/common/http';
+import { getJSON } from 'ng-alain/utils/json';
+import { Api } from '../../../../../../../data-generator/Api';
+import { GeneratorEnum } from '../../../../../../../data-generator/GeneratorEnum';
+import { DataGenerator } from '../../../../../../../data-generator/DataGenerator';
+import { DefaultDataGenerator } from '../../../../../../../data-generator/DefaultDataGenerator';
 
 @Component({
   selector: 'app-api-modal',
@@ -54,7 +54,7 @@ export class ApiModalComponent implements OnInit {
   formData = {
     headersText: '',
     bodyText: '',
-    responseText: ''
+    responseText: '',
   };
   modMsg;
   aceConfig = {
@@ -72,8 +72,8 @@ export class ApiModalComponent implements OnInit {
       this.modMsg = text;
     },
     options: {
-      printMargin: false
-    }
+      printMargin: false,
+    },
   };
 
 
@@ -100,9 +100,9 @@ export class ApiModalComponent implements OnInit {
       generator: GeneratorEnum.DEFAULT,
     };
     const httpGenerator = new DataGenerator(api);
-    httpGenerator.useDataGenerator(api).subscribe(data=>{
+    httpGenerator.getResponse$(api).subscribe(data => {
       this.responseText = JSON.stringify(data);
-      this.formData.responseText = JSON.stringify(data, null,2);
+      this.formData.responseText = JSON.stringify(data, null, 2);
     });
     // const defaultDataGenerator = new DefaultDataGenerator(api);
     // defaultDataGenerator.fetchData().subscribe(data => {
@@ -123,8 +123,8 @@ export class ApiModalComponent implements OnInit {
       api: {
         url: this.url,
         method: this.method,
-        headers: JSON.parse(this.headersText === '' ? '{}' : this.headersText),
-        params: JSON.parse(this.bodyText === '' ? '{}' : this.bodyText),
+        headers: JSON.parse(this.headersText === '' ? '' : this.headersText),
+        params: JSON.parse(this.bodyText === '' ? '' : this.bodyText),
       },
     };
 
@@ -154,8 +154,8 @@ export class ApiModalComponent implements OnInit {
       api: {
         url: this.url,
         method: this.method,
-        headers: JSON.parse(this.headersText === '' ? '{}' : this.headersText),
-        params: JSON.parse(this.bodyText === '' ? '{}' : this.bodyText),
+        headers: JSON.parse(this.headersText === '' ? '' : this.headersText),
+        params: JSON.parse(this.bodyText === '' ? '' : this.bodyText),
       },
     };
 
@@ -174,7 +174,7 @@ export class ApiModalComponent implements OnInit {
 
   // 查询api
   qryApi() {
-    this._spaceManageService.queryApi({id: this.id}).subscribe(
+    this._spaceManageService.queryApi({ id: this.id }).subscribe(
       data => {
         this.name = data.name;
         this.remark = data.remark;
@@ -183,10 +183,10 @@ export class ApiModalComponent implements OnInit {
         this.interval = data.interval;
         this.status = data.status;
         this.type = data.type;
-        this.headersText = JSON.stringify(data.api.headers);
-        this.bodyText = JSON.stringify(data.api.params);
-        this.formData.bodyText = JSON.stringify(data.api.params,null,2);
-        this.formData.headersText = JSON.stringify(data.api.headers,null,2);
+        this.headersText = data.api.headers ? '' : JSON.stringify(data.api.headers);
+        this.bodyText = data.api.params ? '' : JSON.stringify(data.api.params);
+        this.formData.headersText = data.api.headers ? '' : JSON.stringify(data.api.headers, null, 2);
+        this.formData.bodyText = data.api.params ? '' : JSON.stringify(data.api.params, null, 2);
       },
       err => {
         if (err instanceof HttpRequest) {
