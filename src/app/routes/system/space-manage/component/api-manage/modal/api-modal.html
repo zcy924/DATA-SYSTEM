@@ -20,6 +20,17 @@
                 <label nz-radio nzValue="POST">POST</label>
                 <label nz-radio nzValue="PUT">PUT</label>
               </nz-radio-group>
+            </div>
+          </div>
+
+          <div nz-row class="api-form-item">
+            <div nz-col [nzSpan]="3">响应格式</div>
+            <div nz-col  [nzSpan]="19">
+              <nz-radio-group [(ngModel)]="generator" name="generator">
+                <label nz-radio nzValue="JSON">JSON</label>
+                <label nz-radio nzValue="XML">XML</label>
+                <label nz-radio nzValue="TEXT">TEXT</label>
+              </nz-radio-group>
               <button nz-button nzType="default" (click)="sendRequest()">发送请求</button>
             </div>
           </div>
@@ -82,7 +93,7 @@
                    [theme]="'clouds'"
                    [readOnly]="true"
                    ace-editor
-                   style="width: 100%;height: 405px; border: #D9D9D9 solid 1px;border-radius: 4px">
+                   style="width: 100%;height: 445px; border: #D9D9D9 solid 1px;border-radius: 4px">
               </div>
               <!--<textarea nz-input rows="16" [(ngModel)]="responseText" name='responseText' class="textbox"></textarea>-->
             </div>

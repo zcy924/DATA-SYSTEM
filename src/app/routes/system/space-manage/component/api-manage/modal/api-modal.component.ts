@@ -1,19 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {
   NzTreeNode,
   NzFormatEmitEvent,
   NzMessageService,
   NzModalRef,
 } from 'ng-zorro-antd';
-import { SpaceManageService } from '../../../space-manage.service';
-import { ActivatedRoute } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { HttpRequest, HttpResponse } from '@angular/common/http';
-import { getJSON } from 'ng-alain/utils/json';
-import { Api } from '../../../../../../../data-generator/Api';
-import { GeneratorEnum } from '../../../../../../../data-generator/GeneratorEnum';
-import { DataGenerator } from '../../../../../../../data-generator/DataGenerator';
-import { DefaultDataGenerator } from '../../../../../../../data-generator/DefaultDataGenerator';
+import {SpaceManageService} from '../../../space-manage.service';
+import {HttpRequest, HttpResponse} from '@angular/common/http';
+import {Api} from '../../../../../../../data-generator/Api';
+import {DataGenerator} from '../../../../../../../data-generator/DataGenerator';
 
 @Component({
   selector: 'app-api-modal',
@@ -44,12 +39,12 @@ export class ApiModalComponent implements OnInit {
   remark: string;
   headersText: string = '';
   bodyText: string = '';
-  responseText: any;
   method: string = 'GET';
   spaceID = localStorage.getItem('spaceID');
   id;
   interval;
   status;
+  generator: 'JSON' | 'XML' | 'TEXT' = 'JSON';
   type;
   formData = {
     headersText: '',
@@ -95,20 +90,14 @@ export class ApiModalComponent implements OnInit {
     let api: Api = {
       url: this.url,
       method: this.method,
-      headers: JSON.parse(this.headersText === '' ? null : this.headersText),
-      params: JSON.parse(this.bodyText === '' ? null : this.bodyText),
-      generator: GeneratorEnum.DEFAULT,
+      headers: this.headersText === '' || null || undefined ? null : JSON.parse(this.headersText),
+      params: this.headersText === '' || null || undefined ? '' : JSON.parse(this.bodyText),
+      generator: this.generator,
     };
     const httpGenerator = new DataGenerator(api);
     httpGenerator.getResponse$(api).subscribe(data => {
-      this.responseText = JSON.stringify(data);
       this.formData.responseText = JSON.stringify(data, null, 2);
     });
-    // const defaultDataGenerator = new DefaultDataGenerator(api);
-    // defaultDataGenerator.fetchData().subscribe(data => {
-    //   this.responseText = JSON.stringify(data);
-    //   this.formData.responseText = JSON.stringify(data, null,2);
-    // });
   }
 
   // 新增API
@@ -123,8 +112,9 @@ export class ApiModalComponent implements OnInit {
       api: {
         url: this.url,
         method: this.method,
-        headers: JSON.parse(this.headersText === '' ? '' : this.headersText),
-        params: JSON.parse(this.bodyText === '' ? '' : this.bodyText),
+        headers: this.headersText === '' || null || undefined ? null : JSON.parse(this.headersText),
+        params: this.bodyText === '' || null || undefined ? '' : JSON.parse(this.bodyText),
+        generator: this.generator
       },
     };
 
@@ -154,14 +144,15 @@ export class ApiModalComponent implements OnInit {
       api: {
         url: this.url,
         method: this.method,
-        headers: JSON.parse(this.headersText === '' ? '' : this.headersText),
-        params: JSON.parse(this.bodyText === '' ? '' : this.bodyText),
+        generator: this.generator,
+        headers: this.headersText === '' || null || undefined ? '' : JSON.parse(this.headersText),
+        params: this.bodyText === '' || null || undefined ? '' : JSON.parse(this.bodyText),
       },
     };
 
     this._spaceManageService.modApi(params).subscribe(
       res => {
-        this._message.success('添加API成功！');
+        this._message.success('修改API成功！');
         this._modalRef.destroy('ok');
       },
       err => {
@@ -174,7 +165,7 @@ export class ApiModalComponent implements OnInit {
 
   // 查询api
   qryApi() {
-    this._spaceManageService.queryApi({ id: this.id }).subscribe(
+    this._spaceManageService.queryApi({id: this.id}).subscribe(
       data => {
         this.name = data.name;
         this.remark = data.remark;
@@ -183,10 +174,11 @@ export class ApiModalComponent implements OnInit {
         this.interval = data.interval;
         this.status = data.status;
         this.type = data.type;
-        this.headersText = data.api.headers ? '' : JSON.stringify(data.api.headers);
-        this.bodyText = data.api.params ? '' : JSON.stringify(data.api.params);
-        this.formData.headersText = data.api.headers ? '' : JSON.stringify(data.api.headers, null, 2);
-        this.formData.bodyText = data.api.params ? '' : JSON.stringify(data.api.params, null, 2);
+        this.generator = data.api.generator;
+        this.headersText = data.api.headers === '' || null || undefined ? '' : JSON.stringify(data.api.headers);
+        this.bodyText = data.api.params === '' || null || undefined ? '' : JSON.stringify(data.api.params);
+        this.formData.headersText = data.api.headers === '' || null || undefined ? '' : JSON.stringify(data.api.headers, null, 2);
+        this.formData.bodyText = data.api.params === '' || null || undefined ? '' : JSON.stringify(data.api.params, null, 2);
       },
       err => {
         if (err instanceof HttpRequest) {

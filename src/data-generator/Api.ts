@@ -3,5 +3,5 @@ export interface Api{
   method: string;
   headers?: any;
   params?: any;
-  generator: string;
+  generator: 'JSON'|'XML'|'TEXT';
 }

@@ -13,15 +13,15 @@ export class DataGenerator {
 
   getResponse$(api: Api):Observable<any> {
     switch (api.generator) {
-      case 'xmlDataGenerator':
+      case 'XML':
         const xmlDataGenerator = new XmlDataGenerator(api);
         return xmlDataGenerator.fetchData();
         break;
-      case 'textDataGenerator':
+      case 'TEXT':
         const textDataGenerator = new TextDataGenerator(api);
         return textDataGenerator.fetchData();
         break;
-      case  'defaultDataGenerator':
+      case  'JSON':
         const defaultDataGenerator = new DefaultDataGenerator(api);
         return defaultDataGenerator.fetchData();
       default:
