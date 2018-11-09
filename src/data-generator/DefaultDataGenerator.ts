@@ -48,7 +48,9 @@ export class DefaultDataGenerator implements IDataGenerator {
       delete options.generator;
       let url = options.url;
       delete options.url;
-      options.params = JSON.stringify(this.api.params);
+      options['body'] = JSON.stringify(this.api.params);
+      delete options.params;
+      console.log(options);
       this.http$ = fromPromise(fetch(url, options).then(response => response.json())).pipe(map(response => response));
     }
     return this.http$;
