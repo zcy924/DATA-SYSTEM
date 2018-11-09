@@ -3,11 +3,7 @@ export interface IComponentOption {
     regionKey: string;
     regionOption: IRegionOption;
   };
-  graphic: {
-    graphicKey: string;
-    configOption: any;
-    dataSourceKey: string;
-  }
+  graphic: IGraphicOption
 }
 
 export interface IRegionOption {
@@ -16,5 +12,12 @@ export interface IRegionOption {
   top: number;
   width: number;
   height: number;
+}
+
+export interface IGraphicOption {
+  graphicKey: string;
+  graphicId?: string;
+  configOption?: any;
+  dataSourceKey?: string;
 }
 

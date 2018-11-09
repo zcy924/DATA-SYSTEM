@@ -1,4 +1,3 @@
-import { IGraphic, IGraphicOption } from '@core/node/graphic/graphic';
 import { combineLatest, Observable, Subject, Subscription } from 'rxjs';
 import { RegionController } from '@core/node/region/region.controller';
 import { getParameterName, guid } from '@core/node/utils/tools';
@@ -8,6 +7,8 @@ import { distinctUntilChanged, tap } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { dataModelManager } from '@core/data/data.model.manager';
 import { ChangedItem } from '@core/node/event/model.event';
+import { IGraphicOption } from '@shared/file/component.option';
+import { IGraphic } from '@shared/core/graphic/graphic';
 
 
 /**
@@ -50,7 +51,7 @@ export class GraphicWrapper {
   init(graphicOption: IGraphicOption) {
     this._graphicOption = graphicOption;
     console.log(graphicOption);
-    const { graphicId, graphicKey, dataOptionId, configOption } = graphicOption;
+    const { graphicId, graphicKey, dataSourceKey, configOption } = graphicOption;
     if (graphicMap.has(graphicKey)) {
       this._graphic = new (graphicMap.get(graphicKey))();
       const paramNameArray = getParameterName(this._graphic.init), map = {
@@ -92,7 +93,7 @@ export class GraphicWrapper {
           configOption,
         });
     }
-    this._dataSource = this._region.page.getDataSource(dataOptionId);
+    this._dataSource = this._region.page.getDataSource(dataSourceKey);
 
     // 两个组件必须同时打开  不然收不到信息
     this._modelSubscription = this._graphic
@@ -119,12 +120,12 @@ export class GraphicWrapper {
       })));
   }
 
-  switchDataSource(dataOptionId: string) {
-    this._graphicOption.dataOptionId = dataOptionId;
+  switchDataSource(dataSourceKey: string) {
+    this._graphicOption.dataSourceKey = dataSourceKey;
     if (this._modelSubscription) {
       this._modelSubscription.unsubscribe();
     }
-    this._dataSource = this._region.page.getDataSource(dataOptionId);
+    this._dataSource = this._region.page.getDataSource(dataSourceKey);
     this._modelSubscription = this._graphic.accept(combineLatest(this._configSource, this._dataSource)
       .pipe(tap((modelArray: Array<any>) => {
         const [model, data] = modelArray;
@@ -137,7 +138,7 @@ export class GraphicWrapper {
     this._region.page.focusRegion = this._region;
 
     // 运行时不需要调用此方法
-    dataModelManager.switchDataModel(this._graphicOption.dataOptionId, false);
+    dataModelManager.switchDataModel(this._graphicOption.dataSourceKey, false);
     if (!GraphicConfigManager.getInstance().has(this._uuid)) {
       this.switchConfigSource();
     }

@@ -8,6 +8,7 @@ import { IReportPage } from '@core/node/page/report/page.interface';
 import { ReportPage } from '@core/node/page/report/page';
 import { RuntimePageConfig } from '../../../../components/page.config/runtime.page.config';
 import { RegionController } from '@core/node/region/region.controller';
+import * as _ from 'lodash';
 
 export class PageConfigWrapper {
 
@@ -93,9 +94,20 @@ export class ReportPageOuter {
   }
 
   save() {
-    return {
+    const main = {
       option: this._pageInner.pageConfigWrapper.model.exportOption(),
       children: this._pageInner.regionManager.saveAs(),
+    };
+    let keys = _.uniq(main.children.map((value, index, array) => {
+      return value.graphic.dataSourceKey;
+    }));
+    console.log(JSON.stringify(keys));
+    keys = this._pageInner.dataSourceManager.getDependencies(keys);
+    return {
+      dependencies: {
+        generatorRepositories: keys,
+      },
+      main,
     };
   }
 

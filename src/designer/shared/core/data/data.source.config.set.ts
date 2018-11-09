@@ -26,6 +26,12 @@ export class DataSourceConfigSet {
     }
   }
 
+  has(id: string): boolean {
+    return (this._array.findIndex((value) => {
+      return value.id === id;
+    }) >= 0) || (this._parent ? this._parent.has(id) : false);
+  }
+
   getDataSourceConfig(id: string): DataSourceConfig {
     return this._array.find((value) => {
       return value.id === id;

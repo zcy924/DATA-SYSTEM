@@ -28,10 +28,3 @@ export interface IGraphic {
   destroy();
 }
 
-export interface IGraphicOption {
-  graphicKey: string;
-  graphicId?: string;
-  configOption?: any;
-  dataOptionId?: string;
-}
-

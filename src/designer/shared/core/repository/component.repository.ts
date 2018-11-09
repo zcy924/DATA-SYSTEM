@@ -1,4 +1,4 @@
-import { IGraphic } from '../../../core/node/graphic/graphic';
+import { IGraphic } from '../graphic/graphic';
 import { IComponentMeta, IPaletteMeta } from '../../../interface/component.meta';
 import { Type } from '../../../interface/type';
 import * as _ from 'lodash';

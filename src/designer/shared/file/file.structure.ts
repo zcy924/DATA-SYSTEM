@@ -15,7 +15,7 @@ export interface IFileStructure {
   };
   dependencies: {
     componentRepositories: Array<string>;
-    dataSourceGeneratorRepositories: Array<string>;
+    generatorRepositories: Array<string>;
   };
   main: {
     option: any;

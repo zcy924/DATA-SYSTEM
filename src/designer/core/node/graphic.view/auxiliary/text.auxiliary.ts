@@ -1,5 +1,5 @@
-import {IGraphic} from '@core/node/graphic/graphic';
 import {DefaultGraphicView} from '@core/node/graphic.view/default.graphic.view';
+import { IGraphic } from '@shared/core/graphic/graphic';
 
 const TextTemplate = `<div class="m-rect m-rect-text"
  style="color: rgb(51, 51, 51); font-size: 12px; font-family: avenir, Helvetica, Arial, sans-serif; 

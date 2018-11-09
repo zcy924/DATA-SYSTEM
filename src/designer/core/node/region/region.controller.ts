@@ -1,4 +1,4 @@
-import { IGraphic } from '../graphic/graphic';
+import { IGraphic } from '../../../shared/core/graphic/graphic';
 import { ReportPageInner } from '@core/node/page/report/page.inner';
 import { RegionModel, RegionState } from '@core/node/region/region.model';
 import { RegionView } from '@core/node/region/region.view';

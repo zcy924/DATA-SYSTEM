@@ -1,6 +1,6 @@
 import {ComponentRef} from '@angular/core';
 import {RegionController} from '../../region/region.controller';
-import {IGraphic} from '../graphic';
+import {IGraphic} from '../../../../shared/core/graphic/graphic';
 import {Chart} from '../../graphic.view/chart/chart';
 
 import {DesignGraphicConfig} from '../../../source/config.source/design.config.source';

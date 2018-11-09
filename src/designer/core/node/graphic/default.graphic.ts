@@ -1,4 +1,4 @@
-import {IGraphic} from './graphic';
+import {IGraphic} from '../../../shared/core/graphic/graphic';
 import {IGraphicView} from '../graphic.view/graphic.view';
 import {Observable, Subscription} from 'rxjs';
 import {OuterModelEventTarget} from '@core/node/event/model.event';

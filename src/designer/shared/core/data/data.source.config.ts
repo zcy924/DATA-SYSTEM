@@ -17,6 +17,12 @@ export class DataSourceConfig {
     return this._option.displayName;
   }
 
+  get repositoryKey() {
+    const [key] = this._option.generatorPath.split('$');
+    return key;
+  }
+
+
   get generatorPath() {
     return this._option.generatorPath;
   }

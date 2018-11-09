@@ -1,5 +1,6 @@
 import { RegionController } from '../region/region.controller';
 import { Observable, Subject } from 'rxjs';
+import * as _ from 'lodash';
 
 export class RegionManager {
 
@@ -44,6 +45,12 @@ export class RegionManager {
     this._subject.next(this.regionArray);
   }
 
+  // get keysOfDataSource(): Array<string> {
+  //   return this._children.map(region => {
+  //     return region;
+  //   });
+  // }
+
   get regionArray() {
     return this._children.slice(0);
   }
@@ -72,11 +79,10 @@ export class RegionManager {
     });
   }
 
-  saveAs(param?: 'string' | 'object') {
-    const arr = this._children.map((item) => {
+  saveAs() {
+    return this._children.map((item) => {
       return item.getOption();
     });
-    return param === 'string' ? JSON.stringify(arr, null, 2) : arr;
   }
 
   destroy() {
@@ -84,7 +90,6 @@ export class RegionManager {
       this._subject.unsubscribe();
       this._subject = null;
     }
-
   }
 
 }

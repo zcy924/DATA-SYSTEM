@@ -1,5 +1,5 @@
 import { Type } from '../../interface/type';
-import { IGraphic } from '../../core/node/graphic/graphic';
+import { IGraphic } from '../core/graphic/graphic';
 import { ComponentRepository } from '../core/repository/component.repository';
 
 /**
