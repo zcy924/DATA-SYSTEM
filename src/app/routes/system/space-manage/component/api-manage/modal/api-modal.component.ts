@@ -92,7 +92,6 @@ export class ApiModalComponent implements OnInit {
 
   // 数据源生成器，发送请求，获取响应
   sendRequest() {
-    console.log(this.headersText);
     let api: Api = {
       url: this.url,
       method: this.method,
@@ -100,11 +99,8 @@ export class ApiModalComponent implements OnInit {
       params: JSON.parse(this.bodyText === '' ? null : this.bodyText),
       generator: GeneratorEnum.DEFAULT,
     };
-    console.log(api);
-
     const defaultDataGenerator = new DefaultDataGenerator(api);
     defaultDataGenerator.fetchData().subscribe(data => {
-      console.log(data);
       this.responseText = JSON.stringify(data);
       this.formData.responseText = JSON.stringify(data, null,2);
     });
