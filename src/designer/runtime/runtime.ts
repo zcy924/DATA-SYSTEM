@@ -116,8 +116,10 @@ export class Runtime {
 
   private _createFile(file: IFileStructure): PageRuntime {
     const dataSourceConfigSet = new DataSourceConfigSet(file.data),
-      dataSourceManager = new DataSourceManager(dataSourceConfigSet),
-      page = new PageRuntime();
+      page = new PageRuntime(new DataSourceManager(dataSourceConfigSet));
+
+    page.init();
+    page.load(file.main);
 
     this._pageManager.addPage(page);
     return page;

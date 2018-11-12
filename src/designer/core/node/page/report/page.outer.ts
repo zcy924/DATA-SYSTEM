@@ -150,6 +150,8 @@ export class ReportPageOuter {
         return value.graphic.graphicPath;
       }));
 
+    const dataSourceConfigArray = this._pageInner.dataSourceManager.getDataSourceConfigArray(keys);
+
     keys = this._pageInner.dataSourceManager.getDependencies(keys);
     paths = _.uniq(paths.map(value => value.split('$')[0]));
     console.log(JSON.stringify(keys), paths);
@@ -162,6 +164,7 @@ export class ReportPageOuter {
         componentRepositories: paths,
       },
       main,
+      data: dataSourceConfigArray,
     };
   }
 

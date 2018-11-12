@@ -14,13 +14,14 @@ export class MockDynamicDataSourceGenerator implements IDataSourceGenerator {
   createDataSource(config: MockDynamicDataSourceConfig) {
     const { intervalTime = 5000, dataGenerator } = config;
     const ticker = interval(intervalTime);
+    const dataGeneratorFun=new Function(dataGenerator);
     return ticker
       .pipe(
         map((value, index) => {
           console.log('***');
-          return dataGenerator();
+          return dataGeneratorFun();
         }),
-        publishBehavior(dataGenerator()),
+        publishBehavior(dataGeneratorFun()),
         refCount());
   }
 }
