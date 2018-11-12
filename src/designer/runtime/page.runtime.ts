@@ -34,7 +34,7 @@ export class PageRuntime {
 
   private _model: PageConfig;
 
-  private _state: PageRuntimeState;
+  private _state: PageRuntimeState = PageRuntimeState.created;
   private _scale = 1;
   private _width: number;
   private _height: number;
@@ -49,7 +49,6 @@ export class PageRuntime {
     this._$canvas = $element.find('.report-canvas');
     this._$box = $element.find('.report-box');
     this._$grid = $element.find('.report-grid');
-    this._state = PageRuntimeState.created;
   }
 
   init() {
@@ -64,6 +63,7 @@ export class PageRuntime {
   }
 
   load(option: any) {
+    console.log("AAAAAAAAAAAAAAAAAAAAAAAA");
     if (this._state === PageRuntimeState.initialized) {
       this._model.importOption(option.option);
       option.children.forEach((value) => {
@@ -143,6 +143,7 @@ export class PageRuntime {
       const graphic = new GraphicWrapperRuntime(region);
       graphic.init(componentOption.graphic);
 
+      region.addChild(graphic);
       setTimeout(() => {
         graphic.resize();
       }, 200);
@@ -151,6 +152,7 @@ export class PageRuntime {
   }
 
   addChild(region: RegionRuntime) {
+    this._$grid.append(region.$element);
     this._regionArray.push(region);
   }
 
@@ -174,5 +176,9 @@ export class PageRuntime {
 
   getDataSource(id: string): Observable<any> {
     return this._dataSourceManager.getDataSourceByID(id);
+  }
+
+  destroy() {
+
   }
 }

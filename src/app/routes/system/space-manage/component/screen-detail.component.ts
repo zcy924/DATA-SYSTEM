@@ -1,11 +1,12 @@
-import {AfterViewInit, Component, ElementRef, KeyValueDiffers, OnDestroy, OnInit} from '@angular/core';
-import {session} from '@core/node/utils/session';
-import {ReportPageOuter} from '@core/node/page/report/page.outer';
-import {ActivatedRoute} from '@angular/router';
-import {SpaceManageService} from '../space-manage.service';
-import {switchMap} from 'rxjs/operators';
-import {HttpResponse} from "@angular/common/http";
-import {NzMessageService} from "ng-zorro-antd";
+import { AfterViewInit, Component, ElementRef, KeyValueDiffers, OnDestroy, OnInit } from '@angular/core';
+import { session } from '@core/node/utils/session';
+import { ActivatedRoute } from '@angular/router';
+import { SpaceManageService } from '../space-manage.service';
+import { switchMap } from 'rxjs/operators';
+import { HttpResponse } from '@angular/common/http';
+import { NzMessageService } from 'ng-zorro-antd';
+import { PageRuntime } from '../../../../../designer/runtime/page.runtime';
+import { Runtime } from '../../../../../designer/runtime/runtime';
 
 @Component({
   templateUrl: './screen-detail.html',
@@ -13,11 +14,11 @@ import {NzMessageService} from "ng-zorro-antd";
 })
 export class ScreenDetailComponent implements AfterViewInit, OnInit, OnDestroy {
 
-  report: ReportPageOuter;
+  report: PageRuntime;
   screenName;
   remark;
   icon;
-  dashBoardId
+  dashBoardId;
   collectFlag;
   keepDashBoardId;
 
@@ -44,7 +45,7 @@ export class ScreenDetailComponent implements AfterViewInit, OnInit, OnDestroy {
       });
     }));
     reportInfo$.subscribe(data => {
-      this.report.clear();
+      // this.report.clear();
       this.screenName = data.name;
       this.remark = data.remark;
       this.icon = data.icon;
@@ -53,7 +54,9 @@ export class ScreenDetailComponent implements AfterViewInit, OnInit, OnDestroy {
         this.keepDashBoardId = data.keepDashBoardId;
       }
       if (data.attr) {
-        this.report.load(data.attr);
+        this.report = Runtime.getInstance().open(data.attr);
+        $('.app-content').prepend(this.report.$element);
+        // this.report.load(data.attr);
       } else {
         this._nzMessage.warning('该大屏尚未编辑!');
       }
@@ -65,8 +68,6 @@ export class ScreenDetailComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    const report = this.report = session.currentPage = new ReportPageOuter('runtime');
-    $('.app-content').prepend(report.$element);
     this.getReportContent();
   }
 
@@ -79,7 +80,7 @@ export class ScreenDetailComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   scaleChange(event) {
-    this.report.reportPage.scale = event;
+    this.report.scale = event;
   }
 
   collect() {
@@ -87,23 +88,23 @@ export class ScreenDetailComponent implements AfterViewInit, OnInit, OnDestroy {
       keepDashBoardName: this.screenName,
       icon: this.icon,
       remark: this.remark,
-      dashBoardId: this.dashBoardId
-    }
+      dashBoardId: this.dashBoardId,
+    };
     this._spaceManageService.collectScreen(params).subscribe(data => {
-      this._nzMessage.success('收藏大屏成功!')
+      this._nzMessage.success('收藏大屏成功!');
       this.collectFlag = 'T';
       this.keepDashBoardId = data.keepDashBoardId;
     }, err => {
       if (err instanceof HttpResponse) {
         this._nzMessage.error(err.body.retMsg);
       }
-    })
+    });
   }
 
   uncollect() {
     const params = {
-      keepDashBoardId: this.keepDashBoardId
-    }
+      keepDashBoardId: this.keepDashBoardId,
+    };
     this._spaceManageService.uncollectScreen(params).subscribe(
       data => {
         this.collectFlag = 'F';
@@ -112,8 +113,8 @@ export class ScreenDetailComponent implements AfterViewInit, OnInit, OnDestroy {
         if (err instanceof HttpResponse) {
           this._nzMessage.error(err.body.retMsg);
         }
-      }
-    )
+      },
+    );
 
   }
 

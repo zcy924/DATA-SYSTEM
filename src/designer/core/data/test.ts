@@ -36,7 +36,8 @@ export const array: Array<IDataSourceConfig> = [
         };
       `,
     },
-  }, {
+  },
+  {
     id: 'num2',
     displayName: '实时销售额',
     comment: '没有任何建议',
@@ -51,7 +52,8 @@ export const array: Array<IDataSourceConfig> = [
         return Math.floor(Math.random() * 10000000);
       `,
     },
-  }, {
+  },
+  {
     id: 'num3',
     displayName: '985高校17年毕业生统计',
     comment: '没有任何建议',
@@ -457,7 +459,8 @@ export const array: Array<IDataSourceConfig> = [
         };
       `,
     },
-  }, {
+  },
+  {
     id: 'num4',
     displayName: '紫金大数据及金库条线绩效',
     comment: '没有任何建议',
@@ -522,5 +525,5 @@ export const array: Array<IDataSourceConfig> = [
         ],
       },
     },
-  },
+  }
 ];

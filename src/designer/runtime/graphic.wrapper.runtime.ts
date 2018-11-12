@@ -23,6 +23,7 @@ export class GraphicWrapperRuntime {
   }
 
   init(option: IGraphicOption) {
+    console.log(option);
     const graphicOption = this._graphicOption = new GraphicOption(option);
     const { graphicId, graphicKey, graphicPath, dataSourceKey, configOption } = graphicOption,
       compRepo = ComponentRepositoryManager.getInstance();
