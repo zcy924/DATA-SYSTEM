@@ -9,7 +9,6 @@ import { Destroyable } from '../interface/destroyable';
 import { FilterTools, HelperTools, MoreTools } from './overlay.template';
 import { imageDimensions$ } from './fragment';
 import { Dimensions } from '@core/node/interface';
-import { totalGraphicMetaMap } from '@core/node/config/default.graphic.meta.map';
 import { ActivatedRoute } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
 import { ComponentRepositoryManager } from '@shared/manager/component.repository.manager';
@@ -222,7 +221,7 @@ class PopupWrapper {
         document.addEventListener('mouseup', mouseUp);
         componentName = (<HTMLElement>$event.target).dataset.componentName;
 
-        grabHelper.show($event.pageX, $event.pageY, totalGraphicMetaMap[componentName].grabOption);
+        grabHelper.show($event.pageX, $event.pageY, ComponentRepositoryManager.getInstance().getComponentMeta(componentName).grabOption);
         return false;
       });
 

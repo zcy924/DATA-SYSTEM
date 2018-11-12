@@ -1,11 +1,10 @@
 import {AfterViewInit, Component, ElementRef} from '@angular/core';
-import {ReportPageInner} from '@core/node/page/report/page.inner';
 import {session} from '@core/node/utils/session';
 import {graphicFactory} from '@core/node/factory/graphic.factory';
 import * as _ from 'lodash';
 import {grabHelper} from './designer.header.component';
-import {customGraphicMeta} from '@core/node/config/default.graphic.meta.map';
 import {ReportPageOuter} from '@core/node/page/report/page.outer';
+import { ComponentRepositoryManager } from '@shared/manager/component.repository.manager';
 
 @Component({
   selector: 'app-designer-body',
@@ -53,7 +52,7 @@ export class DesignerBodyComponent implements AfterViewInit {
     document.addEventListener('mouseup', mouseUp);
     componentName = (<HTMLElement>dragEvent.target).getAttribute('componentName');
 
-    grabHelper.show(dragEvent.pageX, dragEvent.pageY, customGraphicMeta[componentName].grabOption);
+    grabHelper.show(dragEvent.pageX, dragEvent.pageY, ComponentRepositoryManager.getInstance().getComponentMeta(componentName).grabOption);
     return false;
   }
 

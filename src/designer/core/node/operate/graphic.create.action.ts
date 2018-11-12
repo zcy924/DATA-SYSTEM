@@ -1,6 +1,5 @@
 import { regionMap } from '@core/node/config/region.map';
 import { RegionController } from '@core/node/region/region.controller';
-import { graphicMetaMap } from '@core/node/config/default.graphic.meta.map';
 import { GraphicWrapper } from '@core/node/graphic/graphic.wrapper';
 import { IAction } from '@core/node/operate/action';
 import { IReportPage } from '@core/node/page/report/page.interface';

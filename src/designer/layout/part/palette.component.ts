@@ -3,7 +3,6 @@ import { session } from '@core/node/utils/session';
 import { graphicFactory } from '@core/node/factory/graphic.factory';
 import * as _ from 'lodash';
 import { grabHelper } from '../designer.header.component';
-import { customGraphicMeta } from '@core/node/config/default.graphic.meta.map';
 import { ComponentRepositoryManager } from '@shared/manager/component.repository.manager';
 
 @Component({
@@ -20,10 +19,6 @@ export class PaletteComponent implements AfterViewInit {
   }
 
   repoList: any;
-
-  get customComponentList() {
-    return _.toPairs(customGraphicMeta);
-  }
 
   dragstart(dragEvent: DragEvent) {
     const
