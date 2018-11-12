@@ -39,7 +39,7 @@ export class DesignerBodyComponent implements AfterViewInit {
     const mouseUp = (event: MouseEvent) => {
       console.log('document mouseup', event, session.currentPage.offset());
 
-      graphicFactory.createByName(componentName, session.currentPage,
+      graphicFactory.createByName(componentPath, session.currentPage,
         event.pageX - session.currentPage.offset().left - grabHelper.offsetX,
         event.pageY - session.currentPage.offset().top - grabHelper.offsetY);
       grabHelper.hidden();
@@ -47,12 +47,12 @@ export class DesignerBodyComponent implements AfterViewInit {
       document.removeEventListener('mouseup', mouseUp);
     };
 
-    let componentName: string;
+    let componentPath: string;
     document.addEventListener('mousemove', mouseMove);
     document.addEventListener('mouseup', mouseUp);
-    componentName = (<HTMLElement>dragEvent.target).getAttribute('componentName');
+    componentPath = (<HTMLElement>dragEvent.target).getAttribute('componentPath');
 
-    grabHelper.show(dragEvent.pageX, dragEvent.pageY, ComponentRepositoryManager.getInstance().getComponentMeta(componentName).grabOption);
+    grabHelper.show(dragEvent.pageX, dragEvent.pageY, ComponentRepositoryManager.getInstance().getComponentMeta(componentPath).grabOption);
     return false;
   }
 

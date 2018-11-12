@@ -22,14 +22,14 @@ export class PaletteComponent implements AfterViewInit {
 
   dragstart(dragEvent: DragEvent) {
     const
-      componentName = (<HTMLElement>dragEvent.target).getAttribute('componentName'),
+      componentPath = (<HTMLElement>dragEvent.target).getAttribute('componentPath'),
       mouseMove = (event: MouseEvent) => {
         grabHelper.refresh(event.pageX, event.pageY);
       },
       mouseUp = (event: MouseEvent) => {
         console.log('document mouseup', event, session.currentPage.offset());
 
-        graphicFactory.createByName(componentName, session.currentPage,
+        graphicFactory.createByName(componentPath, session.currentPage,
           event.pageX - session.currentPage.offset().left - grabHelper.offsetX,
           event.pageY - session.currentPage.offset().top - grabHelper.offsetY);
         grabHelper.hidden();
@@ -40,7 +40,7 @@ export class PaletteComponent implements AfterViewInit {
     document.addEventListener('mousemove', mouseMove);
     document.addEventListener('mouseup', mouseUp);
 
-    grabHelper.show(dragEvent.pageX, dragEvent.pageY, ComponentRepositoryManager.getInstance().getComponentMeta(componentName).grabOption);
+    grabHelper.show(dragEvent.pageX, dragEvent.pageY, ComponentRepositoryManager.getInstance().getComponentMeta(componentPath).grabOption);
     return false;
   }
 

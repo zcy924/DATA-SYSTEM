@@ -2,7 +2,7 @@
   <p class="repo-title">{{item.name}}</p>
   <ul class="component-lib">
     <li *ngFor="let comp of item.children" draggable="true" (dragstart)="dragstart($event)"
-        [attr.componentName]="item.key+'$'+comp.key">
+        [attr.componentPath]="item.key+'$'+comp.key">
       <span class="tool-item">
         <div class="tool-item-icon {{comp.imageClass}}"></div>
         <div class="tool-item-name">{{comp.displayName}}</div>
