@@ -154,7 +154,7 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
         }, () => {
         }, () => {
           if (session.currentPage) {
-            graphicFactory.newGraphicByName(session.currentPage, 'imageAuxiliary', 200, 200, option);
+            graphicFactory.newGraphicByName(session.currentPage, 'standard$image.graphic', 200, 200, option);
           }
         });
       (<HTMLFormElement>file.parentElement).reset();

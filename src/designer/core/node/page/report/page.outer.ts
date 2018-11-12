@@ -9,7 +9,6 @@ import { ReportPage } from '@core/node/page/report/page';
 import { RuntimePageConfig } from '../../../../runtime/runtime.page.config';
 import { RegionController } from '@core/node/region/region.controller';
 import * as _ from 'lodash';
-import { Runtime } from '../../../../runtime/runtime';
 import { IFileStructure } from '@shared/file/file.structure';
 
 export class PageConfigWrapper {
@@ -121,13 +120,20 @@ export class ReportPageOuter {
     return this._checkVersion(file) && this._checkDependencies(file);
   }
 
+  /**
+   * 若版本号为空，则不可以打开
+   * @param {IFileStructure} file
+   * @returns {boolean}
+   * @private
+   */
   private _checkVersion(file: IFileStructure) {
-    return ReportPageOuter.accept(_.get(file, 'manifest.version'));
+    const version = _.get(file, 'manifest.version');
+    return version ? ReportPageOuter.accept(version) : false;
   }
 
   private _checkDependencies(file: IFileStructure) {
     const { componentRepositories, generatorRepositories } =
-      _.get(file, 'dependencies');
+      _.get(file, 'dependencies', { componentRepositories: [], generatorRepositories: [] });
     return this._pageInner.compRepoManager.includes(componentRepositories)
       && this._pageInner.geneRepoManager.includes(generatorRepositories);
   }

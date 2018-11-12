@@ -5,7 +5,7 @@ import { ReportPageInner } from '@core/node/page/report/page.inner';
 import { AbstractPageView } from '@core/node/page/report/abstract.page.view';
 
 
-export class DesignPageView extends AbstractPageView {
+export class PageView extends AbstractPageView {
 
 
   private _contextMenuGenerator: Function;

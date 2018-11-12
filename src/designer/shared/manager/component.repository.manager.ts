@@ -59,6 +59,7 @@ export class ComponentRepositoryManager {
 
   includes(array: Array<string>): boolean {
     const keys = Array.from(this._map.keys());
+    // array.every: This method returns true for any condition put on an empty array.
     return array.every((value) => {
       return keys.includes(value);
     });
@@ -85,7 +86,7 @@ export class ComponentRepositoryManager {
    * @returns {any}
    */
   getComponentMeta(path: string) {
-    if(path){
+    if (path) {
       const [repoKey, graphicKey] = path.split('$');
       if (this._map.has(repoKey)) {
         return this._map.get(repoKey).getComponentMeta(graphicKey);
