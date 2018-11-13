@@ -1,5 +1,5 @@
 import { combineLatest, Observable, Subscription } from 'rxjs/index';
-import { getParameterName, guid } from '@core/node/utils/tools';
+import { getParameterName, guid } from '@core/../shared/core/utils/tools';
 import { RegionRuntime } from './region.runtime';
 import { GraphicOption, IGraphicOption } from '@shared/file/component.option';
 import { IGraphic } from '@shared/core/graphic/graphic';
@@ -23,14 +23,15 @@ export class GraphicWrapperRuntime {
   }
 
   init(option: IGraphicOption) {
-    console.log(option);
-    const graphicOption = this._graphicOption = new GraphicOption(option);
-    const { graphicId, graphicKey, graphicPath, dataSourceKey, configOption } = graphicOption,
-      compRepo = ComponentRepositoryManager.getInstance();
-    if (compRepo.has(graphicPath)) {
-      this._graphic = new (compRepo.getComponentMeta(graphicPath).graphicDef)();
+    const region = this._region,
+      page = region.page,
+      graphicOption = this._graphicOption = new GraphicOption(option),
+      { graphicId, graphicKey, graphicPath, dataSourceKey, configOption } = graphicOption,
+      componentRepositoryManager = ComponentRepositoryManager.getInstance();
+    if (componentRepositoryManager.has(graphicPath)) {
+      this._graphic = new (componentRepositoryManager.getGraphicDef(graphicPath))();
       const paramNameArray = getParameterName(this._graphic.init), map = {
-        region: this._region,
+        region: region,
         wrapper: this,
       };
       this._graphic.init(...paramNameArray.map((paramName) => {
@@ -40,15 +41,14 @@ export class GraphicWrapperRuntime {
 
     this._uuid = graphicId || guid(10, 16);
 
-    // 有configOption一般粘贴，或者打开新的文件时 会走这条路
-    this._configSource = this._region.page
+    this._configSource = page
       .getConfigSource({
         graphicId: this._uuid,
         graphicKey,
         configOption,
       });
 
-    this._dataSource = this._region.page.getDataSource(dataSourceKey);
+    this._dataSource = page.getDataSource(dataSourceKey);
 
     // 两个组件必须同时打开  不然收不到信息
     this._modelSubscription = this._graphic
@@ -64,7 +64,6 @@ export class GraphicWrapperRuntime {
       this._graphic.updateTheme(theme);
     }
   }
-
 
   resize() {
     if (this._graphic) {
