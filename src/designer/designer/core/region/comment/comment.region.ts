@@ -2,7 +2,7 @@ import {RegionController} from '../region.controller';
 import {RegionModel, RegionState} from '../region.model';
 import {CommentRegionView} from './comment.region.view';
 import {clipboard} from '../../../../core/node/utils/clipboard';
-import {IReportPage} from '../../../../core/node/page/report/page.interface';
+import {IReportPage} from '../../page/report/page.interface';
 
 
 export class CommentRegion extends RegionController {

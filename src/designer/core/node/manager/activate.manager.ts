@@ -1,5 +1,5 @@
 import { RegionController } from '../../../designer/core/region/region.controller';
-import { ReportPageInner } from '../page/report/page.inner';
+import { ReportPageInner } from '../../../designer/core/page/report/page.inner';
 import { RegionState } from '../../../designer/core/region/region.model';
 
 /**

@@ -1,7 +1,7 @@
 import { IGraphic } from '../../../shared/core/graphic/graphic';
-import { ReportPageInner } from '../../../core/node/page/report/page.inner';
+import { ReportPageInner } from '../page/report/page.inner';
 import { GraphicWrapper } from '../graphic/graphic.wrapper';
-import { IReportPage } from '../../../core/node/page/report/page.interface';
+import { IReportPage } from '../page/report/page.interface';
 import { RegionModel, RegionState } from './region.model';
 import { RegionView } from './region.view';
 
