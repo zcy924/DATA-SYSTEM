@@ -66,16 +66,16 @@ export class SpaceManageComponent implements OnInit {
           link: `app/square/${localStorage.getItem('spaceID')}/user-manage`,
         },
         {
-          text: '数据源管理',
-          isLeaf: true,
-          icon: 'database',
-          link: 'user-message',
-        },
-        {
           text: 'API管理',
           isLeaf: true,
-          icon: 'database',
+          icon: 'api',
           link: `app/square/${localStorage.getItem('spaceID')}/api-manage`,
+        },
+        {
+          text: '数据库管理',
+          isLeaf: true,
+          icon: 'database',
+          link: `app/square/${localStorage.getItem('spaceID')}/database-manage`,
         },
         {
           text: '数据表预览',

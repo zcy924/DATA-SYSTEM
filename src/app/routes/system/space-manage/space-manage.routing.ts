@@ -8,6 +8,7 @@ import {UserManageComponent} from './component/user-manage/user-manage.component
 import {ScreenDetailComponent} from './component/screen-detail.component';
 import {SpaceSettingComponent} from "./component/space-setting/space-setting.component";
 import {ApiManageComponent} from "./component/api-manage/api-manage.component";
+import {DatabaseManageComponent} from "./component/database-manage/database-manage.component";
 
 const routes: Routes = [
   {
@@ -49,6 +50,11 @@ const routes: Routes = [
     path: 'api-manage',
     component: ApiManageComponent,
     data: {title: 'api管理'}
+  },
+  {
+    path: 'database-manage',
+    component: DatabaseManageComponent,
+    data: {title: '数据直连'}
   }
 ];
 
