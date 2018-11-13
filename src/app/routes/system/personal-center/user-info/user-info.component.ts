@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PersonalCenterService } from '../personal-center.service';
 import { NzMessageService, UploadFile } from 'ng-zorro-antd';
 import { HttpResponse } from '@angular/common/http';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'app-user-info',
@@ -22,6 +23,7 @@ export class UserInfoComponent implements OnInit {
     phone: null,
     email: null,
   };
+  actionUrl = environment.SERVER_URL+'selfCore/selfInfo/pictureTest';
 
   constructor(
     private perService: PersonalCenterService,

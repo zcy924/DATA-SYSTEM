@@ -3,6 +3,7 @@ import {HttpResponse} from "@angular/common/http";
 import {NzMessageService, UploadFile} from "ng-zorro-antd";
 import {SpaceManageService} from "../../space-manage.service";
 import {el} from "@angular/platform-browser/testing/src/browser_util";
+import { environment } from '@env/environment';
 
 @Component({
   templateUrl: './space-setting.html',
@@ -25,6 +26,7 @@ export class SpaceSettingComponent implements AfterViewInit {
   previewImage = '';
   previewVisible = false;
   loading;
+  actionUrl = environment.SERVER_URL+'selfCore/selfInfo/pictureTest';
 
   constructor(private spaceManageService: SpaceManageService, private msg: NzMessageService) {
 
