@@ -1,10 +1,11 @@
 import { ReportPageInner } from '@core/node/page/report/page.inner';
 import { regionMap } from '@core/node/config/region.map';
 import { session } from '@core/node/utils/session';
-import { RegionController } from '@core/node/region/region.controller';
+
 import { GraphicWrapper } from '@core/node/graphic/graphic.wrapper';
 import { GraphicCreateAction } from '@core/node/operate/graphic.create.action';
 import { ReportPageOuter } from '@core/node/page/report/page.outer';
+import { RegionController } from '../../../designer/core/region/region.controller';
 
 class GraphicFactory {
   /**

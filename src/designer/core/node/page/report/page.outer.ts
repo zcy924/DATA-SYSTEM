@@ -7,9 +7,9 @@ import { PageConfig } from '../../../../shared/core/page/page.config';
 import { IReportPage } from '@core/node/page/report/page.interface';
 import { ReportPage } from '@core/node/page/report/page';
 import { RuntimePageConfig } from '../../../../runtime/runtime.page.config';
-import { RegionController } from '@core/node/region/region.controller';
 import * as _ from 'lodash';
 import { IFileStructure } from '@shared/file/file.structure';
+import { RegionController } from '../../../../designer/core/region/region.controller';
 
 export class PageConfigWrapper {
 

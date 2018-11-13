@@ -1,4 +1,4 @@
-import {RegionController} from '../../../core/node/region/region.controller';
+import {RegionController} from '../../../designer/core/region/region.controller';
 
 import {Grid} from '../../../core/node/graphic.view/chart/echart.interface/grid';
 import {Axis} from '../../../core/node/graphic.view/chart/echart.interface/axis';

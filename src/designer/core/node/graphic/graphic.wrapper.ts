@@ -1,5 +1,4 @@
 import { combineLatest, Observable, Subject, Subscription } from 'rxjs';
-import { RegionController } from '@core/node/region/region.controller';
 import { GraphicConfigManager } from '@core/config/design/graphic.config.manager';
 import { distinctUntilChanged, tap } from 'rxjs/operators';
 import * as _ from 'lodash';
@@ -9,6 +8,7 @@ import { GraphicOption, IGraphicOption } from '@shared/file/component.option';
 import { IGraphic } from '@shared/core/graphic/graphic';
 import { ComponentRepositoryManager } from '@shared/manager/component.repository.manager';
 import { getParameterName, guid } from '@shared/core/utils/tools';
+import { RegionController } from '../../../designer/core/region/region.controller';
 
 
 /**

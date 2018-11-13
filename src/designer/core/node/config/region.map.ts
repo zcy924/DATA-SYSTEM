@@ -1,5 +1,5 @@
-import {ExplicitRegion} from '../region/explicit/explicit.region';
-import {CommentRegion} from '@core/node/region/comment/comment.region';
+import {ExplicitRegion} from '../../../designer/core/region/explicit/explicit.region';
+import { CommentRegion } from '../../../designer/core/region/comment/comment.region';
 
 const map = new Map();
 map.set('explicit.region', ExplicitRegion);

@@ -1,10 +1,10 @@
 import { regionMap } from '@core/node/config/region.map';
-import { RegionController } from '@core/node/region/region.controller';
 import { GraphicWrapper } from '@core/node/graphic/graphic.wrapper';
 import { IAction } from '@core/node/operate/action';
 import { IReportPage } from '@core/node/page/report/page.interface';
 import { ComponentRepositoryManager } from '@shared/manager/component.repository.manager';
 import { IComponentOption } from '@shared/file/component.option';
+import { RegionController } from '../../../designer/core/region/region.controller';
 
 export class GraphicCreateAction implements IAction {
 

@@ -1,4 +1,4 @@
-import { RegionController } from '../region/region.controller';
+import { RegionController } from '../../../designer/core/region/region.controller';
 import { Observable, Subject } from 'rxjs';
 import * as _ from 'lodash';
 
