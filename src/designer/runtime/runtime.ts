@@ -64,8 +64,17 @@ export class Runtime {
   }
 
   open(file: IFileStructure): PageRuntime {
-    if (this._checkFile(file)) {
+    if (file && this._checkFile(file)) {
       return this._createFile(file);
+    } else {
+      console.error('文件为空，或不符合格式要求', file);
+    }
+  }
+
+  close(page: PageRuntime) {
+    if (page) {
+      this._pageManager.removePage(page);
+      page.destroy();
     }
   }
 
@@ -114,7 +123,7 @@ export class Runtime {
   }
 
   private _createFile(file: IFileStructure): PageRuntime {
-    const dataSourceConfigSet = new DataSourceConfigSet(file.data),
+    const dataSourceConfigSet = new DataSourceConfigSet(file.data || []),
       page = new PageRuntime(new DataSourceManager(dataSourceConfigSet));
     page.init();
     page.load(file.main);

@@ -1,5 +1,5 @@
 import { View } from '@core/node/structure/view';
-import { PageConfig } from '../../../../components/page.config/page.config';
+import { PageConfig } from '../../../../shared/core/page/page.config';
 
 const TEMPLATE = `
     <div class="report-region">

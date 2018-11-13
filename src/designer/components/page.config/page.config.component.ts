@@ -9,7 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { PageConfig } from './page.config';
+import { PageConfig } from '../../shared/core/page/page.config';
 import { debounceTime } from 'rxjs/operators';
 
 @Component({

@@ -1,5 +1,5 @@
 import { RegionRuntime } from './region.runtime';
-import { PageConfig } from '../components/page.config/page.config';
+import { PageConfig } from '../shared/core/page/page.config';
 import { regionMap } from '@core/node/config/region.map';
 import { Observable } from 'rxjs/internal/Observable';
 import { RuntimePageConfig } from './runtime.page.config';
