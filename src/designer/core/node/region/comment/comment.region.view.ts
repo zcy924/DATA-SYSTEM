@@ -7,7 +7,7 @@ import { LinesChartGraphic } from '../../../../component.packages/standard/chart
 import { LineChartGraphic } from '../../../../component.packages/standard/chart/line.chart.graphic';
 import { TextGraphic } from '../../../../component.packages/standard/auxiliary/text.graphic';
 import { CoordinatesAndDimensions, Dimensions } from '../../interface';
-import { clipboard } from '../../clipboard';
+import { clipboard } from '../../utils/clipboard';
 import { filter, throttleTime } from 'rxjs/internal/operators';
 import { closestNum } from '../../../../utils/common';
 import { PieChartGraphic } from '../../../../component.packages/standard/chart/pie.chart.graphic';

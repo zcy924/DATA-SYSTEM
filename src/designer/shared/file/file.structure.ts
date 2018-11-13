@@ -24,4 +24,22 @@ export interface IFileStructure {
   data?: Array<IDataSourceConfig>;
 }
 
+export function emptyFileBuilder(name: string) {
+  return {
+    name,
+    manifest: {
+      version: '1.0.0',
+    },
+    dependencies: {
+      componentRepositories: [],
+      generatorRepositories: [],
+    },
+    main: {
+      option: null,
+      children: [],
+    },
+    data: [],
+  };
+}
+
 

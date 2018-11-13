@@ -2,12 +2,15 @@ import { RegionRuntime } from './region.runtime';
 import { PageConfig } from '../components/page.config/page.config';
 import { regionMap } from '@core/node/config/region.map';
 import { Observable } from 'rxjs/internal/Observable';
-import { RuntimePageConfig } from '../components/page.config/runtime.page.config';
+import { RuntimePageConfig } from './runtime.page.config';
 import { GraphicWrapperRuntime } from './graphic.wrapper.runtime';
 import { DataSourceManager } from '@shared/core/data/data.source.manager';
+import { IComponentOption } from '@shared/file/component.option';
+import { IComponentMeta } from '../interface/component.meta';
+import { ConfigSourceManager } from '@core/config/config.source.manager';
 
 enum PageRuntimeState {
-  created, inited, loaded
+  created, initialized, loaded
 }
 
 const template = `
@@ -31,29 +34,28 @@ export class PageRuntime {
 
   private _model: PageConfig;
 
-  private _state: PageRuntimeState;
+  private _state: PageRuntimeState = PageRuntimeState.created;
   private _scale = 1;
   private _width: number;
   private _height: number;
 
   private _regionArray: Array<RegionRuntime> = [];
 
-  private _dataSourceManager: DataSourceManager;
+  private _configSourceManager = new ConfigSourceManager('runtime');
 
-  constructor() {
+  constructor(private _dataSourceManager: DataSourceManager) {
     const $element = this.$element = $(template);
 
     this._$canvas = $element.find('.report-canvas');
     this._$box = $element.find('.report-box');
     this._$grid = $element.find('.report-grid');
-    this._state = PageRuntimeState.created;
   }
 
   init() {
     if (this._state === PageRuntimeState.created) {
       this._model = new RuntimePageConfig();
       this._accept(this._model);
-      this._state = PageRuntimeState.inited;
+      this._state = PageRuntimeState.initialized;
     } else {
       throw new Error('init 方法已经调用');
     }
@@ -61,7 +63,8 @@ export class PageRuntime {
   }
 
   load(option: any) {
-    if (this._state === PageRuntimeState.inited) {
+    console.log("AAAAAAAAAAAAAAAAAAAAAAAA");
+    if (this._state === PageRuntimeState.initialized) {
       this._model.importOption(option.option);
       option.children.forEach((value) => {
         this._createRegion(value);
@@ -131,15 +134,16 @@ export class PageRuntime {
     }
   }
 
-  private _createRegion(graphicMeta: any) {
-    if (regionMap.has(graphicMeta.region.regionKey)) {
+  private _createRegion(componentOption: IComponentOption) {
+    if (regionMap.has(componentOption.region.regionKey)) {
       const region: RegionRuntime = new RegionRuntime(this);
 
-      region.init(graphicMeta.region.regionOption);
+      region.init(componentOption.region.regionOption);
 
       const graphic = new GraphicWrapperRuntime(region);
-      graphic.init(graphicMeta.graphic);
+      graphic.init(componentOption.graphic);
 
+      region.addChild(graphic);
       setTimeout(() => {
         graphic.resize();
       }, 200);
@@ -148,6 +152,7 @@ export class PageRuntime {
   }
 
   addChild(region: RegionRuntime) {
+    this._$grid.append(region.$element);
     this._regionArray.push(region);
   }
 
@@ -166,10 +171,14 @@ export class PageRuntime {
   }
 
   getConfigSource(option: any): Observable<any> {
-    return null;
+    return this._configSourceManager.getConfigSource(option);
   }
 
-  getDataSource(option: any): Observable<any> {
-    return null;
+  getDataSource(id: string): Observable<any> {
+    return this._dataSourceManager.getDataSourceByID(id);
+  }
+
+  destroy() {
+
   }
 }

@@ -46,7 +46,6 @@ export class ReportPage implements IReportPage {
 
 
   addChild(child: RegionController) {
-    // child.page = this;
     this._pageInner.regionManager.add(child);
     this._pageInner.view.$grid.append(child.$element);
   }

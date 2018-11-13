@@ -9,7 +9,6 @@ import { Destroyable } from '../interface/destroyable';
 import { FilterTools, HelperTools, MoreTools } from './overlay.template';
 import { imageDimensions$ } from './fragment';
 import { Dimensions } from '@core/node/interface';
-import { totalGraphicMetaMap } from '@core/node/config/default.graphic.meta.map';
 import { ActivatedRoute } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
 import { ComponentRepositoryManager } from '@shared/manager/component.repository.manager';
@@ -154,7 +153,7 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
         }, () => {
         }, () => {
           if (session.currentPage) {
-            graphicFactory.newGraphicByName(session.currentPage, 'imageAuxiliary', 200, 200, option);
+            graphicFactory.newGraphicByName(session.currentPage, 'standard$image.graphic', 200, 200, option);
           }
         });
       (<HTMLFormElement>file.parentElement).reset();
@@ -164,7 +163,7 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
   }
 
   dragStart(dragEvent: DragEvent) {
-    let componentName: string;
+    let componentPath: string;
     const mouseMove = (event: MouseEvent) => {
       console.log('mouseMove');
       grabHelper.refresh(event.pageX, event.pageY);
@@ -172,7 +171,7 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
     const mouseUp = (event: MouseEvent) => {
       console.log('document mouseup', event, session.currentPage.offset());
 
-      graphicFactory.createByName(componentName, session.currentPage,
+      graphicFactory.createByName(componentPath, session.currentPage,
         event.pageX - session.currentPage.offset().left - grabHelper.offsetX,
         event.pageY - session.currentPage.offset().top - grabHelper.offsetY);
       grabHelper.hidden();
@@ -182,9 +181,9 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
 
     document.addEventListener('mousemove', mouseMove);
     document.addEventListener('mouseup', mouseUp);
-    componentName = (<HTMLElement>event.target).dataset.componentName;
+    componentPath = (<HTMLElement>event.target).dataset.componentPath;
     grabHelper.show(dragEvent.pageX, dragEvent.pageY,
-      ComponentRepositoryManager.getInstance().getComponentMetaByPath(componentName).grabOption);
+      ComponentRepositoryManager.getInstance().getComponentMeta(componentPath).grabOption);
     return false;
   }
 
@@ -212,7 +211,7 @@ class PopupWrapper {
   }
 
   private _init() {
-    let componentName: string;
+    let componentPath: string;
     this._$element.mouseleave(() => {
       this._$element.hide();
     });
@@ -220,9 +219,9 @@ class PopupWrapper {
       .on('dragstart', ($event: JQuery.Event) => {
         document.addEventListener('mousemove', mouseMove);
         document.addEventListener('mouseup', mouseUp);
-        componentName = (<HTMLElement>$event.target).dataset.componentName;
+        componentPath = (<HTMLElement>$event.target).dataset.componentPath;
 
-        grabHelper.show($event.pageX, $event.pageY, totalGraphicMetaMap[componentName].grabOption);
+        grabHelper.show($event.pageX, $event.pageY, ComponentRepositoryManager.getInstance().getComponentMeta(componentPath).grabOption);
         return false;
       });
 
@@ -233,7 +232,7 @@ class PopupWrapper {
     const mouseUp = (event: MouseEvent) => {
       console.log('document mouseup', event, session.currentPage.offset());
 
-      graphicFactory.createByName(componentName, session.currentPage,
+      graphicFactory.createByName(componentPath, session.currentPage,
         event.pageX - session.currentPage.offset().left - grabHelper.offsetX,
         event.pageY - session.currentPage.offset().top - grabHelper.offsetY);
       grabHelper.hidden();

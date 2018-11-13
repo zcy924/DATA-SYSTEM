@@ -30,6 +30,12 @@ export class DataSourceManager {
     return _.uniq(_.compact(ret));
   }
 
+  getDataSourceConfigArray(ids: Array<string>): Array<IDataSourceConfig> {
+    return ids
+      .map(value => this._dataSourceConfigSet.getDataSourceConfig(value))
+      .map(value => value.value);
+  }
+
   getDataSourceByID(id: string): Observable<any> {
     console.log('获取数据源：');
     const dataSourceMap = this._dataSourceMap;

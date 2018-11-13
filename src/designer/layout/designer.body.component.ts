@@ -1,11 +1,10 @@
 import {AfterViewInit, Component, ElementRef} from '@angular/core';
-import {ReportPageInner} from '@core/node/page/report/page.inner';
 import {session} from '@core/node/utils/session';
 import {graphicFactory} from '@core/node/factory/graphic.factory';
 import * as _ from 'lodash';
 import {grabHelper} from './designer.header.component';
-import {customGraphicMeta} from '@core/node/config/default.graphic.meta.map';
 import {ReportPageOuter} from '@core/node/page/report/page.outer';
+import { ComponentRepositoryManager } from '@shared/manager/component.repository.manager';
 
 @Component({
   selector: 'app-designer-body',
@@ -40,7 +39,7 @@ export class DesignerBodyComponent implements AfterViewInit {
     const mouseUp = (event: MouseEvent) => {
       console.log('document mouseup', event, session.currentPage.offset());
 
-      graphicFactory.createByName(componentName, session.currentPage,
+      graphicFactory.createByName(componentPath, session.currentPage,
         event.pageX - session.currentPage.offset().left - grabHelper.offsetX,
         event.pageY - session.currentPage.offset().top - grabHelper.offsetY);
       grabHelper.hidden();
@@ -48,12 +47,12 @@ export class DesignerBodyComponent implements AfterViewInit {
       document.removeEventListener('mouseup', mouseUp);
     };
 
-    let componentName: string;
+    let componentPath: string;
     document.addEventListener('mousemove', mouseMove);
     document.addEventListener('mouseup', mouseUp);
-    componentName = (<HTMLElement>dragEvent.target).getAttribute('componentName');
+    componentPath = (<HTMLElement>dragEvent.target).getAttribute('componentPath');
 
-    grabHelper.show(dragEvent.pageX, dragEvent.pageY, customGraphicMeta[componentName].grabOption);
+    grabHelper.show(dragEvent.pageX, dragEvent.pageY, ComponentRepositoryManager.getInstance().getComponentMeta(componentPath).grabOption);
     return false;
   }
 

@@ -7,35 +7,6 @@ import {GaugeConfigComponent} from '../../../components/graphic.config/chart/gau
 import {RingConfigComponent} from '../../../components/graphic.config/chart/ring.config.component';
 import {MapConfigComponent} from '../../../components/graphic.config/chart/map.config.component';
 import {WordCloudConfigComponent} from '../../../components/graphic.config/chart/word.cloud.config.component';
-import { BarChartGraphic } from '../../../component.packages/standard/chart/bar.chart.graphic';
-import { PieChartGraphic } from '../../../component.packages/standard/chart/pie.chart.graphic';
-import { LineChartGraphic } from '../../../component.packages/standard/chart/line.chart.graphic';
-import { LinesChartGraphic } from '../../../component.packages/standard/chart/lines.chart.graphic';
-import { ImageGraphic } from '../../../component.packages/standard/auxiliary/image.graphic';
-import { TextGraphic } from '../../../component.packages/standard/auxiliary/text.graphic';
-import { ClockGraphic } from '../../../component.packages/custom/clock.graphic';
-import { TableGraphic } from '../../../component.packages/custom/table.graphic';
-import { FlipNumberGraphic } from '../../../component.packages/custom/flip.number.graphic';
-import { GaugeChartGraphic } from '../../../component.packages/standard/chart/gauge.chart.graphic';
-import { RingChartGraphic } from '../../../component.packages/standard/chart/ring.chart.graphic';
-import { MapChartGraphic } from '../../../component.packages/standard/chart/map.chart.graphic';
-import { WordCloudChartGraphic } from '../../../component.packages/standard/chart/word.cloud.chart.graphic';
-
-const map = new Map();
-map.set('bar.chart.graphic', BarChartGraphic);
-map.set('line.chart.graphic', LineChartGraphic);
-map.set('pie.chart.graphic', PieChartGraphic);
-map.set('lines.chart.graphic', LinesChartGraphic);
-map.set('image.graphic', ImageGraphic);
-map.set('text.graphic', TextGraphic);
-map.set('clock.graphic', ClockGraphic);
-map.set('table.graphic', TableGraphic);
-map.set('flip.number.graphic', FlipNumberGraphic);
-map.set('gauge.chart.graphic', GaugeChartGraphic);
-map.set('ring.chart.graphic', RingChartGraphic);
-map.set('map.chart.graphic', MapChartGraphic);
-map.set('wordCloud.chart.graphic', WordCloudChartGraphic);
-export const graphicMap = map;
 
 const map1 = new Map();
 map1.set('bar.chart.graphic', BarConfigComponent);

@@ -1,13 +1,13 @@
 import { combineLatest, Observable, Subscription } from 'rxjs/index';
 import { getParameterName, guid } from '@core/node/utils/tools';
-import { graphicMap } from '@core/node/config/graphic.map';
 import { RegionRuntime } from './region.runtime';
-import { IGraphicOption } from '@shared/file/component.option';
+import { GraphicOption, IGraphicOption } from '@shared/file/component.option';
 import { IGraphic } from '@shared/core/graphic/graphic';
+import { ComponentRepositoryManager } from '@shared/manager/component.repository.manager';
 
 export class GraphicWrapperRuntime {
   private _uuid: string;
-  private _graphicOption: IGraphicOption;
+  private _graphicOption: GraphicOption;
 
   private _graphic: IGraphic;
   private _configSource: Observable<any>;
@@ -22,11 +22,13 @@ export class GraphicWrapperRuntime {
     return this._graphic.$element;
   }
 
-  init(graphicOption: IGraphicOption) {
-    this._graphicOption = graphicOption;
-    const { graphicId, graphicKey, dataSourceKey, configOption } = graphicOption;
-    if (graphicMap.has(graphicKey)) {
-      this._graphic = new (graphicMap.get(graphicKey))();
+  init(option: IGraphicOption) {
+    console.log(option);
+    const graphicOption = this._graphicOption = new GraphicOption(option);
+    const { graphicId, graphicKey, graphicPath, dataSourceKey, configOption } = graphicOption,
+      compRepo = ComponentRepositoryManager.getInstance();
+    if (compRepo.has(graphicPath)) {
+      this._graphic = new (compRepo.getComponentMeta(graphicPath).graphicDef)();
       const paramNameArray = getParameterName(this._graphic.init), map = {
         region: this._region,
         wrapper: this,

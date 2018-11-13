@@ -6,7 +6,7 @@ export interface MockStaticDataSourceConfig {
 
 export interface MockDynamicDataSourceConfig {
   intervalTime: number;
-  dataGenerator: IDataGenerator;
+  dataGenerator: string;
 }
 
 export interface ArrayDataSourceMeta {
