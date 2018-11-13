@@ -1,5 +1,5 @@
 import { IPage } from '../../interface';
-import { PageConfig } from '../../../../components/page.config/page.config';
+import { PageConfig } from '../../../../shared/core/page/page.config';
 import { graphicFactory } from '@core/node/factory/graphic.factory';
 import { clipboard } from '@core/node/utils/clipboard';
 import { ISelectManager, SelectManager } from '@core/node/manager/select.manager';

@@ -6,7 +6,7 @@ import {
   ViewContainerRef, ViewRef
 } from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {PageConfig} from '../../components/page.config/page.config';
+import {PageConfig} from '../../shared/core/page/page.config';
 import {DataHeaderComponent} from '../../components/graphic.config/html/header.component';
 import {DesignGraphicConfig} from '../../core/source/config.source/design.config.source';
 import {DesignerBodyComponent} from '../designer.body.component';

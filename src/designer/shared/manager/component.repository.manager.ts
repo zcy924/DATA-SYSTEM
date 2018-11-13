@@ -96,6 +96,17 @@ export class ComponentRepositoryManager {
     }
   }
 
+  getGraphicDef(path: string): Type<IGraphic> {
+    if (path) {
+      const [repoKey, graphicKey] = path.split('$');
+      if (this._map.has(repoKey)) {
+        return this._map.get(repoKey).getComponentMeta(graphicKey).graphicDef;
+      } else {
+        return null;
+      }
+    }
+  }
+
 
   destroy() {
     if (this._map) {

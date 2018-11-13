@@ -37,12 +37,14 @@ export class SpaceSettingComponent implements AfterViewInit {
   getSpaceInfo() {
     this.spaceManageService.qrySpaceInfo({spaceId: localStorage.getItem('spaceID')}).subscribe(data => {
       this.formModel.spaceName = data.spaceName;
-      this.fileList.push({
-        uid: -1,
-        name: 'avatar.png',
-        status: 'done',
-        url: data.avatar,
-      });
+      if(data.avatar){
+        this.fileList.push({
+          uid: -1,
+          name: 'avatar.png',
+          status: 'done',
+          url: data.avatar,
+        });
+      }
       this.formModel.isPublic = data.isPublic === 'T' ? true : false;
       this.formModel.remark = data.remark;
       this.formModel.avatar = data.avatar;
