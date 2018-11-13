@@ -1,5 +1,6 @@
-import { KeyValueListener } from '@core/node/event/event';
+
 import * as _ from 'lodash';
+import { KeyValueListener } from './event';
 
 export interface ChangedItem {
   key: string;

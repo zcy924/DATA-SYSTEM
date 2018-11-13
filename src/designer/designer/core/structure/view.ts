@@ -1,4 +1,4 @@
-import {ViewEventTarget} from '@core/node/event/view.event';
+import {ViewEventTarget} from '../event/view.event';
 
 
 export abstract class View {

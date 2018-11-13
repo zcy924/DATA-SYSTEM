@@ -1,7 +1,7 @@
 import {IGraphic} from './graphic';
 import {IGraphicView} from '../../../core/node/graphic.view/graphic.view';
 import {Observable, Subscription} from 'rxjs';
-import {OuterModelEventTarget} from '../../../core/node/event/model.event';
+import {OuterModelEventTarget} from '../../../designer/core/event/model.event';
 
 export abstract class DefaultGraphic implements IGraphic {
   $element: JQuery;

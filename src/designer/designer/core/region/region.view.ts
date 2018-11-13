@@ -1,4 +1,4 @@
-import { View } from '../../../core/node/structure/view';
+import { View } from '../structure/view';
 import { fromEvent, Subscription } from 'rxjs';
 import { throttleTime } from 'rxjs/internal/operators';
 import { RegionController } from './region.controller';

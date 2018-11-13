@@ -1,4 +1,4 @@
-import { View } from '../../../../core/node/structure/view';
+import { View } from '../../structure/view';
 import { PageConfig } from '../../../../shared/core/page/page.config';
 
 const TEMPLATE = `

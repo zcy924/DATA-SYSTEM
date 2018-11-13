@@ -1,6 +1,6 @@
-import {RegionController} from '../../../designer/core/region/region.controller';
-import {IPlugin} from '@core/node/plugin/plugin';
-import {EventBus, EventMessage} from '@core/node/event/event.bus';
+import {RegionController} from '../core/region/region.controller';
+import {EventBus, EventMessage} from '../core/event/event.bus';
+import { IPlugin } from './plugin';
 
 enum SelectStatus {
   default, single, multi

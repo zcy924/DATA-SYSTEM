@@ -1,14 +1,15 @@
 import { combineLatest, Observable, Subject, Subscription } from 'rxjs';
 import { GraphicConfigManager } from '../../../core/config/design/graphic.config.manager';
 import { distinctUntilChanged, tap } from 'rxjs/operators';
-import * as _ from 'lodash';
 import { dataModelManager } from '../../../core/data/data.model.manager';
-import { ChangedItem } from '../../../core/node/event/model.event';
+import { ChangedItem } from '../event/model.event';
 import { GraphicOption, IGraphicOption } from '../../../shared/file/component.option';
 import { IGraphic } from '../../../shared/core/graphic/graphic';
 import { ComponentRepositoryManager } from '../../../shared/manager/component.repository.manager';
 import { getParameterName, guid } from '../../../shared/core/utils/tools';
 import { RegionController } from '../region/region.controller';
+
+import * as _ from 'lodash';
 
 
 /**

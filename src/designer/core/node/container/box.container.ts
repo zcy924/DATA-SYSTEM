@@ -1,6 +1,5 @@
 import {Face} from '@core/node/face/face';
 import {ContainerImmutable} from '@core/node/container/container.immutable.interface';
-import {EchartFace} from '@core/node/face/echart.face';
 
 const Box_TEMPLATE = `
 <div class="chart-container">
