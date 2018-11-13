@@ -1,7 +1,6 @@
 import { ReportPageInner } from '@core/node/page/report/page.inner';
 import { session } from '@core/node/utils/session';
 import { PageConfigComponent } from '../../../../components/page.config/page.config.component';
-import { graphicFactory } from '@core/node/factory/graphic.factory';
 import { ComponentRef } from '@angular/core';
 import { PageConfig } from '../../../../shared/core/page/page.config';
 import { IReportPage } from '@core/node/page/report/page.interface';
@@ -10,6 +9,7 @@ import { RuntimePageConfig } from '../../../../runtime/runtime.page.config';
 import * as _ from 'lodash';
 import { IFileStructure } from '@shared/file/file.structure';
 import { RegionController } from '../../../../designer/core/region/region.controller';
+import { graphicFactory } from '../../../../designer/core/graphic/graphic.factory';
 
 export class PageConfigWrapper {
 

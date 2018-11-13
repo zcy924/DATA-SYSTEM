@@ -1,6 +1,5 @@
 import { IPage } from '../../interface';
 import { PageConfig } from '../../../../shared/core/page/page.config';
-import { graphicFactory } from '@core/node/factory/graphic.factory';
 import { clipboard } from '@core/node/utils/clipboard';
 import { ISelectManager, SelectManager } from '@core/node/manager/select.manager';
 import { PageView } from '@core/node/page/report/page.view';
@@ -14,6 +13,7 @@ import { AbstractPageView } from '@core/node/page/report/abstract.page.view';
 import { DataSourceManager } from '@shared/core/data/data.source.manager';
 import { GeneratorRepositoryManager } from '@shared/manager/generator.repository.manager';
 import { ComponentRepositoryManager } from '@shared/manager/component.repository.manager';
+import { graphicFactory } from '../../../../designer/core/graphic/graphic.factory';
 
 export class ReportPageInner implements IPage {
 

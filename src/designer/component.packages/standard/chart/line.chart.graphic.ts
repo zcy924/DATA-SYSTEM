@@ -4,7 +4,7 @@ import {Grid} from '../../../core/node/graphic.view/chart/echart.interface/grid'
 import {Axis} from '../../../core/node/graphic.view/chart/echart.interface/axis';
 import {Title} from '../../../core/node/graphic.view/chart/echart.interface/title';
 import {LineSeriesConfig} from '../../../core/node/graphic.view/chart/echart.interface/series/line.series';
-import {GraphicWrapper} from '../../../core/node/graphic/graphic.wrapper';
+import {GraphicWrapper} from '../../../designer/core/graphic/graphic.wrapper';
 import { ChartGraphic } from './chart.graphic';
 
 export interface ChartLineOption {

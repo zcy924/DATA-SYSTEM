@@ -2,7 +2,7 @@ import { TextAuxiliary } from '../../../core/node/graphic.view/auxiliary/text.au
 import { IGraphicView } from '../../../core/node/graphic.view/graphic.view';
 import { DefaultGraphic } from '../../../shared/core/graphic/default.graphic';
 import { Observable, Subscription } from 'rxjs';
-import { GraphicWrapper } from '../../../core/node/graphic/graphic.wrapper';
+import { GraphicWrapper } from '../../../designer/core/graphic/graphic.wrapper';
 
 const template = `
 <div class="graphic m-graphic m-graphic-text z-mode-edit">
