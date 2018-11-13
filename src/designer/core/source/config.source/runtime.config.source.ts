@@ -1,6 +1,6 @@
 import {KeyValueDiffer} from '@angular/core';
 import {GraphicConfig} from '../../config/design/graphic.config';
-import {session} from '../../node/utils/session';
+import {session} from '../../../designer/utils/session';
 import {ChangedItem} from '@core/node/event/model.event';
 
 export class RuntimeConfigSource extends GraphicConfig {

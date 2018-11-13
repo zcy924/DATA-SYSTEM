@@ -2,11 +2,11 @@ import { RegionView } from '../region.view';
 import { RegionModel, RegionState } from '../region.model';
 import { fromEvent, Subscription } from 'rxjs';
 import { CoordinatesAndDimensions, Dimensions } from '../../../../core/node/interface';
-import { clipboard } from '../../../../core/node/utils/clipboard';
+import { clipboard } from '../../../utils/clipboard';
 import { filter, throttleTime } from 'rxjs/internal/operators';
 import { closestNum } from '../../../../utils/common';
 import { PieChartGraphic } from '../../../../component.packages/standard/chart/pie.chart.graphic';
-import { resizeTipHelper } from '../../helper/resize.tip.helper';
+import { resizeTipHelper } from '../../../helper/resize.tip.helper';
 import { contextMenuHelper } from '../../../../utils/contextMenu';
 import { RegionController } from '../region.controller';
 

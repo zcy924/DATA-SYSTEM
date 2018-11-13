@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, ElementRef} from '@angular/core';
-import {session} from '@core/node/utils/session';
+import {session} from '@core/../designer/utils/session';
 import * as _ from 'lodash';
 import {grabHelper} from './designer.header.component';
-import {ReportPageOuter} from '@core/node/page/report/page.outer';
 import { ComponentRepositoryManager } from '@shared/manager/component.repository.manager';
 import { graphicFactory } from '../designer/core/graphic/graphic.factory';
+import { ReportPageOuter } from '../designer/core/page/report/page.outer';
 
 @Component({
   selector: 'app-designer-body',

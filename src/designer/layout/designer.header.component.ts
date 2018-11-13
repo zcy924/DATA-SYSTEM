@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, EventEmitter, Output, OnDestroy } from '@angular/core';
-import { session } from '@core/node/utils/session';
+import { session } from '@core/../designer/utils/session';
 import * as FileSaver from 'file-saver';
 import * as moment from 'moment';
 import { CommService } from '../service/comm.service';

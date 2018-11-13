@@ -1,9 +1,8 @@
-
 import { contextMenuHelper } from '../../../../utils/contextMenu';
-import { ReportPageInner } from '@core/node/page/report/page.inner';
-import { AbstractPageView } from '@core/node/page/report/abstract.page.view';
-import { repaintMaskGenerator } from '../../../../designer/core/helper/mask.helper';
-import { boxSelectHelper } from '../../../../designer/core/helper/box.select.helper';
+import { ReportPageInner } from './page.inner';
+import { AbstractPageView } from './abstract.page.view';
+import { repaintMaskGenerator } from '../../../helper/mask.helper';
+import { boxSelectHelper } from '../../../helper/box.select.helper';
 
 
 export class PageView extends AbstractPageView {

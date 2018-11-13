@@ -1,8 +1,8 @@
 import {KeyValueDiffers} from '@angular/core';
-import {SiderLeftComponent} from '../../../layout/sider/sider.left.component';
-import {GraphicConfig} from '@core/config/design/graphic.config';
-import {ReportPageOuter} from '@core/node/page/report/page.outer';
+import {SiderLeftComponent} from '../../layout/sider/sider.left.component';
+import {GraphicConfig} from '../../core/config/design/graphic.config';
 import {Subject} from 'rxjs';
+import { ReportPageOuter } from '../core/page/report/page.outer';
 
 class Session {
   differs: KeyValueDiffers;

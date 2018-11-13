@@ -1,15 +1,15 @@
-import { ReportPageInner } from '@core/node/page/report/page.inner';
-import { session } from '@core/node/utils/session';
+import { ReportPageInner } from './page.inner';
+import { session } from '../../../utils/session';
 import { PageConfigComponent } from '../../../../components/page.config/page.config.component';
 import { ComponentRef } from '@angular/core';
 import { PageConfig } from '../../../../shared/core/page/page.config';
-import { IReportPage } from '@core/node/page/report/page.interface';
-import { ReportPage } from '@core/node/page/report/page';
+import { IReportPage } from './page.interface';
 import { RuntimePageConfig } from '../../../../runtime/runtime.page.config';
 import * as _ from 'lodash';
-import { IFileStructure } from '@shared/file/file.structure';
-import { RegionController } from '../../../../designer/core/region/region.controller';
-import { graphicFactory } from '../../../../designer/core/graphic/graphic.factory';
+import { IFileStructure } from '../../../../shared/file/file.structure';
+import { RegionController } from '../../region/region.controller';
+import { graphicFactory } from '../../graphic/graphic.factory';
+import { ReportPage } from './page';
 
 export class PageConfigWrapper {
 

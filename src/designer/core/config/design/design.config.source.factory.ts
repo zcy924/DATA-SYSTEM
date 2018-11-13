@@ -1,5 +1,5 @@
 import {IConfigSourceFactory} from '../config.source.factory';
-import {session} from '../../node/utils/session';
+import {session} from '../../../designer/utils/session';
 import {DesignGraphicConfig} from '../../source/config.source/design.config.source';
 import {Type} from '@angular/core';
 import {GraphicConfigManager} from '@core/config/design/graphic.config.manager';

@@ -1,5 +1,5 @@
 import {KeyValueDiffer} from '@angular/core';
-import {session} from '../core/node/utils/session';
+import {session} from '../designer/utils/session';
 import {PageConfig} from '../shared/core/page/page.config';
 
 export class RuntimePageConfig extends PageConfig {

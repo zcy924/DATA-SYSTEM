@@ -1,19 +1,19 @@
-import { IPage } from '../../interface';
+import { IPage } from '../../../../core/node/interface';
 import { PageConfig } from '../../../../shared/core/page/page.config';
-import { clipboard } from '@core/node/utils/clipboard';
-import { ISelectManager, SelectManager } from '@core/node/manager/select.manager';
-import { PageView } from '@core/node/page/report/page.view';
-import { RegionManager } from '@core/node/manager/region.manager';
-import { ActivateManager } from '@core/node/manager/activate.manager';
-import { ConfigSourceManager } from '@core/config/config.source.manager';
-import { dataOptionManager } from '@core/data/data.source.config.manager';
-import { PageConfigWrapper } from '@core/node/page/report/page.outer';
-import { AbstractPageView } from '@core/node/page/report/abstract.page.view';
-import { DataSourceManager } from '@shared/core/data/data.source.manager';
-import { GeneratorRepositoryManager } from '@shared/manager/generator.repository.manager';
-import { ComponentRepositoryManager } from '@shared/manager/component.repository.manager';
-import { graphicFactory } from '../../../../designer/core/graphic/graphic.factory';
-import { ActionManager } from '../../../../designer/core/operate/action.manager';
+import { clipboard } from '../../../utils/clipboard';
+import { ISelectManager, SelectManager } from '../../manager/select.manager';
+import { RegionManager } from '../../manager/region.manager';
+import { ActivateManager } from '../../manager/activate.manager';
+import { ConfigSourceManager } from '../../../../core/config/config.source.manager';
+import { dataOptionManager } from '../../../../core/data/data.source.config.manager';
+import { AbstractPageView } from './abstract.page.view';
+import { DataSourceManager } from '../../../../shared/core/data/data.source.manager';
+import { GeneratorRepositoryManager } from '../../../../shared/manager/generator.repository.manager';
+import { ComponentRepositoryManager } from '../../../../shared/manager/component.repository.manager';
+import { graphicFactory } from '../../graphic/graphic.factory';
+import { ActionManager } from '../../operate/action.manager';
+import { PageConfigWrapper } from './page.outer';
+import { PageView } from './page.view';
 
 export class ReportPageInner implements IPage {
 

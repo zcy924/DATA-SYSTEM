@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, ElementRef, KeyValueDiffers, OnDestroy, OnInit } from '@angular/core';
-import { session } from '@core/node/utils/session';
-import { ReportPageOuter } from '@core/node/page/report/page.outer';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { HttpResponse } from "@angular/common/http";
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { PersonalCenterService } from '../personal-center.service';
+import { ReportPageOuter } from '../../../../../designer/designer/core/page/report/page.outer';
+import { session } from '../../../../../designer/designer/utils/session';
 
 
 @Component({
@@ -15,10 +15,10 @@ import { PersonalCenterService } from '../personal-center.service';
 export class DetailReportComponent implements AfterViewInit, OnInit, OnDestroy {
 
   keepReportId;
-  
+
   report: ReportPageOuter;
   reportName;
-  
+
   leftPanelState = false;
 
   constructor(private _elementRef: ElementRef,
