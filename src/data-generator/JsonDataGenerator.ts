@@ -8,13 +8,13 @@ export class JsonDataGenerator implements IDataSourceGenerator {
 
   createDataSource(api: any): Observable<any> {
 
-    if (api.headers !== (null || '' || undefined)) {
-      api.headers = JSON.parse(api.headers);
-    } else {
-      api.headers = {
-        Accept: 'application/json;charset=utf-8',
-      };
-    }
+    // if (api.headers !== (null || '' || undefined)) {
+    //   api.headers = JSON.parse(api.headers);
+    // } else {
+    //   api.headers = {
+    //     Accept: 'application/json;charset=utf-8',
+    //   };
+    // }
 
     // if (api.params !== (null || '' || undefined)) {
     //   console.log(api.params)

@@ -9,7 +9,7 @@ repository.batchRegister([
     generatorDef: JsonDataGenerator,
   },
   {
-    key: 'text',
+    key: 'xml',
     generatorDef: XmlDataGenerator,
   }
 ]);
