@@ -1,9 +1,9 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { session } from '@core/node/utils/session';
-import { graphicFactory } from '@core/node/factory/graphic.factory';
 import * as _ from 'lodash';
 import { grabHelper } from '../designer.header.component';
 import { ComponentRepositoryManager } from '@shared/manager/component.repository.manager';
+import { graphicFactory } from '../../designer/core/graphic/graphic.factory';
 
 @Component({
   selector: 'app-palette',

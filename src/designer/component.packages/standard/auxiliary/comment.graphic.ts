@@ -1,5 +1,5 @@
 import {CommentAuxiliary} from '../../../core/node/graphic.view/auxiliary/comment.auxiliary';
-import {RegionController} from '../../../core/node/region/region.controller';
+import {RegionController} from '../../../designer/core/region/region.controller';
 import {DefaultGraphic} from '../../../shared/core/graphic/default.graphic';
 import {Observable, Subscription} from 'rxjs';
 

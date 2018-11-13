@@ -1,5 +1,6 @@
-import { RegionController } from '@core/node/region/region.controller';
+
 import { Observable } from 'rxjs';
+import { RegionController } from '../../../../designer/core/region/region.controller';
 
 /**
  *

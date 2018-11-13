@@ -1,4 +1,4 @@
-import { Type } from '../../interface/type';
+import { Type } from '../interface/type';
 import { IGraphic } from '../core/graphic/graphic';
 import { ComponentRepository } from '../core/repository/component.repository';
 import { StandardCompRepo } from '../../component.packages/standard';

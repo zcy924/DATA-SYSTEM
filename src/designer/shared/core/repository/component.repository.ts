@@ -1,4 +1,4 @@
-import { IComponentMeta, IPaletteMeta } from '../../../interface/component.meta';
+import { IComponentMeta, IPaletteMeta } from '../../interface/component.meta';
 import * as _ from 'lodash';
 
 

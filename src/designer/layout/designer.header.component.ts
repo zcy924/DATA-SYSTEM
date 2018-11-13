@@ -1,17 +1,17 @@
 import { AfterViewInit, Component, EventEmitter, Output, OnDestroy } from '@angular/core';
-import { graphicFactory } from '@core/node/factory/graphic.factory';
 import { session } from '@core/node/utils/session';
 import * as FileSaver from 'file-saver';
 import * as moment from 'moment';
 import { CommService } from '../service/comm.service';
 import { designerStorage } from '../utils/designer.storage';
-import { Destroyable } from '../interface/destroyable';
+import { Destroyable } from '../shared/interface/destroyable';
 import { FilterTools, HelperTools, MoreTools } from './overlay.template';
 import { imageDimensions$ } from './fragment';
 import { Dimensions } from '@core/node/interface';
 import { ActivatedRoute } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
 import { ComponentRepositoryManager } from '@shared/manager/component.repository.manager';
+import { graphicFactory } from '../designer/core/graphic/graphic.factory';
 
 @Component({
   selector: 'app-designer-header',

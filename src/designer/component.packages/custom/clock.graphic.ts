@@ -1,6 +1,6 @@
 import * as moment from 'moment';
 import {Observable} from 'rxjs';
-import {RegionController} from '../../core/node/region/region.controller';
+import {RegionController} from '../../designer/core/region/region.controller';
 import {Chart} from '../../core/node/graphic.view/chart/chart';
 import { DefaultGraphic } from '../../shared/core/graphic/default.graphic';
 

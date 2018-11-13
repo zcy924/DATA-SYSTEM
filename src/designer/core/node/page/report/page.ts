@@ -1,7 +1,7 @@
 import { ReportPageInner } from '@core/node/page/report/page.inner';
 import { IReportPage } from '@core/node/page/report/page.interface';
-import { RegionController } from '@core/node/region/region.controller';
 import { Observable } from 'rxjs';
+import { RegionController } from '../../../../designer/core/region/region.controller';
 
 
 export class ReportPage implements IReportPage {
@@ -84,7 +84,7 @@ export class ReportPage implements IReportPage {
   }
 
   getDataSource(id: string) {
-    return this._pageInner.dataSourceManager.getDataSourceByID(id);
+    return this._pageInner.dataSourceManager.getDataSource(id);
   }
 
   destroy() {

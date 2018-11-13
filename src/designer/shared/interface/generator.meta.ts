@@ -1,5 +1,5 @@
 import { Type } from './type';
-import { IDataSourceGenerator } from '@shared/core/data/data.source.generator';
+import { IDataSourceGenerator } from '../core/data/data.source.generator';
 
 export interface IDataSourceGeneratorMeta {
   key: string;

@@ -1,9 +1,9 @@
 import { combineLatest, Observable, Subscription } from 'rxjs/index';
-import { getParameterName, guid } from '@core/../shared/core/utils/tools';
 import { RegionRuntime } from './region.runtime';
 import { GraphicOption, IGraphicOption } from '@shared/file/component.option';
 import { IGraphic } from '@shared/core/graphic/graphic';
 import { ComponentRepositoryManager } from '@shared/manager/component.repository.manager';
+import { getParameterName, guid } from '@shared/core/utils/tools';
 
 export class GraphicWrapperRuntime {
   private _uuid: string;

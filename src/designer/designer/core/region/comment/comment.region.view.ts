@@ -1,20 +1,14 @@
 import { RegionView } from '../region.view';
-import { RegionState } from '../region.model';
+import { RegionModel, RegionState } from '../region.model';
 import { fromEvent, Subscription } from 'rxjs';
-import { BarChartGraphic } from '../../../../component.packages/standard/chart/bar.chart.graphic';
-import { TextAuxiliary } from '../../graphic.view/auxiliary/text.auxiliary';
-import { LinesChartGraphic } from '../../../../component.packages/standard/chart/lines.chart.graphic';
-import { LineChartGraphic } from '../../../../component.packages/standard/chart/line.chart.graphic';
-import { TextGraphic } from '../../../../component.packages/standard/auxiliary/text.graphic';
-import { CoordinatesAndDimensions, Dimensions } from '../../interface';
-import { clipboard } from '../../utils/clipboard';
+import { CoordinatesAndDimensions, Dimensions } from '../../../../core/node/interface';
+import { clipboard } from '../../../../core/node/utils/clipboard';
 import { filter, throttleTime } from 'rxjs/internal/operators';
 import { closestNum } from '../../../../utils/common';
 import { PieChartGraphic } from '../../../../component.packages/standard/chart/pie.chart.graphic';
 import { resizeTipHelper } from '../../helper/resize.tip.helper';
 import { contextMenuHelper } from '../../../../utils/contextMenu';
 import { RegionController } from '../region.controller';
-import { RegionModel } from '@core/node/region/region.model';
 
 const template = `
 <div class="m-dashbox">

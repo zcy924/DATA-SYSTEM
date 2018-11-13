@@ -1,4 +1,4 @@
-import {RegionController} from '../../core/node/region/region.controller';
+import {RegionController} from '../../designer/core/region/region.controller';
 import * as _ from 'lodash';
 import {Observable, Subscription} from 'rxjs';
 import { DefaultGraphic } from '../../shared/core/graphic/default.graphic';

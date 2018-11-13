@@ -1,4 +1,4 @@
-import {RegionController} from '../../../core/node/region/region.controller';
+import {RegionController} from '../../../designer/core/region/region.controller';
 import { ChartGraphic } from './chart.graphic';
 
 

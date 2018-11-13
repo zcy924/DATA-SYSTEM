@@ -1,4 +1,5 @@
-import {IAction} from '@core/node/operate/action';
+import { IAction } from './action';
+
 
 export class ActionManager {
   private _actionArray: Array<IAction> = [];

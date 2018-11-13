@@ -1,9 +1,9 @@
 import { IGraphic } from '../../../shared/core/graphic/graphic';
-import { ReportPageInner } from '@core/node/page/report/page.inner';
-import { RegionModel, RegionState } from '@core/node/region/region.model';
-import { RegionView } from '@core/node/region/region.view';
-import { GraphicWrapper } from '@core/node/graphic/graphic.wrapper';
-import { IReportPage } from '@core/node/page/report/page.interface';
+import { ReportPageInner } from '../../../core/node/page/report/page.inner';
+import { GraphicWrapper } from '../graphic/graphic.wrapper';
+import { IReportPage } from '../../../core/node/page/report/page.interface';
+import { RegionModel, RegionState } from './region.model';
+import { RegionView } from './region.view';
 
 
 export abstract class RegionController {

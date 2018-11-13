@@ -1,4 +1,4 @@
-import {RegionController} from '../region/region.controller';
+import {RegionController} from '../../../designer/core/region/region.controller';
 import {IPlugin} from '@core/node/plugin/plugin';
 import {EventBus, EventMessage} from '@core/node/event/event.bus';
 

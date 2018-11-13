@@ -1,5 +1,5 @@
 import {ComponentRef} from '@angular/core';
-import {RegionController} from '../../core/node/region/region.controller';
+import {RegionController} from '../../designer/core/region/region.controller';
 import {Chart} from '../../core/node/graphic.view/chart/chart';
 
 import {DesignGraphicConfig} from '../../core/source/config.source/design.config.source';
