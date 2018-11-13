@@ -10,7 +10,7 @@ export const HelperTools = `
           <span class="text">矩形</span>
         </div>
       </li>
-      <li class="btn-item draggable" draggable="true" data-component-name="textAuxiliary">
+      <li class="btn-item draggable" draggable="true" data-component-path="standard$text.graphic">
         <div class="u-tool-btn">
           <i class="u-icn u-icn-menubar-text"></i>
           <span class="text">文本</span>
@@ -22,7 +22,7 @@ export const HelperTools = `
           <span class="text">Tab</span>
         </div>
       </li>
-      <li class="btn-item draggable" draggable="true" data-component-name="commentAuxiliary">
+      <li class="btn-item draggable" draggable="true" data-component-path="standard$comment.graphic">
         <div class="u-tool-btn">
           <i class="u-icn u-icn-menubar-comment"></i>
           <span class="text">注释框</span>
@@ -75,19 +75,19 @@ export const MoreTools = `
   <div class="m-classMenu m-classMenu-more" style="zoom: 1;">
     <div class="placeholder" style="height: 68px;left: 94px;right: 94px;"></div>
     <ul class="btns-box">
-    <li class="btn-item draggable" draggable="true" data-component-name="lineChart">
+    <li class="btn-item draggable" draggable="true" data-component-path="standard$line.chart.graphic">
         <div class="u-tool-btn">
           <i class="u-icn u-icn-chart-line"></i>
           <span class="text">折线图</span>
         </div>
       </li>
-      <li class="btn-item draggable" draggable="true" data-component-name="clock">
+      <li class="btn-item draggable" draggable="true" data-component-path="custom$clock.graphic">
         <div class="u-tool-btn">
           <i class="u-icn u-icn-chart-area"></i>
           <span class="text">区域图</span>
         </div>
       </li>
-      <li class="btn-item draggable" draggable="true" data-component-name="pieChart">
+      <li class="btn-item draggable" draggable="true" data-component-path="standard$pie.chart.graphic">
         <div class="u-tool-btn">
           <i class="u-icn u-icn-chart-pie"></i>
           <span class="text">饼状图</span>

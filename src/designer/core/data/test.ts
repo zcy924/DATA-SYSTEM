@@ -18,8 +18,8 @@ export const array: Array<IDataSourceConfig> = [
     generatorPath: 'standard$mockDynamic',
     generatorParams: {
       intervalTime: 10000,
-      dataGenerator: () => {
-        return {
+      dataGenerator: `
+              return {
           // 这里指定了维度名的顺序，从而可以利用默认的维度到坐标轴的映射。
           // 如果不指定 dimensions，也可以通过指定 series.encode 完成映射，参见后文。
           dimensions: [
@@ -34,9 +34,10 @@ export const array: Array<IDataSourceConfig> = [
             { product: '豆子', '2015': Math.random() * 100, '2016': 53.9, '2017': 39.1 },
           ],
         };
-      },
+      `,
     },
-  }, {
+  },
+  {
     id: 'num2',
     displayName: '实时销售额',
     comment: '没有任何建议',
@@ -46,12 +47,13 @@ export const array: Array<IDataSourceConfig> = [
     generatorPath: 'standard$mockDynamic',
     generatorParams: {
       intervalTime: 10000,
-      dataGenerator: () => {
-        console.log('实时销售额');
+      dataGenerator: `
+              console.log('实时销售额');
         return Math.floor(Math.random() * 10000000);
-      },
+      `,
     },
-  }, {
+  },
+  {
     id: 'num3',
     displayName: '985高校17年毕业生统计',
     comment: '没有任何建议',
@@ -84,8 +86,8 @@ export const array: Array<IDataSourceConfig> = [
     generatorPath: 'standard$mockDynamic',
     generatorParams: {
       intervalTime: 10000,
-      dataGenerator: () => {
-        return {
+      dataGenerator: `
+      return {
           dimensions: [
             {
               name: '学校',
@@ -455,9 +457,10 @@ export const array: Array<IDataSourceConfig> = [
 
           ],
         };
-      },
+      `,
     },
-  }, {
+  },
+  {
     id: 'num4',
     displayName: '紫金大数据及金库条线绩效',
     comment: '没有任何建议',
@@ -522,5 +525,5 @@ export const array: Array<IDataSourceConfig> = [
         ],
       },
     },
-  },
+  }
 ];

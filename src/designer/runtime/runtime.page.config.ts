@@ -1,6 +1,6 @@
 import {KeyValueDiffer} from '@angular/core';
-import {session} from '@core/node/utils/session';
-import {PageConfig} from './page.config';
+import {session} from '../core/node/utils/session';
+import {PageConfig} from '../components/page.config/page.config';
 
 export class RuntimePageConfig extends PageConfig {
   private _differ: KeyValueDiffer<any, any>;

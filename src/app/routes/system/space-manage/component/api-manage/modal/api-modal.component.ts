@@ -91,7 +91,7 @@ export class ApiModalComponent implements OnInit {
       url: this.url,
       method: this.method,
       headers: this.headersText === '' || null || undefined ? null : JSON.parse(this.headersText),
-      params: this.headersText === '' || null || undefined ? '' : JSON.parse(this.bodyText),
+      params: this.bodyText === '' || null || undefined ? '' : JSON.parse(this.bodyText),
       generator: this.generator,
     };
     const httpGenerator = new DataGenerator(api);

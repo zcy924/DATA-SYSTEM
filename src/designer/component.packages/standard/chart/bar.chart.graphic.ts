@@ -1,10 +1,10 @@
-import {RegionController} from '../../../core/node/region/region.controller';
+import { RegionController } from '../../../core/node/region/region.controller';
 
-import {Grid} from '../../../core/node/graphic.view/chart/echart.interface/grid';
-import {BarSeriesConfig} from '../../../core/node/graphic.view/chart/echart.interface/series/bar.series';
-import {Axis} from '../../../core/node/graphic.view/chart/echart.interface/axis';
-import {Title} from '../../../core/node/graphic.view/chart/echart.interface/title';
-import {GraphicWrapper} from '../../../core/node/graphic/graphic.wrapper';
+import { Grid } from '../../../core/node/graphic.view/chart/echart.interface/grid';
+import { BarSeriesConfig } from '../../../core/node/graphic.view/chart/echart.interface/series/bar.series';
+import { Axis } from '../../../core/node/graphic.view/chart/echart.interface/axis';
+import { Title } from '../../../core/node/graphic.view/chart/echart.interface/title';
+import { GraphicWrapper } from '../../../core/node/graphic/graphic.wrapper';
 import { ChartGraphic } from './chart.graphic';
 
 
@@ -26,11 +26,11 @@ export class BarChartGraphic extends ChartGraphic {
 
   init(region: RegionController, wrapper: GraphicWrapper) {
     super.init();
-    region.addMethod('desc', () => {
+    region.addMethod && region.addMethod('desc', () => {
       return {
         id: wrapper.uuid,
         displayName: `柱状图 ${wrapper.uuid}`,
-        icon: 'u-icn-chart-bar'
+        icon: 'u-icn-chart-bar',
       };
     });
   }

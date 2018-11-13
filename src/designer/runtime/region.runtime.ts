@@ -1,6 +1,7 @@
 import { PageRuntime } from './page.runtime';
 import { GraphicWrapperRuntime } from './graphic.wrapper.runtime';
 import { IRegionOption } from '@shared/file/component.option';
+import { GraphicWrapper } from '@core/node/graphic/graphic.wrapper';
 
 const template = `
 <div class="m-dashbox">
@@ -30,12 +31,14 @@ export class RegionRuntime {
     this._page.addChild(this);
   }
 
+  addChild(graphic: GraphicWrapperRuntime) {
+    this._graphicWrapper = graphic;
+    this._$fill.append(graphic.$element);
+  }
+
   init(regionOption: any) {
     this._regionOption = regionOption;
     this._refresh();
-    const graphicWrapper = this._graphicWrapper = new GraphicWrapperRuntime(this);
-    this._$fill.append(graphicWrapper.$element);
-    graphicWrapper.init(regionOption);
   }
 
   updateTheme(theme: string) {

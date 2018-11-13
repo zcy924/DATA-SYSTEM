@@ -42,4 +42,8 @@ export class DataSourceConfig {
   get dimensions() {
     return this._option.metaData.dimensions;
   }
+
+  get value(): IDataSourceConfig {
+    return this._option;
+  }
 }

@@ -1,14 +1,14 @@
 import { combineLatest, Observable, Subject, Subscription } from 'rxjs';
 import { RegionController } from '@core/node/region/region.controller';
 import { getParameterName, guid } from '@core/node/utils/tools';
-import { graphicMap } from '@core/node/config/graphic.map';
 import { GraphicConfigManager } from '@core/config/design/graphic.config.manager';
 import { distinctUntilChanged, tap } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { dataModelManager } from '@core/data/data.model.manager';
 import { ChangedItem } from '@core/node/event/model.event';
-import { IGraphicOption } from '@shared/file/component.option';
+import { GraphicOption, IGraphicOption } from '@shared/file/component.option';
 import { IGraphic } from '@shared/core/graphic/graphic';
+import { ComponentRepositoryManager } from '@shared/manager/component.repository.manager';
 
 
 /**
@@ -18,7 +18,7 @@ import { IGraphic } from '@shared/core/graphic/graphic';
 export class GraphicWrapper {
 
   private _uuid: string;
-  private _graphicOption: IGraphicOption;
+  private _graphicOption: GraphicOption;
 
   private _graphic: IGraphic;
   private _configSource: Observable<any>;
@@ -48,12 +48,12 @@ export class GraphicWrapper {
    * 创建DataSource
    * @param graphicOption
    */
-  init(graphicOption: IGraphicOption) {
-    this._graphicOption = graphicOption;
-    console.log(graphicOption);
-    const { graphicId, graphicKey, dataSourceKey, configOption } = graphicOption;
-    if (graphicMap.has(graphicKey)) {
-      this._graphic = new (graphicMap.get(graphicKey))();
+  init(option: IGraphicOption) {
+    const graphicOption = this._graphicOption = new GraphicOption(option);
+    const { graphicId, graphicKey, graphicPath, dataSourceKey, configOption } = graphicOption,
+      compRepo = ComponentRepositoryManager.getInstance();
+    if (compRepo.has(graphicPath)) {
+      this._graphic = new (compRepo.getComponentMeta(graphicPath).graphicDef)();
       const paramNameArray = getParameterName(this._graphic.init), map = {
         region: this._region,
         wrapper: this,
@@ -84,8 +84,8 @@ export class GraphicWrapper {
           graphicKey,
           configOption,
         });
-    } else { // 如果是新建 则肯定是调用设计时的configFactory
-      console.log(configOption, 'create 根据实际情况');
+    } else {
+      // 如果是新建 则肯定是调用设计时的configFactory
       this._configSource = this._region.page
         .getConfigSource({
           graphicId: this._uuid,
@@ -146,7 +146,7 @@ export class GraphicWrapper {
   }
 
   get optionAccessor() {
-    return this._optionAccessor || (() => Object.assign({}, this._graphicOption));
+    return this._optionAccessor || (() => Object.assign({}, this._graphicOption.value));
   }
 
   set optionAccessor(value: Function) {

@@ -1,8 +1,7 @@
-import {Observable, Subscription} from 'rxjs';
-import {ImageAuxiliary} from '../../../core/node/graphic.view/auxiliary/image.auxiliary';
-import {IGraphicView} from '../../../core/node/graphic.view/graphic.view';
-import {DefaultGraphic} from '../../../shared/core/graphic/default.graphic';
-import {RegionController} from '../../../core/node/region/region.controller';
+import { Observable, Subscription } from 'rxjs';
+import { ImageAuxiliary } from '../../../core/node/graphic.view/auxiliary/image.auxiliary';
+import { DefaultGraphic } from '../../../shared/core/graphic/default.graphic';
+import { RegionController } from '../../../core/node/region/region.controller';
 import * as _ from 'lodash';
 
 const template = `
@@ -29,27 +28,27 @@ export class ImageGraphic extends DefaultGraphic {
     this._modelEventTarget
       .register('add.borderRadius borderRadius', (key, oldValue, newValue) => {
         $frame.css({
-          'borderRadius': newValue
+          'borderRadius': newValue,
         });
       }).register('add.borderWidth borderWidth', (key, oldValue, newValue) => {
       $frame.css({
-        'borderWidth': newValue
+        'borderWidth': newValue,
       });
     }).register('add.borderColor borderColor', (key, oldValue, newValue) => {
       $frame.css({
-        'borderColor': newValue
+        'borderColor': newValue,
       });
     }).register('add.borderStyle borderStyle', (key, oldValue, newValue) => {
       $frame.css({
-        'borderStyle': newValue
+        'borderStyle': newValue,
       });
     }).register('add.backgroundColor backgroundColor', (key, oldValue, newValue) => {
       $frame.css({
-        'backgroundColor': newValue
+        'backgroundColor': newValue,
       });
     }).register('add.image image', (key, oldValue, newValue) => {
       if (this._view && newValue && newValue.dataUrl) {
-        region.setDimensions(newValue.width, newValue.height);
+        region.setDimensions && region.setDimensions(newValue.width, newValue.height);
         this._view.update(newValue);
       }
     });

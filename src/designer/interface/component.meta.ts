@@ -11,6 +11,7 @@ export interface IComponentMeta {
 }
 
 export interface IPaletteMeta {
+  show?: boolean;
   displayName?: string;
   imageClass?: string;
   grabOption?: {

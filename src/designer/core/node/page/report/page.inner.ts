@@ -1,9 +1,9 @@
 import { IPage } from '../../interface';
 import { PageConfig } from '../../../../components/page.config/page.config';
 import { graphicFactory } from '@core/node/factory/graphic.factory';
-import { clipboard } from '@core/node/clipboard';
+import { clipboard } from '@core/node/utils/clipboard';
 import { ISelectManager, SelectManager } from '@core/node/manager/select.manager';
-import { DesignPageView } from '@core/node/page/report/design,page.view';
+import { PageView } from '@core/node/page/report/page.view';
 import { RegionManager } from '@core/node/manager/region.manager';
 import { ActivateManager } from '@core/node/manager/activate.manager';
 import { ConfigSourceManager } from '@core/config/config.source.manager';
@@ -11,8 +11,9 @@ import { dataOptionManager } from '@core/data/data.source.config.manager';
 import { ActionManager } from '@core/node/operate/action.manager';
 import { PageConfigWrapper } from '@core/node/page/report/page.outer';
 import { AbstractPageView } from '@core/node/page/report/abstract.page.view';
-import { RuntimePageView } from '@core/node/page/report/runtime.page.view';
 import { DataSourceManager } from '@shared/core/data/data.source.manager';
+import { GeneratorRepositoryManager } from '@shared/manager/generator.repository.manager';
+import { ComponentRepositoryManager } from '@shared/manager/component.repository.manager';
 
 export class ReportPageInner implements IPage {
 
@@ -26,13 +27,12 @@ export class ReportPageInner implements IPage {
   public dataSourceManager: DataSourceManager;
   public actionManager: ActionManager;
 
-  constructor(private _mode: 'design' | 'runtime') {
-    if (_mode === 'design') {
-      this.view = new DesignPageView(this);
-    } else {
-      this.view = new RuntimePageView(this);
-    }
+  public compRepoManager = ComponentRepositoryManager.getInstance();
+  public geneRepoManager = GeneratorRepositoryManager.getInstance();
 
+
+  constructor(private _mode: 'design' | 'runtime') {
+    this.view = new PageView(this);
     this.pageConfigWrapper = new PageConfigWrapper(_mode);
     this.regionManager = new RegionManager();
     this.selectManager = new SelectManager();

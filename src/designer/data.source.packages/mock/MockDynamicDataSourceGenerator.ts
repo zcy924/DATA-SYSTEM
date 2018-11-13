@@ -1,5 +1,5 @@
 import { map, publishBehavior, refCount } from 'rxjs/operators';
-import { interval } from 'rxjs/index';
+import { interval, Observable } from 'rxjs/index';
 import { IDataSourceGenerator } from '../../shared/core/data/data.source.generator';
 import { MockDynamicDataSourceConfig } from './interface';
 
@@ -11,16 +11,17 @@ export class MockDynamicDataSourceGenerator implements IDataSourceGenerator {
    * @param config
    * @private
    */
-  createDataSource(config: MockDynamicDataSourceConfig) {
+  createDataSource(config: MockDynamicDataSourceConfig): Observable<any> {
     const { intervalTime = 5000, dataGenerator } = config;
     const ticker = interval(intervalTime);
+    const dataGeneratorFun = new Function(dataGenerator);
     return ticker
       .pipe(
         map((value, index) => {
           console.log('***');
-          return dataGenerator();
+          return dataGeneratorFun();
         }),
-        publishBehavior(dataGenerator()),
+        publishBehavior(dataGeneratorFun()),
         refCount());
   }
 }
