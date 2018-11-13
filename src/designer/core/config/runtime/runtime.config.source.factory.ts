@@ -1,6 +1,7 @@
-import {IConfigSourceFactory} from '../config.source.factory';
-import {BehaviorSubject, of} from 'rxjs';
-import {session} from '@core/node/utils/session';
+import { IConfigSourceFactory } from '../config.source.factory';
+import { BehaviorSubject, of } from 'rxjs';
+import { session } from '@core/node/utils/session';
+import { Observable } from 'rxjs/internal/Observable';
 
 export class RuntimeConfigSourceFactory implements IConfigSourceFactory {
   private static _configSourceFactory: IConfigSourceFactory;
@@ -16,19 +17,18 @@ export class RuntimeConfigSourceFactory implements IConfigSourceFactory {
   private constructor() {
   }
 
-  getConfigSource(configSourceOption: { graphicId: string, graphicKey: string, configOption: any }) {
+  getConfigSource(configSourceOption: { graphicId: string, graphicKey: string, configOption: any }): Observable<any> {
     const differ = session.differs.find({}).create(), option = configSourceOption.configOption;
 
     const array = [],
       changes = differ.diff(option);
     if (changes) {
       changes.forEachRemovedItem((record) => {
-        console.log('removedItem', JSON.stringify(record.key));
         array.push({
           key: `remove.${record.key}`,
           oldValue: record.previousValue,
           newValue: record.currentValue,
-          option
+          option,
         });
       });
       changes.forEachAddedItem((record) => {
@@ -36,17 +36,15 @@ export class RuntimeConfigSourceFactory implements IConfigSourceFactory {
           key: `add.${record.key}`,
           oldValue: record.previousValue,
           newValue: record.currentValue,
-          option
+          option,
         });
-        console.log('addedItem', JSON.stringify(record.key));
       });
       changes.forEachChangedItem((record) => {
-        console.log('changedItem', JSON.stringify(record.key));
         array.push({
           key: record.key,
           oldValue: record.previousValue,
           newValue: record.currentValue,
-          option
+          option,
         });
       });
     }
@@ -55,7 +53,7 @@ export class RuntimeConfigSourceFactory implements IConfigSourceFactory {
       key: 'option',
       oldValue: option,
       newValue: option,
-      option
+      option,
     });
 
     return new BehaviorSubject(array);

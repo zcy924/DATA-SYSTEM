@@ -8,6 +8,9 @@ import { DataSourceManager } from '@shared/core/data/data.source.manager';
 import { IComponentOption } from '@shared/file/component.option';
 import { IComponentMeta } from '../interface/component.meta';
 import { ConfigSourceManager } from '@core/config/config.source.manager';
+import { IConfigSourceOption } from '@core/config/config.source.interface';
+import { IConfigSourceFactory } from '@core/config/config.source.factory';
+import { RuntimeConfigSourceFactory } from '@core/config/runtime/runtime.config.source.factory';
 
 enum PageRuntimeState {
   created, initialized, loaded
@@ -41,7 +44,7 @@ export class PageRuntime {
 
   private _regionArray: Array<RegionRuntime> = [];
 
-  private _configSourceManager = new ConfigSourceManager('runtime');
+  private _configSourceFactory: IConfigSourceFactory = RuntimeConfigSourceFactory.getInstance();
 
   constructor(private _dataSourceManager: DataSourceManager) {
     const $element = this.$element = $(template);
@@ -51,6 +54,10 @@ export class PageRuntime {
     this._$grid = $element.find('.report-grid');
   }
 
+  /**
+   * 创建PageConfig
+   * 监听PageConfig
+   */
   init() {
     if (this._state === PageRuntimeState.created) {
       this._model = new RuntimePageConfig();
@@ -59,11 +66,9 @@ export class PageRuntime {
     } else {
       throw new Error('init 方法已经调用');
     }
-
   }
 
   load(option: any) {
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAA");
     if (this._state === PageRuntimeState.initialized) {
       this._model.importOption(option.option);
       option.children.forEach((value) => {
@@ -71,7 +76,7 @@ export class PageRuntime {
       });
       this._state = PageRuntimeState.loaded;
     } else {
-      throw new Error('状态不一致  请检查代码！');
+      throw new Error('状态不一致,页面已经装载  请检查代码！ ');
     }
   }
 
@@ -171,7 +176,7 @@ export class PageRuntime {
   }
 
   getConfigSource(option: any): Observable<any> {
-    return this._configSourceManager.getConfigSource(option);
+    return this._configSourceFactory.getConfigSource(option);
   }
 
   getDataSource(id: string): Observable<any> {
@@ -179,6 +184,15 @@ export class PageRuntime {
   }
 
   destroy() {
+    this._regionArray.forEach(value => value.destroy());
+    this._regionArray.splice(0);
+    this._regionArray = null;
 
+    this._configSourceFactory = null;
+
+    this._dataSourceManager.destroy();
+    this._dataSourceManager = null;
+
+    this._model.destroy();
   }
 }

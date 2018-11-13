@@ -37,11 +37,10 @@ export class DataSourceManager {
   }
 
   getDataSourceByID(id: string): Observable<any> {
-    console.log('获取数据源：');
     const dataSourceMap = this._dataSourceMap;
     if (dataSourceMap.has(id)) {
       return dataSourceMap.get(id);
-    } else if (this._dataSourceConfigSet.getDataSourceConfig(id)) {
+    } else if (this._dataSourceConfigSet.has(id)) {
       const dataSource = this._dataSourceFactory
         .getDataSource(this._dataSourceConfigSet.getDataSourceConfig(id));
       dataSourceMap.set(id, dataSource);
@@ -52,5 +51,13 @@ export class DataSourceManager {
 
   clear() {
 
+  }
+
+  destroy() {
+    this._dataSourceConfigSet.destroy();
+    this._dataSourceConfigSet = null;
+
+    this._dataSourceMap.clear();
+    this._dataSourceMap = null;
   }
 }

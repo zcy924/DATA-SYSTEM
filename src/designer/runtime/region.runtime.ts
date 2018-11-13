@@ -1,7 +1,6 @@
 import { PageRuntime } from './page.runtime';
 import { GraphicWrapperRuntime } from './graphic.wrapper.runtime';
 import { IRegionOption } from '@shared/file/component.option';
-import { GraphicWrapper } from '@core/node/graphic/graphic.wrapper';
 
 const template = `
 <div class="m-dashbox">
@@ -59,8 +58,6 @@ export class RegionRuntime {
     }
     this._page.removeChild(this);
     this._page = null;
-
-    // this._view.destroy();
   }
 
   private _refresh() {

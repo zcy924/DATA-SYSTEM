@@ -50,6 +50,5 @@ export class RuntimePageConfig extends PageConfig {
     if (array.length > 0) {
       this._batchTrigger(array);
     }
-
   }
 }

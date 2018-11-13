@@ -51,4 +51,11 @@ export class DataSourceConfigSet {
   private _load(dataOptionOption: IDataSourceConfig) {
     this._array.push(new DataSourceConfig(dataOptionOption));
   }
+
+  destroy() {
+    this._array.splice(0);
+    this._array = null;
+
+    this._parent = null;
+  }
 }
