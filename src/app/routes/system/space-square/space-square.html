@@ -24,7 +24,7 @@
         <div nz-col (click)="openDetail(item.spaceId,'admin')" *ngFor="let item of onlyWrite" style="width: 300px;float:left;padding-right: 16px">
           <ng-template #avatarTemplate>
             <div style="line-height:60px;">
-              <nz-avatar [nzShape]="'square'" nzSrc="./assets/tmp/img/6.png" nzSize="large"></nz-avatar>
+              <nz-avatar [nzShape]="'square'" nzSrc="{{item.avatar}}" nzSize="large"></nz-avatar>
             </div>
           </ng-template>
           <nz-card style="margin-top: 16px" nzHoverable="true">
@@ -40,7 +40,7 @@
         <div nz-col (click)="openDetail(item.spaceId,'other')" *ngFor="let item of onlyRead" style="width: 300px;float:left;padding-right: 16px">
           <ng-template #avatarTemplate>
             <div style="line-height:60px;">
-              <nz-avatar [nzShape]="'square'" nzSrc="./assets/tmp/img/6.png" nzSize="large"></nz-avatar>
+              <nz-avatar [nzShape]="'square'" nzSrc="{{item.avatar}}" nzSize="large"></nz-avatar>
             </div>
           </ng-template>
           <nz-card style="margin-top: 16px" nzHoverable="true">
@@ -56,7 +56,7 @@
         <div nz-col (click)="openDetail(item.spaceId,'public')" *ngFor="let item of public" style="width: 300px;float:left;padding-right: 16px">
           <ng-template #avatarTemplate>
             <div style="line-height:60px;">
-              <nz-avatar [nzShape]="'square'" nzSrc="./assets/tmp/img/6.png" nzSize="large"></nz-avatar>
+              <nz-avatar [nzShape]="'square'" nzSrc="{{item.avatar}}" nzSize="large"></nz-avatar>
             </div>
           </ng-template>
           <nz-card style="margin-top: 16px" nzHoverable="true">

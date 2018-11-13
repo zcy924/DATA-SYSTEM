@@ -1,8 +1,8 @@
-import {IDataGenerator} from './IDataGenerator';
-import {Api} from './Api';
-import {fromPromise} from 'rxjs/internal-compatibility';
-import {map} from 'rxjs/operators';
-import {Observable} from "rxjs/internal/Observable";
+import { IDataGenerator } from './IDataGenerator';
+import { Api } from './Api';
+import { fromPromise } from 'rxjs/internal-compatibility';
+import { map } from 'rxjs/operators';
+import { Observable } from "rxjs/internal/Observable";
 import * as X2JS from 'x2js';
 
 export class XmlDataGenerator implements IDataGenerator {
@@ -14,7 +14,7 @@ export class XmlDataGenerator implements IDataGenerator {
     this.api = api;
   }
 
-  fetchData() {
+  fetchData(): Observable<any> {
     if (this.api.headers === null || '') {
       this.api.headers = {
         Accept: 'text/plain, */*',
@@ -35,7 +35,7 @@ export class XmlDataGenerator implements IDataGenerator {
         }
       }
       delete options.params;
-      this.http$ = fromPromise(fetch(url, options).then(response =>response.text())).pipe(map(response => {
+      this.http$ = fromPromise(fetch(url, options).then(response => response.text())).pipe(map(response => {
         let x2js = new X2JS();
         const data = x2js.xml2js(response);
         return data;

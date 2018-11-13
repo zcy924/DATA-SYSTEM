@@ -45,6 +45,7 @@ export class SpaceSettingComponent implements AfterViewInit {
       });
       this.formModel.isPublic = data.isPublic === 'T' ? true : false;
       this.formModel.remark = data.remark;
+      this.formModel.avatar = data.avatar;
     })
   }
 
@@ -86,7 +87,7 @@ export class SpaceSettingComponent implements AfterViewInit {
   };
 
   submit() {
-    this.formModel.isPublic = this.formModel.isPublic ? 'T' : 'F';
+    this.formModel.isPublic = this.formModel.isPublic ? 'F' : 'T';
     const params = Object.assign({}, this.formModel);
     this.spaceManageService.modSpaceInfo(params).subscribe(data => {
         this.msg.success('更新用户信息成功!');

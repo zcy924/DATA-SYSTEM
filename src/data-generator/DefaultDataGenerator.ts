@@ -1,8 +1,9 @@
-import {IDataGenerator} from './IDataGenerator';
-import {Api} from './Api';
-import {fromPromise} from 'rxjs/internal-compatibility';
-import {map} from 'rxjs/operators';
-import {Observable} from "rxjs/internal/Observable";
+import { IDataGenerator } from './IDataGenerator';
+import { Api } from './Api';
+import { fromPromise } from 'rxjs/internal-compatibility';
+import { map } from 'rxjs/operators';
+import { Observable } from "rxjs/internal/Observable";
+import { of } from 'rxjs';
 
 export class DefaultDataGenerator implements IDataGenerator {
 
@@ -13,7 +14,7 @@ export class DefaultDataGenerator implements IDataGenerator {
     this.api = api;
   }
 
-  fetchData() {
+  fetchData(): Observable<any> {
     if (this.api.headers === null || '') {
       this.api.headers = {
         Accept: '*/*',
