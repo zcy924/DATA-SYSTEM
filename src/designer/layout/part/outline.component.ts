@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { debounceTime, delay } from 'rxjs/operators';
 import { IReportPage } from '@core/node/page/report/page.interface';
 import { RegionController } from '@core/node/region/region.controller';
-import { Destroyable } from '../../interface/destroyable';
+import { Destroyable } from '../../shared/interface/destroyable';
 
 
 @Component({

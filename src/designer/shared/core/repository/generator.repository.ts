@@ -1,7 +1,7 @@
-import { Type } from '../../../interface/type';
+import { Type } from '../../interface/type';
 import * as _ from 'lodash';
 import { IDataSourceGenerator } from '../data/data.source.generator';
-import { IDataSourceGeneratorMeta } from '../../../interface/generator.meta';
+import { IDataSourceGeneratorMeta } from '../../interface/generator.meta';
 
 
 /**

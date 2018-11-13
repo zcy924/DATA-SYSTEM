@@ -84,7 +84,7 @@ export class ReportPage implements IReportPage {
   }
 
   getDataSource(id: string) {
-    return this._pageInner.dataSourceManager.getDataSourceByID(id);
+    return this._pageInner.dataSourceManager.getDataSource(id);
   }
 
   destroy() {

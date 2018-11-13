@@ -6,7 +6,7 @@ import { RuntimePageConfig } from './runtime.page.config';
 import { GraphicWrapperRuntime } from './graphic.wrapper.runtime';
 import { DataSourceManager } from '@shared/core/data/data.source.manager';
 import { IComponentOption } from '@shared/file/component.option';
-import { IComponentMeta } from '../interface/component.meta';
+import { IComponentMeta } from '../shared/interface/component.meta';
 import { ConfigSourceManager } from '@core/config/config.source.manager';
 import { IConfigSourceOption } from '@core/config/config.source.interface';
 import { IConfigSourceFactory } from '@core/config/config.source.factory';
@@ -180,7 +180,7 @@ export class PageRuntime {
   }
 
   getDataSource(id: string): Observable<any> {
-    return this._dataSourceManager.getDataSourceByID(id);
+    return this._dataSourceManager.getDataSource(id);
   }
 
   destroy() {

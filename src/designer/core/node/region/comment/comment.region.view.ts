@@ -11,7 +11,7 @@ import { clipboard } from '../../utils/clipboard';
 import { filter, throttleTime } from 'rxjs/internal/operators';
 import { closestNum } from '../../../../utils/common';
 import { PieChartGraphic } from '../../../../component.packages/standard/chart/pie.chart.graphic';
-import { resizeTipHelper } from '../../helper/resize.tip.helper';
+import { resizeTipHelper } from '../../../../designer/core/helper/resize.tip.helper';
 import { contextMenuHelper } from '../../../../utils/contextMenu';
 import { RegionController } from '../region.controller';
 import { RegionModel } from '@core/node/region/region.model';

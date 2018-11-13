@@ -1,6 +1,6 @@
 import { Type } from './type';
-import { IComponentOption } from '../shared/file/component.option';
-import { IGraphic } from '@shared/core/graphic/graphic';
+import { IComponentOption } from '../file/component.option';
+import { IGraphic } from '../core/graphic/graphic';
 
 
 export interface IComponentMeta {

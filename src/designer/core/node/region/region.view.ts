@@ -1,12 +1,12 @@
 import { View } from '@core/node/structure/view';
 import { fromEvent, Subscription } from 'rxjs';
 import { throttleTime } from 'rxjs/internal/operators';
-import { resizeTipHelper } from '@core/node/helper/resize.tip.helper';
 import { RegionController } from '@core/node/region/region.controller';
 import { CoordinatesAndDimensions } from '@core/node/interface';
 import { closestNum } from '../../../utils/common';
 import { contextMenuHelper, ContextMenuItem } from '../../../utils/contextMenu';
 import { RegionModel } from '@core/node/region/region.model';
+import { resizeTipHelper } from '../../../designer/core/helper/resize.tip.helper';
 
 type IContextMenuGenerator = () => Array<ContextMenuItem | 'split'>;
 

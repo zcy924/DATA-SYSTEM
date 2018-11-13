@@ -36,7 +36,7 @@ export class DataSourceManager {
       .map(value => value.value);
   }
 
-  getDataSourceByID(id: string): Observable<any> {
+  getDataSource(id: string): Observable<any> {
     const dataSourceMap = this._dataSourceMap;
     if (dataSourceMap.has(id)) {
       return dataSourceMap.get(id);
