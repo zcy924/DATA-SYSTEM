@@ -18,7 +18,6 @@
               <nz-radio-group [(ngModel)]="method" name="method">
                 <label nz-radio nzValue="GET">GET</label>
                 <label nz-radio nzValue="POST">POST</label>
-                <label nz-radio nzValue="PUT">PUT</label>
               </nz-radio-group>
             </div>
           </div>
@@ -27,9 +26,8 @@
             <div nz-col [nzSpan]="3">响应格式</div>
             <div nz-col  [nzSpan]="19">
               <nz-radio-group [(ngModel)]="generator" name="generator">
-                <label nz-radio nzValue="JSON">JSON</label>
-                <label nz-radio nzValue="XML">XML</label>
-                <label nz-radio nzValue="TEXT">TEXT</label>
+                <label nz-radio nzValue="json">JSON</label>
+                <label nz-radio nzValue="xml">XML</label>
               </nz-radio-group>
               <button nz-button nzType="default" (click)="sendRequest()">发送请求</button>
             </div>

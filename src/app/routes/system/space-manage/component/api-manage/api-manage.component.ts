@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SpaceManageService } from '../../space-manage.service';
 import { Page } from '../../../../../models/page';
-import { SettingsService } from '@delon/theme';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { HttpResponse } from '@angular/common/http';
-import { DefaultDataGenerator } from '../../../../../../data-generator/DefaultDataGenerator';
-import { Api } from '../../../../../../data-generator/Api';
 import { ApiModalComponent } from './modal/api-modal.component';
 
 @Component({

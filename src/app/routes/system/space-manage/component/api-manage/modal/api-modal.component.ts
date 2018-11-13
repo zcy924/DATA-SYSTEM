@@ -1,14 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   NzTreeNode,
   NzFormatEmitEvent,
   NzMessageService,
   NzModalRef,
 } from 'ng-zorro-antd';
-import {SpaceManageService} from '../../../space-manage.service';
-import {HttpRequest, HttpResponse} from '@angular/common/http';
-import {Api} from '../../../../../../../data-generator/Api';
-import {DataGenerator} from '../../../../../../../data-generator/DataGenerator';
+import { SpaceManageService } from '../../../space-manage.service';
+import { HttpRequest, HttpResponse } from '@angular/common/http';
+import { Api } from '../../../../../../../data-generator/Api';
+import { generatorRepo } from '../../../../../../../data-generator/DataGeneratorRepository';
 
 @Component({
   selector: 'app-api-modal',
@@ -44,7 +44,7 @@ export class ApiModalComponent implements OnInit {
   id;
   interval;
   status;
-  generator: 'JSON' | 'XML' | 'TEXT' = 'JSON';
+  generator: 'json' | 'xml'  = 'json';
   type;
   formData = {
     headersText: '',
@@ -90,18 +90,43 @@ export class ApiModalComponent implements OnInit {
     let api: Api = {
       url: this.url,
       method: this.method,
-      headers: this.headersText === '' || null || undefined ? null : JSON.parse(this.headersText),
-      params: this.bodyText === '' || null || undefined ? '' : JSON.parse(this.bodyText),
-      generator: this.generator,
+      headers: this.headersText,
+      params: this.bodyText,
     };
-    const httpGenerator = new DataGenerator(api);
-    httpGenerator.getResponse$(api).subscribe(data => {
+
+    const gen = generatorRepo.getGenerator(this.generator);
+    gen.createDataSource(api).subscribe(data => {
       this.formData.responseText = JSON.stringify(data, null, 2);
     });
   }
 
   // 新增API
   submitForm() {
+
+    // let test = {
+    //   id: 'num1',
+    //   displayName: '产品近三年销售额',
+    //   comment: '没有任何建议',
+    //   metaData: {
+    //     dataType: 'array',
+    //     dimensions: [
+    //       { name: 'product', type: 'ordinal' },
+    //       { name: '2015', type: 'int' },
+    //       { name: '2016', type: 'int' },
+    //       {
+    //         name: '2017', type: 'int',
+    //       }],
+    //   },
+    //   generatorPath: 'standard$mockDynamic',
+    //   generatorParams: {
+    //     api: api,
+    //     intervalTime: 10000,
+    //     dataGenerator: `
+    //
+    //   `,
+    //   },
+    // };
+
     let params = {
       spaceId: this.spaceID,
       name: this.name,
@@ -112,9 +137,9 @@ export class ApiModalComponent implements OnInit {
       api: {
         url: this.url,
         method: this.method,
-        headers: this.headersText === '' || null || undefined ? null : JSON.parse(this.headersText),
-        params: this.bodyText === '' || null || undefined ? '' : JSON.parse(this.bodyText),
-        generator: this.generator
+        headers: this.headersText,
+        params: this.bodyText,
+        generator: this.generator,
       },
     };
 
@@ -145,8 +170,8 @@ export class ApiModalComponent implements OnInit {
         url: this.url,
         method: this.method,
         generator: this.generator,
-        headers: this.headersText === '' || null || undefined ? '' : JSON.parse(this.headersText),
-        params: this.bodyText === '' || null || undefined ? '' : JSON.parse(this.bodyText),
+        headers: this.headersText,
+        params: this.bodyText,
       },
     };
 
@@ -165,7 +190,7 @@ export class ApiModalComponent implements OnInit {
 
   // 查询api
   qryApi() {
-    this._spaceManageService.queryApi({id: this.id}).subscribe(
+    this._spaceManageService.queryApi({ id: this.id }).subscribe(
       data => {
         this.name = data.name;
         this.remark = data.remark;
@@ -175,10 +200,10 @@ export class ApiModalComponent implements OnInit {
         this.status = data.status;
         this.type = data.type;
         this.generator = data.api.generator;
-        this.headersText = data.api.headers === '' || null || undefined ? '' : JSON.stringify(data.api.headers);
-        this.bodyText = data.api.params === '' || null || undefined ? '' : JSON.stringify(data.api.params);
-        this.formData.headersText = data.api.headers === '' || null || undefined ? '' : JSON.stringify(data.api.headers, null, 2);
-        this.formData.bodyText = data.api.params === '' || null || undefined ? '' : JSON.stringify(data.api.params, null, 2);
+        this.headersText = data.api.headers;
+        this.bodyText = data.api.params;
+        this.formData.headersText = data.api.headers === ('' || null || undefined) ? '' : JSON.stringify(data.api.headers, null, 2);
+        this.formData.bodyText = data.api.params === ('' || null || undefined) ? '' : JSON.stringify(data.api.params, null, 2);
       },
       err => {
         if (err instanceof HttpRequest) {
