@@ -1,10 +1,10 @@
 import { AfterViewInit, Component, OnDestroy } from '@angular/core';
-import { session } from '@core/node/utils/session';
 import { Subscription } from 'rxjs';
 import { debounceTime, delay } from 'rxjs/operators';
 import { Destroyable } from '../../shared/interface/destroyable';
 import { RegionController } from '../../designer/core/region/region.controller';
 import { IReportPage } from '../../designer/core/page/report/page.interface';
+import { session } from '../../designer/utils/session';
 
 
 @Component({

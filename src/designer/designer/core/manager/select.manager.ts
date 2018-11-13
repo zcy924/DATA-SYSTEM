@@ -1,5 +1,5 @@
-import { RegionController } from '../../../designer/core/region/region.controller';
-import { RegionState } from '../../../designer/core/region/region.model';
+import { RegionController } from '../region/region.controller';
+import { RegionState } from '../region/region.model';
 
 enum SelectStatus {
   default, single, multi

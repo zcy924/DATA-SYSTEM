@@ -7,7 +7,7 @@ import {DesignGraphicConfig} from '../../core/source/config.source/design.config
 
 import * as moment from 'moment';
 import {BarConfigComponent} from '../../components/graphic.config/chart/bar.config.component';
-import {session} from '../../core/node/utils/session';
+import {session} from '../../designer/utils/session';
 import {Observable} from 'rxjs';
 
 const template = `

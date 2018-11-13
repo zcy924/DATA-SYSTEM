@@ -10,7 +10,7 @@ import {PageConfig} from '../../shared/core/page/page.config';
 import {DataHeaderComponent} from '../../components/graphic.config/html/header.component';
 import {DesignGraphicConfig} from '../../core/source/config.source/design.config.source';
 import {DesignerBodyComponent} from '../designer.body.component';
-import {session} from '@core/node/utils/session';
+import { session } from '../../designer/utils/session';
 
 @Component({
   selector: 'app-sider-left',

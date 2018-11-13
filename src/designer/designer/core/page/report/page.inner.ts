@@ -1,9 +1,9 @@
 import { IPage } from '../../../../core/node/interface';
 import { PageConfig } from '../../../../shared/core/page/page.config';
-import { clipboard } from '../../../../core/node/utils/clipboard';
-import { ISelectManager, SelectManager } from '../../../../core/node/manager/select.manager';
-import { RegionManager } from '../../../../core/node/manager/region.manager';
-import { ActivateManager } from '../../../../core/node/manager/activate.manager';
+import { clipboard } from '../../../utils/clipboard';
+import { ISelectManager, SelectManager } from '../../manager/select.manager';
+import { RegionManager } from '../../manager/region.manager';
+import { ActivateManager } from '../../manager/activate.manager';
 import { ConfigSourceManager } from '../../../../core/config/config.source.manager';
 import { dataOptionManager } from '../../../../core/data/data.source.config.manager';
 import { AbstractPageView } from './abstract.page.view';

@@ -1,5 +1,5 @@
 import { ReportPageInner } from './page.inner';
-import { session } from '../../../../core/node/utils/session';
+import { session } from '../../../utils/session';
 import { PageConfigComponent } from '../../../../components/page.config/page.config.component';
 import { ComponentRef } from '@angular/core';
 import { PageConfig } from '../../../../shared/core/page/page.config';

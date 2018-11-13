@@ -1,6 +1,6 @@
 import { ReportPageInner } from '../page/report/page.inner';
 import { regionMap } from '../../../core/node/config/region.map';
-import { session } from '../../../core/node/utils/session';
+import { session } from '../../utils/session';
 import { GraphicCreateAction } from '../operate/graphic.create.action';
 import { ReportPageOuter } from '../page/report/page.outer';
 import { RegionController } from '../region/region.controller';

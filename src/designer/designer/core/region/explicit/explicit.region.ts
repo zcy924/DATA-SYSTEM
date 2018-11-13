@@ -1,5 +1,5 @@
 import { RegionController } from '../region.controller';
-import { clipboard } from '../../../../core/node/utils/clipboard';
+import { clipboard } from '../../../utils/clipboard';
 import { RegionModel, RegionState } from '../region.model';
 import { ExplicitRegionView } from './explicit.region.view';
 import { IReportPage } from '../../page/report/page.interface';

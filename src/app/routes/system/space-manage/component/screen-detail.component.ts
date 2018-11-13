@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, ElementRef, KeyValueDiffers, OnDestroy, OnInit } from '@angular/core';
-import { session } from '@core/node/utils/session';
 import { ActivatedRoute } from '@angular/router';
 import { SpaceManageService } from '../space-manage.service';
 import { switchMap } from 'rxjs/operators';
@@ -7,6 +6,7 @@ import { HttpResponse } from '@angular/common/http';
 import { NzMessageService } from 'ng-zorro-antd';
 import { PageRuntime } from '../../../../../designer/runtime/page.runtime';
 import { Runtime } from '../../../../../designer/runtime/runtime';
+import { session } from '../../../../../designer/designer/utils/session';
 
 @Component({
   templateUrl: './screen-detail.html',

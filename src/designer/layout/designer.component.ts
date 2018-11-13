@@ -2,13 +2,13 @@ import {AfterViewInit, Component, ElementRef, KeyValueDiffers, OnInit, Type} fro
 
 import * as _ from 'lodash';
 import {filterExecutor} from '@core/filter/filter.executor';
-import {session} from '@core/node/utils/session';
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/internal/Observable';
 import {switchMap} from 'rxjs/operators';
 import {SpaceManageService} from '../../app/routes/system/space-manage/space-manage.service';
 import {CommService} from '../service/comm.service';
 import {designerStorage} from '../utils/designer.storage';
+import { session } from '../designer/utils/session';
 
 @Component({
   selector: 'app-designer',

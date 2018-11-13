@@ -1,6 +1,6 @@
-import { RegionController } from '../../../designer/core/region/region.controller';
-import { ReportPageInner } from '../../../designer/core/page/report/page.inner';
-import { RegionState } from '../../../designer/core/region/region.model';
+import { RegionController } from '../region/region.controller';
+import { ReportPageInner } from '../page/report/page.inner';
+import { RegionState } from '../region/region.model';
 
 /**
  * 记录当前页面被激活的图表   并处理图标激活时 页面和图表状态的改变。
