@@ -1,6 +1,7 @@
-import { GeneratorRepository } from '@shared/core/repository/generator.repository';
+
 import { JsonDataGenerator } from './JsonDataGenerator';
 import { XmlDataGenerator } from './XmlDataGenerator';
+import { GeneratorRepository } from '../data_visual/shared/core/repository/generator.repository';
 
 const repository = new GeneratorRepository('standard', '标准数据源生成器库');
 repository.batchRegister([

@@ -21,7 +21,7 @@ import { ReportFolderModalComponent } from './component/report-folder-modal.comp
 import { ReportKeepModalComponent } from './component/report-keep-modal.component';
 import {SpaceSettingComponent} from "./component/space-setting/space-setting.component";
 import {ApiManageComponent} from "./component/api-manage/api-manage.component";
-import { ColorPickerModule } from '../../../../designer/components/shared/color-picker/color-picker.module';
+import { ColorPickerModule } from '../../../../data_visual/components/shared/color-picker/color-picker.module';
 import { ApiModalComponent } from './component/api-manage/modal/api-modal.component';
 import {AceEditorDirective} from "./component/api-manage/ace-editor.directive";
 import {DatabaseManageComponent} from "./component/database-manage/database-manage.component";

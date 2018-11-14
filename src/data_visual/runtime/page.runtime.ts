@@ -3,11 +3,11 @@ import { PageConfig } from '../shared/core/page/page.config';
 import { Observable } from 'rxjs/internal/Observable';
 import { RuntimePageConfig } from './runtime.page.config';
 import { GraphicWrapperRuntime } from './graphic.wrapper.runtime';
-import { DataSourceManager } from '@shared/core/data/data.source.manager';
-import { IComponentOption } from '@shared/file/component.option';
 import { IConfigSourceFactory } from '../designer/core/config/config.source.factory';
 import { RuntimeConfigSourceFactory } from '../designer/core/config/runtime/runtime.config.source.factory';
 import { regionMap } from '../designer/config/region.map';
+import { DataSourceManager } from '../shared/core/data/data.source.manager';
+import { IComponentOption } from '../shared/file/component.option';
 
 enum PageRuntimeState {
   created, initialized, loaded

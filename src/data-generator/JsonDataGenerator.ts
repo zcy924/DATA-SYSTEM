@@ -2,7 +2,7 @@ import { Api } from './Api';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
-import { IDataSourceGenerator } from '@shared/core/data/data.source.generator';
+import { IDataSourceGenerator } from '../data_visual/shared/core/data/data.source.generator';
 
 export class JsonDataGenerator implements IDataSourceGenerator {
 

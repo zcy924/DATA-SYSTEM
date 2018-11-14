@@ -10,7 +10,7 @@ import { ReportFolderModalComponent } from './report-collect/modal/report-folder
 import { ReportKeepModalComponent } from './report-collect/modal/report-keep-modal.component';
 import { EditScreenCollectComponent } from "./screen-collect/component/edit-screen-collect.component";
 import { DetailReportComponent } from './report-detail/detail-report.component';
-import { ColorPickerModule } from '../../../../designer/components/shared/color-picker/color-picker.module';
+import { ColorPickerModule } from '../../../../data_visual/components/shared/color-picker/color-picker.module';
 
 const components = [
   ReportCollectComponent,
