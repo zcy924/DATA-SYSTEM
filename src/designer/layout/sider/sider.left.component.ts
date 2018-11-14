@@ -8,7 +8,7 @@ import {
 import {NgForm} from '@angular/forms';
 import {PageConfig} from '../../shared/core/page/page.config';
 import {DataHeaderComponent} from '../../components/graphic.config/html/header.component';
-import {DesignGraphicConfig} from '../../core/source/config.source/design.config.source';
+import {DesignGraphicConfig} from '../../shared/core/source/config.source/design.config.source';
 import {DesignerBodyComponent} from '../designer.body.component';
 import { session } from '../../designer/utils/session';
 

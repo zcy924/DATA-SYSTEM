@@ -10,7 +10,7 @@ import {NgForm} from '@angular/forms';
 import {dataModelManager} from '../../../core/data/data.model.manager';
 
 import {NzModalService} from 'ng-zorro-antd';
-import {DesignGraphicConfig} from '../../../core/source/config.source/design.config.source';
+import {DesignGraphicConfig} from '../../../shared/core/source/config.source/design.config.source';
 
 import {removeUndefined} from '../../../designer/utils/common';
 import {debounceTime} from 'rxjs/operators';

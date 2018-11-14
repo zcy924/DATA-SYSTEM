@@ -2,9 +2,8 @@ import {ComponentRef} from '@angular/core';
 import {RegionController} from '../../designer/core/region/region.controller';
 import {Chart} from '../../core/node/graphic.view/chart/chart';
 
-import {DesignGraphicConfig} from '../../core/source/config.source/design.config.source';
+import {DesignGraphicConfig} from '../../shared/core/source/config.source/design.config.source';
 
-import {TableDataSubject} from '../../core/source/data.source/mock/table.data.subject';
 import {Observable, Subscription} from 'rxjs';
 import { DefaultGraphic } from '../../shared/core/graphic/default.graphic';
 

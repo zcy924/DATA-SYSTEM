@@ -7,7 +7,7 @@ import {Chart} from '../../../core/node/graphic.view/chart/chart';
 
 import {contextMenuHelper} from '../../../utils/contextMenu';
 
-import {DesignGraphicConfig} from '../../../core/source/config.source/design.config.source';
+import {DesignGraphicConfig} from '../../../shared/core/source/config.source/design.config.source';
 import {OuterModelEventTarget} from '../../../designer/core/event/model.event';
 
 

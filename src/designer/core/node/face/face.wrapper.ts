@@ -1,6 +1,6 @@
 import {ComponentRef, Type} from '@angular/core';
 import {EchartFace} from '@core/node/face/echart.face';
-import {DesignGraphicConfig} from '../../source/config.source/design.config.source';
+import {DesignGraphicConfig} from '../../../shared/core/source/config.source/design.config.source';
 import { session } from '../../../designer/utils/session';
 
 export class FaceWrapper {
