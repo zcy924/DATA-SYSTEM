@@ -1,7 +1,7 @@
 import { RegionRuntime } from './region.runtime';
 import { PageConfig } from '../shared/core/page/page.config';
 import { Observable } from 'rxjs/internal/Observable';
-import { RuntimePageConfig } from './runtime.page.config';
+import { PageConfigRuntime } from './page.config.runtime';
 import { GraphicWrapperRuntime } from './graphic.wrapper.runtime';
 import { IConfigSourceFactory } from '../designer/core/config/config.source.factory';
 import { RuntimeConfigSourceFactory } from '../designer/core/config/runtime/runtime.config.source.factory';
@@ -57,7 +57,7 @@ export class PageRuntime {
    */
   init() {
     if (this._state === PageRuntimeState.created) {
-      this._model = new RuntimePageConfig();
+      this._model = new PageConfigRuntime();
       this._accept(this._model);
       this._state = PageRuntimeState.initialized;
     } else {

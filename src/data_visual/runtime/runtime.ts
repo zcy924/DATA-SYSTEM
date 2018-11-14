@@ -1,13 +1,15 @@
-import { IFileStructure } from '../shared/file/file.structure';
 import { PageRuntime } from './page.runtime';
 import { PageManagerRuntime } from './page.manager.runtime';
-import * as _ from 'lodash';
+
+import { IFileStructure } from '../shared/file/file.structure';
 import { ComponentRepositoryManager } from '../shared/manager/component.repository.manager';
 import { GeneratorRepositoryManager } from '../shared/manager/generator.repository.manager';
 import { ComponentRepository } from '../shared/core/repository/component.repository';
 import { GeneratorRepository } from '../shared/core/repository/generator.repository';
 import { DataSourceManager } from '../shared/core/data/data.source.manager';
 import { DataSourceConfigSet } from '../shared/core/data/data.source.config.set';
+
+import * as _ from 'lodash';
 
 /**
  * 1、支持同时打开多个页面
@@ -58,6 +60,9 @@ export class Runtime {
       return false;
     }
 
+  }
+
+  private constructor() {
   }
 
   public init() {

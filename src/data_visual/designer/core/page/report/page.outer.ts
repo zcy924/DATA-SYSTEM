@@ -4,7 +4,7 @@ import { PageConfigComponent } from '../../../../components/page.config/page.con
 import { ComponentRef } from '@angular/core';
 import { PageConfig } from '../../../../shared/core/page/page.config';
 import { IReportPage } from './page.interface';
-import { RuntimePageConfig } from '../../../../runtime/runtime.page.config';
+import { PageConfigRuntime } from '../../../../runtime/page.config.runtime';
 import * as _ from 'lodash';
 import { IFileStructure } from '../../../../shared/file/file.structure';
 import { RegionController } from '../../region/region.controller';
@@ -21,7 +21,7 @@ export class PageConfigWrapper {
         this._inner = session.siderLeftComponent.forwardCreateCanvasConfig(PageConfigComponent);
         break;
       case 'runtime':
-        this._inner = new RuntimePageConfig();
+        this._inner = new PageConfigRuntime();
         break;
     }
   }

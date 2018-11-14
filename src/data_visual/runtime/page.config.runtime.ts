@@ -1,13 +1,13 @@
 import {KeyValueDiffer} from '@angular/core';
-import {session} from '../designer/utils/session';
 import {PageConfig} from '../shared/core/page/page.config';
+import { keyValueDiffers } from '../shared/utils/default_keyvalue_differ';
 
-export class RuntimePageConfig extends PageConfig {
+export class PageConfigRuntime extends PageConfig {
   private _differ: KeyValueDiffer<any, any>;
 
   constructor() {
     super();
-    this._differ = session.differs.find({}).create();
+    this._differ = keyValueDiffers.find({}).create();
   }
 
   importOption(option: any) {
