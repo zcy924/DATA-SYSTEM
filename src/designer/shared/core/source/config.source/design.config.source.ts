@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import {BehaviorSubject} from 'rxjs';
-import {GraphicConfig} from '../../../../core/config/design/graphic.config';
+import {GraphicConfig} from '../../../../designer/core/config/design/graphic.config';
 import { ChangedItem } from '../../../../designer/core/event/model.event';
 
 export class DesignGraphicConfig extends GraphicConfig {

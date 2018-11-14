@@ -1,6 +1,6 @@
-import {IConfigSourceFactory} from '@core/config/config.source.factory';
-import {DesignConfigSourceFactory} from '@core/config/design/design.config.source.factory';
-import {RuntimeConfigSourceFactory} from '@core/config/runtime/runtime.config.source.factory';
+import {IConfigSourceFactory} from './config.source.factory';
+import {DesignConfigSourceFactory} from './design/design.config.source.factory';
+import {RuntimeConfigSourceFactory} from './runtime/runtime.config.source.factory';
 import {Observable} from 'rxjs';
 
 /**

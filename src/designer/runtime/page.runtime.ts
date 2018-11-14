@@ -6,11 +6,8 @@ import { RuntimePageConfig } from './runtime.page.config';
 import { GraphicWrapperRuntime } from './graphic.wrapper.runtime';
 import { DataSourceManager } from '@shared/core/data/data.source.manager';
 import { IComponentOption } from '@shared/file/component.option';
-import { IComponentMeta } from '../shared/interface/component.meta';
-import { ConfigSourceManager } from '@core/config/config.source.manager';
-import { IConfigSourceOption } from '@core/config/config.source.interface';
-import { IConfigSourceFactory } from '@core/config/config.source.factory';
-import { RuntimeConfigSourceFactory } from '@core/config/runtime/runtime.config.source.factory';
+import { IConfigSourceFactory } from '../designer/core/config/config.source.factory';
+import { RuntimeConfigSourceFactory } from '../designer/core/config/runtime/runtime.config.source.factory';
 
 enum PageRuntimeState {
   created, initialized, loaded

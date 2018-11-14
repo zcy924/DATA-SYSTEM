@@ -1,6 +1,6 @@
 import {KeyValueDiffers} from '@angular/core';
 import {SiderLeftComponent} from '../../layout/sider/sider.left.component';
-import {GraphicConfig} from '../../core/config/design/graphic.config';
+import {GraphicConfig} from '../core/config/design/graphic.config';
 import {Subject} from 'rxjs';
 import { ReportPageOuter } from '../core/page/report/page.outer';
 

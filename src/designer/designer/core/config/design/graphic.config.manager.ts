@@ -1,7 +1,7 @@
 import {ComponentRef} from '@angular/core';
 
-import { session } from '../../../designer/utils/session';
-import { DesignGraphicConfig } from '@shared/core/source/config.source/design.config.source';
+import { session } from '../../../utils/session';
+import { DesignGraphicConfig } from '../../../../shared/core/source/config.source/design.config.source';
 
 export class GraphicConfigManager {
   private static _graphicConfigManager: GraphicConfigManager;

@@ -1,5 +1,5 @@
 import { combineLatest, Observable, Subject, Subscription } from 'rxjs';
-import { GraphicConfigManager } from '../../../core/config/design/graphic.config.manager';
+import { GraphicConfigManager } from '../config/design/graphic.config.manager';
 import { distinctUntilChanged, tap } from 'rxjs/operators';
 import { dataModelManager } from '../../data/data.model.manager';
 import { ChangedItem } from '../event/model.event';

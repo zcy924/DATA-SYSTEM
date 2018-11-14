@@ -1,5 +1,5 @@
 import {KeyValueDiffer} from '@angular/core';
-import {GraphicConfig} from '../../../../core/config/design/graphic.config';
+import {GraphicConfig} from '../../../../designer/core/config/design/graphic.config';
 import {session} from '../../../../designer/utils/session';
 import { ChangedItem } from '../../../../designer/core/event/model.event';
 

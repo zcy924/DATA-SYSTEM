@@ -1,7 +1,7 @@
 import { IConfigSourceFactory } from '../config.source.factory';
 import { BehaviorSubject, of } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
-import { session } from '../../../designer/utils/session';
+import { session } from '../../../utils/session';
 
 export class RuntimeConfigSourceFactory implements IConfigSourceFactory {
   private static _configSourceFactory: IConfigSourceFactory;
