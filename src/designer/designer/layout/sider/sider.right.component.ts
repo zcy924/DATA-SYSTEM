@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, KeyValueDiffer, KeyValueDiffers, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {DesignerBodyComponent} from '../designer.body.component';
-import {dataModelList} from '../../utils/dataModel';
+import {dataModelList} from '../../../utils/dataModel';
 import {HttpClient} from '@angular/common/http';
-import { dataModelManager } from '../../designer/data/data.model.manager';
-import { DataSourceConfigManager } from '../../designer/data/data.source.config.manager';
+import { dataModelManager } from '../../data/data.model.manager';
+import { DataSourceConfigManager } from '../../data/data.source.config.manager';
 
 export let modelPlugin = null;
 

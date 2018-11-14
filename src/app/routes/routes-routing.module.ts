@@ -22,7 +22,7 @@ import { PlatformManageComponent } from './system/platform-manage/platform-manag
 import { LoginComponent } from './system/login/login.component';
 import { Log } from '@angular/core/testing/src/logger';
 import { AuthGuard } from '@core/guard/auth-guard.service';
-import { DesignerComponent } from '../../designer/layout/designer.component';
+import { DesignerComponent } from '../../designer/designer/layout/designer.component';
 
 const routes: Routes = [
   {

@@ -4,9 +4,9 @@ import {
   Input, OnDestroy,
   ViewEncapsulation
 } from '@angular/core';
-import {draggableHeler} from '../../../utils/draggable.helper';
-import { DataModel } from '../../../designer/data/data.model.interface';
-import { dataModelManager } from '../../../designer/data/data.model.manager';
+import {draggableHeler} from '../../../../utils/draggable.helper';
+import { DataModel } from '../../../data/data.model.interface';
+import { dataModelManager } from '../../../data/data.model.manager';
 
 @Component({
   selector: 'app-measure-area',

@@ -72,7 +72,7 @@ import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
 import { RoutesModule } from './routes/routes.module';
 import { LayoutModule } from './layout/layout.module';
-import { DesignerLayoutModule } from '../designer/layout/designer.layout.module';
+import { DesignerLayoutModule } from '../designer/designer/layout/designer.layout.module';
 
 @NgModule({
   declarations: [

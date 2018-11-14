@@ -5,10 +5,10 @@ import {
   SimpleChanges,
   ViewEncapsulation
 } from '@angular/core';
-import {draggableHeler} from '../../../utils/draggable.helper';
+import {draggableHeler} from '../../../../utils/draggable.helper';
 import {fromEvent} from 'rxjs';
-import { DataModel } from '../../../designer/data/data.model.interface';
-import { dataModelManager } from '../../../designer/data/data.model.manager';
+import { DataModel } from '../../../data/data.model.interface';
+import { dataModelManager } from '../../../data/data.model.manager';
 
 
 @Component({

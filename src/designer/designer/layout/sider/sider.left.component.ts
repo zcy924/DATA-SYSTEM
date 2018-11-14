@@ -6,11 +6,11 @@ import {
   ViewContainerRef, ViewRef
 } from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {PageConfig} from '../../shared/core/page/page.config';
-import {DataHeaderComponent} from '../../components/graphic.config/html/header.component';
-import {DesignGraphicConfig} from '../../shared/core/source/config.source/design.config.source';
+import {PageConfig} from '../../../shared/core/page/page.config';
+import {DataHeaderComponent} from '../../../components/graphic.config/html/header.component';
+import {DesignGraphicConfig} from '../../../shared/core/source/config.source/design.config.source';
 import {DesignerBodyComponent} from '../designer.body.component';
-import { session } from '../../designer/utils/session';
+import { session } from '../../utils/session';
 
 @Component({
   selector: 'app-sider-left',

@@ -10,16 +10,16 @@ import { FormsModule } from '@angular/forms';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { HttpClientModule } from '@angular/common/http';
 import { SiderRightComponent } from './sider/sider.right.component';
-import { ConfigModule } from '../components/config/config.module';
-import { GraphicConfigModule } from '../components/graphic.config/graphic.config.module';
+import { ConfigModule } from '../../components/config/config.module';
+import { GraphicConfigModule } from '../../components/graphic.config/graphic.config.module';
 import { DimensionAreaComponent } from './sider/model/dimension.area.component';
 import { MeasureAreaComponent } from './sider/model/measure.area.component';
 import { DesignerComponent } from './designer.component';
 import { DesignerBodyLeftComponent } from './designer.body.left.component';
 import { PaletteComponent } from './part/palette.component';
 import { OutlineComponent } from './part/outline.component';
-import { CommService } from '../designer/service/comm.service';
-import { ColorPickerModule } from '../components/shared/color-picker/color-picker.module';
+import { CommService } from '../service/comm.service';
+import { ColorPickerModule } from '../../components/shared/color-picker/color-picker.module';
 
 const COMPONENTS = [
   DesignerComponent,
