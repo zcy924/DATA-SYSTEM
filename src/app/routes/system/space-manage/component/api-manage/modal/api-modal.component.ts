@@ -51,6 +51,7 @@ export class ApiModalComponent implements OnInit {
     bodyText: '',
     responseText: '',
   };
+  metaData:any;
   modMsg;
   aceConfig = {
     textChanged: (text, type) => {
