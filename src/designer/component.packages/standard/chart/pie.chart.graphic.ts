@@ -1,9 +1,9 @@
 import {RegionController} from '../../../designer/core/region/region.controller';
 
-import {Title} from '../../../core/node/graphic.view/chart/echart.interface/title';
-import {Grid} from '../../../core/node/graphic.view/chart/echart.interface/grid';
-import {Axis} from '../../../core/node/graphic.view/chart/echart.interface/axis';
-import {PieSeriesConfig} from '../../../core/node/graphic.view/chart/echart.interface/series/pie.series';
+import {Title} from './echart.interface/title';
+import {Grid} from './echart.interface/grid';
+import {Axis} from './echart.interface/axis';
+import {PieSeriesConfig} from './echart.interface/series/pie.series';
 import { ChartGraphic } from './chart.graphic';
 
 export interface ChartPieConfig {

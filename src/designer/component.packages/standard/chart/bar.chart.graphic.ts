@@ -1,9 +1,9 @@
 import { RegionController } from '../../../designer/core/region/region.controller';
 
-import { Grid } from '../../../core/node/graphic.view/chart/echart.interface/grid';
-import { BarSeriesConfig } from '../../../core/node/graphic.view/chart/echart.interface/series/bar.series';
-import { Axis } from '../../../core/node/graphic.view/chart/echart.interface/axis';
-import { Title } from '../../../core/node/graphic.view/chart/echart.interface/title';
+import { Grid } from './echart.interface/grid';
+import { BarSeriesConfig } from './echart.interface/series/bar.series';
+import { Axis } from './echart.interface/axis';
+import { Title } from './echart.interface/title';
 import { GraphicWrapper } from '../../../designer/core/graphic/graphic.wrapper';
 import { ChartGraphic } from './chart.graphic';
 

@@ -1,6 +1,6 @@
-import {ChartGraphic} from '../../../../component.packages/standard/chart/chart.graphic';
-import {IGraphicView} from '@core/node/graphic.view/graphic.view';
-import {DefaultGraphicView} from '@core/node/graphic.view/default.graphic.view';
+import {ChartGraphic} from '../chart.graphic';
+import {IGraphicView} from '../../../../core/node/graphic.view/graphic.view';
+import {DefaultGraphicView} from '../../../../core/node/graphic.view/default.graphic.view';
 
 enum ChartState {
   uninitialized, initialized, normal, destroyed

@@ -1,5 +1,5 @@
 import {CartesionEncode} from './common';
-import {Animation} from '@core/node/graphic.view/chart/echart.interface/common';
+import {Animation} from '../common';
 
 export interface LineSeriesConfig extends Animation {
   type: 'line';

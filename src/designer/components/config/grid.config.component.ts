@@ -6,9 +6,9 @@ import {
 import {NG_VALUE_ACCESSOR, NgForm} from '@angular/forms';
 
 import {CustomControlValueAccessor} from './CustomControlValueAccessor';
-import {Grid} from '@core/node/graphic.view/chart/echart.interface/grid';
 import {debounceTime} from 'rxjs/operators';
 import {removeUndefined} from '../../designer/utils/common';
+import { Grid } from '../../component.packages/standard/chart/echart.interface/grid';
 
 export const GRID_CONFIG_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,

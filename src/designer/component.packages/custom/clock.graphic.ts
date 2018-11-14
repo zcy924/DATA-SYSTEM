@@ -1,7 +1,7 @@
 import * as moment from 'moment';
 import {Observable} from 'rxjs';
 import {RegionController} from '../../designer/core/region/region.controller';
-import {Chart} from '../../core/node/graphic.view/chart/chart';
+import {Chart} from '../standard/chart/graphic.view/chart';
 import { DefaultGraphic } from '../../shared/core/graphic/default.graphic';
 
 const template = `

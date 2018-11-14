@@ -11,8 +11,8 @@ import {NG_VALUE_ACCESSOR, NgForm} from '@angular/forms';
 import {NzModalService} from 'ng-zorro-antd';
 import {CustomControlValueAccessor} from './CustomControlValueAccessor';
 import {removeUndefined} from '../../designer/utils/common';
-import {Axis} from '@core/node/graphic.view/chart/echart.interface/axis';
 import {debounceTime} from 'rxjs/operators';
+import { Axis } from '../../component.packages/standard/chart/echart.interface/axis';
 
 export const AXIS_CONFIG_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,

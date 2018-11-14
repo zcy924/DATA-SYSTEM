@@ -1,4 +1,4 @@
-import { TextAuxiliary } from '../../../core/node/graphic.view/auxiliary/text.auxiliary';
+import { TextAuxiliary } from './graphic.view/text.auxiliary';
 import { IGraphicView } from '../../../core/node/graphic.view/graphic.view';
 import { DefaultGraphic } from '../../../shared/core/graphic/default.graphic';
 import { Observable, Subscription } from 'rxjs';

@@ -1,5 +1,5 @@
 import { Observable, Subscription } from 'rxjs';
-import { ImageAuxiliary } from '../../../core/node/graphic.view/auxiliary/image.auxiliary';
+import { ImageAuxiliary } from './graphic.view/image.auxiliary';
 import { DefaultGraphic } from '../../../shared/core/graphic/default.graphic';
 import { RegionController } from '../../../designer/core/region/region.controller';
 import * as _ from 'lodash';

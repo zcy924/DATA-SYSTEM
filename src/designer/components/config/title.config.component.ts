@@ -9,8 +9,8 @@ import {CustomControlValueAccessor} from './CustomControlValueAccessor';
 
 import * as _ from 'lodash';
 import {removeUndefined} from '../../designer/utils/common';
-import {Title} from '@core/node/graphic.view/chart/echart.interface/title';
 import {debounceTime} from 'rxjs/operators';
+import { Title } from '../../component.packages/standard/chart/echart.interface/title';
 
 export const Title_CONFIG_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,

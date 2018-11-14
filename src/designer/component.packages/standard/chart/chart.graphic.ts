@@ -1,9 +1,8 @@
 import {Type} from '@angular/core';
 import {Observable} from 'rxjs';
-import * as _ from 'lodash';
 import {RegionController} from '../../../designer/core/region/region.controller';
 import {IGraphic} from '../../../shared/core/graphic/graphic';
-import {Chart} from '../../../core/node/graphic.view/chart/chart';
+import {Chart} from './graphic.view/chart';
 
 import {contextMenuHelper} from '../../../utils/contextMenu';
 
