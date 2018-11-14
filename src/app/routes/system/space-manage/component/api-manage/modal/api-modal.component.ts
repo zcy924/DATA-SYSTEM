@@ -142,8 +142,8 @@ export class ApiModalComponent implements OnInit {
       api: {
         url: this.url,
         method: this.method,
-        headers: this.headersText,
-        params: this.bodyText,
+        headers: this.headersText === ('' || null || undefined) ? null :JSON.parse(this.headersText),
+        params: this.bodyText === ('' || null || undefined) ? null :JSON.parse(this.bodyText),
       },
     };
 
@@ -175,9 +175,8 @@ export class ApiModalComponent implements OnInit {
       api: {
         url: this.url,
         method: this.method,
-        generatorPath: this.generatorPath,
-        headers: this.headersText,
-        params: this.bodyText,
+        headers: this.headersText === '' || null || undefined ? null :JSON.parse(this.headersText),
+        params: this.bodyText === '' || null || undefined ? null :JSON.parse(this.bodyText),
       },
     };
 

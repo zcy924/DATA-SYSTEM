@@ -8,30 +8,28 @@ export class JsonDataGenerator implements IDataSourceGenerator {
 
   createDataSource(api: any): Observable<any> {
 
-    // if (api.headers !== (null || '' || undefined)) {
-    //   api.headers = JSON.parse(api.headers);
-    // } else {
-    //   api.headers = {
-    //     Accept: 'application/json;charset=utf-8',
-    //   };
-    // }
-
-    // if (api.params !== (null || '' || undefined)) {
-    //   console.log(api.params)
-    //   api.params = JSON.parse(api.params);
-    // }
-
     if (api.url === (null || '' || undefined)) {
       return;
     }
-
     let url = api.url;
+
+    if (api.headers !== null && api.headers !== '' && api.headers !== undefined) {
+      if(! (api.headers instanceof Object)){
+        api.headers = JSON.parse(api.headers);
+      }
+    }
 
     if (api.method === 'GET') {
 
       let paramsArray = [];
       if (api.params !== null) {
-        Object.keys(api.params).forEach(key => paramsArray.push(key + '=' + api.params[key]));
+        let params;
+        if(api.params instanceof Object){
+          params = api.params;
+        }else{
+          params = JSON.parse(api.params);
+        }
+        Object.keys(params).forEach(key => paramsArray.push(key + '=' + params[key]));
         if (url.search(/\?/) === -1) {
           url += '?' + paramsArray.join('&');
         } else {
@@ -41,7 +39,11 @@ export class JsonDataGenerator implements IDataSourceGenerator {
 
     } else if (api.method === 'POST') {
       if(api.params){
-        api['body'] = JSON.stringify(api.params);
+        if (api.params instanceof Object){
+          api['body'] = JSON.stringify(api.params);
+        }else{
+          api['body'] = api.params;
+        }
       }
     }
 
