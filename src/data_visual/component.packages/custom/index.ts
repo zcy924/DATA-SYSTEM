@@ -1,7 +1,7 @@
 import { ComponentRepository } from '../../shared/core/repository/component.repository';
-import { ClockGraphic } from '../custom/clock.graphic';
-import { TableGraphic } from '../custom/table.graphic';
-import { FlipNumberGraphic } from '../custom/flip.number.graphic';
+import { ClockGraphic } from './clock.graphic';
+import { FlipNumberGraphic } from './flip.number.graphic';
+import { TableGraphic } from './table.graphic';
 
 const compRepo = new ComponentRepository('custom', '自定义组件库');
 
@@ -57,60 +57,6 @@ compRepo.batchRegister([
   },
   {
     key: 'table.graphic',
-    paletteMeta: {
-      show: true,
-      displayName: '带边框表格',
-      imageClass: 'baidu-table',
-    },
-    componentOption: {
-      region: {
-        regionKey: 'explicit.region',
-      },
-      graphic: {
-        configOption: null,
-        dataSourceKey: 'num1',
-      },
-    },
-    graphicDef: TableGraphic,
-  },
-  {
-    key: 'table.graphic1',
-    paletteMeta: {
-      show: true,
-      displayName: '带边框表格',
-      imageClass: 'baidu-table',
-    },
-    componentOption: {
-      region: {
-        regionKey: 'explicit.region',
-      },
-      graphic: {
-        configOption: null,
-        dataSourceKey: 'num1',
-      },
-    },
-    graphicDef: TableGraphic,
-  },
-  {
-    key: 'table.graphic2',
-    paletteMeta: {
-      show: true,
-      displayName: '带边框表格',
-      imageClass: 'baidu-table',
-    },
-    componentOption: {
-      region: {
-        regionKey: 'explicit.region',
-      },
-      graphic: {
-        configOption: null,
-        dataSourceKey: 'num1',
-      },
-    },
-    graphicDef: TableGraphic,
-  },
-  {
-    key: 'table.graphic3',
     paletteMeta: {
       show: true,
       displayName: '带边框表格',

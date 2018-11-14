@@ -1,11 +1,6 @@
-import {ComponentRef} from '@angular/core';
 import {RegionController} from '../../designer/core/region/region.controller';
-import {Chart} from '../standard/chart/graphic.view/chart';
-
-import {DesignGraphicConfig} from '../../shared/core/source/config.source/design.config.source';
-
-import {Observable, Subscription} from 'rxjs';
 import { DefaultGraphic } from '../../shared/core/graphic/default.graphic';
+import {Observable, Subscription} from 'rxjs';
 
 const template = `
 <div class="demo">
