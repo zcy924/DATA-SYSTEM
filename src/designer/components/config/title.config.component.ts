@@ -8,7 +8,7 @@ import {NG_VALUE_ACCESSOR, NgForm} from '@angular/forms';
 import {CustomControlValueAccessor} from './CustomControlValueAccessor';
 
 import * as _ from 'lodash';
-import {removeUndefined} from '../../utils/common';
+import {removeUndefined} from '../../designer/utils/common';
 import {Title} from '@core/node/graphic.view/chart/echart.interface/title';
 import {debounceTime} from 'rxjs/operators';
 

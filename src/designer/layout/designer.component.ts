@@ -6,7 +6,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/internal/Observable';
 import {switchMap} from 'rxjs/operators';
 import {SpaceManageService} from '../../app/routes/system/space-manage/space-manage.service';
-import {CommService} from '../service/comm.service';
+import {CommService} from '../designer/service/comm.service';
 import {designerStorage} from '../utils/designer.storage';
 import { session } from '../designer/utils/session';
 

@@ -18,7 +18,7 @@ import { DesignerComponent } from './designer.component';
 import { DesignerBodyLeftComponent } from './designer.body.left.component';
 import { PaletteComponent } from './part/palette.component';
 import { OutlineComponent } from './part/outline.component';
-import { CommService } from '../service/comm.service';
+import { CommService } from '../designer/service/comm.service';
 import { ColorPickerModule } from '../components/shared/color-picker/color-picker.module';
 
 const COMPONENTS = [

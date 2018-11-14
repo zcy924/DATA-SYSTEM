@@ -1,4 +1,4 @@
-import { closestNum } from '../../../utils/common';
+import { closestNum } from '../../utils/common';
 import { CoordinatesAndDimensions, Dimensions } from '../../../core/node/interface';
 import { ModelEventTarget } from '../event/model.event';
 import * as _ from 'lodash';

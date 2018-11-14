@@ -18,7 +18,7 @@ import {Dimension} from '../../../core/data/data.model.interface';
 import {DesignGraphicConfig} from '../../../core/source/config.source/design.config.source';
 import {ChartPieConfig} from '../../../component.packages/standard/chart/pie.chart.graphic';
 import {debounceTime} from 'rxjs/operators';
-import {removeUndefined} from '../../../utils/common';
+import {removeUndefined} from '../../../designer/utils/common';
 
 @Component({
   selector: 'app-pie-config',

@@ -14,7 +14,7 @@ import {dataModelManager} from '../../../core/data/data.model.manager';
 import {DesignGraphicConfig} from '../../../core/source/config.source/design.config.source';
 import {ChartLineOption} from '../../../component.packages/standard/chart/line.chart.graphic';
 import {debounceTime} from 'rxjs/operators';
-import {removeUndefined} from '../../../utils/common';
+import {removeUndefined} from '../../../designer/utils/common';
 
 
 @Component({

@@ -11,7 +11,7 @@ import {NgForm} from '@angular/forms';
 import {NzModalService} from 'ng-zorro-antd';
 import {DesignGraphicConfig} from '../../../core/source/config.source/design.config.source';
 
-import {removeUndefined} from '../../../utils/common';
+import {removeUndefined} from '../../../designer/utils/common';
 import {debounceTime} from 'rxjs/operators';
 import {ChartBarOption} from '../../../component.packages/standard/chart/bar.chart.graphic';
 import * as _ from 'lodash';

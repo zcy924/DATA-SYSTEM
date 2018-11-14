@@ -10,7 +10,7 @@ import {NG_VALUE_ACCESSOR, NgForm} from '@angular/forms';
 
 import {NzModalService} from 'ng-zorro-antd';
 import {CustomControlValueAccessor} from './CustomControlValueAccessor';
-import {removeUndefined} from '../../utils/common';
+import {removeUndefined} from '../../designer/utils/common';
 import {Axis} from '@core/node/graphic.view/chart/echart.interface/axis';
 import {debounceTime} from 'rxjs/operators';
 

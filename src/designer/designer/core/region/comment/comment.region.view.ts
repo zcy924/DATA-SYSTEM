@@ -4,7 +4,7 @@ import { fromEvent, Subscription } from 'rxjs';
 import { CoordinatesAndDimensions, Dimensions } from '../../../../core/node/interface';
 import { clipboard } from '../../../utils/clipboard';
 import { filter, throttleTime } from 'rxjs/internal/operators';
-import { closestNum } from '../../../../utils/common';
+import { closestNum } from '../../../utils/common';
 import { PieChartGraphic } from '../../../../component.packages/standard/chart/pie.chart.graphic';
 import { resizeTipHelper } from '../../../helper/resize.tip.helper';
 import { contextMenuHelper } from '../../../../utils/contextMenu';
