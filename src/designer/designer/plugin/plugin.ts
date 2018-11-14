@@ -1,4 +1,4 @@
-import {EventBus} from '@core/node/event/event.bus';
+import {EventBus} from '../core/event/event.bus';
 
 export interface IPlugin {
   listen(eventBus: EventBus);

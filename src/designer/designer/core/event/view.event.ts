@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import {IEventTarget} from '@core/node/event/event';
+import { IEventTarget } from './event';
 
 /**
  * 只能先“订阅”再“发布”

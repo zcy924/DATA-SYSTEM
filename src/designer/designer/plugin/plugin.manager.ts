@@ -1,6 +1,7 @@
-import {IPlugin} from '@core/node/plugin/plugin';
-import {IPage} from '@core/node/interface';
-import {EventBus} from '@core/node/event/event.bus';
+
+import {IPage} from '../../core/node/interface';
+import {EventBus} from '../core/event/event.bus';
+import { IPlugin } from './plugin';
 
 export class PluginManager {
   constructor(private _page: IPage) {

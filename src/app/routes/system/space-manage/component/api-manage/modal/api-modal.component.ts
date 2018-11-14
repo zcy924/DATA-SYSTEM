@@ -10,6 +10,7 @@ import { HttpRequest, HttpResponse } from '@angular/common/http';
 import { Api } from '../../../../../../../data-generator/Api';
 import { generatorRepo } from '../../../../../../../data-generator/DataGeneratorRepository';
 
+
 @Component({
   selector: 'app-api-modal',
   templateUrl: './api-modal.html',
@@ -44,7 +45,8 @@ export class ApiModalComponent implements OnInit {
   id;
   interval;
   status;
-  generator: 'json' | 'xml'  = 'json';
+  metadata;
+  generatorPath: 'json' | 'xml' = 'json';
   type;
   formData = {
     headersText: '',
@@ -95,7 +97,7 @@ export class ApiModalComponent implements OnInit {
       params: this.bodyText,
     };
 
-    const gen = generatorRepo.getGenerator(this.generator);
+    const gen = generatorRepo.getGenerator(this.generatorPath);
     gen.createDataSource(api).subscribe(data => {
       this.formData.responseText = JSON.stringify(data, null, 2);
     });
@@ -108,7 +110,7 @@ export class ApiModalComponent implements OnInit {
     //   id: 'num1',
     //   displayName: '产品近三年销售额',
     //   comment: '没有任何建议',
-    //   metaData: {
+    //   metadata: {
     //     dataType: 'array',
     //     dimensions: [
     //       { name: 'product', type: 'ordinal' },
@@ -118,11 +120,11 @@ export class ApiModalComponent implements OnInit {
     //         name: '2017', type: 'int',
     //       }],
     //   },
-    //   generatorPath: 'standard$mockDynamic',
-    //   generatorParams: {
+    //   generatorPathPath: 'standard$mockDynamic',
+    //   generatorPathParams: {
     //     api: api,
     //     intervalTime: 10000,
-    //     dataGenerator: `
+    //     datageneratorPath: `
     //
     //   `,
     //   },
@@ -135,12 +137,13 @@ export class ApiModalComponent implements OnInit {
       status: 'T',
       interval: '60',
       type: '0',
+      metadata: {},
+      generatorPath: this.generatorPath,
       api: {
         url: this.url,
         method: this.method,
         headers: this.headersText,
         params: this.bodyText,
-        generator: this.generator,
       },
     };
 
@@ -167,10 +170,12 @@ export class ApiModalComponent implements OnInit {
       status: 'T',
       interval: '60',
       type: '0',
+      metadata: {},
+      generatorPath: this.generatorPath,
       api: {
         url: this.url,
         method: this.method,
-        generator: this.generator,
+        generatorPath: this.generatorPath,
         headers: this.headersText,
         params: this.bodyText,
       },
@@ -197,10 +202,11 @@ export class ApiModalComponent implements OnInit {
         this.remark = data.remark;
         this.url = data.api.url;
         this.method = data.api.method;
+        this.metadata = data.metadata;
         this.interval = data.interval;
         this.status = data.status;
         this.type = data.type;
-        this.generator = data.api.generator;
+        this.generatorPath = data.generatorPath;
         this.headersText = data.api.headers;
         this.bodyText = data.api.params;
         this.formData.headersText = data.api.headers === ('' || null || undefined) ? '' : JSON.stringify(data.api.headers, null, 2);
