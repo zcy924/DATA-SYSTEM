@@ -1,6 +1,6 @@
-import {SplitPair} from '@core/node/page/dashboard/split.pair';
-import {addEventListener1} from '@core/node/page/dashboard/dashboard.canvas';
-import {Split} from '@core/node/page/dashboard/split';
+import {SplitPair} from './split.pair';
+import {addEventListener1} from './dashboard.canvas';
+import {Split} from './split';
 
 export class SplitGutter {
   private _element: HTMLElement;

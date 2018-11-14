@@ -1,5 +1,5 @@
 
-import {IPage} from '../../core/node/interface';
+import {IPage} from '../core/interface';
 import {EventBus} from '../core/event/event.bus';
 import { IPlugin } from './plugin';
 

@@ -1,4 +1,4 @@
-import { IPage } from '../../../../core/node/interface';
+import { IPage } from '../../interface';
 import { PageConfig } from '../../../../shared/core/page/page.config';
 import { clipboard } from '../../../utils/clipboard';
 import { ISelectManager, SelectManager } from '../../manager/select.manager';

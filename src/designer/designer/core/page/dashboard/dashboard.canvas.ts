@@ -1,4 +1,4 @@
-import {Split} from '@core/node/page/dashboard/split';
+import {Split} from './split';
 
 export const NOOP = () => false;
 

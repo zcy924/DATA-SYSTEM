@@ -7,7 +7,7 @@ import { designerStorage } from '../../utils/designer.storage';
 import { Destroyable } from '../../shared/interface/destroyable';
 import { FilterTools, HelperTools, MoreTools } from './overlay.template';
 import { imageDimensions$ } from './fragment';
-import { Dimensions } from '../../core/node/interface';
+import { Dimensions } from '../core/interface';
 import { ActivatedRoute } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
 import { ComponentRepositoryManager } from '../../shared/manager/component.repository.manager';

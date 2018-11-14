@@ -2,7 +2,7 @@ import { View } from '../structure/view';
 import { fromEvent, Subscription } from 'rxjs';
 import { throttleTime } from 'rxjs/internal/operators';
 import { RegionController } from './region.controller';
-import { CoordinatesAndDimensions } from '../../../core/node/interface';
+import { CoordinatesAndDimensions } from '../interface';
 import { closestNum } from '../../utils/common';
 import { contextMenuHelper, ContextMenuItem } from '../../../utils/contextMenu';
 import { RegionModel } from './region.model';

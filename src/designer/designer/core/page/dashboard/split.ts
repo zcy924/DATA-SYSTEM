@@ -1,5 +1,5 @@
-import {SplitPair} from '@core/node/page/dashboard/split.pair';
-import {getBoundingClientRect, HORIZONTAL, NOOP} from '@core/node/page/dashboard/dashboard.canvas';
+import {SplitPair} from './split.pair';
+import {getBoundingClientRect, HORIZONTAL, NOOP} from './dashboard.canvas';
 
 let splitCount = 0;
 

@@ -1,5 +1,5 @@
 import { closestNum } from '../../utils/common';
-import { CoordinatesAndDimensions, Dimensions } from '../../../core/node/interface';
+import { CoordinatesAndDimensions, Dimensions } from '../interface';
 import { ModelEventTarget } from '../event/model.event';
 import * as _ from 'lodash';
 import { IRegionOption } from '../../../shared/file/component.option';

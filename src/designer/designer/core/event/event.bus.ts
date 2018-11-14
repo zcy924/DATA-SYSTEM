@@ -1,4 +1,4 @@
-import {IPage} from '../../../core/node/interface';
+import {IPage} from '../interface';
 import { RegionController } from '../region/region.controller';
 
 type ICallback = (event: EventMessage) => void;

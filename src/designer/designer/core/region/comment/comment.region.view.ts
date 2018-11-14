@@ -1,7 +1,7 @@
 import { RegionView } from '../region.view';
 import { RegionModel, RegionState } from '../region.model';
 import { fromEvent, Subscription } from 'rxjs';
-import { CoordinatesAndDimensions, Dimensions } from '../../../../core/node/interface';
+import { CoordinatesAndDimensions, Dimensions } from '../../interface';
 import { clipboard } from '../../../utils/clipboard';
 import { filter, throttleTime } from 'rxjs/internal/operators';
 import { closestNum } from '../../../utils/common';

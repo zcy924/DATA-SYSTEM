@@ -1,12 +1,12 @@
-import {addEventListener1, isString, NOOP} from '@core/node/page/dashboard/dashboard.canvas';
+import {addEventListener1, isString, NOOP} from './dashboard.canvas';
 import {contextMenuHelper} from '../../../../utils/contextMenu';
-import {Split} from '@core/node/page/dashboard/split';
-import {SplitPair} from '@core/node/page/dashboard/split.pair';
-import { Container } from '../../../../designer/core/container/container.interface';
-import { Card } from '../../../../designer/core/container/card.container';
-import { Cube } from '../../../../designer/core/container/cube.container';
-import { CarouselRotate } from '../../../../designer/core/container/carousel.container';
-import { Box } from '../../../../designer/core/container/box.container';
+import {Split} from './split';
+import {SplitPair} from './split.pair';
+import { Container } from '../../container/container.interface';
+import { Card } from '../../container/card.container';
+import { Cube } from '../../container/cube.container';
+import { CarouselRotate } from '../../container/carousel.container';
+import { Box } from '../../container/box.container';
 
 let count = 0, dragSourcePair: SplitPair;
 
