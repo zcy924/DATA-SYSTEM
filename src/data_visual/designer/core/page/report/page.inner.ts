@@ -6,7 +6,6 @@ import { RegionManager } from '../../manager/region.manager';
 import { ActivateManager } from '../../manager/activate.manager';
 import { ConfigSourceManager } from '../../config/config.source.manager';
 import { dataOptionManager } from '../../../data/data.source.config.manager';
-import { AbstractPageView } from './abstract.page.view';
 import { DataSourceManager } from '../../../../shared/core/data/data.source.manager';
 import { GeneratorRepositoryManager } from '../../../../shared/manager/generator.repository.manager';
 import { ComponentRepositoryManager } from '../../../../shared/manager/component.repository.manager';
@@ -18,7 +17,7 @@ import { PageView } from './page.view';
 export class ReportPageInner implements IPage {
 
   public pageConfigWrapper: PageConfigWrapper;
-  public view: AbstractPageView;
+  public view: PageView;
   public regionManager: RegionManager;
   public selectManager: ISelectManager;
   public activateManager: ActivateManager;

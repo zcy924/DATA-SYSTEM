@@ -3,6 +3,7 @@ import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { RoleModalComponent } from './components/role-modal.component';
 import { SpaceManageService } from '../../space-manage.service';
 import { HttpRequest, HttpResponse } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-role-manage',
@@ -59,12 +60,16 @@ export class RoleManageComponent implements OnInit {
   disabledButton = true;
   checkedAll = '全选';
   selectedArray = [];
+  spaceId: string;
 
   constructor(
     private nzModal: NzModalService,
     private message: NzMessageService,
     private service: SpaceManageService,
-  ) {}
+    private router: ActivatedRoute
+  ) {
+    this.spaceId = this.router.snapshot.parent.params.spaceId;
+  }
 
   ngOnInit() {
     this.getRoleList();
@@ -76,6 +81,9 @@ export class RoleManageComponent implements OnInit {
       nzTitle: '新建角色',
       nzContent: RoleModalComponent,
       nzWidth: '50%',
+      nzComponentParams: {
+        spaceId: this.spaceId
+      },
       nzOnOk: ref => {
         return new Promise(res => {
           ref.createRole();
@@ -89,14 +97,13 @@ export class RoleManageComponent implements OnInit {
 
   // 角色列表查询
   getRoleList() {
-    let spaceID = localStorage.getItem('spaceID');
     let params = {
       pageSize: 100,
       curPage: 0,
       totalPage: 0,
       totalRow: 0,
       SpaceRole: {
-        spaceId: spaceID,
+        spaceId: this.spaceId,
       },
     };
     this.service.getRoleList(params).subscribe(
@@ -135,10 +142,9 @@ export class RoleManageComponent implements OnInit {
 
   // 批量删除
   delAll(list, title = '所选择的角色') {
-    let spaceID = localStorage.getItem('spaceID');
     let params = {
       SpaceRole: {
-        spaceId: spaceID,
+        spaceId: this.spaceId,
         roleList: list,
       },
     };
@@ -183,6 +189,7 @@ export class RoleManageComponent implements OnInit {
         roleName: role.roleName,
         remark: role.remark,
         roleId: role.roleId,
+        spaceId: this.spaceId
       },
       nzOnOk: ref => {
         return new Promise(res => {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NzModalService, NzMessageService } from 'ng-zorro-antd';
 import { AddScreenComponent } from './component/add-screen.component';
 import { SpaceManageService } from '../../space-manage.service';
@@ -7,13 +7,14 @@ import { Page } from 'app/models/page';
 import { EditScreenComponent } from './component/edit-screen.component';
 import { SettingsService } from '@delon/theme';
 import { SideMenuService } from '@shared/side-menu.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-screen-manage',
   templateUrl: './screen-manage.html',
   styleUrls: ['./screen-manage.less'],
 })
-export class ScreenManageComponent implements OnInit {
+export class ScreenManageComponent implements OnInit, AfterViewInit {
   page = new Page();
   loading = false;
   disabledButton = true;
@@ -22,6 +23,7 @@ export class ScreenManageComponent implements OnInit {
   allChecked = false;
   dataSet = [];
   menu;
+  spaceId: string;
 
   constructor(
     private nzModal: NzModalService,
@@ -29,10 +31,15 @@ export class ScreenManageComponent implements OnInit {
     private spaceManageService: SpaceManageService,
     private settings: SettingsService,
     private sideMenu: SideMenuService,
+    private router: ActivatedRoute
+
   ) {
   }
 
   ngOnInit() {
+    this.spaceId = this.router.snapshot.parent.params.spaceId;
+  }
+  ngAfterViewInit() {
     this.getScreenList();
     this.menu = this.sideMenu.menu;
   }
@@ -43,7 +50,7 @@ export class ScreenManageComponent implements OnInit {
       nzContent: AddScreenComponent,
       nzWidth: '600px',
       nzComponentParams: {
-        spaceId: localStorage.getItem('spaceID'),
+        spaceId: this.spaceId,
         companyId: this.settings.user.companyId,
       },
       nzOkText: '新增',
@@ -64,7 +71,7 @@ export class ScreenManageComponent implements OnInit {
     }
     this.loading = true;
     const params = {
-      spaceId: localStorage.getItem('spaceID'),
+      spaceId: this.spaceId,
       curPage: this.page.curPage,
       pageSize: this.page.pageSize,
       totalPage: this.page.totalPage || '',
@@ -129,7 +136,7 @@ export class ScreenManageComponent implements OnInit {
         screenRemark: data.remark,
         isDev: data.isDev,
         dashboardId: data.dashboardId,
-        spaceId: localStorage.getItem('spaceID'),
+        spaceId: this.spaceId,
       },
     });
     modal.afterClose.subscribe(data => {
@@ -148,7 +155,7 @@ export class ScreenManageComponent implements OnInit {
 
   delete(screenId) {
     const params = {
-      spaceId: localStorage.getItem('spaceID'),
+      spaceId: this.spaceId,
       dashboardId: screenId,
     };
     this.spaceManageService.delScreen(params).subscribe(
@@ -177,7 +184,7 @@ export class ScreenManageComponent implements OnInit {
           if (value.checked) {
             const item = {
               dashboardId: value.dashboardId,
-              spaceId: localStorage.getItem('spaceID'),
+              spaceId: this.spaceId,
             };
             handleArray.push(item);
           }
@@ -205,7 +212,7 @@ export class ScreenManageComponent implements OnInit {
       this.page.curPage = 1;
     }
     const params = {
-      spaceId: localStorage.getItem('spaceID'),
+      spaceId: this.spaceId,
       curPage: this.page.curPage,
       pageSize: 1000,
       totalPage: this.page.totalPage || '',
@@ -216,7 +223,7 @@ export class ScreenManageComponent implements OnInit {
         const dataSet = data['retList'];
         dataSet.map(value => {
           value.text = value.name;
-          value.link = `app/square/${localStorage.getItem('spaceID')}/screen-detail/${
+          value.link = `app/square/${this.spaceId}/screen-detail/${
             value.dashboardId
             }`;
           value.isLeaf = true;

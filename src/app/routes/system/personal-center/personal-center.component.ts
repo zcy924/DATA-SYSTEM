@@ -87,7 +87,6 @@ export class PersonalCenterComponent implements OnInit {
       this.page.curPage = 1;
     }
     const params = {
-      spaceId: localStorage.getItem('spaceID'),
       curPage: this.page.curPage,
       pageSize: 5000,
       totalPage: this.page.totalPage || '',

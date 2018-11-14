@@ -1,9 +1,10 @@
-import {Component, AfterViewInit} from "@angular/core";
-import {HttpResponse} from "@angular/common/http";
-import {NzMessageService, UploadFile} from "ng-zorro-antd";
-import {SpaceManageService} from "../../space-manage.service";
-import {el} from "@angular/platform-browser/testing/src/browser_util";
+import { Component, AfterViewInit } from "@angular/core";
+import { HttpResponse } from "@angular/common/http";
+import { NzMessageService, UploadFile } from "ng-zorro-antd";
+import { SpaceManageService } from "../../space-manage.service";
+import { el } from "@angular/platform-browser/testing/src/browser_util";
 import { environment } from '@env/environment';
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   templateUrl: './space-setting.html',
@@ -16,7 +17,7 @@ import { environment } from '@env/environment';
 })
 export class SpaceSettingComponent implements AfterViewInit {
   formModel = {
-    spaceId: localStorage.getItem('spaceID'),
+    spaceId: null,
     spaceName: null,
     isPublic: null,
     remark: null,
@@ -26,10 +27,10 @@ export class SpaceSettingComponent implements AfterViewInit {
   previewImage = '';
   previewVisible = false;
   loading;
-  actionUrl = environment.SERVER_URL+'selfCore/selfInfo/pictureTest';
+  actionUrl = environment.SERVER_URL + 'selfCore/selfInfo/pictureTest';
 
-  constructor(private spaceManageService: SpaceManageService, private msg: NzMessageService) {
-
+  constructor(private spaceManageService: SpaceManageService, private msg: NzMessageService, private router: ActivatedRoute) {
+    this.formModel.spaceId = this.router.snapshot.parent.params.spaceId;
   }
 
   ngAfterViewInit() {
@@ -37,9 +38,9 @@ export class SpaceSettingComponent implements AfterViewInit {
   }
 
   getSpaceInfo() {
-    this.spaceManageService.qrySpaceInfo({spaceId: localStorage.getItem('spaceID')}).subscribe(data => {
+    this.spaceManageService.qrySpaceInfo({ spaceId: this.formModel.spaceId }).subscribe(data => {
       this.formModel.spaceName = data.spaceName;
-      if(data.avatar){
+      if (data.avatar) {
         this.fileList.push({
           uid: -1,
           name: 'avatar.png',
@@ -94,8 +95,8 @@ export class SpaceSettingComponent implements AfterViewInit {
     this.formModel.isPublic = this.formModel.isPublic ? 'F' : 'T';
     const params = Object.assign({}, this.formModel);
     this.spaceManageService.modSpaceInfo(params).subscribe(data => {
-        this.msg.success('更新用户信息成功!');
-      },
+      this.msg.success('更新用户信息成功!');
+    },
       err => {
         if (err instanceof HttpResponse) {
           this.msg.error(err.body.retMsg);

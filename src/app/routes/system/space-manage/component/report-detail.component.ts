@@ -22,21 +22,22 @@ export class ReportDetailComponent implements AfterViewInit, OnInit, OnDestroy {
 
   report: ReportPageOuter;
   reportName;
+  spaceId: string;
 
   leftPanelState = false;
 
   constructor(private _elementRef: ElementRef,
-              private _differs: KeyValueDiffers,
-              private _router: ActivatedRoute,
-              private _spaceManageService: SpaceManageService,
-              private _personalService:PersonalCenterService,
-              private _nzModel: NzModalService,
-              private _nzMessage: NzMessageService) {
+    private _differs: KeyValueDiffers,
+    private _router: ActivatedRoute,
+    private _spaceManageService: SpaceManageService,
+    private _personalService: PersonalCenterService,
+    private _nzModel: NzModalService,
+    private _nzMessage: NzMessageService) {
     session.differs = _differs;
   }
 
   ngOnInit() {
-
+    this.spaceId = this._router.snapshot.parent.params.spaceId;
   }
 
   getReportContent() {
@@ -44,7 +45,7 @@ export class ReportDetailComponent implements AfterViewInit, OnInit, OnDestroy {
       return this._spaceManageService.qryReportContent({
         Report: {
           reportId: data.reportId,
-          spaceId: localStorage.getItem('spaceID'),
+          spaceId: this.spaceId,
         },
       });
     }));
@@ -56,13 +57,13 @@ export class ReportDetailComponent implements AfterViewInit, OnInit, OnDestroy {
 
       this.report.clear();
       this.reportName = data.Report.reportName;
-      if(data.Report.attr){
+      if (data.Report.attr) {
         this.report.load(data.Report.attr);
-      }else {
+      } else {
         this._nzMessage.warning('该报表尚未编辑!');
       }
-    },err=>{
-      if(err instanceof HttpResponse){
+    }, err => {
+      if (err instanceof HttpResponse) {
         this._nzMessage.error(err.body.retMsg);
       }
     });

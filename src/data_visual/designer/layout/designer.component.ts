@@ -21,6 +21,8 @@ export class DesignerComponent implements AfterViewInit, OnInit {
 
   reportId: string;
   report: any;
+  spaceId: string;
+  dashboardId;
 
   constructor(private _elementRef: ElementRef, private _differs: KeyValueDiffers, private route: ActivatedRoute, private _service: CommService) {
     session.differs = _differs;
@@ -28,31 +30,31 @@ export class DesignerComponent implements AfterViewInit, OnInit {
 
   ngOnInit() {
     const url = this.route.snapshot.routeConfig.path;
-    if (url == 'report-designer/:id') {
-      this.report$ = this.route.paramMap.pipe(
+    if (url == 'report-designer') {
+      this.report$ = this.route.queryParams.pipe(
         switchMap(params => {
-          console.log(url);
           // (+) before `params.get()` turns the string into a number
-          this.reportId = params.get('id');
+          this.reportId = params.reportId;
+          this.spaceId = params.spaceId;
           designerStorage.reportId = this.reportId;
           return this._service.qryReportContent({
             Report: {
-              spaceId: localStorage.getItem('spaceID'),
+              spaceId: this.spaceId,
               reportId: this.reportId,
             }
           });
         }),
       );
     } else {
-      this.report$ = this.route.paramMap.pipe(
+      this.report$ = this.route.queryParams.pipe(
         switchMap(params => {
-          console.log(url);
           // (+) before `params.get()` turns the string into a number
-          this.reportId = params.get('id');
+          this.dashboardId = params.dashboardId;
+          this.spaceId = params.spaceId;
           designerStorage.reportId = this.reportId;
           return this._service.getScreenInfo({
-            spaceId: localStorage.getItem('spaceID'),
-            dashboardId: this.reportId,
+            spaceId: this.spaceId,
+            dashboardId: this.dashboardId,
           });
         }),
       );

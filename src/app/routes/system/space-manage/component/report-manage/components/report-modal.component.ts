@@ -38,6 +38,7 @@ export class ReportModalComponent implements OnInit {
   isDev = true;
   isPublic = false;
   remark = '';
+  spaceId;
 
   constructor(
     private spaceManageService: SpaceManageService,
@@ -46,11 +47,11 @@ export class ReportModalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    
+
   }
 
   createReport() {
-    let spaceID = localStorage.getItem('spaceID');
+    let spaceID = this.spaceId;
     let params = {
       Report: {
         isPublic: this.isPublic ? this.PUBLIC : this.NOT_PUBLIC,
@@ -77,15 +78,14 @@ export class ReportModalComponent implements OnInit {
   }
 
   modReport() {
-    let spaceID = localStorage.getItem('spaceID');
-    let params = {
+    const params = {
       Report: {
         isPublic: this.isPublic ? this.PUBLIC : this.NOT_PUBLIC,
         isdDev: this.isDev ? this.DEV : this.NOT_DEV,
         remark: this.remark,
         reportName: this.reportName,
         type: this.radioValue,
-        spaceId: spaceID,
+        spaceId: this.spaceId,
         parentId: this.folderID,
         reportId: this.reportId,
       },
