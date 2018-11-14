@@ -7,7 +7,6 @@ import {
   ViewChild
 } from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {dataModelManager} from '../../../core/data/data.model.manager';
 
 import {NzModalService} from 'ng-zorro-antd';
 import {DesignGraphicConfig} from '../../../shared/core/source/config.source/design.config.source';

@@ -7,7 +7,7 @@ import {
   ViewChild
 } from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {dataModelManager} from '../../../core/data/data.model.manager';
+import {dataModelManager} from '../../../designer/data/data.model.manager';
 
 import {NzModalService} from 'ng-zorro-antd';
 import {DesignGraphicConfig} from '../../../shared/core/source/config.source/design.config.source';
@@ -15,7 +15,7 @@ import {DesignGraphicConfig} from '../../../shared/core/source/config.source/des
 import {removeUndefined} from '../../../designer/utils/common';
 import {debounceTime} from 'rxjs/operators';
 import * as _ from 'lodash';
-import {convertData, provinceCityMap} from '@core/data/geo.map';
+import { convertData, provinceCityMap } from '../../../designer/data/geo.map';
 
 const data = [
   {name: '济南市', value: 390},

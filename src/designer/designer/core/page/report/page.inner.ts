@@ -5,7 +5,7 @@ import { ISelectManager, SelectManager } from '../../manager/select.manager';
 import { RegionManager } from '../../manager/region.manager';
 import { ActivateManager } from '../../manager/activate.manager';
 import { ConfigSourceManager } from '../../../../core/config/config.source.manager';
-import { dataOptionManager } from '../../../../core/data/data.source.config.manager';
+import { dataOptionManager } from '../../../data/data.source.config.manager';
 import { AbstractPageView } from './abstract.page.view';
 import { DataSourceManager } from '../../../../shared/core/data/data.source.manager';
 import { GeneratorRepositoryManager } from '../../../../shared/manager/generator.repository.manager';

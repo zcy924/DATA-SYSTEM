@@ -6,7 +6,7 @@ import {
 
 import {NzModalRef} from 'ng-zorro-antd';
 import * as _ from 'lodash';
-import {dataModelManager} from '../../../core/data/data.model.manager';
+import {dataModelManager} from '../../../designer/data/data.model.manager';
 
 @Component({
   selector: 'nz-modal-filter',

@@ -9,7 +9,6 @@ import {
 import {NG_VALUE_ACCESSOR, NgForm} from '@angular/forms';
 
 import {NzModalService} from 'ng-zorro-antd';
-import {Dimension} from '@core/data/data.model.interface';
 import {CustomControlValueAccessor} from '../CustomControlValueAccessor';
 import {draggableHeler} from '../../../utils/draggable.helper';
 import {contextMenuHelper} from '../../../utils/contextMenu';
@@ -17,6 +16,7 @@ import {contextMenuHelper} from '../../../utils/contextMenu';
 import {BarSeriesConfig} from '@core/node/graphic.view/chart/echart.interface/series/bar.series';
 import {NzModalFilterComponent} from '../../graphic.config/common/filter.modal.component';
 import {debounceTime} from 'rxjs/operators';
+import { Dimension } from '../../../designer/data/data.model.interface';
 
 export const BAR_SERIES_CONFIG_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,

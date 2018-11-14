@@ -1,10 +1,10 @@
-import {Type} from '@angular/core';
-import {ListFilter} from '@core/filter/list.filter';
-import {SortFilter} from '@core/filter/sort.filter';
-import {BaseFilter, IFilterConfig} from '@core/filter/filter.interface';
-import {TextFilter} from '@core/filter/text.filter';
-import {FieldFilter} from '@core/filter/field.filter';
-import {TakeFilter} from '@core/filter/take.filter';
+import { Type } from '@angular/core';
+import { ListFilter } from './list.filter';
+import { SortFilter } from './sort.filter';
+import { BaseFilter, IFilterConfig } from './filter.interface';
+import { TextFilter } from './text.filter';
+import { FieldFilter } from './field.filter';
+import { TakeFilter } from './take.filter';
 
 class FilterExecutor {
   private _map: Map<string, Type<BaseFilter>> = new Map();

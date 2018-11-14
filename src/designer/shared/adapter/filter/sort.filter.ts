@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import {BaseFilter} from '@core/filter/filter.interface';
+import {BaseFilter} from './filter.interface';
 
 type OrderType = 'asc' | 'desc' | null | undefined;
 

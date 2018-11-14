@@ -5,9 +5,8 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {draggableHeler} from '../../../utils/draggable.helper';
-import {DataModel} from '@core/data/data.model.interface';
-import {dataModelManager} from '@core/data/data.model.manager';
-
+import { DataModel } from '../../../designer/data/data.model.interface';
+import { dataModelManager } from '../../../designer/data/data.model.manager';
 
 @Component({
   selector: 'app-measure-area',

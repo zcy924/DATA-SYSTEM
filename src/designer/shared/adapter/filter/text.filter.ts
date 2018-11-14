@@ -1,4 +1,4 @@
-import {BaseFilter} from '@core/filter/filter.interface';
+import {BaseFilter} from './filter.interface';
 
 type TextFilterType = 'include' | 'startWith' | 'endWith' | 'exclude' | 'equal';
 

@@ -1,5 +1,5 @@
-import { array } from '@core/data/test';
-import { DataSourceConfigSet } from '@shared/core/data/data.source.config.set';
+import { array } from './test';
+import { DataSourceConfigSet } from '../../shared/core/data/data.source.config.set';
 
 /**
  * 管理多个空间的DataSourceConfig

@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import {NgForm} from '@angular/forms';
 
-import {dataModelManager} from '../../../core/data/data.model.manager';
+import {dataModelManager} from '../../../designer/data/data.model.manager';
 
 import {DesignGraphicConfig} from '../../../shared/core/source/config.source/design.config.source';
 import {ChartLineOption} from '../../../component.packages/standard/chart/line.chart.graphic';

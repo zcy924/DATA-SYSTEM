@@ -11,10 +11,10 @@ import {
 } from '@angular/core';
 import {NgForm} from '@angular/forms';
 
-import {dataModelManager} from '../../../core/data/data.model.manager';
+import {dataModelManager} from '../../../designer/data/data.model.manager';
 
 import {NzModalService} from 'ng-zorro-antd';
-import {Dimension} from '../../../core/data/data.model.interface';
+import {Dimension} from '../../../designer/data/data.model.interface';
 import {DesignGraphicConfig} from '../../../shared/core/source/config.source/design.config.source';
 import {ChartPieConfig} from '../../../component.packages/standard/chart/pie.chart.graphic';
 import {debounceTime} from 'rxjs/operators';

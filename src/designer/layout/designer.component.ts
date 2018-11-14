@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, ElementRef, KeyValueDiffers, OnInit, Type} from '@angular/core';
 
 import * as _ from 'lodash';
-import {filterExecutor} from '@core/filter/filter.executor';
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs/internal/Observable';
 import {switchMap} from 'rxjs/operators';

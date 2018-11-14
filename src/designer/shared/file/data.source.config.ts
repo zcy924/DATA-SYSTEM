@@ -1,4 +1,4 @@
-import { Dimension } from '../../core/data/data.model.interface';
+import { Dimension } from '../../designer/data/data.model.interface';
 
 export interface IDataSourceConfig {
   id: string;
