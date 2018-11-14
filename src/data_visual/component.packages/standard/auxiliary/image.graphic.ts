@@ -5,7 +5,7 @@ import { RegionController } from '../../../designer/core/region/region.controlle
 import * as _ from 'lodash';
 
 const template = `
-<div class="graphic m-graphic m-graphic-image z-mode-edit">
+<div class="graphic m-graphic m-graphic-image">
   <div class="frame"
   style="border: 0px solid rgb(204, 204, 204); background-color: rgba(255, 255, 255, 0); border-radius: 0px; opacity: 1;">
   </div>

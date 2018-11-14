@@ -2,13 +2,14 @@ import {DefaultGraphicView} from '../../default.graphic.view';
 import { IGraphic } from '../../../../shared/core/graphic/graphic';
 
 const TextTemplate = `<div class="m-rect m-rect-text"
- style="color: rgb(51, 51, 51); font-size: 12px; font-family: avenir, Helvetica, Arial, sans-serif; 
+ style="color: rgb(195,195,195); font-size: 12px; font-family: avenir, Helvetica, Arial, sans-serif; 
  background: rgba(1, 1, 1, 0); border-radius: 0px; overflow-y: visible;">
   <div class="editor-wrap">
     <div class="editor medium-editor-element"
-    contenteditable="true"
-    spellcheck="false"
-    role="textbox" aria-multiline="true" data-placeholder="请输入文本" style="vertical-align: top;"></div>
+      contenteditable="true"
+      spellcheck="false"
+      role="textbox" aria-multiline="true" data-placeholder="请输入文本" style="vertical-align: top;">
+    </div>
   </div>
 </div>
 `;
