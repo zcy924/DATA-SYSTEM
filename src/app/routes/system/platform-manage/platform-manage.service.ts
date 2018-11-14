@@ -7,9 +7,7 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class PlatformManageService {
 
-  // url = environment.SERVER_URL;
-  url = '127.0.0.1:8080/dvsp/';
-
+  url = environment.SERVER_URL;
   constructor(private httpClient: HttpClient) {
   }
 
