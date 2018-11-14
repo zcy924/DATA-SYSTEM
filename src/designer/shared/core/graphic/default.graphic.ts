@@ -1,5 +1,5 @@
 import {IGraphic} from './graphic';
-import {IGraphicView} from '../../../core/node/graphic.view/graphic.view';
+import {IGraphicView} from '../../../component.packages/standard/graphic.view';
 import {Observable, Subscription} from 'rxjs';
 import {OuterModelEventTarget} from '../../../designer/core/event/model.event';
 

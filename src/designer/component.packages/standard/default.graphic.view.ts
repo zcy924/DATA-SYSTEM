@@ -1,30 +1,33 @@
-import {IGraphicView} from '@core/node/graphic.view/graphic.view';
-import { ViewEventTarget } from '../../../../designer/core/event/view.event';
 
-export abstract class FilterNode implements IGraphicView {
+import { ViewEventTarget } from '../../designer/core/event/view.event';
+import { IGraphicView } from './graphic.view';
+
+export abstract class DefaultGraphicView implements IGraphicView {
   $element: JQuery;
-  protected _event: ViewEventTarget = new ViewEventTarget();
 
-  abstract resize();
+  protected _event: ViewEventTarget = new ViewEventTarget();
 
   abstract update(option: any);
 
   updateConfig(config: any) {
+
   }
 
-  updateData(data) {
+  updateData(data: any) {
 
   }
 
   updateTheme(theme: string) {
   }
 
-  abstract activate();
+  resize() {
+  }
+
+  activate() {
+  }
 
   deactivate() {
   }
-
-  abstract destroy();
 
   addEventListener(eventName: string, callback: Function) {
     this._event.addEventListener(eventName, callback);
@@ -34,5 +37,12 @@ export abstract class FilterNode implements IGraphicView {
   removeEventListener(eventName: string, fn?: Function) {
     this._event.removeEventListener(eventName, fn);
     return this;
+  }
+
+  destroy() {
+    if (this._event) {
+      this._event.destroy();
+      this._event = null;
+    }
   }
 }

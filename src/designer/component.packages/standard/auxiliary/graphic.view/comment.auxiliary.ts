@@ -1,5 +1,5 @@
 
-import {DefaultGraphicView} from '../../../../core/node/graphic.view/default.graphic.view';
+import {DefaultGraphicView} from '../../default.graphic.view';
 import { IGraphic } from '../../../../shared/core/graphic/graphic';
 
 interface CommentOption {

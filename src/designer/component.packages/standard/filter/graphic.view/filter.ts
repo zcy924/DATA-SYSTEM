@@ -1,14 +1,11 @@
-import {IGraphicView} from '@core/node/graphic.view/graphic.view';
+import {IGraphicView} from '../../graphic.view';
 import { ViewEventTarget } from '../../../../designer/core/event/view.event';
 
-
-export abstract class HtmlNode implements IGraphicView {
+export abstract class FilterNode implements IGraphicView {
   $element: JQuery;
   protected _event: ViewEventTarget = new ViewEventTarget();
 
   abstract resize();
-
-  abstract init(option: any);
 
   abstract update(option: any);
 
@@ -16,13 +13,10 @@ export abstract class HtmlNode implements IGraphicView {
   }
 
   updateData(data) {
+
   }
 
   updateTheme(theme: string) {
-
-  }
-
-  refresh() {
   }
 
   abstract activate();
