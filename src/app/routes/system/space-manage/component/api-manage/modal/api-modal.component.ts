@@ -105,31 +105,6 @@ export class ApiModalComponent implements OnInit {
 
   // 新增API
   submitForm() {
-
-    // let test = {
-    //   id: 'num1',
-    //   displayName: '产品近三年销售额',
-    //   comment: '没有任何建议',
-    //   metadata: {
-    //     dataType: 'array',
-    //     dimensions: [
-    //       { name: 'product', type: 'ordinal' },
-    //       { name: '2015', type: 'int' },
-    //       { name: '2016', type: 'int' },
-    //       {
-    //         name: '2017', type: 'int',
-    //       }],
-    //   },
-    //   generatorPathPath: 'standard$mockDynamic',
-    //   generatorPathParams: {
-    //     api: api,
-    //     intervalTime: 10000,
-    //     datageneratorPath: `
-    //
-    //   `,
-    //   },
-    // };
-
     let params = {
       spaceId: this.spaceID,
       name: this.name,
@@ -142,8 +117,8 @@ export class ApiModalComponent implements OnInit {
       api: {
         url: this.url,
         method: this.method,
-        headers: this.headersText === ('' || null || undefined) ? null :JSON.parse(this.headersText),
-        params: this.bodyText === ('' || null || undefined) ? null :JSON.parse(this.bodyText),
+        headers: this.headersText === '' || this.headersText === null || this.headersText === undefined ? null : JSON.parse(this.headersText),
+        params: this.bodyText === '' || this.bodyText === null || this.bodyText === undefined ? null :JSON.parse(this.bodyText),
       },
     };
 
@@ -175,8 +150,8 @@ export class ApiModalComponent implements OnInit {
       api: {
         url: this.url,
         method: this.method,
-        headers: this.headersText === '' || null || undefined ? null :JSON.parse(this.headersText),
-        params: this.bodyText === '' || null || undefined ? null :JSON.parse(this.bodyText),
+        headers: this.headersText === '' || this.headersText === null || this.headersText === undefined ? null : JSON.parse(this.headersText),
+        params: this.bodyText === '' || this.bodyText === null || this.bodyText === undefined ? null :JSON.parse(this.bodyText),
       },
     };
 
@@ -208,8 +183,8 @@ export class ApiModalComponent implements OnInit {
         this.generatorPath = data.generatorPath;
         this.headersText = data.api.headers;
         this.bodyText = data.api.params;
-        this.formData.headersText = data.api.headers === ('' || null || undefined) ? '' : JSON.stringify(data.api.headers, null, 2);
-        this.formData.bodyText = data.api.params === ('' || null || undefined) ? '' : JSON.stringify(data.api.params, null, 2);
+        this.formData.headersText = (data.api.headers  === null || data.api.headers  === undefined)? '' : JSON.stringify(data.api.headers, null, 2);
+        this.formData.bodyText =  (data.api.params === null || data.api.params === undefined) ? '' : JSON.stringify(data.api.params, null, 2);
       },
       err => {
         if (err instanceof HttpRequest) {
