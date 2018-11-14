@@ -6,6 +6,7 @@ import { Page } from '../../../../../models/page';
 import { HttpResponse } from '@angular/common/http';
 import { SideMenuService } from '@shared/side-menu.service';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-report-manage',
@@ -29,6 +30,7 @@ export class ReportManageComponent implements OnInit {
   selectedArray = [];
   dataSet = [];
   page = new Page();
+  spaceId: string;
 
   menu;
 
@@ -37,7 +39,10 @@ export class ReportManageComponent implements OnInit {
     private message: NzMessageService,
     private spaceManageService: SpaceManageService,
     private sideMenu: SideMenuService,
-  ) {}
+    private router: ActivatedRoute
+  ) {
+    this.spaceId = this.router.snapshot.parent.params.spaceId;
+  }
 
   ngOnInit(): void {
     this.searchData(true);
@@ -74,7 +79,7 @@ export class ReportManageComponent implements OnInit {
       this.page.curPage = 1;
     }
     this.loading = true;
-    let spaceID = localStorage.getItem('spaceID');
+    let spaceID = this.spaceId;
     let params = {
       curPage: this.page.curPage,
       pageSize: this.page.pageSize,
@@ -164,6 +169,7 @@ export class ReportManageComponent implements OnInit {
       nzComponentParams: {
         folderName: this.folderName,
         folders: this.folders,
+        spaceId: this.spaceId,
         folderID: data.parentId,
         isPublic: data.isPublic === this.isPublic,
         isDev: data.isDev === this.isDev,
@@ -237,7 +243,7 @@ export class ReportManageComponent implements OnInit {
   getReportTree() {
     const params = {
       Report: {
-        spaceId: localStorage.getItem('spaceID'),
+        spaceId: this.spaceId,
       },
     };
     this.spaceManageService.qryReportTree(params).subscribe(

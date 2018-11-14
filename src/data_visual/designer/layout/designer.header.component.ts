@@ -26,6 +26,7 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
   @Output() switch = new EventEmitter();
 
   reportTile: string;
+  spaceId;
 
   constructor(private _service: CommService, private _router: ActivatedRoute, private nzMessage: NzMessageService) {
     super();
@@ -36,7 +37,7 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
     const url = this._router.snapshot.routeConfig.path;
     const subscription = designerStorage.reportInfo$.subscribe((reportInfo: any) => {
 
-      if (url == 'report-designer/:id') {
+      if (url == 'report-designer') {
         this.reportTile = reportInfo.Report.reportName;
         reportInfo.Report ? this.doLoad(reportInfo.Report.attr) : null;
       } else {
@@ -74,13 +75,16 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
     //
     // FileSaver.saveAs(blob, `zijin.template.${moment().format('YYYYMMDDHHmmss')}.json`);
     const url = this._router.snapshot.routeConfig.path;
+    this._router.queryParams.subscribe(data=>{
+      this.spaceId = data.spaceId;
+    })
     const params = Object.assign({},
       designerStorage.reportInfo.Report,
       {
         attr: JSON.stringify(session.currentPage.save(), null, 2),
-        spaceId: localStorage.getItem('spaceID'),
+        spaceId: this.spaceId,
       });
-    if (url == 'report-designer/:id') {
+    if (url == 'report-designer') {
       this._service.modReport({ Report: params }).subscribe((data) => {
         this.nzMessage.success('保存成功!');
       });
@@ -90,7 +94,7 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
           designerStorage.reportInfo,
           {
             attr: JSON.stringify(session.currentPage.save(), null, 2),
-            spaceId: localStorage.getItem('spaceID'),
+            spaceId: this.spaceId,
           })).subscribe((data) => {
         this.nzMessage.success('保存成功!');
       });

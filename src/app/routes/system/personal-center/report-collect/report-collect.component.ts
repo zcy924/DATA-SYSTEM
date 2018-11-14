@@ -79,7 +79,6 @@ export class ReportCollectComponent implements OnInit {
       this.page.curPage = 1;
     }
     this.loading = true;
-    let spaceID = localStorage.getItem('spaceID');
     let params = {
       curPage: this.page.curPage,
       pageSize: this.page.pageSize,

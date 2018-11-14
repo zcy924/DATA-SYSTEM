@@ -23,7 +23,7 @@ export class XmlDataGenerator implements IDataSourceGenerator {
 
     if (api.method === 'GET') {
       let paramsArray = [];
-      if (api.params !== null) {
+      if (api.params !== null && api.params !== '' && api.params !== undefined) {
         let params;
         if(api.params instanceof Object){
           params = api.params;

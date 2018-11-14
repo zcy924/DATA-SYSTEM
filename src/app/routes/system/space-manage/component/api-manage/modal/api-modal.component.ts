@@ -15,7 +15,7 @@ import { generatorRepo } from '../../../../../../../data-generator/DataGenerator
   selector: 'app-api-modal',
   templateUrl: './api-modal.html',
   styles: [
-      `
+    `
       nz-date-picker ::ng-deep .ant-calendar-picker {
         width: 100%;
       }
@@ -41,7 +41,7 @@ export class ApiModalComponent implements OnInit {
   headersText: string = '';
   bodyText: string = '';
   method: string = 'GET';
-  spaceID = localStorage.getItem('spaceID');
+  spaceId;
   id;
   interval;
   status;
@@ -53,7 +53,7 @@ export class ApiModalComponent implements OnInit {
     bodyText: '',
     responseText: '',
   };
-  metaData:any;
+  metaData: any;
   modMsg;
   aceConfig = {
     textChanged: (text, type) => {
@@ -131,7 +131,7 @@ export class ApiModalComponent implements OnInit {
     // };
 
     let params = {
-      spaceId: this.spaceID,
+      spaceId: this.spaceId,
       name: this.name,
       remark: this.remark,
       status: 'T',
@@ -164,7 +164,7 @@ export class ApiModalComponent implements OnInit {
   updateApi() {
     let params = {
       id: this.id,
-      spaceId: this.spaceID,
+      spaceId: this.spaceId,
       name: this.name,
       remark: this.remark,
       status: 'T',

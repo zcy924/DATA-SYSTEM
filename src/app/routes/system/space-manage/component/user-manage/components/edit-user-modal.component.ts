@@ -17,6 +17,7 @@ export class EditUserModalComponent implements OnInit {
   user;
   reportList = [];
   roles = [];
+  spaceId;
 
   constructor(
     private spaceService: SpaceManageService,
@@ -43,7 +44,7 @@ export class EditUserModalComponent implements OnInit {
 
   // 修改用户
   editUser() {
-    let spaceID = localStorage.getItem('spaceID');
+    let spaceID = this.spaceId;
     this.roles = this.roles.filter(role => role.checked);
     this.reportList = [];
     this.treeCom
@@ -74,10 +75,9 @@ export class EditUserModalComponent implements OnInit {
 
   // 回显用户自定义报表树
   initReportTree() {
-    let spaceID = localStorage.getItem('spaceID');
     let params3 = {
       SpaceUserReport: {
-        spaceId: spaceID,
+        spaceId: this.spaceId,
         userId: this.user.userId,
       },
     };
@@ -113,14 +113,13 @@ export class EditUserModalComponent implements OnInit {
 
   // 回显用户的角色列表
   initRoleList() {
-    let spaceID = localStorage.getItem('spaceID');
     let params = {
       pageSize: 100,
       curPage: 0,
       totalPage: 0,
       totalRow: 0,
       SpaceRole: {
-        spaceId: spaceID,
+        spaceId: this.spaceId,
       },
     };
     this.spaceService.getRoleList(params).subscribe(
