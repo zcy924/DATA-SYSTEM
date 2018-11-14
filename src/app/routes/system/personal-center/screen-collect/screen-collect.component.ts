@@ -43,7 +43,6 @@ export class ScreenCollectComponent implements OnInit {
     }
     this.loading = true;
     const params = {
-      spaceId: localStorage.getItem('spaceID'),
       curPage: this.page.curPage,
       pageSize: this.page.pageSize,
       totalPage: this.page.totalPage || '',
@@ -106,7 +105,6 @@ export class ScreenCollectComponent implements OnInit {
         screenName: data.keepDashBoardName,
         screenRemark: data.remark,
         dashboardId: data.keepDashBoardId,
-        spaceId: localStorage.getItem('spaceID'),
       },
     });
     modal.afterClose.subscribe(data => {
@@ -180,7 +178,6 @@ export class ScreenCollectComponent implements OnInit {
       this.page.curPage = 1;
     }
     const params = {
-      spaceId: localStorage.getItem('spaceID'),
       curPage: this.page.curPage,
       pageSize: 5000,
       totalPage: this.page.totalPage || '',

@@ -79,12 +79,12 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'designer/:id',
+    path: 'designer',
     data: { title: '设计器' },
     component: DesignerComponent,
   },
   {
-    path: 'report-designer/:id',
+    path: 'report-designer',
     data: {title: '报表设计器'},
     component: DesignerComponent,
   },

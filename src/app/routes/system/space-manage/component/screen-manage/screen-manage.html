@@ -5,7 +5,7 @@
     </div>
     <div nz-col style="float: right">
       <nz-button-group>
-        <button nz-button [disabled]="disabledButton" nzType="danger"(click)="handle()">批量删除</button>
+        <button nz-button [disabled]="disabledButton" nzType="danger" (click)="handle()">批量删除</button>
         <button nz-button nzType="primary" (click)="openAdd()">添加新大屏</button>
       </nz-button-group>
 
@@ -43,7 +43,8 @@
             <td>{{data.token}}</td>
             <td><span *ngIf="data.isDev=='F'">否</span><span *ngIf="data.isDev=='T'">是</span></td>
             <td>
-              <a  nz-tooltip nzTitle="查看大屏页面" [routerLink]='["/designer" , data.dashboardId]'><i class="anticon anticon-eye"></i></a>
+              <a nz-tooltip nzTitle="查看大屏页面" [routerLink]='["/designer"]' [queryParams]="{spaceId: spaceId,dashboardId:data.dashboardId}"><i
+                  class="anticon anticon-eye"></i></a>
               <nz-divider nzType="vertical"></nz-divider>
               <a (click)="edit(data)" nz-tooltip nzTitle="编辑页面属性"><i class="anticon anticon-edit"></i></a>
               <nz-divider nzType="vertical"></nz-divider>

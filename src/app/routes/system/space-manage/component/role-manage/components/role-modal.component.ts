@@ -24,6 +24,7 @@ export class RoleModalComponent implements OnInit {
   searchedUsers = [];
   key = '';
   reportList = [];
+  spaceId;
 
   nodes:Array<any>;
 
@@ -53,7 +54,7 @@ export class RoleModalComponent implements OnInit {
 
   // 异步获取报表列表
   // openFolder(name: string, e: NzFormatEmitEvent): void {
-  //   let spaceID = localStorage.getItem('spaceID');
+  //   let spaceID = this.spaceId;
   //   let parentID = '';
   //   if (name === 'first') {
   //     parentID = '/'; // 加载根目录
@@ -155,7 +156,7 @@ export class RoleModalComponent implements OnInit {
 
   // 创建角色
   createRole() {
-    let spaceID = localStorage.getItem('spaceID');
+    let spaceID = this.spaceId;
     this.users.forEach(user => (user.isSpaceAdmin = 'F'));
     this.users = this.users.filter(user => user.checked === true);
     this.reportList = [];
@@ -185,7 +186,7 @@ export class RoleModalComponent implements OnInit {
 
   // 修改更新角色
   editRole() {
-    let spaceID = localStorage.getItem('spaceID');
+    let spaceID = this.spaceId;
     this.users = this.users.filter(user => user.checked === true);
     this.users.forEach(user => (user.isSpaceAdmin = 'F'));
     this.reportList = [];
@@ -228,7 +229,7 @@ export class RoleModalComponent implements OnInit {
       }
     });
 
-    let spaceID = localStorage.getItem('spaceID');
+    let spaceID = this.spaceId;
     let params3 = {
       SpaceRoleReport: {
         spaceId: spaceID,
@@ -268,7 +269,7 @@ export class RoleModalComponent implements OnInit {
 
   // 初始化报表树
   getTree() {
-    let spaceID = localStorage.getItem('spaceID');
+    let spaceID = this.spaceId;
     let params = {
       Report: {
         spaceId: spaceID,
@@ -302,5 +303,5 @@ export class RoleModalComponent implements OnInit {
       }
     }
   }
-  
+
 }

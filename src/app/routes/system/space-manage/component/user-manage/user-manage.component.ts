@@ -5,6 +5,7 @@ import { AddUserModalComponent } from './components/add-user-modal.component';
 import { EditUserModalComponent } from './components/edit-user-modal.component';
 import { SettingsService } from '@delon/theme';
 import { HttpResponse } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-manage',
@@ -68,15 +69,18 @@ export class UserManageComponent implements OnInit {
   userList = [];
   disabledButton = true;
   selectedArray = [];
+  spaceId: string;
 
   constructor(
     private nzModal: NzModalService,
     private message: NzMessageService,
     private service: SpaceManageService,
     private settingsService: SettingsService,
+    private router: ActivatedRoute
   ) {}
 
   ngOnInit() {
+    this.spaceId = this.router.snapshot.parent.params.spaceId;
     this.getUserList();
   }
 
@@ -88,6 +92,7 @@ export class UserManageComponent implements OnInit {
       nzWidth: '50%',
       nzComponentParams: {
         usersOfSpace: this.userList,
+        spaceId: this.spaceId
       },
       nzOnOk: ref => {
         return new Promise(res => {
@@ -104,14 +109,13 @@ export class UserManageComponent implements OnInit {
 
   // 查询空间用户列表
   getUserList() {
-    let spaceID = localStorage.getItem('spaceID');
     let params = {
       pageSize: 5000,
       curPage: 0,
       totalPage: 0,
       totalRow: 0,
       SpaceUser: {
-        spaceId: spaceID,
+        spaceId: this.spaceId,
         userName: this.key,
       },
     };
@@ -151,14 +155,13 @@ export class UserManageComponent implements OnInit {
 
   // 批量删除
   delAll(list, title = '所选择的用户') {
-    let spaceID = localStorage.getItem('spaceID');
     let id = this.settingsService.user.account;
     console.log(id);
     console.log(list);
     list = list.filter(data => data.userId !== id);
     let params = {
       SpaceUser: {
-        spaceId: spaceID,
+        spaceId: this.spaceId,
         userList: list,
       },
     };
@@ -208,6 +211,7 @@ export class UserManageComponent implements OnInit {
       nzComponentParams: {
         user: user,
         adminChecked: user.isSpaceAdmin === 'T',
+        spaceId: this.spaceId
       },
       nzOnOk: ref => {
         return new Promise(res => {

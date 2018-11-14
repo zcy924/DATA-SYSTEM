@@ -4,11 +4,12 @@ import { Page } from '../../../../../models/page';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { HttpResponse } from '@angular/common/http';
 import { ApiModalComponent } from './modal/api-modal.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   templateUrl: 'api-manage.html',
   styles: [
-      `
+    `
       .title-tab {
         height: 32px;
         line-height: 32px;
@@ -32,13 +33,15 @@ export class ApiManageComponent implements OnInit {
   dataSet = [];
 
   key = '';
+  spaceId: string;
 
   constructor(
     private nzModal: NzModalService,
     private nzMessage: NzMessageService,
     private spaceManageService: SpaceManageService,
-
+    private router: ActivatedRoute
   ) {
+    this.spaceId = this.router.snapshot.parent.params.spaceId;
   }
 
   ngOnInit() {
@@ -49,6 +52,9 @@ export class ApiManageComponent implements OnInit {
     const modal = this.nzModal.create({
       nzTitle: `新增API`,
       nzContent: ApiModalComponent,
+      nzComponentParams: {
+        spaceId: this.spaceId
+      },
       nzStyle: { top: '30px' },
       nzWidth: '80%',
       nzOkText: '新增',
@@ -75,7 +81,7 @@ export class ApiManageComponent implements OnInit {
     this.loading = true;
     const params = {
       key: this.key,
-      spaceId: localStorage.getItem('spaceID'),
+      spaceId: this.spaceId,
       status: 'T',
       curPage: this.page.curPage,
       pageSize: this.page.pageSize,
@@ -135,7 +141,7 @@ export class ApiManageComponent implements OnInit {
         });
       },
       nzComponentParams: {
-        id:data.id
+        id: data.id
       },
     });
     modal.afterClose.subscribe(data => {

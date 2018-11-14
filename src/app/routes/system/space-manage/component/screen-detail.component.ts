@@ -21,6 +21,7 @@ export class ScreenDetailComponent implements AfterViewInit, OnInit, OnDestroy {
   dashBoardId;
   collectFlag;
   keepDashBoardId;
+  spaceId: string;
 
   leftPanelState = false;
 
@@ -33,6 +34,7 @@ export class ScreenDetailComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.spaceId = this._router.snapshot.parent.params.spaceId;
 
   }
 
@@ -41,7 +43,7 @@ export class ScreenDetailComponent implements AfterViewInit, OnInit, OnDestroy {
       this.dashBoardId = data.screenId;
       return this._spaceManageService.getScreenInfo({
         dashboardId: data.screenId,
-        spaceId: localStorage.getItem('spaceID'),
+        spaceId: this.spaceId,
       });
     }));
     reportInfo$.subscribe(data => {

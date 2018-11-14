@@ -22,6 +22,7 @@ export class AddUserModalComponent implements OnInit {
   searchedUsers = [];
   roles = [];
   reportList = [];
+  spaceId;
 
   constructor(
     private companyService: CompanyManageService,
@@ -51,7 +52,7 @@ export class AddUserModalComponent implements OnInit {
 
   // 添加空间用户
   createUser() {
-    let spaceID = localStorage.getItem('spaceID');
+    let spaceID = this.spaceId;
     this.roles = this.roles.filter(role => role.checked);
     this.treeCom
       .getCheckedNodeList()
@@ -84,14 +85,13 @@ export class AddUserModalComponent implements OnInit {
 
   // 初始化角色列表
   initRoleList() {
-    let spaceID = localStorage.getItem('spaceID');
     let params = {
       pageSize: 100,
       curPage: 0,
       totalPage: 0,
       totalRow: 0,
       SpaceRole: {
-        spaceId: spaceID,
+        spaceId: this.spaceId,
       },
     };
     this.spaceService.getRoleList(params).subscribe(
@@ -111,10 +111,9 @@ export class AddUserModalComponent implements OnInit {
 
   // 初始化报表树
   initReportTree() {
-    let spaceID = localStorage.getItem('spaceID');
     let params = {
       Report: {
-        spaceId: spaceID,
+        spaceId: this.spaceId,
       },
     };
     this.spaceService.qryReportTree(params).subscribe(
