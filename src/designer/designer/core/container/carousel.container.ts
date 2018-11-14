@@ -1,5 +1,7 @@
-import {ContainerAlterable} from '@core/node/container/container.alterable.interface';
+
 // import {FaceEchart} from '@core/node/face/echart.face';
+
+import { ContainerAlterable } from './container.alterable.interface';
 
 const CAROUSEL_ROTATE_TEMPLATE = `
 <div class="chart-container">

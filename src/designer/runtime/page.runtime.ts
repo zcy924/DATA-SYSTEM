@@ -1,6 +1,5 @@
 import { RegionRuntime } from './region.runtime';
 import { PageConfig } from '../shared/core/page/page.config';
-import { regionMap } from '@core/node/config/region.map';
 import { Observable } from 'rxjs/internal/Observable';
 import { RuntimePageConfig } from './runtime.page.config';
 import { GraphicWrapperRuntime } from './graphic.wrapper.runtime';
@@ -8,6 +7,7 @@ import { DataSourceManager } from '@shared/core/data/data.source.manager';
 import { IComponentOption } from '@shared/file/component.option';
 import { IConfigSourceFactory } from '../designer/core/config/config.source.factory';
 import { RuntimeConfigSourceFactory } from '../designer/core/config/runtime/runtime.config.source.factory';
+import { regionMap } from '../designer/config/region.map';
 
 enum PageRuntimeState {
   created, initialized, loaded

@@ -1,5 +1,5 @@
-import {Container} from '@core/node/container/container.interface';
-import {Face} from '@core/node/face/face';
+import {Container} from './container.interface';
+import {Face} from '../face/face';
 
 export abstract class ContainerAlterable extends Container {
   protected _faceArray: Array<Face> = [];

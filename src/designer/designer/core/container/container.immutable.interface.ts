@@ -1,5 +1,6 @@
-import {Container} from '@core/node/container/container.interface';
-import {FaceWrapper} from '@core/node/face/face.wrapper';
+
+import {FaceWrapper} from '../face/face.wrapper';
+import { Container } from './container.interface';
 
 export abstract class ContainerImmutable extends Container {
   protected _map: Map<string, FaceWrapper> = new Map();

@@ -1,4 +1,4 @@
-import { regionMap } from '../../../core/node/config/region.map';
+import { regionMap } from '../../config/region.map';
 import { IReportPage } from '../page/report/page.interface';
 import { ComponentRepositoryManager } from '../../../shared/manager/component.repository.manager';
 import { IComponentOption } from '../../../shared/file/component.option';

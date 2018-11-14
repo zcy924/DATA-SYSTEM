@@ -3,7 +3,7 @@ import {session} from '../../../utils/session';
 import {DesignGraphicConfig} from '../../../../shared/core/source/config.source/design.config.source';
 import {Type} from '@angular/core';
 import {GraphicConfigManager} from './graphic.config.manager';
-import {graphicConfigMap} from '../../../../core/node/config/graphic.map';
+import {graphicConfigMap} from '../../../config/graphic.map';
 
 export class DesignConfigSourceFactory implements IConfigSourceFactory {
 

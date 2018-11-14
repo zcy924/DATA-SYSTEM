@@ -1,6 +1,6 @@
 import {contextMenuHelper} from '../../../utils/contextMenu';
-import {FaceWrapper} from '@core/node/face/face.wrapper';
-import {BarEchartFace} from '@core/node/face/bar.echart.face';
+import {FaceWrapper} from '../face/face.wrapper';
+import {BarEchartFace} from '../face/bar.echart.face';
 
 export abstract class Container {
   protected _$element: JQuery;

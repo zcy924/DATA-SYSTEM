@@ -1,5 +1,5 @@
-import {ContainerImmutable} from '@core/node/container/container.immutable.interface';
-import {Face} from '@core/node/face/face';
+import {ContainerImmutable} from './container.immutable.interface';
+import {Face} from '../face/face';
 // import {FaceEchart} from '@core/node/face/echart.face';
 
 const CUBE_TEMPLATE = `

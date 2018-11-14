@@ -1,5 +1,5 @@
-import {ContainerImmutable} from '@core/node/container/container.immutable.interface';
-import {FaceWrapper} from '@core/node/face/face.wrapper';
+import {FaceWrapper} from '../face/face.wrapper';
+import { ContainerImmutable } from './container.immutable.interface';
 
 const CARD_TEMPLATE = `
 <div class="chart-container">

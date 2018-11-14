@@ -1,6 +1,6 @@
-import {Container} from '@core/node/container/container.interface';
+import {Container} from './container.interface';
 // import {FaceEchart} from '@core/node/face/echart.face';
-import {Face} from '@core/node/face/face';
+import {Face} from '../face/face';
 
 const CONTAINER_SLIDER_TEMPLATE = `
 <div class="chart-container">
