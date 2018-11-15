@@ -1,13 +1,11 @@
-import {AfterViewInit, Component, ElementRef, KeyValueDiffers, OnInit, Type} from '@angular/core';
-
+import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
-import {ActivatedRoute} from '@angular/router';
-import {Observable} from 'rxjs/internal/Observable';
-import {switchMap} from 'rxjs/operators';
-import {SpaceManageService} from '../../../app/routes/system/space-manage/space-manage.service';
-import {CommService} from '../service/comm.service';
-import {designerStorage} from '../../utils/designer.storage';
-import { session } from '../utils/session';
+import { Observable } from 'rxjs/internal/Observable';
+import { switchMap } from 'rxjs/operators';
+
+import { CommService } from '../service/comm.service';
+import { designerStorage } from '../../utils/designer.storage';
 
 @Component({
   selector: 'app-designer',
@@ -24,13 +22,16 @@ export class DesignerComponent implements AfterViewInit, OnInit {
   spaceId: string;
   dashboardId;
 
-  constructor(private _elementRef: ElementRef, private _differs: KeyValueDiffers, private route: ActivatedRoute, private _service: CommService) {
+  constructor(
+    private _elementRef: ElementRef,
+    private _route: ActivatedRoute,
+    private _service: CommService) {
   }
 
   ngOnInit() {
-    const url = this.route.snapshot.routeConfig.path;
+    const url = this._route.snapshot.routeConfig.path;
     if (url == 'report-designer') {
-      this.report$ = this.route.queryParams.pipe(
+      this.report$ = this._route.queryParams.pipe(
         switchMap(params => {
           // (+) before `params.get()` turns the string into a number
           this.reportId = params.reportId;
@@ -40,12 +41,12 @@ export class DesignerComponent implements AfterViewInit, OnInit {
             Report: {
               spaceId: this.spaceId,
               reportId: this.reportId,
-            }
+            },
           });
         }),
       );
     } else {
-      this.report$ = this.route.queryParams.pipe(
+      this.report$ = this._route.queryParams.pipe(
         switchMap(params => {
           // (+) before `params.get()` turns the string into a number
           this.dashboardId = params.dashboardId;
@@ -59,9 +60,7 @@ export class DesignerComponent implements AfterViewInit, OnInit {
       );
     }
 
-
     this.report$.subscribe((data) => {
-      console.log('app-designer', data);
       designerStorage.reportInfo = data;
     });
     console.log('ngOnInit main');
@@ -69,7 +68,5 @@ export class DesignerComponent implements AfterViewInit, OnInit {
 
   ngAfterViewInit() {
     console.log('ngAfterViewInit main');
-
-
   }
 }

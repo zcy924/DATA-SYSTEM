@@ -2,42 +2,43 @@ import {
   AfterViewInit,
   Component, ElementRef, HostBinding,
   Input, OnDestroy,
-  ViewEncapsulation
+  ViewEncapsulation,
 } from '@angular/core';
-import {draggableHeler} from '../../../../utils/draggable.helper';
+import { draggableHeler } from '../../../../utils/draggable.helper';
 import { DataModel } from '../../../data/data.model.interface';
 import { dataModelManager } from '../../../data/data.model.manager';
+import { Destroyable } from '../../../../shared/interface/destroyable';
 
 @Component({
   selector: 'app-measure-area',
   encapsulation: ViewEncapsulation.Emulated,
   templateUrl: './measure.area.component.html',
-  styleUrls: ['./measure.area.component.less']
+  styleUrls: ['./measure.area.component.less'],
 })
-export class MeasureAreaComponent implements AfterViewInit, OnDestroy {
+export class MeasureAreaComponent extends Destroyable implements AfterViewInit, OnDestroy {
   private _$element: JQuery;
-  // schema: TableSchema = new TableSchema(demo);
   dataModel: DataModel;
-
-  @Input() modelName: string;
 
   @HostBinding('class.measure-area') measureArea = true;
 
   constructor(private _elementRef: ElementRef) {
+    super();
     this._$element = $(_elementRef.nativeElement);
     this.dataModel = dataModelManager.getDefaultDataset();
   }
 
   ngAfterViewInit() {
-    dataModelManager.currentDataModelObservable.subscribe((dataModel) => {
+    const subscription = dataModelManager.currentDataModelObservable.subscribe((dataModel) => {
       this.dataModel = dataModel;
+    });
+    this.onDestroy(() => {
+      subscription.unsubscribe();
     });
   }
 
   doDragStart(event: DragEvent, item) {
-    console.log(event);
-    console.log((<HTMLElement>event.target).getAttribute('fieldid'));
-    event.dataTransfer.setData('Text', (<HTMLElement>event.target).getAttribute('fieldid'));
+    event.dataTransfer
+      .setData('Text', (<HTMLElement>event.target).getAttribute('fieldid'));
     draggableHeler.dragInfo = item;
   }
 
@@ -56,6 +57,7 @@ export class MeasureAreaComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this._elementRef = null;
     this._$element = null;
+    this.destroy();
   }
 
 }

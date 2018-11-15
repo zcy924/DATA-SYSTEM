@@ -48,9 +48,7 @@ export class ReportPageInner implements IPage {
   init() {
     this.accept(this.pageConfigWrapper.model);
     this.view.accept(this.pageConfigWrapper.model);
-    if (this._mode === 'design') {
-      this._init();
-    }
+    this._init();
   }
 
   /**
@@ -110,13 +108,6 @@ export class ReportPageInner implements IPage {
                  graphicFactory.createByName('textAuxiliary', this, $event.offsetX, $event.offsetY);
                  contextMenuHelper.close();
                }
-             }, {
-               displayName: '新建 Image',
-               callback: ($event) => {
-                 // 如何建立关联
-                 graphicFactory.createByName('imageAuxiliary', this, $event.offsetX, $event.offsetY);
-                 contextMenuHelper.close();
-               }
              },*/ 'split', {
           displayName: '剪切',
           shortcut: 'Ctrl+X',
@@ -150,8 +141,11 @@ export class ReportPageInner implements IPage {
   }
 
   destroy() {
+    this.activateManager.destroy();
+    this.regionManager.regionArray.forEach(value => value.destroy());
+    this.regionManager.destroy();
+    this.selectManager.destroy();
     this.view.destroy();
-    this.regionManager;
   }
 }
 

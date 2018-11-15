@@ -45,12 +45,6 @@ export class RegionManager {
     this._subject.next(this.regionArray);
   }
 
-  // get keysOfDataSource(): Array<string> {
-  //   return this._children.map(region => {
-  //     return region;
-  //   });
-  // }
-
   get regionArray() {
     return this._children.slice(0);
   }
@@ -91,5 +85,4 @@ export class RegionManager {
       this._subject = null;
     }
   }
-
 }

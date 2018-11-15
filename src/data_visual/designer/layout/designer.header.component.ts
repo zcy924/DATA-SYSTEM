@@ -33,7 +33,6 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
   }
 
   ngOnInit() {
-    console.log('ngOnInit header');
     const url = this._router.snapshot.routeConfig.path;
     const subscription = designerStorage.reportInfo$.subscribe((reportInfo: any) => {
 

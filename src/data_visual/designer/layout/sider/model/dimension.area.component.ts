@@ -1,48 +1,49 @@
 import {
   AfterViewInit,
-  Component, ElementRef, HostBinding,
-  Input, OnChanges, OnDestroy,
-  SimpleChanges,
-  ViewEncapsulation
+  Component, ElementRef, HostBinding, OnDestroy,
+  ViewEncapsulation,
 } from '@angular/core';
-import {draggableHeler} from '../../../../utils/draggable.helper';
-import {fromEvent} from 'rxjs';
+import { draggableHeler } from '../../../../utils/draggable.helper';
+import { fromEvent } from 'rxjs';
 import { DataModel } from '../../../data/data.model.interface';
 import { dataModelManager } from '../../../data/data.model.manager';
+import { Destroyable } from '../../../../shared/interface/destroyable';
 
 
 @Component({
   selector: 'app-dimension-area',
   encapsulation: ViewEncapsulation.Emulated,
   templateUrl: './dimension.area.component.html',
-  styleUrls: ['./dimension.area.component.less']
+  styleUrls: ['./dimension.area.component.less'],
 })
-export class DimensionAreaComponent implements AfterViewInit, OnDestroy {
+export class DimensionAreaComponent extends Destroyable implements AfterViewInit, OnDestroy {
   private _$element: JQuery;
   dataModel: DataModel;
 
   @HostBinding('class.dimension-area') dimensionArea = true;
 
   constructor(private _elementRef: ElementRef) {
+    super();
     this._$element = $(_elementRef.nativeElement);
     this.dataModel = dataModelManager.getDefaultDataset();
   }
 
   ngAfterViewInit() {
-    dataModelManager.currentDataModelObservable.subscribe((dataModel) => {
+    const subscription = dataModelManager.currentDataModelObservable.subscribe((dataModel) => {
       this.dataModel = dataModel;
+    });
+    this.onDestroy(() => {
+      subscription.unsubscribe();
     });
   }
 
   doDragStart(event: DragEvent, item) {
-    console.log(event);
-    console.log((<HTMLElement>event.target).getAttribute('fieldid'));
-    event.dataTransfer.setData('Text', (<HTMLElement>event.target).getAttribute('fieldid'));
+    event.dataTransfer
+      .setData('Text', (<HTMLElement>event.target).getAttribute('fieldid'));
     draggableHeler.dragInfo = item;
   }
 
   dragStartForDragBar(event: DragEvent) {
-
     const subscription = fromEvent(document, 'mousemove')
     /*.pipe(throttleTime(30))*/
       .subscribe((mouseEvent: MouseEvent) => {
@@ -75,6 +76,7 @@ export class DimensionAreaComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this._elementRef = null;
     this._$element = null;
+    this.destroy();
   }
 
 }

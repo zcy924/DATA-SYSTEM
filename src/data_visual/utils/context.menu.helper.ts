@@ -74,7 +74,7 @@ function searchCallback(array: Array<ContextMenuItem | string>, key: string) {
 
 }
 
-class ContextMenu {
+class ContextMenuHelper {
   $mask: JQuery;
   $menu: JQuery;
 
@@ -162,4 +162,4 @@ class ContextMenu {
 
 }
 
-export const contextMenuHelper = new ContextMenu();
+export const contextMenuHelper = new ContextMenuHelper();

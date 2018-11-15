@@ -1,50 +1,36 @@
-import {AfterViewInit, Component, KeyValueDiffer, KeyValueDiffers, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {DesignerBodyComponent} from '../designer.body.component';
-import {dataModelList} from '../../../utils/dataModel';
-import {HttpClient} from '@angular/common/http';
+import {
+  AfterViewInit,
+  Component, OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { DesignerBodyComponent } from '../designer.body.component';
+import { dataModelList } from '../../../utils/dataModel';
+import { HttpClient } from '@angular/common/http';
 import { dataModelManager } from '../../data/data.model.manager';
 import { DataSourceConfigManager } from '../../data/data.source.config.manager';
-
-export let modelPlugin = null;
-
+import { Destroyable } from '../../../shared/interface/destroyable';
 
 @Component({
   selector: 'app-sider-right',
   encapsulation: ViewEncapsulation.None,
   templateUrl: './sider.right.component.html',
-  styleUrls: ['./sider.right.component.less']
+  styleUrls: ['./sider.right.component.less'],
 })
-export class SiderRightComponent implements AfterViewInit, OnInit {
+export class SiderRightComponent extends Destroyable implements AfterViewInit, OnInit, OnDestroy {
 
   @ViewChild(NgForm) ngForm: NgForm;
 
-  option = {
-    title: {
-      show: true,
-      text: '大水牛',
-      left: 'auto',
-      top: 'auto',
-      right: 'auto',
-      bottom: 'auto',
-      backgroundColor: '#fff',
-      textStyle: {
-        align: 'left'
-      }
-    }
-  };
-
-  modelID: string;
   modelName: string;
 
-  private _differ: KeyValueDiffer<any, any>;
-
-  constructor(private _differs: KeyValueDiffers, private appBody: DesignerBodyComponent, private http: HttpClient) {
-    // this.modelName = dataModelManager.getDefaultDataset().displayName;
+  constructor(
+    private appBody: DesignerBodyComponent) {
+    super();
   }
 
   ngOnInit() {
-    this._differ = this._differs.find(this.option).create();
   }
 
   closeRightPanel() {
@@ -55,55 +41,13 @@ export class SiderRightComponent implements AfterViewInit, OnInit {
   ngAfterViewInit() {
     dataModelManager.dataOptionSet = DataSourceConfigManager.getInstance().getDataSourceConfigSet('space1');
 
-    modelPlugin = this;
-
-    dataModelManager.modelNameObservable.subscribe((modelName) => {
-      console.log('modelName Changed');
+    const subscription = dataModelManager.modelNameObservable.subscribe((modelName) => {
       this.modelName = modelName;
     });
-    /*
-        this.http.get('http://10.2.78.207:8080/table/total')
-          .subscribe((data: any) => console.log(data));
 
-        // , {
-        //       headers: new HttpHeaders({'Content-Type': 'application/json'}),
-        //       withCredentials: true
-        //     }
-        this.http.post('http://10.2.78.207:8080/table/query', {tableName: 'alumni_list'})
-          .subscribe((data: any) => {
-            console.log(data);
-            let dimensions = data.data.dimensions;
-            dimensions = dimensions.map((value) => {
-              value.type = value.type === 'INT' ? 'int' : 'ordinal';
-              return value;
-            });
-
-            dataModelManager.addDataset(data.data.id, '中国大学杰出校友排行榜', {
-              dimensions,
-              source: data.data.source
-            });
-
-            console.log(dimensions);
-          });
-        this.http.post('http://10.2.78.207:8080/table/query', {tableName: 'young_people_list'})
-          .subscribe((data: any) => {
-            console.log(data);
-            let dimensions = data.data.dimensions;
-            dimensions = dimensions.map((value) => {
-              value.type = value.type === 'INT' ? 'int' : 'ordinal';
-              return value;
-            });
-
-            dataModelManager.addDataset(data.data.id, '各大学国家杰出青年入选数量', {
-              dimensions,
-              source: data.data.source
-            });
-
-            console.log(dimensions);
-          });
-
-    */
-
+    this.onDestroy(() => {
+      subscription.unsubscribe();
+    });
   }
 
   /**
@@ -112,8 +56,12 @@ export class SiderRightComponent implements AfterViewInit, OnInit {
    */
   switchDataModel($event: MouseEvent) {
     dataModelList.open($event, (modelID: string) => {
-      dataModelManager.switchDataModel(this.modelID = modelID);
+      dataModelManager.switchDataModel(modelID);
     });
+  }
+
+  ngOnDestroy() {
+
   }
 
 }

@@ -9,7 +9,6 @@ enum SelectStatus {
  * 被删除的region如何剔除
  */
 class Store {
-  private _selected: RegionController = null;
   private _selectArray: Array<RegionController> = [];
 
   get status(): SelectStatus {
@@ -79,11 +78,14 @@ class Store {
    * @param region
    */
   delete(region: RegionController) {
-    if (this._selected === region) {
-      this._selected = null;
-    } else if (this.include(region)) {
+    if (this.include(region)) {
       this._selectArray.splice(this._selectArray.indexOf(region), 1);
     }
+  }
+
+  destroy() {
+    this._selectArray.splice(0);
+    this._selectArray = null;
   }
 }
 
@@ -129,8 +131,6 @@ class StateSelected extends State {
       this.store.removeRegion(region);
     } else {
       this.store.addRegion(region);
-      // this.store.addMultiSelected(this.store.clearSelected());
-      // this.store.addMultiSelected(region);
     }
   }
 }
@@ -143,8 +143,6 @@ class StateMultiSelected extends State {
   select(region: RegionController) {
     this.store.clear();
     this.store.addRegion(region);
-    // this.store.clearTotalMultiSelected();
-    // this.store.addSelected(region);
   }
 
   ctrlSelect(region: RegionController) {
@@ -153,11 +151,6 @@ class StateMultiSelected extends State {
     } else {
       this.store.addRegion(region);
     }
-    // if (this.store.include(region)) {
-    //   this.store.removeMultiSelected(region);
-    // } else {
-    //   this.store.addMultiSelected(region);
-    // }
   }
 }
 
@@ -193,6 +186,7 @@ export class SelectManager extends Store implements ISelectManager {
   }
 
   destroy() {
+    super.destroy();
     this._stateDefault = null;
     this._stateSelected = null;
     this._stateMultiSelected = null;

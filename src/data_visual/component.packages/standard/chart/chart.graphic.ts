@@ -4,7 +4,7 @@ import {RegionController} from '../../../designer/core/region/region.controller'
 import {IGraphic} from '../../../shared/core/graphic/graphic';
 import {Chart} from './graphic.view/chart';
 
-import {contextMenuHelper} from '../../../utils/contextMenu';
+import {contextMenuHelper} from '../../../utils/context.menu.helper';
 
 import {DesignGraphicConfig} from '../../../shared/core/source/config.source/design.config.source';
 import {OuterModelEventTarget} from '../../../shared/core/event/model.event';

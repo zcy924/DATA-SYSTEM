@@ -18,10 +18,10 @@ export class RuntimeConfigSourceFactory implements IConfigSourceFactory {
   }
 
   getConfigSource(configSourceOption: { graphicId: string, graphicKey: string, configOption: any }): Observable<any> {
-    const differ = keyValueDiffers.find({}).create(), option = configSourceOption.configOption;
-
-    const array = [],
-      changes = differ.diff(option);
+    const
+      option = configSourceOption.configOption,
+      changes = keyValueDiffers.find({}).create().diff(option),
+      array = [];
     if (changes) {
       changes.forEachRemovedItem((record) => {
         array.push({

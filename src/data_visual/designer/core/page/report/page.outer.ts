@@ -180,6 +180,8 @@ export class ReportPageOuter {
 
   destroy() {
     if (this._page) {
+      this._pageInner.destroy();
+      this._pageInner = null;
       this._page.destroy();
       this._page = null;
     }
