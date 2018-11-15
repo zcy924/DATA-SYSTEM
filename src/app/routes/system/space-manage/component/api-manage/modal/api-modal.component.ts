@@ -9,6 +9,7 @@ import { SpaceManageService } from '../../../space-manage.service';
 import { HttpRequest, HttpResponse } from '@angular/common/http';
 import { Api } from '../../../../../../../data-generator/Api';
 import { generatorRepo } from '../../../../../../../data-generator/DataGeneratorRepository';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -38,10 +39,10 @@ export class ApiModalComponent implements OnInit {
   url: string;
   name: string;
   remark: string;
-  headersText: string = '';
-  bodyText: string = '';
+  headersText: any = '';
+  bodyText: any = '';
   method: string = 'GET';
-  spaceId;
+  spaceId ;
   id;
   interval;
   status;
@@ -137,6 +138,24 @@ export class ApiModalComponent implements OnInit {
 
   // 更新API
   updateApi() {
+    console.log(this.headersText);
+    console.log(typeof this.headersText);
+    console.log(this.bodyText);
+    console.log(typeof this.bodyText);
+
+    let headers ;
+    let body ;
+    if(this.headersText instanceof Object){
+      headers = this.headersText;
+    }else if(this.headersText.length > 2){
+      headers = JSON.parse(this.headersText);
+    }
+    if(this.bodyText instanceof Object){
+      body = this.bodyText;
+    }else if(this.bodyText.length > 2){
+      body = JSON.parse(this.bodyText);
+    }
+
     let params = {
       id: this.id,
       spaceId: this.spaceId,
@@ -150,8 +169,8 @@ export class ApiModalComponent implements OnInit {
       api: {
         url: this.url,
         method: this.method,
-        headers: this.headersText === '' || this.headersText === null || this.headersText === undefined ? null : JSON.parse(this.headersText),
-        params: this.bodyText === '' || this.bodyText === null || this.bodyText === undefined ? null :JSON.parse(this.bodyText),
+        headers: headers,
+        params: body,
       },
     };
 
@@ -183,8 +202,8 @@ export class ApiModalComponent implements OnInit {
         this.generatorPath = data.generatorPath;
         this.headersText = data.api.headers;
         this.bodyText = data.api.params;
-        this.formData.headersText = (data.api.headers  === null || data.api.headers  === undefined)? '' : JSON.stringify(data.api.headers, null, 2);
-        this.formData.bodyText =  (data.api.params === null || data.api.params === undefined) ? '' : JSON.stringify(data.api.params, null, 2);
+        this.formData.headersText = (data.api.headers  === null || data.api.headers  === undefined )? '' : JSON.stringify(data.api.headers, null, 2);
+        this.formData.bodyText = (data.api.params === null || data.api.params === undefined) ? '' : JSON.stringify(data.api.params, null, 2);
       },
       err => {
         if (err instanceof HttpRequest) {

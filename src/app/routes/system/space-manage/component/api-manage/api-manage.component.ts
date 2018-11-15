@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   templateUrl: 'api-manage.html',
   styles: [
-    `
+      `
       .title-tab {
         height: 32px;
         line-height: 32px;
@@ -39,7 +39,7 @@ export class ApiManageComponent implements OnInit {
     private nzModal: NzModalService,
     private nzMessage: NzMessageService,
     private spaceManageService: SpaceManageService,
-    private router: ActivatedRoute
+    private router: ActivatedRoute,
   ) {
     this.spaceId = this.router.snapshot.parent.params.spaceId;
   }
@@ -53,7 +53,7 @@ export class ApiManageComponent implements OnInit {
       nzTitle: `新增API`,
       nzContent: ApiModalComponent,
       nzComponentParams: {
-        spaceId: this.spaceId
+        spaceId: this.spaceId,
       },
       nzStyle: { top: '30px' },
       nzWidth: '80%',
@@ -141,7 +141,8 @@ export class ApiManageComponent implements OnInit {
         });
       },
       nzComponentParams: {
-        id: data.id
+        id: data.id,
+        spaceId: this.spaceId,
       },
     });
     modal.afterClose.subscribe(data => {
