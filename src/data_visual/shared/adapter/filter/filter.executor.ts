@@ -1,4 +1,4 @@
-import { Type } from '@angular/core';
+import { Type } from '../../interface/type';
 import { ListFilter } from './list.filter';
 import { SortFilter } from './sort.filter';
 import { BaseFilter, IFilterConfig } from './filter.interface';

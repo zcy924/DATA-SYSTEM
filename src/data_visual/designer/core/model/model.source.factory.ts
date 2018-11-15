@@ -1,9 +1,9 @@
-import {IConfigSourceFactory} from '../config/config.source.factory';
-import {DesignConfigSourceFactory} from '../../../designer/core/config/design/design.config.source.factory';
-import {RuntimeConfigSourceFactory} from '../config/runtime/runtime.config.source.factory';
+import {IConfigSourceFactory} from '../../../shared/core/config/config.source.factory';
+import {DesignConfigSourceFactory} from '../config/design/design.config.source.factory';
+import {RuntimeConfigSourceFactory} from '../../../shared/core/config/runtime/runtime.config.source.factory';
 import {combineLatest, Observable} from 'rxjs';
-import {IConfigSourceOption} from '../../../designer/core/config/config.source.interface';
-import { DataSourceFactory } from '../data/data.source.factory';
+import {IConfigSourceOption} from '../config/config.source.interface';
+import { DataSourceFactory } from '../../../shared/core/data/data.source.factory';
 
 export class ModelSourceFactory {
   private static _modelSourceFactoryForDesign: ModelSourceFactory;

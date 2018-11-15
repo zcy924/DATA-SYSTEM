@@ -126,7 +126,6 @@ export class ReportPageInner implements IPage {
         },
       ];
     };
-
   }
 
   activate() {

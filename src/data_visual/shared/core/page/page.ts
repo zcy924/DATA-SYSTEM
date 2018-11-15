@@ -1,3 +1,3 @@
-interface IPage {
-
+export interface IPage {
+  destroy();
 }

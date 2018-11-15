@@ -1,5 +1,5 @@
-import { IPage } from '../../../designer/core/interface';
 import { IRegion } from '../region/region';
+import { IPage } from '../page/page';
 
 type ICallback = (event: EventMessage) => void;
 

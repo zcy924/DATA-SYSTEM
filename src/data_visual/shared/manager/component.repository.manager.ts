@@ -1,9 +1,9 @@
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { delay } from 'rxjs/operators';
 import { Type } from '../interface/type';
 import { IGraphic } from '../core/graphic/graphic';
 import { ComponentRepository } from '../core/repository/component.repository';
 import { StandardCompRepo } from '../../component.packages/standard';
-import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
-import { delay } from 'rxjs/operators';
 import { CustomCompRepo } from '../../component.packages/custom';
 
 /**
