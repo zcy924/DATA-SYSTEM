@@ -7,7 +7,7 @@ import {Chart} from './graphic.view/chart';
 import {contextMenuHelper} from '../../../utils/contextMenu';
 
 import {DesignGraphicConfig} from '../../../shared/core/source/config.source/design.config.source';
-import {OuterModelEventTarget} from '../../../designer/core/event/model.event';
+import {OuterModelEventTarget} from '../../../shared/core/event/model.event';
 
 
 const template = `

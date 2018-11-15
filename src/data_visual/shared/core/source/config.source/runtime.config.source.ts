@@ -1,5 +1,5 @@
 import { GraphicConfig } from '../../../../designer/core/config/design/graphic.config';
-import { ChangedItem } from '../../../../designer/core/event/model.event';
+import { ChangedItem } from '../../event/model.event';
 import { KeyValueDiffer } from '../../../utils/keyvalue_differs';
 import { keyValueDiffers } from '../../../utils/default_keyvalue_differ';
 

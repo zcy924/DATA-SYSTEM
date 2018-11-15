@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
+import * as _ from 'lodash';
 import { DataSourceFactory } from './data.source.factory';
 import { IDataSourceConfig } from '../../file/data.source.config';
-import * as _ from 'lodash';
 import { DataSourceConfigSet } from './data.source.config.set';
 
 /**

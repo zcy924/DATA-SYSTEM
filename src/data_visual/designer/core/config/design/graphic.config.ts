@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import {Observable, Subject} from 'rxjs';
-import { ChangedItem } from '../../event/model.event';
+import { ChangedItem } from '../../../../shared/core/event/model.event';
 
 type KeyValueListener = (key: string, oldValue: any, newValue: any, option?: any) => void;
 

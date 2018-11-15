@@ -1,5 +1,5 @@
-import {IPage} from '../interface';
-import { RegionController } from '../region/region.controller';
+import {IPage} from '../../../designer/core/interface';
+import { RegionController } from '../../../designer/core/region/region.controller';
 
 type ICallback = (event: EventMessage) => void;
 

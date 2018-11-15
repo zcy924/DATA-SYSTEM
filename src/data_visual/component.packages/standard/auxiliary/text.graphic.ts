@@ -1,5 +1,5 @@
 import { TextAuxiliary } from './graphic.view/text.auxiliary';
-import { IGraphicView } from '../graphic.view';
+import { IGraphicView } from '../../../shared/core/graphic/graphic.view';
 import { DefaultGraphic } from '../../../shared/core/graphic/default.graphic';
 import { Observable, Subscription } from 'rxjs';
 import { GraphicWrapper } from '../../../designer/core/graphic/graphic.wrapper';

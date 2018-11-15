@@ -1,5 +1,5 @@
 import {RegionController} from '../core/region/region.controller';
-import {EventBus, EventMessage} from '../core/event/event.bus';
+import {EventBus, EventMessage} from '../../shared/core/event/event.bus';
 import { IPlugin } from './plugin';
 
 enum SelectStatus {

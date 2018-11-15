@@ -1,5 +1,6 @@
-import {ModelEventTarget} from '../../../designer/core/event/model.event';
 import * as _ from 'lodash';
+import {ModelEventTarget} from '../event/model.event';
+
 
 export class PageConfig extends ModelEventTarget {
   option: any;

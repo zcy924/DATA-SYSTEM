@@ -1,6 +1,6 @@
 
 import {IPage} from '../core/interface';
-import {EventBus} from '../core/event/event.bus';
+import {EventBus} from '../../shared/core/event/event.bus';
 import { IPlugin } from './plugin';
 
 export class PluginManager {

@@ -1,5 +1,5 @@
-import { IComponentMeta, IPaletteMeta } from '../../interface/component.meta';
 import * as _ from 'lodash';
+import { IComponentMeta, IPaletteMeta } from '../../interface/component.meta';
 
 
 /**

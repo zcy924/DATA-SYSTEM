@@ -1,4 +1,4 @@
-import {ViewEventTarget} from '../event/view.event';
+import {ViewEventTarget} from '../../../shared/core/event/view.event';
 
 
 export abstract class View {

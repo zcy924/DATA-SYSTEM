@@ -1,6 +1,6 @@
 
-import { ViewEventTarget } from '../../designer/core/event/view.event';
-import { IGraphicView } from './graphic.view';
+import { ViewEventTarget } from '../../shared/core/event/view.event';
+import { IGraphicView } from '../../shared/core/graphic/graphic.view';
 
 export abstract class DefaultGraphicView implements IGraphicView {
   $element: JQuery;

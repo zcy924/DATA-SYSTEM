@@ -1,5 +1,5 @@
 import {ChartGraphic} from '../chart.graphic';
-import {IGraphicView} from '../../graphic.view';
+import {IGraphicView} from '../../../../shared/core/graphic/graphic.view';
 import {DefaultGraphicView} from '../../default.graphic.view';
 
 enum ChartState {
