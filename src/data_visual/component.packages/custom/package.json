@@ -1,0 +1,14 @@
+{
+  "name": "@barca/custom",
+  "version": "1.0.0",
+  "description": "自定义组件库",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "组件库"
+  ],
+  "author": "李爱东",
+  "license": "ISC"
+}
