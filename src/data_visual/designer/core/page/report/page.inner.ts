@@ -36,7 +36,7 @@ export class ReportPageInner implements IPage {
     this.regionManager = new RegionManager();
     this.selectManager = new SelectManager();
     this.activateManager = new ActivateManager(this);
-    this.configSourceManager = new ConfigSourceManager(_mode);
+    this.configSourceManager = new ConfigSourceManager();
     this.dataSourceManager = new DataSourceManager(dataOptionManager.getDataSourceConfigSet('space1'));
     this.actionManager = new ActionManager();
   }

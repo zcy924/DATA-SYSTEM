@@ -1,7 +1,7 @@
-import {KeyValueDiffer} from '@angular/core';
-import {GraphicConfig} from '../../../../designer/core/config/design/graphic.config';
-import {session} from '../../../../designer/utils/session';
+import { GraphicConfig } from '../../../../designer/core/config/design/graphic.config';
 import { ChangedItem } from '../../../../designer/core/event/model.event';
+import { KeyValueDiffer } from '../../../utils/keyvalue_differs';
+import { keyValueDiffers } from '../../../utils/default_keyvalue_differ';
 
 export class RuntimeConfigSource extends GraphicConfig {
   private _option: any;
@@ -9,7 +9,7 @@ export class RuntimeConfigSource extends GraphicConfig {
 
   constructor() {
     super();
-    this._differ = session.differs.find({}).create();
+    this._differ = keyValueDiffers.find({}).create();
   }
 
   importOption(option: any) {
@@ -24,7 +24,7 @@ export class RuntimeConfigSource extends GraphicConfig {
           key: `remove.${record.key}`,
           oldValue: record.previousValue,
           newValue: record.currentValue,
-          option
+          option,
         });
       });
       changes.forEachAddedItem((record) => {
@@ -32,7 +32,7 @@ export class RuntimeConfigSource extends GraphicConfig {
           key: `add.${record.key}`,
           oldValue: record.previousValue,
           newValue: record.currentValue,
-          option
+          option,
         });
         console.log('addedItem', JSON.stringify(record.key));
       });
@@ -42,14 +42,14 @@ export class RuntimeConfigSource extends GraphicConfig {
           key: record.key,
           oldValue: record.previousValue,
           newValue: record.currentValue,
-          option
+          option,
         });
       });
       array.push({
         key: 'option',
         oldValue: option,
         newValue: option,
-        option
+        option,
       });
     }
     if (array.length > 0) {

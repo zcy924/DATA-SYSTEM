@@ -1,6 +1,6 @@
+import { IRegionOption } from '../shared/file/component.option';
 import { PageRuntime } from './page.runtime';
 import { GraphicWrapperRuntime } from './graphic.wrapper.runtime';
-import { IRegionOption } from '../shared/file/component.option';
 
 const template = `
 <div class="m-dashbox">

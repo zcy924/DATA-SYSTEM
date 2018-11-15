@@ -1,13 +1,13 @@
-import { RegionRuntime } from './region.runtime';
-import { PageConfig } from '../shared/core/page/page.config';
 import { Observable } from 'rxjs/internal/Observable';
-import { PageConfigRuntime } from './page.config.runtime';
-import { GraphicWrapperRuntime } from './graphic.wrapper.runtime';
-import { IConfigSourceFactory } from '../designer/core/config/config.source.factory';
-import { RuntimeConfigSourceFactory } from '../designer/core/config/runtime/runtime.config.source.factory';
-import { regionMap } from '../designer/config/region.map';
+
+import { PageConfig } from '../shared/core/page/page.config';
 import { DataSourceManager } from '../shared/core/data/data.source.manager';
 import { IComponentOption } from '../shared/file/component.option';
+import { PageConfigRuntime } from './page.config.runtime';
+import { RegionRuntime } from './region.runtime';
+import { GraphicWrapperRuntime } from './graphic.wrapper.runtime';
+import { IConfigSourceFactory } from '../shared/core/config/config.source.factory';
+import { RuntimeConfigSourceFactory } from '../shared/core/config/runtime/runtime.config.source.factory';
 
 enum PageRuntimeState {
   created, initialized, loaded
@@ -137,20 +137,17 @@ export class PageRuntime {
   }
 
   private _createRegion(componentOption: IComponentOption) {
-    if (regionMap.has(componentOption.region.regionKey)) {
-      const region: RegionRuntime = new RegionRuntime(this);
+    const region: RegionRuntime = new RegionRuntime(this);
 
-      region.init(componentOption.region.regionOption);
+    region.init(componentOption.region.regionOption);
 
-      const graphic = new GraphicWrapperRuntime(region);
-      graphic.init(componentOption.graphic);
+    const graphic = new GraphicWrapperRuntime(region);
+    graphic.init(componentOption.graphic);
 
-      region.addChild(graphic);
-      setTimeout(() => {
-        graphic.resize();
-      }, 200);
-
-    }
+    region.addChild(graphic);
+    setTimeout(() => {
+      graphic.resize();
+    }, 200);
   }
 
   addChild(region: RegionRuntime) {

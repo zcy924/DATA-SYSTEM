@@ -1,6 +1,6 @@
-import {IConfigSourceFactory} from './config.source.factory';
+import {IConfigSourceFactory} from '../../../shared/core/config/config.source.factory';
 import {DesignConfigSourceFactory} from './design/design.config.source.factory';
-import {RuntimeConfigSourceFactory} from './runtime/runtime.config.source.factory';
+import {RuntimeConfigSourceFactory} from '../../../shared/core/config/runtime/runtime.config.source.factory';
 import {Observable} from 'rxjs';
 
 /**
@@ -10,16 +10,9 @@ export class ConfigSourceManager {
   private _configSourceFactory: IConfigSourceFactory;
   private _mockConfigSourceFactory: IConfigSourceFactory;
 
-  constructor(modelSourceFactoryType: 'design' | 'runtime') {
-    switch (modelSourceFactoryType) {
-      case 'design':
-        this._configSourceFactory = DesignConfigSourceFactory.getInstance();
-        this._mockConfigSourceFactory = RuntimeConfigSourceFactory.getInstance();
-        break;
-      case 'runtime':
-        this._mockConfigSourceFactory = this._configSourceFactory = RuntimeConfigSourceFactory.getInstance();
-        break;
-    }
+  constructor() {
+    this._configSourceFactory = DesignConfigSourceFactory.getInstance();
+    this._mockConfigSourceFactory = RuntimeConfigSourceFactory.getInstance();
   }
 
   getConfigSource(configSourceOption: any): Observable<any> {
