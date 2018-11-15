@@ -1,7 +1,6 @@
-import {RegionController} from '../../designer/core/region/region.controller';
 import * as _ from 'lodash';
 import {Observable, Subscription} from 'rxjs';
-import { DefaultGraphic } from '../../shared/core/graphic/default.graphic';
+import { DefaultGraphic } from '@barca/shared/core/graphic/default.graphic';
 
 const template = `
 <div class="flip-number-wrapper" style="justify-content: center;">
@@ -58,7 +57,7 @@ export class FlipNumberGraphic extends DefaultGraphic {
    * 3、建立父子关系
    * @param {RegionController} region
    */
-  constructor(region: RegionController) {
+  constructor(region: any) {
     super();
     this.$element = $(template);
   }

@@ -18,11 +18,17 @@
       "dom"
     ],
     "paths": {
+      "@barca/shared": [
+        "data_visual/shared"
+      ],
+      "@barca/shared/*": [
+        "data_visual/shared/*"
+      ],
       "@shared": [
-        "app/shared","data_visual/shared"
+        "app/shared"
       ],
       "@shared/*": [
-        "app/shared/*","data_visual/shared/*"
+        "app/shared/*"
       ],
       "@core": [
         "app/core","data_visual/core"

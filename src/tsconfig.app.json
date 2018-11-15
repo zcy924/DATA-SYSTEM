@@ -3,6 +3,12 @@
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "paths": {
+      "@barca/shared": [
+        "data_visual/shared"
+      ],
+      "@barca/shared/*": [
+        "data_visual/shared/*"
+      ],
       "@shared": [
         "app/shared","designer/shared"
       ],

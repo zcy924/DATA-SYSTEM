@@ -1,8 +1,6 @@
 import * as moment from 'moment';
 import {Observable} from 'rxjs';
-import {RegionController} from '../../designer/core/region/region.controller';
-import {Chart} from '../standard/chart/graphic.view/chart';
-import { DefaultGraphic } from '../../shared/core/graphic/default.graphic';
+import { DefaultGraphic } from '@barca/shared/core/graphic/default.graphic';
 
 const template = `
 <div class="time-chart-container" 
@@ -22,7 +20,7 @@ export class ClockGraphic extends DefaultGraphic {
    * 3、建立父子关系
    * @param {RegionController} region
    */
-  constructor(region: RegionController) {
+  constructor(region: any) {
     super();
     this.$element = $(template);
   }

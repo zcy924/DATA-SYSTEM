@@ -1,15 +1,14 @@
 import { PageRuntime } from './page.runtime';
 import { PageManagerRuntime } from './page.manager.runtime';
 
-import { IFileStructure } from '../shared/file/file.structure';
-import { ComponentRepositoryManager } from '../shared/manager/component.repository.manager';
-import { GeneratorRepositoryManager } from '../shared/manager/generator.repository.manager';
-import { ComponentRepository } from '../shared/core/repository/component.repository';
-import { GeneratorRepository } from '../shared/core/repository/generator.repository';
-import { DataSourceManager } from '../shared/core/data/data.source.manager';
-import { DataSourceConfigSet } from '../shared/core/data/data.source.config.set';
-
 import * as _ from 'lodash';
+import { ComponentRepositoryManager } from '@barca/shared/manager/component.repository.manager';
+import { GeneratorRepositoryManager } from '@barca/shared/manager/generator.repository.manager';
+import { IFileStructure } from '@barca/shared/file/file.structure';
+import { ComponentRepository } from '@barca/shared/core/repository/component.repository';
+import { GeneratorRepository } from '@barca/shared/core/repository/generator.repository';
+import { DataSourceManager } from '@barca/shared/core/data/data.source.manager';
+import { DataSourceConfigSet } from '@barca/shared/core/data/data.source.config.set';
 
 /**
  * 1、支持同时打开多个页面
@@ -109,7 +108,7 @@ export class Runtime {
   removeComponentRepository() {
   }
 
-  addGeneretorRepository(geneRepo: GeneratorRepository | Array<GeneratorRepository>) {
+  addGeneratorRepository(geneRepo: GeneratorRepository | Array<GeneratorRepository>) {
     if (_.isArray(geneRepo)) {
       geneRepo
         .forEach(value => this._geneRepoManager

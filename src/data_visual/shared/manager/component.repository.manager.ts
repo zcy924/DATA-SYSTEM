@@ -3,8 +3,6 @@ import { delay } from 'rxjs/operators';
 import { Type } from '../interface/type';
 import { IGraphic } from '../core/graphic/graphic';
 import { ComponentRepository } from '../core/repository/component.repository';
-import { StandardCompRepo } from '../../component.packages/standard';
-import { CustomCompRepo } from '../../component.packages/custom';
 
 /**
  * 设计时和运行时都会使用到ComponentRepositoryManager
@@ -22,8 +20,6 @@ export class ComponentRepositoryManager {
   static getInstance() {
     if (!this._manager) {
       this._manager = new ComponentRepositoryManager();
-      this._manager.addComponentRepository(StandardCompRepo);
-      this._manager.addComponentRepository(CustomCompRepo);
     }
     return this._manager;
   }

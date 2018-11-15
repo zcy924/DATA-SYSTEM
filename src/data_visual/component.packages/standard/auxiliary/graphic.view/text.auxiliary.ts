@@ -1,5 +1,5 @@
 import {DefaultGraphicView} from '../../default.graphic.view';
-import { IGraphic } from '../../../../shared/core/graphic/graphic';
+import { IGraphic } from '@barca/shared/core/graphic/graphic';
 
 const TextTemplate = `<div class="m-rect m-rect-text"
  style="color: rgb(195,195,195); font-size: 12px; font-family: avenir, Helvetica, Arial, sans-serif; 

@@ -1,7 +1,7 @@
 import { map, publishBehavior, refCount } from 'rxjs/operators';
 import { interval, Observable } from 'rxjs/index';
-import { IDataSourceGenerator } from '../../shared/core/data/data.source.generator';
 import { MockDynamicDataSourceConfig } from './interface';
+import { IDataSourceGenerator } from '@barca/shared/core/data/data.source.generator';
 
 export class MockDynamicDataSourceGenerator implements IDataSourceGenerator {
   /**

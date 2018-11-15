@@ -1,10 +1,7 @@
-import { RegionController } from '../../../designer/core/region/region.controller';
-
 import { Grid } from './echart.interface/grid';
 import { BarSeriesConfig } from './echart.interface/series/bar.series';
 import { Axis } from './echart.interface/axis';
 import { Title } from './echart.interface/title';
-import { GraphicWrapper } from '../../../designer/core/graphic/graphic.wrapper';
 import { ChartGraphic } from './chart.graphic';
 
 
@@ -20,11 +17,11 @@ export interface ChartBarOption {
 }
 
 export class BarChartGraphic extends ChartGraphic {
-  constructor(region: RegionController) {
+  constructor(region: any) {
     super(region);
   }
 
-  init(region: RegionController, wrapper: GraphicWrapper) {
+  init(region: any, wrapper: any) {
     super.init();
     region.addMethod && region.addMethod('desc', () => {
       return {

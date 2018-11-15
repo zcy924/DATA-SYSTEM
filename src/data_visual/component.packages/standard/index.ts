@@ -1,4 +1,3 @@
-import { ComponentRepository } from '../../shared/core/repository/component.repository';
 import { BarChartGraphic } from './chart/bar.chart.graphic';
 import { LineChartGraphic } from './chart/line.chart.graphic';
 import { PieChartGraphic } from './chart/pie.chart.graphic';
@@ -11,6 +10,7 @@ import { WordCloudChartGraphic } from './chart/word.cloud.chart.graphic';
 import { GaugeChartGraphic } from './chart/gauge.chart.graphic';
 import { RingChartGraphic } from './chart/ring.chart.graphic';
 import { LinesChartGraphic } from './chart/lines.chart.graphic';
+import { ComponentRepository } from '@barca/shared/core/repository/component.repository';
 
 const compRepo = new ComponentRepository('standard', '标准组件库');
 

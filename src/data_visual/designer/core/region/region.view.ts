@@ -5,7 +5,7 @@ import { closestNum } from '../../utils/common';
 import { RegionController } from './region.controller';
 import { CoordinatesAndDimensions } from '../interface';
 import { RegionModel } from './region.model';
-import { contextMenuHelper, ContextMenuItem } from '../../../utils/context.menu.helper';
+import { contextMenuHelper, ContextMenuItem } from '../../../shared/utils/context.menu.helper';
 import { resizeTipHelper } from '../../helper/resize.tip.helper';
 
 type IContextMenuGenerator = () => Array<ContextMenuItem | 'split'>;

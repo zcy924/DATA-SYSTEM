@@ -1,5 +1,5 @@
-import {IGraphicView} from '../../../../shared/core/graphic/graphic.view';
-import { ViewEventTarget } from '../../../../shared/core/event/view.event';
+import { IGraphicView } from '@barca/shared/core/graphic/graphic.view';
+import { ViewEventTarget } from '@barca/shared/core/event/view.event';
 
 export abstract class FilterNode implements IGraphicView {
   $element: JQuery;

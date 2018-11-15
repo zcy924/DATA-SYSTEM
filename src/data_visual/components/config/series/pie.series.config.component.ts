@@ -11,7 +11,7 @@ import {NG_VALUE_ACCESSOR, NgForm} from '@angular/forms';
 import {NzModalService} from 'ng-zorro-antd';
 import {CustomControlValueAccessor} from '../CustomControlValueAccessor';
 import {draggableHeler} from '../../../utils/draggable.helper';
-import {contextMenuHelper} from '../../../utils/context.menu.helper';
+import {contextMenuHelper} from '../../../shared/utils/context.menu.helper';
 import {NzModalFilterComponent} from '../../graphic.config/common/filter.modal.component';
 import { Dimension } from '../../../designer/data/data.model.interface';
 import { PieSeriesConfig } from '../../../component.packages/standard/chart/echart.interface/series/pie.series';

@@ -1,13 +1,10 @@
 import {Type} from '@angular/core';
 import {Observable} from 'rxjs';
-import {RegionController} from '../../../designer/core/region/region.controller';
-import {IGraphic} from '../../../shared/core/graphic/graphic';
 import {Chart} from './graphic.view/chart';
 
-import {contextMenuHelper} from '../../../utils/context.menu.helper';
-
-import {DesignGraphicConfig} from '../../../shared/core/source/config.source/design.config.source';
-import {OuterModelEventTarget} from '../../../shared/core/event/model.event';
+import { IGraphic } from '@barca/shared/core/graphic/graphic';
+import { OuterModelEventTarget } from '@barca/shared/core/event/model.event';
+import { contextMenuHelper } from '@barca/shared/utils/context.menu.helper';
 
 
 const template = `
@@ -35,9 +32,9 @@ export abstract class ChartGraphic implements IGraphic {
    * 1、初始化视图
    * 2、给视图绑定事件处理函数
    * 3、建立父子关系
-   * @param {RegionController} region
+   * @param {any} region
    */
-  protected constructor(region: RegionController) {
+  protected constructor(region: any) {
     this.$element = $(template);
 
     this._$frame = this.$element.find('.frame');

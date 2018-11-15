@@ -1,10 +1,7 @@
-import { RegionController } from '../../../designer/core/region/region.controller';
-
 import { Grid } from './echart.interface/grid';
 import { Axis } from './echart.interface/axis';
 import { Title } from './echart.interface/title';
 import { LineSeriesConfig } from './echart.interface/series/line.series';
-import { GraphicWrapper } from '../../../designer/core/graphic/graphic.wrapper';
 import { ChartGraphic } from './chart.graphic';
 
 export interface ChartLineOption {
@@ -18,11 +15,11 @@ export interface ChartLineOption {
 }
 
 export class LineChartGraphic extends ChartGraphic {
-  constructor(region: RegionController) {
+  constructor(region: any) {
     super(region);
   }
 
-  init(region: RegionController, wrapper: GraphicWrapper) {
+  init(region: any, wrapper: any) {
     super.init();
     region.addMethod && region.addMethod('desc', () => {
       return {

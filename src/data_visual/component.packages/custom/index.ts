@@ -1,7 +1,7 @@
-import { ComponentRepository } from '../../shared/core/repository/component.repository';
 import { ClockGraphic } from './clock.graphic';
 import { FlipNumberGraphic } from './flip.number.graphic';
 import { TableGraphic } from './table.graphic';
+import { ComponentRepository } from '@barca/shared/core/repository/component.repository';
 
 const compRepo = new ComponentRepository('custom', '自定义组件库');
 

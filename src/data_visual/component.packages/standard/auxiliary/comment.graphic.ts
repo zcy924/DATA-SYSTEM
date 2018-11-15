@@ -1,7 +1,6 @@
-import {CommentAuxiliary} from './graphic.view/comment.auxiliary';
-import {RegionController} from '../../../designer/core/region/region.controller';
-import {DefaultGraphic} from '../../../shared/core/graphic/default.graphic';
-import {Observable, Subscription} from 'rxjs';
+import { CommentAuxiliary } from './graphic.view/comment.auxiliary';
+import { Observable, Subscription } from 'rxjs';
+import { DefaultGraphic } from '@barca/shared/core/graphic/default.graphic';
 
 const template = `
 <div class="graphic m-graphic m-graphic-comment z-mode-edit">
@@ -14,7 +13,7 @@ export class CommentGraphic extends DefaultGraphic {
   $element: JQuery;
   private _$frame: JQuery;
 
-  constructor(private _region: RegionController) {
+  constructor(private _region: any) {
     super();
     this.$element = $(template);
     this._$frame = this.$element.find('.frame');

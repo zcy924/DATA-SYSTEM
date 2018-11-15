@@ -1,8 +1,6 @@
 import { TextAuxiliary } from './graphic.view/text.auxiliary';
-import { IGraphicView } from '../../../shared/core/graphic/graphic.view';
-import { DefaultGraphic } from '../../../shared/core/graphic/default.graphic';
 import { Observable, Subscription } from 'rxjs';
-import { GraphicWrapper } from '../../../designer/core/graphic/graphic.wrapper';
+import { DefaultGraphic } from '@barca/shared/core/graphic/default.graphic';
 
 const template = `
 <div class="graphic m-graphic m-graphic-text z-mode-edit">
@@ -21,7 +19,7 @@ export class TextGraphic extends DefaultGraphic {
     this.$element = $(template);
   }
 
-  init(wrapper: GraphicWrapper) {
+  init(wrapper: any) {
     this._view = new TextAuxiliary(this);
     this.$element.find('.frame').append(this._view.$element);
     this._modelEventTarget.register('option', (key, oldValue, newValue) => {

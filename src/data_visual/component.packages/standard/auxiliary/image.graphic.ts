@@ -1,8 +1,6 @@
 import { Observable, Subscription } from 'rxjs';
 import { ImageAuxiliary } from './graphic.view/image.auxiliary';
-import { DefaultGraphic } from '../../../shared/core/graphic/default.graphic';
-import { RegionController } from '../../../designer/core/region/region.controller';
-import * as _ from 'lodash';
+import { DefaultGraphic } from '@barca/shared/core/graphic/default.graphic';
 
 const template = `
 <div class="graphic m-graphic m-graphic-image">
@@ -20,7 +18,7 @@ export class ImageGraphic extends DefaultGraphic {
     this.$element = $(template);
   }
 
-  init(region: RegionController) {
+  init(region: any) {
     this._view = new ImageAuxiliary(this);
     this.$element.find('.frame').append(this._view.$element);
 

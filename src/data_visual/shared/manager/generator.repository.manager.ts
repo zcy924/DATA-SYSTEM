@@ -1,5 +1,4 @@
 import { GeneratorRepository } from '../core/repository/generator.repository';
-import { standardGeneratorRepo } from '../../data.source.packages/mock';
 
 /**
  * 设计时和运行时都会使用到ComponentRepositoryManager
@@ -15,8 +14,7 @@ export class GeneratorRepositoryManager {
 
   static getInstance() {
     if (!this._manager) {
-      const manager = this._manager = new GeneratorRepositoryManager();
-      manager.addGeneratorRepository(standardGeneratorRepo);
+      this._manager = new GeneratorRepositoryManager();
     }
     return this._manager;
   }
