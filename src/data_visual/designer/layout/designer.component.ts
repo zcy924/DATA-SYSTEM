@@ -25,7 +25,6 @@ export class DesignerComponent implements AfterViewInit, OnInit {
   dashboardId;
 
   constructor(private _elementRef: ElementRef, private _differs: KeyValueDiffers, private route: ActivatedRoute, private _service: CommService) {
-    session.differs = _differs;
   }
 
   ngOnInit() {

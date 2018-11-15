@@ -30,7 +30,6 @@ export class ScreenDetailComponent implements AfterViewInit, OnInit, OnDestroy {
               private _router: ActivatedRoute,
               private _nzMessage: NzMessageService,
               private _spaceManageService: SpaceManageService) {
-    session.differs = _differs;
   }
 
   ngOnInit() {

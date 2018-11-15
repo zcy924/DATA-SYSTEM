@@ -1,4 +1,3 @@
-
 import {IPage} from '../core/interface';
 import {EventBus} from '../../shared/core/event/event.bus';
 import { IPlugin } from './plugin';

@@ -1,6 +1,7 @@
 import { IRegionOption } from '../shared/file/component.option';
 import { PageRuntime } from './page.runtime';
 import { GraphicWrapperRuntime } from './graphic.wrapper.runtime';
+import { IRegion } from '../shared/core/region/region';
 
 const template = `
 <div class="m-dashbox">
@@ -8,7 +9,7 @@ const template = `
   </div>
 `;
 
-export class RegionRuntime {
+export class RegionRuntime implements IRegion{
 
   private _page: PageRuntime;
   private _graphicWrapper: GraphicWrapperRuntime;

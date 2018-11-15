@@ -1,5 +1,5 @@
-import {IPage} from '../../../designer/core/interface';
-import { RegionController } from '../../../designer/core/region/region.controller';
+import { IPage } from '../../../designer/core/interface';
+import { IRegion } from '../region/region';
 
 type ICallback = (event: EventMessage) => void;
 
@@ -96,7 +96,7 @@ export class EventMessage {
   eventName: string;
   tags: Array<string> = [];
 
-  private _target: RegionController;
+  private _target: IRegion;
 
   constructor() {
 

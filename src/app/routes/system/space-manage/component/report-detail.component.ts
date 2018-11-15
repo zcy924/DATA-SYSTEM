@@ -33,7 +33,6 @@ export class ReportDetailComponent implements AfterViewInit, OnInit, OnDestroy {
     private _personalService: PersonalCenterService,
     private _nzModel: NzModalService,
     private _nzMessage: NzMessageService) {
-    session.differs = _differs;
   }
 
   ngOnInit() {

@@ -202,11 +202,11 @@ export class SelectPlugin extends Store implements IPlugin {
   }
 
   listen(eventBus: EventBus) {
-    eventBus
-      .register('region.select', (message: EventMessage) => {
-      this.state.select(message.target);
-    }).register('region.ctrlSelect', (message: EventMessage) => {
-      this.state.ctrlSelect(message.target);
-    });
+    // eventBus
+    //   .register('region.select', (message: EventMessage) => {
+    //   this.state.select(message.target);
+    // }).register('region.ctrlSelect', (message: EventMessage) => {
+    //   this.state.ctrlSelect(message.target);
+    // });
   }
 }

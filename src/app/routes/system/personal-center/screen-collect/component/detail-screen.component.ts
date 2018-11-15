@@ -27,7 +27,6 @@ export class DetailScreenComponent implements AfterViewInit, OnInit, OnDestroy {
               private _router: Router,
               private _nzMessage: NzMessageService,
               private _personalService: PersonalCenterService) {
-    session.differs = _differs;
   }
 
   ngOnInit() {
