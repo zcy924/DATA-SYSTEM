@@ -21,19 +21,18 @@ export class SpaceSquareComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private spaceService: SpaceSquareService,
+    private _spaceService: SpaceSquareService,
     private nzModel: NzModalService,
     public settings: SettingsService,
-    private message: NzMessageService
-  ) {}
+    private message: NzMessageService,
+  ) {
+  }
 
   ngOnInit() {
     this.getList();
   }
 
   openDetail(spaceId, spaceType) {
-    localStorage.setItem('spaceID', spaceId);
-    localStorage.setItem('spaceType', spaceType);
     this.router.navigate(['app/square/' + spaceId]);
   }
 
@@ -42,7 +41,7 @@ export class SpaceSquareComponent implements OnInit {
     this.onlyRead = [];
     this.onlyWrite = [];
     const params = { Space: { space_name: this.key || '' } };
-    this.spaceService.getSpaceList(params).subscribe(
+    this._spaceService.getSpaceList(params).subscribe(
       res => {
         console.log(res);
         this.spaceArr = res['retList'];
@@ -54,13 +53,17 @@ export class SpaceSquareComponent implements OnInit {
           } else {
             this.onlyWrite.push(value);
           }
+          this._spaceService.getLogo({ id: value.spaceId, idType: '1' })
+            .subscribe(data=>{
+              value.avatar = data.logo;
+            });
         });
       },
       err => {
         if (err instanceof HttpResponse) {
           this.message.error(err.body.retMsg);
         }
-      }
+      },
     );
   }
 

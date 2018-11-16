@@ -8,19 +8,19 @@ import { environment } from '@env/environment';
 export class SpaceSquareService {
   url = environment.SERVER_URL;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   getSpaceList(params: any): Observable<any> {
-    return this.http.post(
-      this.url + 'company/spaceSquareManage/qrySpaceList',
-      params,
-    );
+    return this.http.post(this.url + 'company/spaceSquareManage/qrySpaceList', params);
   }
 
   createSpace(params: any): Observable<any> {
-    return this.http.post(
-      this.url + 'company/spaceSquareManage/addSpace',
-      params,
-    );
+    return this.http.post(this.url + 'company/spaceSquareManage/addSpace', params);
   }
+
+  getLogo(params: any): Observable<any> {
+    return this.http.post(this.url + 'logo/getLogo', params);
+  }
+
 }
