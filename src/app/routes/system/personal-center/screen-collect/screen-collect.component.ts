@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NzModalService, NzMessageService} from 'ng-zorro-antd';
 import {HttpResponse} from '@angular/common/http';
 import {Page} from 'app/models/page';
-import {EditScreenCollectComponent} from './component/edit-screen-collect.component';
+import {EditScreenCollectComponent} from './modal/edit-screen-collect.component';
 import {SettingsService} from '@delon/theme';
 import {SideMenuService} from '@shared/side-menu.service';
 import {PersonalCenterService} from "../personal-center.service";

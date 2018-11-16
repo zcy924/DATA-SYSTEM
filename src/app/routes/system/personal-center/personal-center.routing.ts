@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ReportCollectComponent } from './report-collect/report-collect.component';
 import { ScreenCollectComponent } from './screen-collect/screen-collect.component';
 import { UserInfoComponent } from './user-info/user-info.component';
-import { DetailScreenComponent } from './screen-collect/component/detail-screen.component';
+import { DetailScreenComponent } from './screen-detail/detail-screen.component';
 import { DetailReportComponent } from './report-detail/detail-report.component';
 
 

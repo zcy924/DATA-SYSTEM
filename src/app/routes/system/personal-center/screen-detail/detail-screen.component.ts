@@ -3,9 +3,14 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {switchMap} from 'rxjs/operators';
 import {HttpResponse} from "@angular/common/http";
 import {NzMessageService} from "ng-zorro-antd";
-import {PersonalCenterService} from "../../personal-center.service";
-import { ReportPageOuter } from '../../../../../../data_visual/designer/core/page/report/page.outer';
-import { session } from '../../../../../../data_visual/designer/utils/session';
+import {PersonalCenterService} from "../personal-center.service";
+import { ReportPageOuter } from '../../../../../data_visual/designer/core/page/report/page.outer';
+import { session } from '../../../../../data_visual/designer/utils/session';
+import { PageRuntime } from '../../../../../data_visual/runtime/page.runtime';
+import { Runtime } from '../../../../../data_visual/runtime';
+import { StandardCompRepo } from '../../../../../data_visual/component.packages/standard';
+import { CustomCompRepo } from '../../../../../data_visual/component.packages/custom';
+import { standardGeneratorRepo } from '../../../../../data_visual/data.source.packages/mock';
 
 @Component({
   templateUrl: './detail-screen.html',
@@ -13,7 +18,7 @@ import { session } from '../../../../../../data_visual/designer/utils/session';
 })
 export class DetailScreenComponent implements AfterViewInit, OnInit, OnDestroy {
 
-  report: ReportPageOuter;
+  report: PageRuntime;
   screenName;
   remark;
   icon;
@@ -43,17 +48,25 @@ export class DetailScreenComponent implements AfterViewInit, OnInit, OnDestroy {
       });
     }));
     reportInfo$.subscribe(data => {
-      this.report.clear();
+
       this.screenName = data.name;
       this.remark = data.remark;
       this.icon = data.icon;
       this.spaceId = data.spaceId;
       localStorage.setItem('spaceID',this.spaceId);
+
       if (data.attr) {
-        this.report.load(data.attr);
+        const runtime = Runtime.getInstance();
+        runtime.addComponentRepository(StandardCompRepo);
+        runtime.addComponentRepository(CustomCompRepo);
+        runtime.addGeneratorRepository(standardGeneratorRepo);
+        this.report = runtime.open(data.attr);
+        $('.app-content').prepend(this.report.$element);
+
       } else {
         this._nzMessage.warning('该大屏尚未编辑!');
       }
+
     }, err => {
       if (err instanceof HttpResponse) {
         this._nzMessage.error(err.body.retMsg);
@@ -62,8 +75,6 @@ export class DetailScreenComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    const report = this.report = session.currentPage = new ReportPageOuter('runtime');
-    $('.app-content').prepend(report.$element);
     this.getReportContent();
   }
 
@@ -76,7 +87,7 @@ export class DetailScreenComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   scaleChange(event) {
-    this.report.reportPage.scale = event;
+    this.report.scale = event;
   }
 
   uncollect() {
