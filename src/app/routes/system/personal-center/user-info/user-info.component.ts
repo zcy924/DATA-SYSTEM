@@ -43,12 +43,14 @@ export class UserInfoComponent implements OnInit {
       this.formModel.userIcon = data.userIcon;
       this.formModel.phone = data.phone;
       this.formModel.email = data.email;
-      this.fileList.push({
-        uid: -1,
-        name: 'avatar.png',
-        status: 'done',
-        url: data.userIcon,
-      });
+      if(data.userIcon){
+        this.fileList.push({
+          uid: -1,
+          name: 'avatar.png',
+          status: 'done',
+          url: data.userIcon,
+        });
+      }
     });
   }
 

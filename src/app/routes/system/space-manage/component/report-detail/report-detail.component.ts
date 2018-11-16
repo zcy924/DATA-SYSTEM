@@ -8,6 +8,10 @@ import { ReportKeepModalComponent } from './modal/report-keep-modal.component';
 import { PersonalCenterService } from '../../../personal-center/personal-center.service';
 import { ReportPageOuter } from '../../../../../../data_visual/designer/core/page/report/page.outer';
 import { session } from '../../../../../../data_visual/designer/utils/session';
+import { Runtime } from '../../../../../../data_visual/runtime';
+import { StandardCompRepo } from '../../../../../../data_visual/component.packages/standard';
+import { CustomCompRepo } from '../../../../../../data_visual/component.packages/custom';
+import { standardGeneratorRepo } from '../../../../../../data_visual/data.source.packages/mock';
 
 
 @Component({
@@ -21,6 +25,7 @@ export class ReportDetailComponent implements AfterViewInit, OnInit, OnDestroy {
   keepReportId;
 
   report: ReportPageOuter;
+  runTime;
   reportName;
   spaceId: string;
 
@@ -56,8 +61,18 @@ export class ReportDetailComponent implements AfterViewInit, OnInit, OnDestroy {
 
       this.report.clear();
       this.reportName = data.Report.reportName;
-      if (data.Report.attr) {
-        this.report.load(data.Report.attr);
+      if (data.Report.attr !== null && data.Report.attr !== '' && JSON.stringify(data.Report.attr) !== "{}" && data.Report.attr !== undefined) {
+        if (this.runTime !== undefined) {
+          this.report = this.runTime.open(data.Report.attr);
+        } else {
+          this.runTime = Runtime.getInstance();
+          this.runTime.addComponentRepository(StandardCompRepo);
+          this.runTime.addComponentRepository(CustomCompRepo);
+          this.runTime.addGeneratorRepository(standardGeneratorRepo);
+          this.report = this.runTime.open(data.Report.attr);
+        }
+        $('.app-content').empty();
+        $('.app-content').prepend(this.report.$element);
       } else {
         this._nzMessage.warning('该报表尚未编辑!');
       }
@@ -75,7 +90,7 @@ export class ReportDetailComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.report.destroy();
+    // this.report.destroy();
   }
 
   formatter(value) {

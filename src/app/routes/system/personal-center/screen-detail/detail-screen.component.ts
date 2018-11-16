@@ -19,6 +19,8 @@ import { standardGeneratorRepo } from '../../../../../data_visual/data.source.pa
 export class DetailScreenComponent implements AfterViewInit, OnInit, OnDestroy {
 
   report: PageRuntime;
+  runTime;
+
   screenName;
   remark;
   icon;
@@ -53,16 +55,19 @@ export class DetailScreenComponent implements AfterViewInit, OnInit, OnDestroy {
       this.remark = data.remark;
       this.icon = data.icon;
       this.spaceId = data.spaceId;
-      localStorage.setItem('spaceID',this.spaceId);
 
-      if (data.attr) {
-        const runtime = Runtime.getInstance();
-        runtime.addComponentRepository(StandardCompRepo);
-        runtime.addComponentRepository(CustomCompRepo);
-        runtime.addGeneratorRepository(standardGeneratorRepo);
-        this.report = runtime.open(data.attr);
+      if (data.attr !== null && data.attr !== '' && JSON.stringify(data.attr) !== "{}" && data.attr !== undefined) {
+        if (this.runTime !== undefined) {
+          this.report = this.runTime.open(data.attr);
+        } else {
+          this.runTime = Runtime.getInstance();
+          this.runTime.addComponentRepository(StandardCompRepo);
+          this.runTime.addComponentRepository(CustomCompRepo);
+          this.runTime.addGeneratorRepository(standardGeneratorRepo);
+          this.report = this.runTime.open(data.attr);
+        }
+        $('.app-content').empty();
         $('.app-content').prepend(this.report.$element);
-
       } else {
         this._nzMessage.warning('该大屏尚未编辑!');
       }
@@ -79,7 +84,7 @@ export class DetailScreenComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.report.destroy();
+    // this.report.destroy();
   }
 
   formatter(value) {
@@ -93,7 +98,7 @@ export class DetailScreenComponent implements AfterViewInit, OnInit, OnDestroy {
   uncollect() {
     const params = {
       keepDashBoardId: this.keepDashBoardId
-    }
+    };
     this._personalService.uncollectScreen(params).subscribe(
       data => {
         this._nzMessage.success('取消收藏成功!');

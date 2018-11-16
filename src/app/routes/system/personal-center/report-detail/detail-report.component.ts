@@ -22,6 +22,7 @@ export class DetailReportComponent implements AfterViewInit, OnInit, OnDestroy {
   keepReportId;
 
   report: PageRuntime;
+  runTime;
   reportName;
 
   leftPanelState = false;
@@ -49,14 +50,18 @@ export class DetailReportComponent implements AfterViewInit, OnInit, OnDestroy {
     reportInfo$.subscribe(data => {
       this.reportName = data.reportName;
 
-      if (data.attr) {
-        const runtime = Runtime.getInstance();
-        runtime.addComponentRepository(StandardCompRepo);
-        runtime.addComponentRepository(CustomCompRepo);
-        runtime.addGeneratorRepository(standardGeneratorRepo);
-        this.report = runtime.open(data.attr);
+      if (data.attr !== null && data.attr !== '' && JSON.stringify(data.attr) !== "{}" && data.attr !== undefined) {
+        if (this.runTime !== undefined) {
+          this.report = this.runTime.open(data.attr);
+        } else {
+          this.runTime = Runtime.getInstance();
+          this.runTime.addComponentRepository(StandardCompRepo);
+          this.runTime.addComponentRepository(CustomCompRepo);
+          this.runTime.addGeneratorRepository(standardGeneratorRepo);
+          this.report = this.runTime.open(data.attr);
+        }
+        $('.app-content').empty();
         $('.app-content').prepend(this.report.$element);
-        // this.report.load(data.attr);
       } else {
         this._nzMessage.warning('该大屏尚未编辑!');
       }
@@ -72,7 +77,7 @@ export class DetailReportComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.report.destroy();
+    // this.report.destroy();
   }
 
   formatter(value) {

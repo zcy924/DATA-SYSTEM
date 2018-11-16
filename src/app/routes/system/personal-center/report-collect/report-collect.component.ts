@@ -232,7 +232,7 @@ export class ReportCollectComponent implements OnInit {
     array.forEach(value => {
       let node = {
         text: value.keepReportName,
-        link: `app/user/report-detail/${value.keepReportId}`,
+        link: `/app/user/report-detail;reportId=${value.reportId};keepReportId=${value.keepReportId}`,
         isLeaf: value.keepReportType == 1,
         icon: value.keepReportType == 1 ? 'file' : 'folder',
         children: [],

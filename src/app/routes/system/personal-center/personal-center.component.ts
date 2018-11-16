@@ -37,28 +37,22 @@ export class PersonalCenterComponent implements OnInit {
       isGroup: true,
       children: [
         {
-          text: '报表收藏管理',
-          link: '/app/user/user-report',
-          isLeaf: true,
-          icon: 'appstore-o',
-        },
-        {
           text: '大屏收藏管理',
           isLeaf: true,
           icon: 'area-chart',
           link: '/app/user/user-screen',
         },
         {
+          text: '报表收藏管理',
+          link: '/app/user/user-report',
+          isLeaf: true,
+          icon: 'appstore-o',
+        },
+        {
           text: '个人信息管理',
           isLeaf: true,
           icon: 'user',
           link: '/app/user/user-message',
-        },
-        {
-          text: '测试路由',
-          isLeaf: true,
-          icon: 'user',
-          link: '/app/user/dsadsad',
         },
       ],
     },
