@@ -1,13 +1,13 @@
 import { AfterViewInit, Component, ElementRef, KeyValueDiffers, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SpaceManageService } from '../space-manage.service';
+import { SpaceManageService } from '../../space-manage.service';
 import { switchMap } from 'rxjs/operators';
 import { HttpResponse } from "@angular/common/http";
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
-import { ReportKeepModalComponent } from './report-keep-modal.component';
-import { PersonalCenterService } from '../../personal-center/personal-center.service';
-import { ReportPageOuter } from '../../../../../data_visual/designer/core/page/report/page.outer';
-import { session } from '../../../../../data_visual/designer/utils/session';
+import { ReportKeepModalComponent } from './modal/report-keep-modal.component';
+import { PersonalCenterService } from '../../../personal-center/personal-center.service';
+import { ReportPageOuter } from '../../../../../../data_visual/designer/core/page/report/page.outer';
+import { session } from '../../../../../../data_visual/designer/utils/session';
 
 
 @Component({

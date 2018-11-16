@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
-import { ReportDetailComponent } from './component/report-detail.component';
+import { ReportDetailComponent } from './component/report-detail/report-detail.component';
 import { ReportManageComponent } from './component/report-manage/report-manage.component';
 import { RoleManageComponent } from './component/role-manage/role-manage.component';
 import { UserManageComponent } from './component/user-manage/user-manage.component';
@@ -17,8 +17,8 @@ import { EditUserModalComponent } from './component/user-manage/components/edit-
 import { ScreenDetailComponent } from './component/screen-detail.component';
 import { PersonalCenterService } from '../personal-center/personal-center.service';
 
-import { ReportFolderModalComponent } from './component/report-folder-modal.component';
-import { ReportKeepModalComponent } from './component/report-keep-modal.component';
+import { ReportFolderModalComponent } from './component/report-detail/modal/report-folder-modal.component';
+import { ReportKeepModalComponent } from './component/report-detail/modal/report-keep-modal.component';
 import {SpaceSettingComponent} from "./component/space-setting/space-setting.component";
 import {ApiManageComponent} from "./component/api-manage/api-manage.component";
 import { ColorPickerModule } from '../../../../data_visual/components/shared/color-picker/color-picker.module';

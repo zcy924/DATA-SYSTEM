@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {ReportDetailComponent} from './component/report-detail.component';
+import {ReportDetailComponent} from './component/report-detail/report-detail.component';
 import {ReportManageComponent} from './component/report-manage/report-manage.component';
 import {ScreenManageComponent} from './component/screen-manage/screen-manage.component';
 import {RoleManageComponent} from './component/role-manage/role-manage.component';

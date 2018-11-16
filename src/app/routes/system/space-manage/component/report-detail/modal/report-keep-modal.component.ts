@@ -3,18 +3,18 @@ import {
   NzTreeNode,
   NzFormatEmitEvent,
   NzMessageService,
-  NzModalRef,
+  NzModalRef, NzModalService,
 } from 'ng-zorro-antd';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { HttpRequest, HttpResponse } from '@angular/common/http';
-import { SpaceManageService } from '../space-manage.service';
-import { PersonalCenterService } from '../../personal-center/personal-center.service';
-
+import { SpaceManageService } from '../../../space-manage.service';
+import { PersonalCenterService } from '../../../../personal-center/personal-center.service';
+import { ReportFolderModalComponent } from './report-folder-modal.component';
 
 @Component({
-  selector: 'app-report-folder',
-  templateUrl: './report-folder-modal.html',
+  selector: 'app-report-keep',
+  templateUrl: './report-keep-modal.html',
   styles: [
       `
       nz-date-picker ::ng-deep .ant-calendar-picker {
@@ -23,28 +23,29 @@ import { PersonalCenterService } from '../../personal-center/personal-center.ser
     `,
   ],
 })
-export class ReportFolderModalComponent implements OnInit {
+export class ReportKeepModalComponent implements OnInit {
   REPORT = '1'; // 报表
   FOLDER = '0'; // 文件夹
 
   reportName = '';
+  reportId = '';
+  parentId = '/';
   remark = '';
-  parentId = '';
 
+  nodes: Array<any>;
 
   constructor(
-    private spaceManageService: SpaceManageService,
+    private _spaceManageService: SpaceManageService,
     private _personalService: PersonalCenterService,
-    private message: NzMessageService,
-    private modalRef: NzModalRef,
+    private _message: NzMessageService,
+    private _nzModel: NzModalService,
+    private _modalRef: NzModalRef,
   ) {
   }
 
   ngOnInit() {
     this.getTree();
   }
-
-  nodes: Array<any>;
 
   checkTreeNode(e: NzFormatEmitEvent): void {
     this.parentId = e.node.key;
@@ -66,7 +67,7 @@ export class ReportFolderModalComponent implements OnInit {
       },
       err => {
         if (err instanceof HttpResponse) {
-          this.message.error(err.body.retMsg);
+          this._message.error(err.body.retMsg);
         }
       },
     );
@@ -84,28 +85,46 @@ export class ReportFolderModalComponent implements OnInit {
         children: [],
       };
       nodes.push(node);
-      if (!node.isLeaf && report.children) {
+      if (report.children) {
         this.recursiveNode(node.children, report.children);
       }
     }
   }
 
-  // 新增报表收藏文件夹
-  addSelfFolderInSpace() {
+  // 收藏报表
+  keepSelfReportInSpace() {
     let params = {
-      keepReportName: this.reportName,
-      parentId: this.parentId ? this.parentId : '/',
+      reportId: this.reportId,
+      parentId: this.parentId,
       remark: this.remark,
-      keepReportType: '0',
+      keepReportType: '1',
+      keepReportName: this.reportName,
     };
-    this._personalService.addSelfFolder(params).subscribe(res => {
-      this.message.success('新增报表收藏文件夹成功！');
-      console.log(res);
-    }, err => {
-      if (err instanceof HttpResponse) {
-        this.message.error('新增报表收藏文件夹失败！');
+    this._personalService.addSelfReport(params).subscribe(res => {
+        this._message.success('收藏报表成功！');
+        this._modalRef.destroy('ok');
+      },
+      err => {
+        if (err instanceof HttpResponse) {
+          this._message.error('收藏报表失败！');
+        }
+      });
+  }
+
+  // 新建报表文件夹对话框
+  addFolderInSpace() {
+    const modal = this._nzModel.create({
+      nzTitle: `新建报表收藏文件夹`,
+      nzContent: ReportFolderModalComponent,
+      nzWidth: '40%',
+      nzOnOk: (res) => {
+        res.addSelfFolderInSpace();
+      },
+    });
+    modal.afterClose.subscribe(res => {
+      if (res === 'ok') {
+        this.getTree();
       }
     });
   }
-
 }
