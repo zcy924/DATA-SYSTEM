@@ -10,6 +10,7 @@ import { HttpRequest, HttpResponse } from '@angular/common/http';
 import { Api } from '../../../../../../../data-generator/Api';
 import { generatorRepo } from '../../../../../../../data-generator/DataGeneratorRepository';
 import { ActivatedRoute } from '@angular/router';
+import { tryCatch } from 'rxjs/internal-compatibility';
 
 
 @Component({
@@ -53,8 +54,8 @@ export class ApiModalComponent implements OnInit {
     headersText: '',
     bodyText: '',
     responseText: '',
+    metadataText: ''
   };
-  metaData: any;
   modMsg;
   aceConfig = {
     textChanged: (text, type) => {
@@ -64,6 +65,9 @@ export class ApiModalComponent implements OnInit {
           break;
         case 'body':
           this.bodyText = text;
+          break;
+        case 'metadata':
+          this.metadata = text;
           break;
         default:
           return;
@@ -113,13 +117,13 @@ export class ApiModalComponent implements OnInit {
       status: 'T',
       interval: '60',
       type: '0',
-      metadata: {},
+      metadata: JSON.parse(this.metadata),
       generatorPath: this.generatorPath,
       api: {
         url: this.url,
         method: this.method,
-        headers: this.headersText === '' || this.headersText === null || this.headersText === undefined ? null : JSON.parse(this.headersText),
-        params: this.bodyText === '' || this.bodyText === null || this.bodyText === undefined ? null :JSON.parse(this.bodyText),
+        headers: JSON.parse(this.headersText),
+        params:  JSON.parse(this.bodyText),
       },
     };
 
@@ -138,24 +142,6 @@ export class ApiModalComponent implements OnInit {
 
   // 更新API
   updateApi() {
-    console.log(this.headersText);
-    console.log(typeof this.headersText);
-    console.log(this.bodyText);
-    console.log(typeof this.bodyText);
-
-    let headers ;
-    let body ;
-    if(this.headersText instanceof Object){
-      headers = this.headersText;
-    }else if(this.headersText.length > 2){
-      headers = JSON.parse(this.headersText);
-    }
-    if(this.bodyText instanceof Object){
-      body = this.bodyText;
-    }else if(this.bodyText.length > 2){
-      body = JSON.parse(this.bodyText);
-    }
-
     let params = {
       id: this.id,
       spaceId: this.spaceId,
@@ -164,13 +150,13 @@ export class ApiModalComponent implements OnInit {
       status: 'T',
       interval: '60',
       type: '0',
-      metadata: {},
+      metadata: JSON.parse(this.metadata),
       generatorPath: this.generatorPath,
       api: {
         url: this.url,
         method: this.method,
-        headers: headers,
-        params: body,
+        headers: JSON.parse(this.headersText),
+        params: JSON.parse(this.bodyText),
       },
     };
 
@@ -200,10 +186,14 @@ export class ApiModalComponent implements OnInit {
         this.status = data.status;
         this.type = data.type;
         this.generatorPath = data.generatorPath;
-        this.headersText = data.api.headers;
-        this.bodyText = data.api.params;
-        this.formData.headersText = (data.api.headers  === null || data.api.headers  === undefined )? '' : JSON.stringify(data.api.headers, null, 2);
-        this.formData.bodyText = (data.api.params === null || data.api.params === undefined) ? '' : JSON.stringify(data.api.params, null, 2);
+
+        this.headersText = data.api.headers===null ||data.api.headers===undefined||data.api.headers===''? JSON.stringify({}):JSON.stringify(data.api.headers);
+        this.bodyText = data.api.params===null ||data.api.params===undefined||data.api.params===''? JSON.stringify({}):JSON.stringify(data.api.params);
+        this.metadata = data.metadata === null ||data.metadata === undefined || data.metadata ===''? JSON.stringify({}):JSON.stringify(data.metadata);
+
+        this.formData.metadataText = data.metadata===null || data.metadata===undefined? JSON.stringify({}):JSON.stringify(data.metadata, null, 2);
+        this.formData.headersText = (data.api.headers  === null || data.api.headers  === undefined )? JSON.stringify({}) : JSON.stringify(data.api.headers, null, 2);
+        this.formData.bodyText = (data.api.params === null || data.api.params === undefined) ? JSON.stringify({}) : JSON.stringify(data.api.params, null, 2);
       },
       err => {
         if (err instanceof HttpRequest) {
