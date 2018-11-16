@@ -103,7 +103,7 @@ export class ReportPageOuter {
   }
 
   get actionManager() {
-    return this._pageInner.actionManager;
+    return this._pageInner && this._pageInner.actionManager;
   }
 
   load(file: IFileStructure) {

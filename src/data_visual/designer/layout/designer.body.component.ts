@@ -32,10 +32,13 @@ export class DesignerBodyComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    setTimeout(() => {
-      const report = this.report = session.currentPage = new ReportPageOuter('design');
-      $('.app-content').prepend(report.$element);
-    }, 10);
+    // setTimeout(() => {
+    //   const report = this.report = session.currentPage = new ReportPageOuter('design');
+    //   $('.app-content').prepend(report.$element);
+    // }, 100);
+
+    const report = this.report = session.currentPage = new ReportPageOuter('design');
+    $('.app-content').prepend(report.$element);
 
     // const dashboardCanvas = new DashboardCanvas();
     // $('.app-content').prepend(dashboardCanvas.$element);

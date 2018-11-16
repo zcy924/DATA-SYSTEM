@@ -1,6 +1,6 @@
 {
   "name": "@barca/mock",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "数据源生成器库",
   "main": "index.js",
   "scripts": {

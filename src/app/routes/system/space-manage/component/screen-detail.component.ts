@@ -6,7 +6,10 @@ import { HttpResponse } from '@angular/common/http';
 import { NzMessageService } from 'ng-zorro-antd';
 import { PageRuntime } from '../../../../../data_visual/runtime/page.runtime';
 import { Runtime } from '../../../../../data_visual/runtime/runtime';
-import { session } from '../../../../../data_visual/designer/utils/session';
+import { StandardCompRepo } from '../../../../../data_visual/component.packages/standard/main';
+import { CustomCompRepo } from '../../../../../data_visual/component.packages/custom/main';
+import { standardGeneratorRepo } from '../../../../../data_visual/data.source.packages/mock/main';
+
 
 @Component({
   templateUrl: './screen-detail.html',
@@ -55,7 +58,11 @@ export class ScreenDetailComponent implements AfterViewInit, OnInit, OnDestroy {
         this.keepDashBoardId = data.keepDashBoardId;
       }
       if (data.attr) {
-        this.report = Runtime.getInstance().open(data.attr);
+        const runtime = Runtime.getInstance();
+        runtime.addComponentRepository(StandardCompRepo);
+        runtime.addComponentRepository(CustomCompRepo);
+        runtime.addGeneratorRepository(standardGeneratorRepo);
+        this.report = runtime.open(data.attr);
         $('.app-content').prepend(this.report.$element);
         // this.report.load(data.attr);
       } else {

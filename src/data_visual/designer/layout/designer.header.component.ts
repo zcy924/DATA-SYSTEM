@@ -37,9 +37,11 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
     const subscription = designerStorage.reportInfo$.subscribe((reportInfo: any) => {
 
       if (url == 'report-designer') {
+        console.log('reportInfo.Report.attr',reportInfo.Report.attr);
         this.reportTile = reportInfo.Report.reportName;
         reportInfo.Report ? this.doLoad(reportInfo.Report.attr) : null;
       } else {
+        console.log('reportInfo.attr',reportInfo.attr);
         this.reportTile = reportInfo.name;
         reportInfo.attr ? this.doLoad(reportInfo.attr) : null;
       }

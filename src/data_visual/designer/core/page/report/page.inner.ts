@@ -13,6 +13,9 @@ import { graphicFactory } from '../../graphic/graphic.factory';
 import { ActionManager } from '../../operate/action.manager';
 import { PageConfigWrapper } from './page.outer';
 import { PageView } from './page.view';
+import { StandardCompRepo } from '../../../../component.packages/standard/main';
+import { CustomCompRepo } from '../../../../component.packages/custom/main';
+import { standardGeneratorRepo } from '../../../../data.source.packages/mock/main';
 
 export class ReportPageInner implements IPage {
 
@@ -31,6 +34,10 @@ export class ReportPageInner implements IPage {
 
 
   constructor(private _mode: 'design' | 'runtime') {
+    this.compRepoManager.addComponentRepository(StandardCompRepo);
+    this.compRepoManager.addComponentRepository(CustomCompRepo);
+    this.geneRepoManager.addGeneratorRepository(standardGeneratorRepo);
+
     this.view = new PageView(this);
     this.pageConfigWrapper = new PageConfigWrapper(_mode);
     this.regionManager = new RegionManager();
