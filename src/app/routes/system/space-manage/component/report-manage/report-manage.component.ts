@@ -132,6 +132,7 @@ export class ReportManageComponent implements OnInit {
       nzContent: ReportModalComponent,
       nzWidth: '50%',
       nzComponentParams: {
+        spaceId:this.spaceId,
         folderName: this.folderName,
         folders: this.folders,
         folderID: this.folderID,
@@ -169,7 +170,7 @@ export class ReportManageComponent implements OnInit {
       nzComponentParams: {
         folderName: this.folderName,
         folders: this.folders,
-        spaceId: this.spaceId,
+        spaceId:this.spaceId,
         folderID: data.parentId,
         isPublic: data.isPublic === this.isPublic,
         isDev: data.isDev === this.isDev,
@@ -266,7 +267,7 @@ export class ReportManageComponent implements OnInit {
       value.link = `app/square/${value.spaceId}/report-detail/${
         value.reportId
       }`;
-      value.isLeaf = value.type == 1 ? true : false;
+      value.isLeaf = value.type == 1 ;
       value.icon = value.type == 1 ? 'file' : 'folder';
       if (value.children) {
         this.formateTree(value.children);
