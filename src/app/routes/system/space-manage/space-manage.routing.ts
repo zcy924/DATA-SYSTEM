@@ -9,6 +9,7 @@ import {ScreenDetailComponent} from './component/screen-detail/screen-detail.com
 import {SpaceSettingComponent} from "./component/space-setting/space-setting.component";
 import {ApiManageComponent} from "./component/api-manage/api-manage.component";
 import {DatabaseManageComponent} from "./component/database-manage/database-manage.component";
+import { SpaceInfoComponent } from './component/space-info/space-info.component';
 
 const routes: Routes = [
   {
@@ -55,6 +56,11 @@ const routes: Routes = [
     path: 'database-manage',
     component: DatabaseManageComponent,
     data: {title: '数据直连'}
+  },
+  {
+    path: 'space-info',
+    component: SpaceInfoComponent,
+    data: {title: '空间概述'}
   }
 ];
 

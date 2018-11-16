@@ -25,6 +25,7 @@ import { ColorPickerModule } from '../../../../data_visual/components/shared/col
 import { ApiModalComponent } from './component/api-manage/modal/api-modal.component';
 import {AceEditorDirective} from "./component/api-manage/ace-editor.directive";
 import {DatabaseManageComponent} from "./component/database-manage/database-manage.component";
+import { SpaceInfoComponent } from './component/space-info/space-info.component';
 
 const components = [
   ReportDetailComponent,
@@ -36,7 +37,8 @@ const components = [
   SpaceSettingComponent,
   ApiManageComponent,
   AceEditorDirective,
-  DatabaseManageComponent
+  DatabaseManageComponent,
+  SpaceInfoComponent
 ];
 const modals = [
   ReportModalComponent,
