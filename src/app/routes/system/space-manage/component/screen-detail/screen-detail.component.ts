@@ -62,18 +62,22 @@ export class ScreenDetailComponent implements AfterViewInit, OnInit, OnDestroy {
         console.log(typeof data.attr);
         if (this.runTime !== undefined) {
           this.report = this.runTime.open(data.attr);
+          this.report.scale = 1.0;
         } else {
           this.runTime = Runtime.getInstance();
           this.runTime.addComponentRepository(StandardCompRepo);
           this.runTime.addComponentRepository(CustomCompRepo);
           this.runTime.addGeneratorRepository(standardGeneratorRepo);
           this.report = this.runTime.open(data.attr);
+          this.report.scale = 1.0;
         }
         // const runtime = Runtime.getInstance();
         $('.app-content').empty();
         $('.app-content').prepend(this.report.$element);
         // this.report.load(data.attr);
       } else {
+        $('.app-content').empty();
+        $('.app-content').prepend('<h3>该大屏尚未编辑!</h3>');
         this._nzMessage.warning('该大屏尚未编辑!');
       }
     }, err => {
@@ -96,8 +100,7 @@ export class ScreenDetailComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   scaleChange(event) {
-    this.report.scale = 50;
-    console.log(event);
+    this.report.scale = event/100;
   }
 
   collect() {
