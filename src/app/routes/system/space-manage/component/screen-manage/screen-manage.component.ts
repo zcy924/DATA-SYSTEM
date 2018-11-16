@@ -38,9 +38,9 @@ export class ScreenManageComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.spaceId = this.router.snapshot.parent.params.spaceId;
+    this.getScreenList();
   }
   ngAfterViewInit() {
-    this.getScreenList();
     this.menu = this.sideMenu.menu;
   }
 

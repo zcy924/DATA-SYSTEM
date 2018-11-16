@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  NzTreeNode,
-  NzFormatEmitEvent,
   NzMessageService,
   NzModalRef,
 } from 'ng-zorro-antd';
@@ -9,8 +7,6 @@ import { SpaceManageService } from '../../../space-manage.service';
 import { HttpRequest, HttpResponse } from '@angular/common/http';
 import { Api } from '../../../../../../../data-generator/Api';
 import { generatorRepo } from '../../../../../../../data-generator/DataGeneratorRepository';
-import { ActivatedRoute } from '@angular/router';
-import { tryCatch } from 'rxjs/internal-compatibility';
 
 
 @Component({
