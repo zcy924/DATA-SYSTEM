@@ -1,14 +1,14 @@
 import { AfterViewInit, Component, ElementRef, KeyValueDiffers, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SpaceManageService } from '../space-manage.service';
+import { SpaceManageService } from '../../space-manage.service';
 import { switchMap } from 'rxjs/operators';
 import { HttpResponse } from '@angular/common/http';
 import { NzMessageService } from 'ng-zorro-antd';
-import { PageRuntime } from '../../../../../data_visual/runtime/page.runtime';
-import { Runtime } from '../../../../../data_visual/runtime/runtime';
-import { StandardCompRepo } from '../../../../../data_visual/component.packages/standard/main';
-import { CustomCompRepo } from '../../../../../data_visual/component.packages/custom/main';
-import { standardGeneratorRepo } from '../../../../../data_visual/data.source.packages/mock/main';
+import { PageRuntime } from '../../../../../../data_visual/runtime/page.runtime';
+import { Runtime } from '../../../../../../data_visual/runtime/runtime';
+import { StandardCompRepo } from '../../../../../../data_visual/component.packages/standard/main';
+import { CustomCompRepo } from '../../../../../../data_visual/component.packages/custom/main';
+import { standardGeneratorRepo } from '../../../../../../data_visual/data.source.packages/mock/main';
 
 
 @Component({
@@ -25,6 +25,7 @@ export class ScreenDetailComponent implements AfterViewInit, OnInit, OnDestroy {
   collectFlag;
   keepDashBoardId;
   spaceId: string;
+  runTime;
 
   leftPanelState = false;
 
@@ -37,7 +38,6 @@ export class ScreenDetailComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngOnInit() {
     this.spaceId = this._router.snapshot.parent.params.spaceId;
-
   }
 
   getReportContent() {
@@ -57,12 +57,20 @@ export class ScreenDetailComponent implements AfterViewInit, OnInit, OnDestroy {
       if (data.keepDashBoardId) {
         this.keepDashBoardId = data.keepDashBoardId;
       }
-      if (data.attr) {
-        const runtime = Runtime.getInstance();
-        runtime.addComponentRepository(StandardCompRepo);
-        runtime.addComponentRepository(CustomCompRepo);
-        runtime.addGeneratorRepository(standardGeneratorRepo);
-        this.report = runtime.open(data.attr);
+      if (data.attr !== null && data.attr !== '' && JSON.stringify(data.attr) !== "{}" && data.attr !== undefined) {
+        console.log(data.attr)
+        console.log(typeof data.attr);
+        if (this.runTime !== undefined) {
+          this.report = this.runTime.open(data.attr);
+        } else {
+          this.runTime = Runtime.getInstance();
+          this.runTime.addComponentRepository(StandardCompRepo);
+          this.runTime.addComponentRepository(CustomCompRepo);
+          this.runTime.addGeneratorRepository(standardGeneratorRepo);
+          this.report = this.runTime.open(data.attr);
+        }
+        // const runtime = Runtime.getInstance();
+        $('.app-content').empty();
         $('.app-content').prepend(this.report.$element);
         // this.report.load(data.attr);
       } else {
@@ -80,7 +88,7 @@ export class ScreenDetailComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.report.destroy();
+    // this.report.destroy();
   }
 
   formatter(value) {
@@ -88,7 +96,8 @@ export class ScreenDetailComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   scaleChange(event) {
-    this.report.scale = event;
+    this.report.scale = 50;
+    console.log(event);
   }
 
   collect() {

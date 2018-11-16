@@ -5,7 +5,7 @@ import {ReportManageComponent} from './component/report-manage/report-manage.com
 import {ScreenManageComponent} from './component/screen-manage/screen-manage.component';
 import {RoleManageComponent} from './component/role-manage/role-manage.component';
 import {UserManageComponent} from './component/user-manage/user-manage.component';
-import {ScreenDetailComponent} from './component/screen-detail.component';
+import {ScreenDetailComponent} from './component/screen-detail/screen-detail.component';
 import {SpaceSettingComponent} from "./component/space-setting/space-setting.component";
 import {ApiManageComponent} from "./component/api-manage/api-manage.component";
 import {DatabaseManageComponent} from "./component/database-manage/database-manage.component";
