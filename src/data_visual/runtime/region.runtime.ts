@@ -1,8 +1,6 @@
 import { PageRuntime } from './page.runtime';
 import { GraphicWrapperRuntime } from './graphic.wrapper.runtime';
-import { IRegionOption } from '@barca/shared/file/component.option';
-import { IRegion } from '@barca/shared/core/region/region';
-
+import { IRegion, IRegionOption } from '@barca/shared';
 
 const template = `
 <div class="m-dashbox">

@@ -2,13 +2,12 @@ import { PageRuntime } from './page.runtime';
 import { PageManagerRuntime } from './page.manager.runtime';
 
 import * as _ from 'lodash';
-import { ComponentRepositoryManager } from '@barca/shared/manager/component.repository.manager';
-import { GeneratorRepositoryManager } from '@barca/shared/manager/generator.repository.manager';
-import { IFileStructure } from '@barca/shared/file/file.structure';
-import { ComponentRepository } from '@barca/shared/core/repository/component.repository';
-import { GeneratorRepository } from '@barca/shared/core/repository/generator.repository';
-import { DataSourceManager } from '@barca/shared/core/data/data.source.manager';
-import { DataSourceConfigSet } from '@barca/shared/core/data/data.source.config.set';
+import {
+  ComponentRepository,
+  ComponentRepositoryManager, DataSourceConfigSet, DataSourceManager, GeneratorRepository,
+  GeneratorRepositoryManager,
+  IFileStructure,
+} from '@barca/shared';
 
 /**
  * 1、支持同时打开多个页面

@@ -3,11 +3,14 @@ import { Observable } from 'rxjs/internal/Observable';
 import { PageConfigRuntime } from './page.config.runtime';
 import { RegionRuntime } from './region.runtime';
 import { GraphicWrapperRuntime } from './graphic.wrapper.runtime';
-import { PageConfig } from '@barca/shared/core/page/page.config';
-import { IConfigSourceFactory } from '@barca/shared/core/config/config.source.factory';
-import { RuntimeConfigSourceFactory } from '@barca/shared/core/config/runtime/runtime.config.source.factory';
-import { DataSourceManager } from '@barca/shared/core/data/data.source.manager';
-import { IComponentOption } from '@barca/shared/file/component.option';
+import {
+  DataSourceManager,
+  IComponentOption,
+  IConfigSourceFactory,
+  PageConfig,
+  RuntimeConfigSourceFactory,
+} from '@barca/shared';
+
 
 enum PageRuntimeState {
   created, initialized, loaded

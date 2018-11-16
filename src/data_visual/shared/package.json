@@ -1,6 +1,6 @@
 {
   "name": "@barca/shared",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "数据可视化平台共享库 定义了设计时和运行时的接口和工具类",
   "main": "index.js",
   "scripts": {

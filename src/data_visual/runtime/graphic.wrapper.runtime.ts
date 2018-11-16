@@ -1,9 +1,14 @@
 import { combineLatest, Observable, Subscription } from 'rxjs/index';
 import { RegionRuntime } from './region.runtime';
-import { GraphicOption, IGraphicOption } from '@barca/shared/file/component.option';
-import { IGraphic } from '@barca/shared/core/graphic/graphic';
-import { ComponentRepositoryManager } from '@barca/shared/manager/component.repository.manager';
-import { getParameterName, guid } from '@barca/shared/core/utils/tools';
+import {
+  ComponentRepositoryManager,
+  getParameterName,
+  GraphicOption,
+  guid,
+  IGraphic,
+  IGraphicOption,
+} from '@barca/shared';
+
 
 
 export class GraphicWrapperRuntime {

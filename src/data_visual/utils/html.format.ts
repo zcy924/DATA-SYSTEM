@@ -283,7 +283,7 @@ export function style_html(html_source, indent_size, indent_character, max_char)
         if (typeof temp_token !== 'string') {
           return temp_token;
         }
-        token = js_beautify(temp_token, this.indent_size, this.indent_character, this.indent_level); // call the JS Beautifier
+        token = jsBeautify(temp_token, this.indent_size, this.indent_character, this.indent_level); // call the JS Beautifier
         return [token, 'TK_CONTENT'];
       }
       if (this.current_mode === 'CONTENT') {

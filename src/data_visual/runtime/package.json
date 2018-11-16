@@ -1,6 +1,6 @@
 {
   "name": "@barca/runtime",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "数据报告运行引擎",
   "main": "index.js",
   "scripts": {

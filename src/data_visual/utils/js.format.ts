@@ -1,4 +1,4 @@
-function js_beautify(js_source_text, indent_size, indent_character, indent_level) {
+function jsBeautify(js_source_text, indent_size, indent_character, indent_level) {
 
   var input, output, token_text, last_type, last_text, last_word, current_mode, modes, indent_string;
   var whitespace, wordchar, punct, parser_pos, line_starters, in_case;
