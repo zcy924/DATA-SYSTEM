@@ -100,8 +100,14 @@ export class Runtime {
     return this._pageManager.pages;
   }
 
-  addComponentRepository(repo: ComponentRepository) {
-    this._compRepoManager.addComponentRepository(repo);
+  addComponentRepository(repo: ComponentRepository | Array<ComponentRepository>) {
+    if (_.isArray(repo)) {
+      repo
+        .forEach(value => this._compRepoManager
+          .addComponentRepository(value));
+    } else {
+      this._compRepoManager.addComponentRepository(repo);
+    }
   }
 
   removeComponentRepository() {
@@ -115,7 +121,6 @@ export class Runtime {
     } else {
       this._geneRepoManager.addGeneratorRepository(geneRepo);
     }
-
   }
 
   destroy() {
@@ -125,7 +130,13 @@ export class Runtime {
     }
   }
 
-  private _createFile(file: IFileStructure): PageRuntime {
+  private _createFile(param: IFileStructure | string): PageRuntime {
+    let file: IFileStructure;
+    if (_.isString(param)) {
+      file = JSON.parse(param);
+    } else {
+      file = param;
+    }
     const dataSourceConfigSet = new DataSourceConfigSet(file.data || []),
       page = new PageRuntime(new DataSourceManager(dataSourceConfigSet));
     page.init();

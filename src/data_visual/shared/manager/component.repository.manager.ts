@@ -3,6 +3,7 @@ import { delay } from 'rxjs/operators';
 import { Type } from '../interface/type';
 import { IGraphic } from '../core/graphic/graphic';
 import { ComponentRepository } from '../core/repository/component.repository';
+import * as _ from 'lodash';
 
 /**
  * 设计时和运行时都会使用到ComponentRepositoryManager
