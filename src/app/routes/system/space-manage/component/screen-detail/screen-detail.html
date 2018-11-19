@@ -7,9 +7,12 @@
       <div nz-col>
         <a><i nz-tooltip nzTitle="页面已公开" nzPlacement="bottom" nz-icon type="eye"></i></a>
         <a><i nz-tooltip nzTitle="页面处于开发模式" nzPlacement="bottom" nz-icon type="setting"></i></a>
-        <a *ngIf="collectFlag=='F'" (click)="collect()"><i nz-tooltip nzTitle="收藏" nzPlacement="bottom" nz-icon type="heart"></i></a>
-        <a *ngIf="collectFlag=='T'" (click)="uncollect()"><i nz-tooltip nzTitle="已收藏" nzPlacement="bottom" nz-icon type="heart" theme="fill"></i></a>
-        <a><i nz-tooltip nzTitle="编辑" nzPlacement="bottom" nz-icon type="edit"></i></a>
+        <a *ngIf="collectFlag=='F'" (click)="collect()"><i nz-tooltip nzTitle="收藏" nzPlacement="bottom" nz-icon
+                                                           type="heart"></i></a>
+        <a *ngIf="collectFlag=='T'" (click)="uncollect()"><i nz-tooltip nzTitle="已收藏" nzPlacement="bottom" nz-icon
+                                                             type="heart" theme="fill"></i></a>
+        <a [routerLink]='["/designer"]'
+           [queryParams]="{spaceId: spaceId,dashboardId:dashBoardId}"><i nz-icon type="edit"></i></a>
       </div>
     </div>
     <div class="app-body-center">

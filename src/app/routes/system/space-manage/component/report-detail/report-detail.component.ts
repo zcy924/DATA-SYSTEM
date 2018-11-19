@@ -12,6 +12,7 @@ import { Runtime } from '../../../../../../data_visual/runtime';
 import { StandardCompRepo } from '../../../../../../data_visual/component.packages/standard';
 import { CustomCompRepo } from '../../../../../../data_visual/component.packages/custom';
 import { standardGeneratorRepo } from '../../../../../../data_visual/data.source.packages/mock';
+import { PageRuntime } from '../../../../../../data_visual/runtime/page.runtime';
 
 
 @Component({
@@ -23,8 +24,9 @@ export class ReportDetailComponent implements AfterViewInit, OnInit, OnDestroy {
   heartIconTheme: boolean = false;
   reportResponse;
   keepReportId;
+  reportId;
 
-  report: ReportPageOuter;
+  report: PageRuntime;
   runTime;
   reportName;
   spaceId: string;
@@ -46,9 +48,10 @@ export class ReportDetailComponent implements AfterViewInit, OnInit, OnDestroy {
 
   getReportContent() {
     const reportInfo$ = this._router.params.pipe(switchMap(data => {
+      this.reportId = data.reportId;
       return this._spaceManageService.qryReportContent({
         Report: {
-          reportId: data.reportId,
+          reportId: this.reportId,
           spaceId: this.spaceId,
         },
       });
@@ -59,21 +62,24 @@ export class ReportDetailComponent implements AfterViewInit, OnInit, OnDestroy {
       this.heartIconTheme = this.reportResponse.keepFlag === 'T';
       this.keepReportId = data.keepReportId;
 
-      this.report.clear();
       this.reportName = data.Report.reportName;
       if (data.Report.attr !== null && data.Report.attr !== '' && JSON.stringify(data.Report.attr) !== "{}" && data.Report.attr !== undefined) {
         if (this.runTime !== undefined) {
           this.report = this.runTime.open(data.Report.attr);
+          this.report.scale = 1.0;
         } else {
           this.runTime = Runtime.getInstance();
           this.runTime.addComponentRepository(StandardCompRepo);
           this.runTime.addComponentRepository(CustomCompRepo);
           this.runTime.addGeneratorRepository(standardGeneratorRepo);
           this.report = this.runTime.open(data.Report.attr);
+          this.report.scale = 1.0;
         }
         $('.app-content').empty();
         $('.app-content').prepend(this.report.$element);
       } else {
+        $('.app-content').empty();
+        $('.app-content').prepend('<h3>该大屏尚未编辑!</h3>');
         this._nzMessage.warning('该报表尚未编辑!');
       }
     }, err => {
@@ -84,8 +90,6 @@ export class ReportDetailComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    const report = this.report = session.currentPage = new ReportPageOuter('runtime');
-    $('.app-content').prepend(report.$element);
     this.getReportContent();
   }
 
@@ -98,7 +102,7 @@ export class ReportDetailComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   scaleChange(event) {
-    this.report.reportPage.scale = event;
+    this.report.scale = event/100;
   }
 
   // 收藏报表对话框

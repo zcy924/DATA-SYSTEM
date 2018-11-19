@@ -8,7 +8,7 @@
          <a><i nz-tooltip nzTitle="页面已公开" nzPlacement="bottom" nz-icon type="eye"></i></a>
          <a><i nz-tooltip nzTitle="页面处于开发模式" nzPlacement="bottom" nz-icon type="setting"></i></a>
          <a><i nz-tooltip nzTitle="收藏" nzPlacement="bottom" nz-icon [theme]="heartIconTheme?'fill':''"  type="heart" (click)="keepSelf()"></i></a>
-         <a><i nz-tooltip nzTitle="编辑" nzPlacement="bottom" nz-icon type="edit"></i></a>
+         <a [routerLink]='["/report-designer"]' [queryParams]="{spaceId: spaceId,reportId: reportId}"><i nz-tooltip nzTitle="编辑" nzPlacement="bottom" nz-icon type="edit"></i></a>
         </div>
       </div>
       <div class="app-body-center">
