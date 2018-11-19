@@ -29,6 +29,9 @@ export class CompanyManageService {
       params,
     );
   }
+  getAvatar(params): Observable<any>{
+    return this.httpClient.post(this.url+ 'logo/getLogo',params);
+  }
 
   searchFuzzySpaceList(params): Observable<any> {
     return this.httpClient.post(
