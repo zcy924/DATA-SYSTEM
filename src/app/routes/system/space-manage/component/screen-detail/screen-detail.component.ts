@@ -89,6 +89,7 @@ export class ScreenDetailComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngAfterViewInit() {
     this.getReportContent();
+
   }
 
   ngOnDestroy() {

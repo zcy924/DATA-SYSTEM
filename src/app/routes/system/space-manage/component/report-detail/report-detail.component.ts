@@ -95,6 +95,7 @@ export class ReportDetailComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngOnDestroy() {
     // this.report.destroy();
+    // this._nzMessage.success('我被销毁了!');
   }
 
   formatter(value) {

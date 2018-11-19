@@ -117,6 +117,9 @@ export class SpaceManageService {
   modUser(params): Observable<any> {
     return this.httpClient.post(this.url + 'space/spaceUser/mod', params);
   }
+  getLogo(params: any): Observable<any> {
+    return this.httpClient.post(this.url + 'logo/getLogo', params);
+  }
 
   /*************************************空间设置*************************************/
   modSpaceInfo(params): Observable<any> {

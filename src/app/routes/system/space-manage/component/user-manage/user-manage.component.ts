@@ -126,6 +126,10 @@ export class UserManageComponent implements OnInit {
           user.roleList.forEach(role => {
             role.color = '#87d068';
           });
+          this.service.getLogo({ id: user.userId, idType: '2' })
+            .subscribe(data=>{
+            user.avatar = data.logo;
+          })
         });
       },
       err => {
