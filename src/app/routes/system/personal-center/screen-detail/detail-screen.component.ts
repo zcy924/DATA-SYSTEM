@@ -92,7 +92,7 @@ export class DetailScreenComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   scaleChange(event) {
-    this.report.scale = event;
+    this.report.scale = event/100;
   }
 
   uncollect() {

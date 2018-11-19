@@ -85,7 +85,7 @@ export class DetailReportComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   scaleChange(event) {
-    this.report.scale = event;
+    this.report.scale = event/100;
   }
 
   // 取消收藏报表对话框
