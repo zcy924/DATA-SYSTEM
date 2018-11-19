@@ -55,16 +55,16 @@ export class SpaceManageComponent implements AfterViewInit {
           isGroup: true,
           children: [
             {
-              text: '报表管理',
-              link: `app/square/${this.spaceId}/report-manage`,
-              isLeaf: true,
-              icon: 'appstore-o',
-            },
-            {
               text: '大屏管理',
               isLeaf: true,
               icon: 'area-chart',
               link: `app/square/${this.spaceId}/screen-manage`,
+            },
+            {
+              text: '报表管理',
+              link: `app/square/${this.spaceId}/report-manage`,
+              isLeaf: true,
+              icon: 'appstore-o',
             },
             {
               text: '角色管理',
