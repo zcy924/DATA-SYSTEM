@@ -33,6 +33,7 @@ export class ScreenCollectComponent implements OnInit {
 
   ngOnInit() {
     this.getScreenList();
+    this.getScreenTree();
     this.menu = this.sideMenu.menu;
   }
 

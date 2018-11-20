@@ -1,6 +1,6 @@
 import {Component, AfterViewInit} from '@angular/core';
 import {MenuService} from '@delon/theme';
-import {ActivatedRoute} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {SpaceManageService} from './space-manage.service';
 import {SideMenuService} from '@shared/side-menu.service';
 import {Menu} from 'app/models/menu';
@@ -25,9 +25,9 @@ export class SpaceManageComponent implements AfterViewInit {
     private spaceManageService: SpaceManageService,
     private sideMenu: SideMenuService,
     private message: NzMessageService,
-    private router: ActivatedRoute
+    private _router: Router
   ) {
-    this.router.params.subscribe(data=>{
+    this.acRouter.params.subscribe(data=>{
       this.spaceId = data.spaceId;
       this.menu =  [
         {
@@ -109,6 +109,8 @@ export class SpaceManageComponent implements AfterViewInit {
     }
     this.sideMenu.setMenu(this.menu);
     this.sideMenu.setMessage(this.menu);
+    // this._router.navigate(['app/square/' + this.spaceId+'/space-info'])
+
   }
 
   getScreenList(reset = false) {

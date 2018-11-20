@@ -59,16 +59,20 @@ export class DetailScreenComponent implements AfterViewInit, OnInit, OnDestroy {
       if (data.attr !== null && data.attr !== '' && JSON.stringify(data.attr) !== "{}" && data.attr !== undefined) {
         if (this.runTime !== undefined) {
           this.report = this.runTime.open(data.attr);
+          this.report.scale = 1.0;
         } else {
           this.runTime = Runtime.getInstance();
           this.runTime.addComponentRepository(StandardCompRepo);
           this.runTime.addComponentRepository(CustomCompRepo);
           this.runTime.addGeneratorRepository(standardGeneratorRepo);
           this.report = this.runTime.open(data.attr);
+          this.report.scale = 1.0;
         }
         $('.app-content').empty();
         $('.app-content').prepend(this.report.$element);
       } else {
+        $('.app-content').empty();
+        $('.app-content').prepend('<h1>该大屏尚未编辑!</h1>');
         this._nzMessage.warning('该大屏尚未编辑!');
       }
 

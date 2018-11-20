@@ -34,7 +34,7 @@ export class SpaceSquareComponent implements OnInit {
 
   openDetail(spaceId, spaceType) {
     localStorage.setItem('spaceType', spaceType);
-    this.router.navigate(['app/square/' + spaceId+'/screen-manage']);
+    this.router.navigate(['app/square/' + spaceId + '/screen-manage']);
   }
 
   getList() {
@@ -44,7 +44,6 @@ export class SpaceSquareComponent implements OnInit {
     const params = { Space: { space_name: this.key || '' } };
     this._spaceService.getSpaceList(params).subscribe(
       res => {
-        console.log(res);
         this.spaceArr = res['retList'];
         this.spaceArr.forEach(value => {
           if (value.sign === 'public') {
@@ -55,7 +54,7 @@ export class SpaceSquareComponent implements OnInit {
             this.onlyWrite.push(value);
           }
           this._spaceService.getLogo({ id: value.spaceId, idType: '1' })
-            .subscribe(data=>{
+            .subscribe(data => {
               value.avatar = data.logo;
             });
         });
