@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, KeyValueDiffers, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SpaceManageService } from '../../space-manage.service';
-import { switchMap } from 'rxjs/operators';
+import { delay, switchMap } from 'rxjs/operators';
 import { HttpResponse } from '@angular/common/http';
 import { NzMessageService } from 'ng-zorro-antd';
 import { PageRuntime } from '../../../../../../data_visual/runtime/page.runtime';
@@ -38,6 +38,7 @@ export class ScreenDetailComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngOnInit() {
     this.spaceId = this._router.snapshot.parent.params.spaceId;
+    this.getReportContent();
   }
 
   getReportContent() {
@@ -88,7 +89,7 @@ export class ScreenDetailComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.getReportContent();
+    // this.getReportContent();
 
   }
 
