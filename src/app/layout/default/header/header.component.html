@@ -4,31 +4,29 @@
     <img class="alain-default__header-logo-collapsed" src="./assets/logo.svg" alt="{{settings.app.name}}" style="max-height:30px;" />
   </a>
 </div>
-<div class="alain-default__nav-wrap">
+<div class="alain-default__nav-wrap header_menu_div">
   <ul class="alain-default__nav">
     <!-- Menu -->
-    <li>
-      <div class="alain-default__nav-item" (click)="toggleCollapsedSidebar()">
-        <!-- <i class="anticon anticon-menu-{{settings.layout.collapsed ? 'unfold' : 'fold'}}"></i> -->
-        <i nz-icon type="menu-{{settings.layout.collapsed ? 'unfold' : 'fold'}}"></i>
-      </div>
-    </li>
+
     <!-- Lock Page -->
-    <li class="hidden-mobile">
-      <div class="alain-default__nav-item" >
-        <i  nz-icon type="lock" nz-tooltip nzTitle="锁定" nzPlacement="bottom"></i>
-      </div>
-    </li>
+    <!--<li class="hidden-mobile">-->
+      <!--<div class="alain-default__nav-item" >-->
+        <!--<i  nz-icon type="lock" nz-tooltip nzTitle="锁定" nzPlacement="bottom"></i>-->
+        <!--<div>锁定</div>-->
+      <!--</div>-->
+    <!--</li>-->
     <!-- 数据报告个人中心 -->
     <li class="hidden-mobile">
       <div class="alain-default__nav-item" [routerLink]="['/app/user']" routerLinkActive="router-link-active">
-        <i nz-icon type="user" nz-tooltip nzTitle="个人中心"   nzPlacement="bottom"></i>
+        <i nz-icon type="user"  nz-tooltip nzTitle="个人中心"   nzPlacement="bottom"></i>
+        <div>个人中心</div>
       </div>
     </li>
     <!-- 空间广场 -->
     <li class="hidden-mobile">
       <div class="alain-default__nav-item" routerLink="/content/square" routerLinkActive="router-link-active" >
-        <i nz-icon type="appstore-o" nz-tooltip nzTitle="空间广场" nzPlacement="bottom"></i>
+        <i nz-icon type="appstore-o"  nz-tooltip nzTitle="空间广场" nzPlacement="bottom"></i>
+        <div>空间广场</div>
       </div>
     </li>
   </ul>
@@ -46,6 +44,12 @@
       <header-icon></header-icon>
     </li> -->
     <!-- Settings -->
+    <li>
+      <div class="alain-default__nav-item" (click)="toggleCollapsedSidebar()">
+        <!-- <i class="anticon anticon-menu-{{settings.layout.collapsed ? 'unfold' : 'fold'}}"></i> -->
+        <i nz-icon type="menu-{{settings.layout.collapsed ? 'unfold' : 'fold'}}"></i>
+      </div>
+    </li>
     <li class="hidden-mobile">
       <nz-dropdown nzTrigger="click" nzPlacement="bottomRight">
         <div class="alain-default__nav-item" nz-dropdown>
