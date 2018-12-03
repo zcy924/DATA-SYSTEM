@@ -1,15 +1,16 @@
-import {Component, AfterViewInit} from '@angular/core';
-import {MenuService} from '@delon/theme';
+import { Component, AfterViewInit } from '@angular/core';
+import { MenuService } from '@delon/theme';
 import { ActivatedRoute, Router } from '@angular/router';
-import {SpaceManageService} from './space-manage.service';
-import {SideMenuService} from '@shared/side-menu.service';
-import {Menu} from 'app/models/menu';
-import {Page} from 'app/models/page';
-import {HttpResponse} from '@angular/common/http';
-import {NzMessageService} from 'ng-zorro-antd';
+import { SpaceManageService } from './space-manage.service';
+import { SideMenuService } from '@shared/side-menu.service';
+import { Menu } from 'app/models/menu';
+import { Page } from 'app/models/page';
+import { HttpResponse } from '@angular/common/http';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
-  template: `<router-outlet></router-outlet>`,
+  template: `
+    <router-outlet></router-outlet>`,
   providers: [SpaceManageService],
 })
 export class SpaceManageComponent implements AfterViewInit {
@@ -17,7 +18,8 @@ export class SpaceManageComponent implements AfterViewInit {
   page = new Page();
   reportTree: any;
   menu: Array<Menu>;
-  spaceId:string;
+  spaceId: string;
+  spaceType: string;
 
   constructor(
     private menuService: MenuService,
@@ -25,11 +27,13 @@ export class SpaceManageComponent implements AfterViewInit {
     private spaceManageService: SpaceManageService,
     private sideMenu: SideMenuService,
     private message: NzMessageService,
-    private _router: Router
+    private _router: Router,
   ) {
-    this.acRouter.params.subscribe(data=>{
-      this.spaceId = data.spaceId;
-      this.menu =  [
+    this.acRouter.params.subscribe(data => {
+      const paramsArray = data.spaceId.split('!');
+      this.spaceId = paramsArray[0];
+      this.spaceType = paramsArray[1];
+      this.menu = [
         {
           text: '大屏',
           isGroup: true,
@@ -93,18 +97,18 @@ export class SpaceManageComponent implements AfterViewInit {
           ],
         },
       ];
-    })
+    });
   }
 
 
   ngOnInit() {
 
   }
-  ngAfterViewInit(){
+
+  ngAfterViewInit() {
     this.getReportTree();
     this.getScreenList();
-    const spaceType = localStorage.getItem('spaceType');
-    if (spaceType !== 'admin') {
+    if (this.spaceType !== 'admin') {
       this.menu.splice(2, 1);
     }
     this.sideMenu.setMenu(this.menu);
