@@ -31,15 +31,21 @@ export class ScreenManageComponent implements OnInit, AfterViewInit {
     private spaceManageService: SpaceManageService,
     private settings: SettingsService,
     private sideMenu: SideMenuService,
-    private router: ActivatedRoute
-
+    private router: ActivatedRoute,
   ) {
   }
 
   ngOnInit() {
-    this.spaceId = this.router.snapshot.parent.params.spaceId;
+    const params = this.router.snapshot.parent.params.spaceId;
+    if (params.indexOf('!')) {
+      this.spaceId = params.split('!')[0];
+    } else {
+      this.spaceId = this.router.snapshot.parent.params.spaceId;
+
+    }
     this.getScreenList();
   }
+
   ngAfterViewInit() {
     this.menu = this.sideMenu.menu;
   }
