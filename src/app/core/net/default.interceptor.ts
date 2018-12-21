@@ -45,6 +45,7 @@ export class DefaultInterceptor implements HttpInterceptor {
   private msgChange$: BehaviorSubject<string> = new BehaviorSubject<string>(
     null,
   );
+
   constructor(
     private injector: Injector,
     @Inject(DA_SERVICE_TOKEN) private tokenService: TokenService,
@@ -76,7 +77,7 @@ export class DefaultInterceptor implements HttpInterceptor {
       ) {
         if (body.retCode === this.RET_CODE.TIMEOUT) {
           // this.session.clear();
-          this.goTo('/401');
+          this.goTo('/');
         }
         // 继续抛出错误中断后续所有 Pipe、subscribe 操作，因此：
         // this.http.get('/').subscribe() 并不会触发
@@ -118,13 +119,11 @@ export class DefaultInterceptor implements HttpInterceptor {
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler,
-  ): Observable<
-    | HttpSentEvent
+  ): Observable<| HttpSentEvent
     | HttpHeaderResponse
     | HttpProgressEvent
     | HttpResponse<any>
-    | HttpUserEvent<any>
-  > {
+    | HttpUserEvent<any>> {
     // 统一加上服务端前缀
     let url = req.url;
     if (!url.startsWith('https://') && !url.startsWith('http://')) {
@@ -148,6 +147,7 @@ export class DefaultInterceptor implements HttpInterceptor {
       catchError((err: HttpErrorResponse) => this.handleError(err)),
     );
   }
+
   parseParams(requestBody: any) {
     const ret = Object.assign({}, requestBody);
     // tslint:disable-next-line:forin

@@ -13,7 +13,7 @@ export class JsonDataGenerator implements IDataSourceGenerator {
     }
     let url = api.url;
 
-    if (api.headers !== null && api.headers !== '' && api.headers !== undefined) {
+    if (api.headers) {
       if(! (api.headers instanceof Object)){
         api.headers = JSON.parse(api.headers);
       }
@@ -22,7 +22,7 @@ export class JsonDataGenerator implements IDataSourceGenerator {
     if (api.method === 'GET') {
 
       let paramsArray = [];
-      if (api.params !== null && api.params !== '' && api.params !== undefined) {
+      if (api.params) {
         let params;
         if(api.params instanceof Object){
           params = api.params;
