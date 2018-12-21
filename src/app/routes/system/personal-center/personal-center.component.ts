@@ -5,6 +5,7 @@ import { HttpResponse } from '@angular/common/http';
 import { Page } from '../../../models/page';
 import { PersonalCenterService } from './personal-center.service';
 import { NzMessageService } from 'ng-zorro-antd';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-personal-center',
@@ -64,6 +65,7 @@ export class PersonalCenterComponent implements OnInit {
     private _sideMenu: SideMenuService,
     private _personalService: PersonalCenterService,
     private _nzMessage: NzMessageService,
+    private _Router: Router,
   ) {
   }
 
@@ -74,6 +76,7 @@ export class PersonalCenterComponent implements OnInit {
     this.getReportTree();
     this._sideMenu.setMessage(this.menu);
     this._sideMenu.setMenu(this.menu);
+    this._Router.navigateByUrl('app/user/user-screen');
   }
 
   getScreenList(reset = false) {
