@@ -3,8 +3,8 @@ import {Observable} from 'rxjs';
 import {Chart} from './graphic.view/chart';
 
 import { IGraphic } from '@barca/shared/core/graphic/graphic';
-import { OuterModelEventTarget } from '@barca/shared/core/event/model.event';
 import { contextMenuHelper } from '@barca/shared/utils/context.menu.helper';
+import { ModelEventTarget } from '@barca/shared';
 
 
 const template = `
@@ -24,7 +24,7 @@ export abstract class ChartGraphic implements IGraphic {
   $element: JQuery;
   private _$frame: JQuery;
   private _$toolbar: JQuery;
-  protected _modelEventTarget = new OuterModelEventTarget();
+  protected _modelEventTarget = new ModelEventTarget();
 
   protected _chart: Chart;
 

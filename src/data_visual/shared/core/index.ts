@@ -1,6 +1,5 @@
 export * from './config';
 export * from './data';
-export * from './event';
 export * from './graphic';
 export * from './page';
 export * from './region';

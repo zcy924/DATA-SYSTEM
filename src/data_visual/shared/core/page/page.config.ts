@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import {ModelEventTarget} from '../event/model.event';
+import { ModelEventTarget } from '../../event';
 
 
 export class BasePageConfig extends ModelEventTarget {

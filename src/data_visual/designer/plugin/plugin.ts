@@ -1,4 +1,4 @@
-import {EventBus} from '../../shared/core/event/event.bus';
+import { EventBus } from '@barca/shared';
 
 export interface IPlugin {
   listen(eventBus: EventBus);

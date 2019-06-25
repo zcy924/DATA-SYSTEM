@@ -1,6 +1,6 @@
 import {IPage} from '../core/interface';
-import {EventBus} from '../../shared/core/event/event.bus';
 import { IPlugin } from './plugin';
+import { EventBus } from '@barca/shared';
 
 export class PluginManager {
   constructor(private _page: IPage) {

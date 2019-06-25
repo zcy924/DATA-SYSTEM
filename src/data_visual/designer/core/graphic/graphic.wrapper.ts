@@ -2,7 +2,6 @@ import { combineLatest, Observable, Subject, Subscription } from 'rxjs';
 import { GraphicConfigManager } from '../config/design/graphic.config.manager';
 import { distinctUntilChanged, tap } from 'rxjs/operators';
 import { dataModelManager } from '../../data/data.model.manager';
-import { ChangedItem } from '../../../shared/core/event/model.event';
 import { GraphicOption, IGraphicOption } from '../../../shared/file/component.option';
 import { IGraphic } from '../../../shared/core/graphic/graphic';
 import { ComponentRepositoryManager } from '../../../shared/manager/component.repository.manager';

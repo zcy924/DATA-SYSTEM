@@ -1,6 +1,5 @@
 import { IGraphicView } from '@barca/shared/core/graphic/graphic.view';
-import { ViewEventTarget } from '@barca/shared/core/event/view.event';
-
+import { ViewEventTarget } from '@barca/shared';
 
 export abstract class HtmlNode implements IGraphicView {
   $element: JQuery;

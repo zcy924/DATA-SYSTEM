@@ -10,10 +10,10 @@ import { IEventTarget } from './event.interface';
  * 它应用广泛，但是也有缺点
  * 创建这个函数同样需要内存，过度使用会导致难以跟踪维护
  */
-export abstract class BaseEventTarget extends Destroyable implements IEventTarget {
+export class BaseEventTarget extends Destroyable implements IEventTarget {
   private _map: Map<string, Array<Function>> = new Map();
 
-  protected constructor() {
+  constructor() {
     super();
     this.addSubscription(() => {
       if (this._map) {

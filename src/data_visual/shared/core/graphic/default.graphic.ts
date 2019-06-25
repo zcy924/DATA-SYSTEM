@@ -1,13 +1,13 @@
 import {Observable, Subscription} from 'rxjs';
 import {IGraphic} from './graphic';
 import {IGraphicView} from './graphic.view';
-import {OuterModelEventTarget} from '../event/model.event';
+import { ModelEventTarget } from '../../event';
 
 export abstract class DefaultGraphic implements IGraphic {
   $element: JQuery;
 
   protected _view: IGraphicView;
-  protected _modelEventTarget = new OuterModelEventTarget();
+  protected _modelEventTarget = new ModelEventTarget();
 
   /**
    * 一般用于初始化  新建Graphic的时候调用

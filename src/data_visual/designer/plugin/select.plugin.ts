@@ -1,6 +1,6 @@
 import {RegionController} from '../core/region/region.controller';
-import {EventBus, EventMessage} from '../../shared/core/event/event.bus';
 import { IPlugin } from './plugin';
+import { EventBus } from '@barca/shared';
 
 enum SelectStatus {
   default, single, multi

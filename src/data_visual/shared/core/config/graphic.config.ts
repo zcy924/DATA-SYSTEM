@@ -1,7 +1,6 @@
 import * as _ from 'lodash';
 import { Observable, Subject } from 'rxjs';
-import { ModelEventTarget } from '../event/model.event';
-
+import { ModelEventTarget } from '../../event';
 
 export abstract class GraphicConfig extends ModelEventTarget {
   private _destroyed = false;

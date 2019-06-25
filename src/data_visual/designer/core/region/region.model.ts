@@ -1,8 +1,8 @@
 import { closestNum } from '../../utils/common';
 import { CoordinatesAndDimensions, Dimensions } from '../interface';
-import { ModelEventTarget } from '../../../shared/core/event/model.event';
 import * as _ from 'lodash';
 import { IRegionOption } from '../../../shared/file/component.option';
+import { ModelEventTarget } from '@barca/shared';
 
 export enum RegionState {
   default, selected, multiSelected, activated

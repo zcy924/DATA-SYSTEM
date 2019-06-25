@@ -1,4 +1,5 @@
 import { BaseEventTarget } from './event';
+import { IRegion } from '../core/region';
 
 type ICallback = (event: EventMessage) => void;
 
@@ -23,10 +24,17 @@ export class EventMessage {
   eventName: string;
   tags: Array<string> = [];
 
+  private _target: IRegion;
+
   constructor() {
 
   }
+
+  get target() {
+    return this._target;
+  }
 }
+
 
 interface EventListener {
   listen(eventBus: EventBus);
@@ -71,6 +79,10 @@ export class EventBus extends BaseEventTarget {
         console.error(e);
       }
     }
+  }
+
+  send(eventType, eventMessage: EventMessage) {
+
   }
 }
 

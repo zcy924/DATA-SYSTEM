@@ -1,5 +1,4 @@
-import {ViewEventTarget} from '../../../shared/core/event/view.event';
-
+import { ViewEventTarget } from '@barca/shared';
 
 export abstract class View {
   $element: JQuery;

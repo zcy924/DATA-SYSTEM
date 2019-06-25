@@ -1,5 +1,6 @@
 import { Destroyable } from '../common/destroyable';
 import { ChangedItem, IModelEventTarget, KeyValueListener } from './event.interface';
+import * as _ from 'lodash';
 
 export class ModelEventTarget extends Destroyable implements IModelEventTarget{
   private _map: Map<string, Array<KeyValueListener>> = new Map();
@@ -84,6 +85,16 @@ export class ModelEventTarget extends Destroyable implements IModelEventTarget{
     });
   }
 
+}
+
+export class OuterModelEventTarget extends ModelEventTarget {
+  trigger(item: ChangedItem | Array<ChangedItem>) {
+    if (_.isArray(item)) {
+      this._batchTrigger(item);
+    } else if (!!item) {
+      this._trigger(item);
+    }
+  }
 }
 
 

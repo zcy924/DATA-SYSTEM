@@ -1,7 +1,7 @@
 import { GraphicConfig } from '../../config/graphic.config';
-import { ChangedItem } from '../../event/model.event';
 import { KeyValueDiffer } from '../../../utils/keyvalue_differs';
 import { keyValueDiffers } from '../../../utils/default_keyvalue_differ';
+import { ChangedItem } from '../../../event';
 
 export class RuntimeConfigSource extends GraphicConfig {
   private _option: any;
