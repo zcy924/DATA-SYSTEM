@@ -22,8 +22,8 @@ export class GraphicWrapper {
   private _graphicOption: GraphicOption;
 
   private _graphic: IGraphic;
-  private _configSource: Observable<any>;
-  private _dataSource: Observable<any>;
+  private _config$: Observable<any>;
+  private _data$: Observable<any>;
 
   private _configSubject = new Subject();
   private _configSubscription: Subscription;
@@ -79,7 +79,7 @@ export class GraphicWrapper {
 
     // 有configOption一般粘贴，或者打开新的文件时 会走这条路
     if (configOption) {
-      this._configSource = this._region.page
+      this._config$ = this._region.page
         .getMockConfigSource({
           graphicId: this._uuid,
           graphicKey,
@@ -87,34 +87,36 @@ export class GraphicWrapper {
         });
     } else {
       // 如果是新建 则肯定是调用设计时的configFactory
-      this._configSource = this._region.page
+      this._config$ = this._region.page
         .getConfigSource({
           graphicId: this._uuid,
           graphicKey,
           configOption,
         });
     }
-    this._dataSource = this._region.page.getDataSource(dataSourceKey);
+    this._data$ = this._region.page.getDataSource(dataSourceKey);
 
     // 两个组件必须同时打开  不然收不到信息
     this._modelSubscription = this._graphic
-      .accept(combineLatest(this._configSource, this._dataSource)
-        .pipe(tap((modelArray: Array<any>) => {
-          const [model, data] = modelArray;
+      .accept(combineLatest(this._config$, this._data$)
+        .pipe(tap(([model, data]: Array<any>) => {
           this._configSubject.next(model);
         })));
   }
 
+  /**
+   * 切换配置源
+   */
   switchConfigSource() {
     if (this._modelSubscription) {
       this._modelSubscription.unsubscribe();
     }
-    this._configSource = this._region.page.getConfigSource({
+    this._config$ = this._region.page.getConfigSource({
       graphicId: this._uuid,
       graphicKey: this._graphicOption.graphicKey,
       configOption: this._graphicOption.configOption,
     });
-    this._modelSubscription = this._graphic.accept(combineLatest(this._configSource, this._dataSource)
+    this._modelSubscription = this._graphic.accept(combineLatest(this._config$, this._data$)
       .pipe(tap((modelArray: Array<any>) => {
         const [model, data] = modelArray;
         this._configSubject.next(model);
@@ -126,8 +128,8 @@ export class GraphicWrapper {
     if (this._modelSubscription) {
       this._modelSubscription.unsubscribe();
     }
-    this._dataSource = this._region.page.getDataSource(dataSourceKey);
-    this._modelSubscription = this._graphic.accept(combineLatest(this._configSource, this._dataSource)
+    this._data$ = this._region.page.getDataSource(dataSourceKey);
+    this._modelSubscription = this._graphic.accept(combineLatest(this._config$, this._data$)
       .pipe(tap((modelArray: Array<any>) => {
         const [model, data] = modelArray;
         this._configSubject.next(model);

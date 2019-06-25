@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  SERVER_URL: `127.0.0.1:8080/DVSP/`,
+  SERVER_URL: `10.34.12.129:8081/DVSP/`,
   // SERVER_URL: `http://10.2.215.218:8080/data-reporter/ipa/`,
   TEST_URL: `http://127.0.0.1:3000/`,
   production: false,

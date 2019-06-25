@@ -60,8 +60,7 @@ class Store {
       this._selectArray.splice(this._selectArray.indexOf(region), 1);
 
       if (this._selectArray.length === 1) {
-        const region1 = this._selectArray[0];
-        region1.state = RegionState.selected;
+        this._selectArray[0].state = RegionState.selected;
       }
     }
   }

@@ -1,5 +1,5 @@
 import { ReportPageInner } from '../page/report/page.inner';
-import { regionMap } from '../../config/region.map';
+import { regionDefinitionMap } from '../../config/region.definition.map';
 import { session } from '../../utils/session';
 import { GraphicCreateAction } from '../operate/graphic.create.action';
 import { ReportPageOuter } from '../page/report/page.outer';
@@ -25,13 +25,12 @@ class GraphicFactory {
   }
 
   paste(graphicMeta: any, x?: number, y?: number) {
-    if (regionMap.has(graphicMeta.region.regionKey)) {
-      const region: RegionController = new (regionMap.get(graphicMeta.region.regionKey))(session.currentPage.reportPage);
+    if (regionDefinitionMap.has(graphicMeta.region.regionKey)) {
+      const region: RegionController = new (regionDefinitionMap.get(graphicMeta.region.regionKey))(session.currentPage.reportPage);
 
       region.init(graphicMeta.region.regionOption);
 
       if (Number.isInteger(x) && Number.isInteger(y)) {
-        region.setCoordinates(x, y);
       }
 
       const graphic = new GraphicWrapper(region);

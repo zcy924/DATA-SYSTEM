@@ -1,4 +1,4 @@
-import { regionMap } from '../../config/region.map';
+import { regionDefinitionMap } from '../../config/region.definition.map';
 import { IReportPage } from '../page/report/page.interface';
 import { ComponentRepositoryManager } from '../../../shared/manager/component.repository.manager';
 import { IComponentOption } from '../../../shared/file/component.option';
@@ -6,6 +6,9 @@ import { RegionController } from '../region/region.controller';
 import { GraphicWrapper } from '../graphic/graphic.wrapper';
 import { IAction } from './action';
 
+/**
+ * 图表创建动作
+ */
 export class GraphicCreateAction implements IAction {
 
   private _region: RegionController;
@@ -17,13 +20,12 @@ export class GraphicCreateAction implements IAction {
 
   forward() {
     const compRepoManager = ComponentRepositoryManager.getInstance();
-    console.log('XXXXXX', compRepoManager.has('standard$bar.chart.graphic'));
     // 是否存在图表的默认定义
     if (compRepoManager.has(this._graphicPath)) {
       const componentOption: IComponentOption = compRepoManager.getComponentMeta(this._graphicPath).componentOption;
 
-      if (regionMap.has(componentOption.region.regionKey)) {
-        const region: RegionController = new (regionMap.get(componentOption.region.regionKey))(this._page);
+      if (regionDefinitionMap.has(componentOption.region.regionKey)) {
+        const region: RegionController = new (regionDefinitionMap.get(componentOption.region.regionKey))(this._page);
         region.init(null);
         region.setCoordinates(this._x, this._y);
         if (componentOption.region.regionOption) {

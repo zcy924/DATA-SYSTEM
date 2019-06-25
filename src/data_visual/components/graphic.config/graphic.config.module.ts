@@ -31,8 +31,8 @@ import {TableConfigComponent} from './custom/table.config.component';
 import { ColorPickerModule } from '../shared/color-picker/color-picker.module';
 
 const COMPONENTS = [
-  PieConfigComponent,
   BarConfigComponent,
+  PieConfigComponent,
   FlipBarConfigComponent,
   GaugeConfigComponent,
   MapConfigComponent,

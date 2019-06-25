@@ -1,6 +1,8 @@
 class ResizeTipHelper {
-  private _template = `<div class="u-tip u-tip-grid" style="transform: translate(0px,-50%);left:300px;top:300px;display: none;">
-    <span></span></div>`;
+  private _template = `
+    <div class="u-tip u-tip-grid" style="transform: translate(0px,-50%);left:300px;top:300px;display: none;">
+    <span></span>
+    </div>`;
 
   private readonly _$element: JQuery;
 
@@ -22,15 +24,11 @@ class ResizeTipHelper {
       left,
       top
     });
-    this._content(width, height);
+    this._$span.text(`${width} × ${height}`);
   }
 
   hide() {
     this._$element.hide();
-  }
-
-  private _content(x, y) {
-    this._$span.text(`${x} × ${y}`);
   }
 }
 

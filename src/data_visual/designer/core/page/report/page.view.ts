@@ -1,8 +1,8 @@
 import { contextMenuHelper } from '../../../../shared/utils/context.menu.helper';
 import { ReportPageInner } from './page.inner';
-import { repaintMaskGenerator } from '../../../helper/mask.helper';
+import { RepaintMask, repaintMaskGenerator } from '../../../helper/mask.helper';
 import { boxSelectHelper } from '../../../helper/box.select.helper';
-import { PageConfig } from '../../../../shared/core/page/page.config';
+import { BasePageConfig } from '../../../../shared/core/page/page.config';
 import { View } from '../../structure/view';
 
 const TEMPLATE = `
@@ -10,12 +10,12 @@ const TEMPLATE = `
         <div class="report-canvas">
           <div class="report-box">
              <div class="report-grid">
-             <div class="u-edit-mask">
-                <div class="mask mask-left" tabindex="-1"></div>
-                <div class="mask mask-right" tabindex="-1"></div>
-                <div class="mask mask-bottom" tabindex="-1"></div>
-                <div class="mask mask-top" tabindex="-1"></div>
-              </div>
+               <div class="u-edit-mask">
+                  <div class="mask mask-left" tabindex="-1"></div>
+                  <div class="mask mask-right" tabindex="-1"></div>
+                  <div class="mask mask-bottom" tabindex="-1"></div>
+                  <div class="mask mask-top" tabindex="-1"></div>
+                </div>
              </div>
           </div>
         </div>
@@ -31,7 +31,7 @@ export class PageView extends View {
 
   private _contextMenuGenerator: Function;
 
-  repaintMask: Function;
+  private _repaintMask: RepaintMask;
 
   private _scale = 1;
   private _width: number;
@@ -46,9 +46,17 @@ export class PageView extends View {
     this._$box = $element.find('.report-box');
     this.$grid = $element.find('.report-grid');
 
-    this.repaintMask = repaintMaskGenerator(this.$element.find('.u-edit-mask'));
+    this._repaintMask = repaintMaskGenerator(this.$element.find('.u-edit-mask'));
 
     this._init();
+  }
+
+  /**
+   * 绘制遮罩层
+   * @param $target 突出现实的元素
+   */
+  repaintMask($target: JQuery) {
+    this._repaintMask($target);
   }
 
   protected _init() {
@@ -73,7 +81,7 @@ export class PageView extends View {
     this._refresh();
   }
 
-  public accept(model: PageConfig) {
+  public accept(model: BasePageConfig) {
     model.register('remove.backgroundClass', (key, oldValue, newValue) => {
       this._$box.removeClass('background1 background2 background3 background4');
     });
@@ -122,6 +130,10 @@ export class PageView extends View {
     this._contextMenuGenerator = generator;
   }
 
+  /**
+   * 更新 视图中画布大小
+   * @private
+   */
   private _refresh() {
     if (this._width && this._height) {
       this.$element.css({
@@ -155,6 +167,7 @@ export class PageView extends View {
     this.$grid
       .on('click', ($event) => {
         if ($event.target === this.$grid[0]) {
+          console.log('dispatch select');
           eventTarget.dispatchEvent('select');
         }
       })
@@ -169,13 +182,14 @@ export class PageView extends View {
             boxSelectHelper.show(
               left = Math.min(startPageX, event.pageX),
               top = Math.min(startPageY, event.pageY),
-              width = Math.abs(event.pageX - startPageX),
-              height = Math.abs(event.pageY - startPageY));
+              width = (Math.abs(event.pageX - startPageX) + 2),
+              height = (Math.abs(event.pageY - startPageY)) + 2);
           },
           mouseup = (event: MouseEvent) => {
             document.removeEventListener('mousemove', mousemove);
             document.removeEventListener('mouseup', mouseup);
             boxSelectHelper.hide();
+            console.log('dispatch boxSelect');
             this._eventTarget.dispatchEvent('boxSelect', left, top, width, height);
           };
         document.addEventListener('mousemove', mousemove);
@@ -201,6 +215,6 @@ export class PageView extends View {
 
 
   destroy() {
-
+    this._repaintMask = null;
   }
 }

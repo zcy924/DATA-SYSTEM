@@ -1,7 +1,7 @@
-import { KeyValueDiffer, keyValueDiffers, PageConfig } from '@barca/shared';
+import { KeyValueDiffer, keyValueDiffers, BasePageConfig } from '@barca/shared';
 
 
-export class PageConfigRuntime extends PageConfig {
+export class PageConfigRuntime extends BasePageConfig {
   private _differ: KeyValueDiffer<any, any>;
 
   constructor() {

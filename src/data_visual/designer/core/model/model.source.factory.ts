@@ -1,6 +1,6 @@
 import {IConfigSourceFactory} from '../../../shared/core/config/config.source.factory';
 import {DesignConfigSourceFactory} from '../config/design/design.config.source.factory';
-import {RuntimeConfigSourceFactory} from '../../../shared/core/config/runtime/runtime.config.source.factory';
+import {RuntimeConfigSourceFactory} from '../../../runtime/config/runtime.config.source.factory';
 import {combineLatest, Observable} from 'rxjs';
 import {IConfigSourceOption} from '../config/config.source.interface';
 import { DataSourceFactory } from '../../../shared/core/data/data.source.factory';

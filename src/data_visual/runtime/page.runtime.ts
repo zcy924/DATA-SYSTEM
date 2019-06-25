@@ -7,7 +7,7 @@ import {
   DataSourceManager,
   IComponentOption,
   IConfigSourceFactory,
-  PageConfig,
+  BasePageConfig,
   RuntimeConfigSourceFactory,
 } from '@barca/shared';
 
@@ -35,7 +35,7 @@ export class PageRuntime {
   private _$box: JQuery;
   private _$grid: JQuery;
 
-  private _model: PageConfig;
+  private _model: BasePageConfig;
 
   private _state: PageRuntimeState = PageRuntimeState.created;
   private _scale = 1;
@@ -80,7 +80,7 @@ export class PageRuntime {
     }
   }
 
-  private _accept(model: PageConfig) {
+  private _accept(model: BasePageConfig) {
     model.register('remove.backgroundClass', (key, oldValue, newValue) => {
       this._$box.removeClass('background1 background2 background3 background4');
     });

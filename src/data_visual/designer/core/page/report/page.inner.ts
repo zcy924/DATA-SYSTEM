@@ -1,5 +1,5 @@
 import { IPage } from '../../interface';
-import { PageConfig } from '../../../../shared/core/page/page.config';
+import { BasePageConfig } from '../../../../shared/core/page/page.config';
 import { clipboard } from '../../../utils/clipboard';
 import { ISelectManager, SelectManager } from '../../manager/select.manager';
 import { RegionManager } from '../../manager/region.manager';
@@ -11,7 +11,7 @@ import { GeneratorRepositoryManager } from '../../../../shared/manager/generator
 import { ComponentRepositoryManager } from '../../../../shared/manager/component.repository.manager';
 import { graphicFactory } from '../../graphic/graphic.factory';
 import { ActionManager } from '../../operate/action.manager';
-import { PageConfigWrapper } from './page.outer';
+import { PageConfig } from './page.outer';
 import { PageView } from './page.view';
 import { StandardCompRepo } from '../../../../component.packages/standard/main';
 import { CustomCompRepo } from '../../../../component.packages/custom/main';
@@ -19,8 +19,10 @@ import { standardGeneratorRepo } from '../../../../data.source.packages/mock/mai
 
 export class ReportPageInner implements IPage {
 
-  public pageConfigWrapper: PageConfigWrapper;
+  public pageConfig: PageConfig;
   public view: PageView;
+
+  // manager
   public regionManager: RegionManager;
   public selectManager: ISelectManager;
   public activateManager: ActivateManager;
@@ -39,10 +41,12 @@ export class ReportPageInner implements IPage {
     this.geneRepoManager.addGeneratorRepository(standardGeneratorRepo);
 
     this.view = new PageView(this);
-    this.pageConfigWrapper = new PageConfigWrapper(_mode);
+    this.pageConfig = new PageConfig(_mode);
+
     this.regionManager = new RegionManager();
     this.selectManager = new SelectManager();
     this.activateManager = new ActivateManager(this);
+
     this.configSourceManager = new ConfigSourceManager();
     this.dataSourceManager = new DataSourceManager(dataOptionManager.getDataSourceConfigSet('space1'));
     this.actionManager = new ActionManager();
@@ -53,16 +57,16 @@ export class ReportPageInner implements IPage {
   }
 
   init() {
-    this.accept(this.pageConfigWrapper.model);
-    this.view.accept(this.pageConfigWrapper.model);
+    this.accept(this.pageConfig.model);
+    this.view.accept(this.pageConfig.model);
     this._init();
   }
 
   /**
    * 监听model事件
-   * @param {PageConfig} model
+   * @param {BasePageConfig} model
    */
-  accept(model: PageConfig) {
+  accept(model: BasePageConfig) {
     model.register('themeMode', (key, oldValue, newValue) => {
       this.regionManager.regionArray.forEach((item) => {
         item.updateTheme(newValue);
@@ -80,7 +84,7 @@ export class ReportPageInner implements IPage {
     this.view
       .addEventListener('select', () => {
         this.selectManager.clear();
-        this.pageConfigWrapper.show();
+        this.pageConfig.show();
       })
       .addEventListener('boxSelect', (left, top, width, height) => {
         const array = this.regionManager.selectByBox(left, top, width, height);

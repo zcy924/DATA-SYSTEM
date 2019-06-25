@@ -1,9 +1,9 @@
-import {IConfigSourceFactory} from '../../../../shared/core/config/config.source.factory';
-import {session} from '../../../utils/session';
-import {DesignGraphicConfig} from '../../../../shared/core/source/config.source/design.config.source';
+import { IConfigSourceFactory } from '../../../../shared/core/config/config.source.factory';
+import { session } from '../../../utils/session';
+import { DesignGraphicConfig } from '../../../../shared/core/source/config.source/design.config.source';
 
-import {GraphicConfigManager} from './graphic.config.manager';
-import {graphicConfigMap} from '../../../config/graphic.map';
+import { GraphicConfigManager } from './graphic.config.manager';
+import { graphicConfigDefinitionMap } from '../../../config/graphic.config.definition.map';
 import { Type } from '../../../../shared/interface/type';
 
 export class DesignConfigSourceFactory implements IConfigSourceFactory {
@@ -21,9 +21,8 @@ export class DesignConfigSourceFactory implements IConfigSourceFactory {
   private constructor() {
   }
 
-  getConfigSource(configSourceOption: { graphicId: string, graphicKey: string, configOption: any }) {
-    const {graphicId, graphicKey, configOption} = configSourceOption,
-      xxx: Type<DesignGraphicConfig> = graphicConfigMap.get(graphicKey),
+  getConfigSource({ graphicId, graphicKey, configOption }: { graphicId: string, graphicKey: string, configOption: any }) {
+    const xxx: Type<DesignGraphicConfig> = graphicConfigDefinitionMap.get(graphicKey),
       configComponentRef = session.siderLeftComponent.forwardCreateGraphicConfig(xxx);
 
     // 步骤四
@@ -34,5 +33,4 @@ export class DesignConfigSourceFactory implements IConfigSourceFactory {
     return configComponentRef.instance.configSource;
   }
 }
-
 

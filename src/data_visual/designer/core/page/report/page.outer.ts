@@ -2,7 +2,7 @@ import { ReportPageInner } from './page.inner';
 import { session } from '../../../utils/session';
 import { PageConfigComponent } from '../../../../components/page.config/page.config.component';
 import { ComponentRef } from '@angular/core';
-import { PageConfig } from '../../../../shared/core/page/page.config';
+import { BasePageConfig } from '../../../../shared/core/page/page.config';
 import { IReportPage } from './page.interface';
 import { PageConfigRuntime } from '../../../../runtime/page.config.runtime';
 import * as _ from 'lodash';
@@ -11,23 +11,23 @@ import { RegionController } from '../../region/region.controller';
 import { graphicFactory } from '../../graphic/graphic.factory';
 import { ReportPage } from './page';
 
-export class PageConfigWrapper {
+export class PageConfig {
 
-  private _inner: ComponentRef<PageConfig> | PageConfig;
+  private _inner: BasePageConfig | ComponentRef<BasePageConfig>;
 
-  constructor(mode: 'design' | 'runtime') {
-    switch (mode) {
+  constructor(private _mode: 'design' | 'runtime') {
+    switch (_mode) {
       case 'design':
         this._inner = session.siderLeftComponent.forwardCreateCanvasConfig(PageConfigComponent);
         break;
       case 'runtime':
-        this._inner = new PageConfigRuntime();
+        this._inner = new PageConfigRuntime() as any;
         break;
     }
   }
 
-  get model(): PageConfig {
-    if (this._inner instanceof PageConfig) {
+  get model(): BasePageConfig {
+    if (this._inner instanceof BasePageConfig) {
       return this._inner;
     } else {
       return this._inner.instance;
@@ -35,7 +35,7 @@ export class PageConfigWrapper {
   }
 
   show() {
-    if (this._inner instanceof PageConfig) {
+    if (this._inner instanceof BasePageConfig) {
 
     } else {
       session.siderLeftComponent.attachDataProperty(this._inner.hostView);
@@ -47,7 +47,7 @@ export class PageConfigWrapper {
   }
 
   destroy() {
-    if (this._inner instanceof PageConfig) {
+    if (this._inner instanceof BasePageConfig) {
     } else {
       this._inner.destroy();
       this._inner = null;
@@ -63,10 +63,14 @@ export class ReportPageOuter {
   private _pageInner: ReportPageInner;
   private _page: IReportPage;
 
-  static accept(versionNo: string): boolean {
-    if (this._versionPattern.test(versionNo)) {
+  static get version() {
+    return this._version;
+  }
+
+  private accept(versionNo: string): boolean {
+    if (ReportPageOuter._versionPattern.test(versionNo)) {
       const [a, b, c] = versionNo.match(/\d+/g),
-        [ta, tb, tc] = this._version.match(/\d+/g);
+        [ta, tb, tc] = ReportPageOuter._version.match(/\d+/g);
       if (a === ta && parseInt(tb) >= parseInt(b)) {
         return true;
       } else {
@@ -106,9 +110,15 @@ export class ReportPageOuter {
     return this._pageInner && this._pageInner.actionManager;
   }
 
+  /**
+   * 加载文件
+   *
+   * 检查文件结构/文件版本，判断传入的文件能否被打开
+   * @param file
+   */
   load(file: IFileStructure) {
     if (file.main && this._checkFile(file)) {
-      file.main.option && this._pageInner.pageConfigWrapper.model.importOption(file.main.option);
+      file.main.option && this._pageInner.pageConfig.model.importOption(file.main.option);
       file.main.children && file.main.children.forEach((value) => {
         graphicFactory.paste(value);
       });
@@ -128,7 +138,7 @@ export class ReportPageOuter {
    */
   private _checkVersion(file: IFileStructure) {
     const version = _.get(file, 'manifest.version');
-    return version ? ReportPageOuter.accept(version) : false;
+    return version ? this.accept(version) : false;
   }
 
   private _checkDependencies(file: IFileStructure) {
@@ -140,7 +150,7 @@ export class ReportPageOuter {
 
   save() {
     const main = {
-      option: this._pageInner.pageConfigWrapper.model.exportOption(),
+      option: this._pageInner.pageConfig.model.exportOption(),
       children: this._pageInner.regionManager.saveAs(),
     };
     let keys = _.uniq(main.children.map((value, index, array) => {
@@ -168,6 +178,10 @@ export class ReportPageOuter {
     };
   }
 
+  /**
+   * 清空页面中的所有图表
+   * 对于单个图表 释放数据源 释放配置源 解绑dom事件绑定
+   */
   clear() {
     this._pageInner.regionManager.regionArray.forEach((value: RegionController) => {
       value.destroy();

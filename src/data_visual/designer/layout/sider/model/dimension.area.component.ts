@@ -7,7 +7,7 @@ import { draggableHeler } from '../../../../utils/draggable.helper';
 import { fromEvent } from 'rxjs';
 import { DataModel } from '../../../data/data.model.interface';
 import { dataModelManager } from '../../../data/data.model.manager';
-import { Destroyable } from '../../../../shared/interface/destroyable';
+import { Destroyable } from '@barca/shared';
 
 
 @Component({

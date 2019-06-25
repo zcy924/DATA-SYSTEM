@@ -48,6 +48,7 @@ export class DataSourceConfigSet {
     }
   }
 
+
   private _load(dataOptionOption: IDataSourceConfig) {
     this._array.push(new DataSourceConfig(dataOptionOption));
   }

@@ -11,7 +11,7 @@ import { dataModelList } from '../../../utils/dataModel';
 import { HttpClient } from '@angular/common/http';
 import { dataModelManager } from '../../data/data.model.manager';
 import { DataSourceConfigManager } from '../../data/data.source.config.manager';
-import { Destroyable } from '../../../shared/interface/destroyable';
+import { Destroyable } from '@barca/shared';
 
 @Component({
   selector: 'app-sider-right',

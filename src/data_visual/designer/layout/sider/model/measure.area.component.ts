@@ -1,17 +1,14 @@
 import {
   AfterViewInit,
-  Component, ElementRef, HostBinding,
-  Input, OnDestroy,
-  ViewEncapsulation,
+  Component, ElementRef, HostBinding, OnDestroy,
 } from '@angular/core';
 import { draggableHeler } from '../../../../utils/draggable.helper';
 import { DataModel } from '../../../data/data.model.interface';
 import { dataModelManager } from '../../../data/data.model.manager';
-import { Destroyable } from '../../../../shared/interface/destroyable';
+import { Destroyable } from '@barca/shared';
 
 @Component({
   selector: 'app-measure-area',
-  encapsulation: ViewEncapsulation.Emulated,
   templateUrl: './measure.area.component.html',
   styleUrls: ['./measure.area.component.less'],
 })

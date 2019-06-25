@@ -2,7 +2,7 @@ import { GeneratorRepository } from '../core/repository/generator.repository';
 
 /**
  * 设计时和运行时都会使用到ComponentRepositoryManager
- * 管理设计器或运行时加载的全部组件库
+ * 管理设计时或运行时加载的全部数据源生成器
  *
  * 设计器只能新建该manager中存在的Graphic
  * 运行时只能识别该manager中存在的Graphic

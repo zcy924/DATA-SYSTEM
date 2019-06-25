@@ -1,10 +1,10 @@
 import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { debounceTime, delay } from 'rxjs/operators';
-import { Destroyable } from '../../../shared/interface/destroyable';
 import { RegionController } from '../../core/region/region.controller';
 import { IReportPage } from '../../core/page/report/page.interface';
 import { session } from '../../utils/session';
+import { Destroyable } from '@barca/shared';
 
 
 @Component({

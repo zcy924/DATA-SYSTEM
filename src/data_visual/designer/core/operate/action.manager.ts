@@ -6,7 +6,6 @@ export class ActionManager {
   private _pointer = -1;
 
   constructor() {
-
   }
 
   /**
@@ -24,7 +23,7 @@ export class ActionManager {
   }
 
   /**
-   * 若果可以重做，则先删除掉可以重做的部分
+   * 如果可以重做，则先删除掉可以重做的部分
    * @param {IAction} action
    */
   execute(action: IAction) {
@@ -40,8 +39,7 @@ export class ActionManager {
 
   backward() {
     if (this.canBackward) {
-      const current = this.current;
-      current.backward();
+      this.current.backward();
       this._pointer--;
     }
   }
@@ -49,8 +47,13 @@ export class ActionManager {
   forward() {
     if (this.canForward) {
       this._pointer++;
-      const current = this.current;
-      current.forward();
+      try {
+        this.current.forward();
+      } catch (e) {
+        console.error(e);
+        this._pointer--;
+      }
+
     }
   }
 

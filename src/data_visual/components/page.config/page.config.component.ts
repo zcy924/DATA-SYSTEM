@@ -9,7 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { PageConfig } from '../../shared/core/page/page.config';
+import { BasePageConfig } from '../../shared/core/page/page.config';
 import { debounceTime } from 'rxjs/operators';
 
 @Component({
@@ -17,7 +17,7 @@ import { debounceTime } from 'rxjs/operators';
   templateUrl: './page.config.component.html',
   styleUrls: ['./page.config.component.less'],
 })
-export class PageConfigComponent extends PageConfig implements AfterViewInit, OnInit {
+export class PageConfigComponent extends BasePageConfig implements AfterViewInit, OnInit {
 
   @ViewChild(NgForm) ngForm: NgForm;
   @Output() output = new EventEmitter();

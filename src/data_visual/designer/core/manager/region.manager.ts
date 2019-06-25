@@ -1,6 +1,5 @@
 import { RegionController } from '../region/region.controller';
 import { Observable, Subject } from 'rxjs';
-import * as _ from 'lodash';
 
 export class RegionManager {
 
@@ -35,14 +34,14 @@ export class RegionManager {
     if (!this.has(region)) {
       this._children.push(region);
     }
-    this._subject.next(this.regionArray);
+    this._subject.next([...this.regionArray]);
   }
 
   remove(region: RegionController) {
-    if (this._children.includes(region)) {
+    if (this.has(region)) {
       this._children.splice(this._children.indexOf(region), 1);
     }
-    this._subject.next(this.regionArray);
+    this._subject.next([...this.regionArray]);
   }
 
   get regionArray() {
