@@ -3,7 +3,7 @@ import {BehaviorSubject} from 'rxjs';
 import {GraphicConfig} from '../../config/graphic.config';
 import { ChangedItem } from '../../../event';
 
-export class DesignGraphicConfig extends GraphicConfig {
+export class DesignerGraphicConfig extends GraphicConfig {
   option: any;
 
   exportOption() {

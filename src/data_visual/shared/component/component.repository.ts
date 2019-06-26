@@ -1,7 +1,6 @@
 import * as _ from 'lodash';
 import { IComponentMeta, IPaletteMeta } from '../interface/component.meta';
 
-
 /**
  *  组件库
  *  注册组件

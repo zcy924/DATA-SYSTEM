@@ -3,8 +3,8 @@ import { throttleTime } from 'rxjs/internal/operators';
 import { closestNum } from '../../../utils/common';
 import { Region } from './region';
 import { RegionModel } from './region.model';
-import { contextMenuHelper, ContextMenuItem } from '../../../helper/context.menu.helper';
-import { resizeTipHelper } from '../../../helper/resize.tip.helper';
+import { contextMenuHelper, ContextMenuItem } from '../../helper/context.menu.helper';
+import { resizeTipHelper } from '../../helper/resize.tip.helper';
 import { Rectangle, ViewEventTarget } from '@barca/shared';
 
 type IContextMenuGenerator = () => Array<ContextMenuItem | 'split'>;

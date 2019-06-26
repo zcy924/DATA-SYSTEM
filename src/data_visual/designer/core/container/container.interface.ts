@@ -1,4 +1,4 @@
-import {contextMenuHelper} from '../../helper/context.menu.helper';
+import {contextMenuHelper} from '../helper/context.menu.helper';
 import {FaceWrapper} from '../face/face.wrapper';
 import {BarEchartFace} from '../face/bar.echart.face';
 

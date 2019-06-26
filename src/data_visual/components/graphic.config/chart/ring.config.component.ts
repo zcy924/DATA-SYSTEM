@@ -9,7 +9,7 @@ import {
 import {NgForm} from '@angular/forms';
 
 import {NzModalService} from 'ng-zorro-antd';
-import {DesignGraphicConfig} from '../../../shared/core/source/config.source/design.config.source';
+import {DesignerGraphicConfig} from '../../../shared/core/source/config.source/designer.config.source';
 import {debounceTime} from 'rxjs/operators';
 import * as _ from 'lodash';
 
@@ -18,7 +18,7 @@ import * as _ from 'lodash';
   templateUrl: './map.config.component.html',
   styleUrls: ['./map.config.component.less']
 })
-export class RingConfigComponent extends DesignGraphicConfig implements AfterViewInit, OnInit {
+export class RingConfigComponent extends DesignerGraphicConfig implements AfterViewInit, OnInit {
 
   @ViewChild(NgForm) ngForm: NgForm;
 

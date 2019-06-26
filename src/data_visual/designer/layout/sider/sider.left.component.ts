@@ -8,7 +8,7 @@ import {
 import {NgForm} from '@angular/forms';
 import {BasePageConfig} from '../../../shared/core/page/page.config';
 import {DataHeaderComponent} from '../../../components/graphic.config/html/header.component';
-import {DesignGraphicConfig} from '../../../shared/core/source/config.source/design.config.source';
+import {DesignerGraphicConfig} from '../../../shared/core/source/config.source/designer.config.source';
 import {DesignerBodyComponent} from '../designer.body.component';
 import { session } from '../../utils/session';
 
@@ -48,12 +48,12 @@ export class SiderLeftComponent implements AfterViewInit {
     });
   }
 
-  createGraphicConfig(type: Type<DesignGraphicConfig>): ComponentRef<DesignGraphicConfig> {
-    let retComponentRef: ComponentRef<DesignGraphicConfig>;
+  createGraphicConfig(type: Type<DesignerGraphicConfig>): ComponentRef<DesignerGraphicConfig> {
+    let retComponentRef: ComponentRef<DesignerGraphicConfig>;
     this.zone.run(() => {
       this.container.detach();
       this.container.clear();
-      const factory: ComponentFactory<DesignGraphicConfig> =
+      const factory: ComponentFactory<DesignerGraphicConfig> =
         this.resolver.resolveComponentFactory(type);
       retComponentRef = this.componentRef = this.container.createComponent(factory);
       this.componentRef.instance.type = type;
@@ -67,12 +67,12 @@ export class SiderLeftComponent implements AfterViewInit {
     return retComponentRef;
   }
 
-  forwardCreateGraphicConfig(type: Type<DesignGraphicConfig>): ComponentRef<DesignGraphicConfig> {
-    let retComponentRef: ComponentRef<DesignGraphicConfig>;
+  forwardCreateGraphicConfig(type: Type<DesignerGraphicConfig>): ComponentRef<DesignerGraphicConfig> {
+    let retComponentRef: ComponentRef<DesignerGraphicConfig>;
     this.zone.run(() => {
       // this.shadowContainer.detach();
       // this.shadowContainer.clear();
-      const factory: ComponentFactory<DesignGraphicConfig> =
+      const factory: ComponentFactory<DesignerGraphicConfig> =
         this.resolver.resolveComponentFactory(type);
       retComponentRef = this.componentRef = this.shadowContainer.createComponent(factory);
       this.componentRef.instance.type = type;

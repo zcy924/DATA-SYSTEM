@@ -2,7 +2,7 @@ import {Type} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Chart} from './graphic.view/chart';
 import { IGraphic, ModelEventTarget } from '@barca/shared';
-import { contextMenuHelper } from '../../../designer/helper/context.menu.helper';
+import { contextMenuHelper } from '../../../designer/core/helper/context.menu.helper';
 
 
 const template = `
@@ -47,7 +47,7 @@ export abstract class ChartGraphic implements IGraphic {
    * 2、创建 ConfigSource
    * 3、监听 ConfigSource 变化
    * 4、导入数据（初始化）ConfigSource
-   * @param {Type<DesignGraphicConfig>} graphicConfigClass
+   * @param {Type<DesignerGraphicConfig>} graphicConfigClass
    * @param option
    * @private
    */

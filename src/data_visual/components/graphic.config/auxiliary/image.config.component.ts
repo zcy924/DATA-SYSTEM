@@ -9,7 +9,7 @@ import {
   ViewChild
 } from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {DesignGraphicConfig} from '../../../shared/core/source/config.source/design.config.source';
+import {DesignerGraphicConfig} from '../../../shared/core/source/config.source/designer.config.source';
 import {debounceTime} from 'rxjs/operators';
 
 @Component({
@@ -17,7 +17,7 @@ import {debounceTime} from 'rxjs/operators';
   templateUrl: './image.config.component.html',
   styleUrls: ['./image.config.component.less']
 })
-export class ImageConfigComponent extends DesignGraphicConfig implements AfterViewInit, OnInit {
+export class ImageConfigComponent extends DesignerGraphicConfig implements AfterViewInit, OnInit {
 
   @ViewChild(NgForm) ngForm: NgForm;
 

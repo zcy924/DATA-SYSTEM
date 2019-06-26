@@ -1,7 +1,6 @@
 import { Observable } from 'rxjs/internal/Observable';
 import { BehaviorSubject } from 'rxjs';
-import { IConfigSourceFactory } from '../../shared/core/config/config.source.factory';
-import { keyValueDiffers } from '../../shared/common/differ/default_keyvalue_differ';
+import { IConfigSourceFactory, keyValueDiffers } from '@barca/shared';
 
 export class RuntimeConfigSourceFactory implements IConfigSourceFactory {
   private static _configSourceFactory: IConfigSourceFactory;

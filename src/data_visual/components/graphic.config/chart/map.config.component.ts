@@ -10,7 +10,7 @@ import {NgForm} from '@angular/forms';
 import {dataModelManager} from '../../../designer/data/data.model.manager';
 
 import {NzModalService} from 'ng-zorro-antd';
-import {DesignGraphicConfig} from '../../../shared/core/source/config.source/design.config.source';
+import {DesignerGraphicConfig} from '../../../shared/core/source/config.source/designer.config.source';
 
 import {removeUndefined} from '../../../designer/utils/common';
 import {debounceTime} from 'rxjs/operators';
@@ -42,7 +42,7 @@ const data = [
   templateUrl: './map.config.component.html',
   styleUrls: ['./map.config.component.less']
 })
-export class MapConfigComponent extends DesignGraphicConfig implements AfterViewInit, OnInit {
+export class MapConfigComponent extends DesignerGraphicConfig implements AfterViewInit, OnInit {
 
   @ViewChild(NgForm) ngForm: NgForm;
 

@@ -1,13 +1,13 @@
 import {AfterViewInit, Component, EventEmitter, KeyValueDiffer, KeyValueDiffers, OnInit, Output, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {DesignGraphicConfig} from '../../../shared/core/source/config.source/design.config.source';
+import {DesignerGraphicConfig} from '../../../shared/core/source/config.source/designer.config.source';
 
 @Component({
   selector: 'app-header-config',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.less']
 })
-export class DataHeaderComponent extends DesignGraphicConfig implements AfterViewInit, OnInit {
+export class DataHeaderComponent extends DesignerGraphicConfig implements AfterViewInit, OnInit {
 
   @ViewChild(NgForm) ngForm: NgForm;
 

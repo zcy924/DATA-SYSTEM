@@ -1,5 +1,5 @@
 import { combineLatest, Observable, Subject, Subscription } from 'rxjs';
-import { GraphicConfigManager } from '../../config/design/graphic.config.manager';
+import { GraphicConfigManager } from '../../config/graphic.config.manager';
 import { distinctUntilChanged, tap } from 'rxjs/operators';
 import { dataModelManager } from '../../../data/data.model.manager';
 import { Region } from '../region/region';
@@ -102,8 +102,8 @@ export class GraphicWrapper {
     // 两个组件必须同时打开  不然收不到信息
     this._modelSubscription = this._graphic
       .accept(combineLatest(this._config$, this._data$)
-        .pipe(tap(([model, data]: Array<any>) => {
-          this._configSubject.next(model);
+        .pipe(tap(([config, data]: Array<any>) => {
+          this._configSubject.next(config);
         })));
   }
 
@@ -121,8 +121,8 @@ export class GraphicWrapper {
     });
     this._modelSubscription = this._graphic.accept(combineLatest(this._config$, this._data$)
       .pipe(tap((modelArray: Array<any>) => {
-        const [model, data] = modelArray;
-        this._configSubject.next(model);
+        const [config, data] = modelArray;
+        this._configSubject.next(config);
       })));
   }
 
@@ -134,8 +134,8 @@ export class GraphicWrapper {
     this._data$ = this._region.page.getDataSource(dataSourceKey);
     this._modelSubscription = this._graphic.accept(combineLatest(this._config$, this._data$)
       .pipe(tap((modelArray: Array<any>) => {
-        const [model, data] = modelArray;
-        this._configSubject.next(model);
+        const [config, data] = modelArray;
+        this._configSubject.next(config);
       })));
   }
 

@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import { Type } from '../common/type';
-import { IDataSourceGenerator } from '../core/data/data.source.generator';
-import { IDataSourceGeneratorMeta } from '../interface/generator.meta';
+import { IDataSourceGenerator } from './generator';
+import { IDataSourceGeneratorMeta } from './generator.meta';
 
 
 /**
@@ -46,6 +46,10 @@ export class GeneratorRepository {
     }
   }
 
+  /**
+   * 获得数据源生成器实例
+   * @param key
+   */
   getGenerator(key: string): IDataSourceGenerator {
     if (this._map.has(key)) {
       const meta = this._map.get(key);
@@ -53,7 +57,13 @@ export class GeneratorRepository {
     }
   }
 
+  /**
+   * 获得数据源生成器类
+   * @param key
+   */
   getGeneratorDef(key: string): Type<IDataSourceGenerator> {
-    return this._map.get(key).generatorDef;
+    if (this._map.has(key)) {
+      return this._map.get(key).generatorDef;
+    }
   }
 }

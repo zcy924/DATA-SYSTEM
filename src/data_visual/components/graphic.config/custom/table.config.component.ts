@@ -9,7 +9,7 @@ import {
 import {NgForm} from '@angular/forms';
 
 import {NzModalService} from 'ng-zorro-antd';
-import {DesignGraphicConfig} from '../../../shared/core/source/config.source/design.config.source';
+import {DesignerGraphicConfig} from '../../../shared/core/source/config.source/designer.config.source';
 
 import {removeUndefined} from '../../../designer/utils/common';
 import {debounceTime} from 'rxjs/operators';
@@ -21,7 +21,7 @@ import * as _ from 'lodash';
   templateUrl: './table.config.component.html',
   styleUrls: ['./table.config.component.less']
 })
-export class TableConfigComponent extends DesignGraphicConfig implements AfterViewInit, OnInit {
+export class TableConfigComponent extends DesignerGraphicConfig implements AfterViewInit, OnInit {
 
   @ViewChild(NgForm) ngForm: NgForm;
 

@@ -2,11 +2,11 @@ import { Api } from './Api';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
-import { IDataSourceGenerator } from '../data_visual/shared/core/data/data.source.generator';
+import { IDataSourceGenerator } from '../data_visual/shared/generator/generator';
 
 export class JsonDataGenerator implements IDataSourceGenerator {
 
-  createDataSource(api: any): Observable<any> {
+  create(api: any): Observable<any> {
 
     if (api.url === (null || '' || undefined)) {
       return;

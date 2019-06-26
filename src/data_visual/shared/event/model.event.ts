@@ -3,14 +3,14 @@ import { ChangedItem, IModelEventTarget, KeyValueListener } from './event.interf
 import * as _ from 'lodash';
 
 export class ModelEventTarget extends Destroyable implements IModelEventTarget{
-  private _map: Map<string, Array<KeyValueListener>> = new Map();
+  private _listenerMap: Map<string, Array<KeyValueListener>> = new Map();
 
   constructor() {
     super();
     this.addSubscription(() => {
-      if (this._map) {
-        this._map.clear();
-        this._map = null;
+      if (this._listenerMap) {
+        this._listenerMap.clear();
+        this._listenerMap = null;
       }
     });
   }
@@ -28,10 +28,10 @@ export class ModelEventTarget extends Destroyable implements IModelEventTarget{
         .replace(/\s+/g, ' ')
         .split(' ');
       eventArray.forEach((value) => {
-        if (this._map.has(value)) {
-          this._map.get(value).push(listener);
+        if (this._listenerMap.has(value)) {
+          this._listenerMap.get(value).push(listener);
         } else {
-          this._map.set(value, [listener]);
+          this._listenerMap.set(value, [listener]);
         }
       });
     }
@@ -44,18 +44,22 @@ export class ModelEventTarget extends Destroyable implements IModelEventTarget{
    * @param listener
    */
   revoke(propertyName: string, listener?: KeyValueListener) {
-    if (this._map.has(propertyName)) {
-      const listenerArray = this._map.get(propertyName);
+    if (this._listenerMap.has(propertyName)) {
+      const listenerArray = this._listenerMap.get(propertyName);
       if (!!listener) {
         if (listenerArray.includes(listener)) {
           listenerArray.splice(listenerArray.indexOf(listener), 1);
         }
       } else {
-        this._map.delete(propertyName);
+        this._listenerMap.delete(propertyName);
       }
     }
   }
 
+  /**
+   * 该方法的存在  使得外部能够触发事件
+   * @param item
+   */
   trigger(item: ChangedItem | Array<ChangedItem>) {
     if (Array.isArray(item)) {
       this._batchTrigger(item);
@@ -67,8 +71,8 @@ export class ModelEventTarget extends Destroyable implements IModelEventTarget{
 
   protected _trigger(item: ChangedItem) {
     const {key, oldValue, newValue, option} = item;
-    if (this._map.has(key)) {
-      const listeners = this._map.get(key);
+    if (this._listenerMap.has(key)) {
+      const listeners = this._listenerMap.get(key);
       listeners.forEach((listener) => {
         try {
           listener(key, oldValue, newValue, option);
@@ -85,16 +89,6 @@ export class ModelEventTarget extends Destroyable implements IModelEventTarget{
     });
   }
 
-}
-
-export class OuterModelEventTarget extends ModelEventTarget {
-  trigger(item: ChangedItem | Array<ChangedItem>) {
-    if (_.isArray(item)) {
-      this._batchTrigger(item);
-    } else if (!!item) {
-      this._trigger(item);
-    }
-  }
 }
 
 

@@ -30,12 +30,6 @@ export class DataSourceManager {
     return _.uniq(_.compact(ret));
   }
 
-  getDataSourceConfigArray(ids: Array<string>): Array<IDataSourceConfig> {
-    return ids
-      .map(value => this._dataSourceConfigSet.getDataSourceConfig(value))
-      .map(value => value.value);
-  }
-
   getDataSource(id: string): Observable<any> {
     const dataSourceMap = this._dataSourceMap;
     if (dataSourceMap.has(id)) {
@@ -48,6 +42,13 @@ export class DataSourceManager {
     }
     return null;
   }
+
+  getDataSourceConfigArray(ids: Array<string>): Array<IDataSourceConfig> {
+    return ids
+      .map(value => this._dataSourceConfigSet.getDataSourceConfig(value))
+      .map(value => value.value);
+  }
+
 
   clear() {
 

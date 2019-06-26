@@ -11,18 +11,18 @@ export class ModelSourceFactory {
 
   private _configSourceFactory: IConfigSourceFactory;
 
-  static getInstance(modelSourceFactoryType: 'design' | 'runtime'): ModelSourceFactory {
+  static getInstance(mode: 'design' | 'runtime'): ModelSourceFactory {
     let modelSourceFactory: ModelSourceFactory;
-    switch (modelSourceFactoryType) {
+    switch (mode) {
       case 'design':
         if (!this._modelSourceFactoryForDesign) {
-          this._modelSourceFactoryForDesign = new ModelSourceFactory(modelSourceFactoryType);
+          this._modelSourceFactoryForDesign = new ModelSourceFactory(mode);
         }
         modelSourceFactory = this._modelSourceFactoryForDesign;
         break;
       case 'runtime':
         if (!this._modelSourceFactoryForRuntime) {
-          this._modelSourceFactoryForRuntime = new ModelSourceFactory(modelSourceFactoryType);
+          this._modelSourceFactoryForRuntime = new ModelSourceFactory(mode);
         }
         modelSourceFactory = this._modelSourceFactoryForRuntime;
         break;

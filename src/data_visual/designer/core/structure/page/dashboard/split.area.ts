@@ -1,5 +1,5 @@
 import {addEventListener1, isString, NOOP} from './dashboard.canvas';
-import {contextMenuHelper} from '../../../../helper/context.menu.helper';
+import {contextMenuHelper} from '../../../helper/context.menu.helper';
 import {Split} from './split';
 import {SplitPair} from './split.pair';
 import { Container } from '../../../container/container.interface';

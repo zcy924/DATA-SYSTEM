@@ -1,7 +1,7 @@
 import { map, publishBehavior, refCount } from 'rxjs/operators';
 import { interval, Observable } from 'rxjs/index';
 import { MockDynamicDataSourceConfig } from './interface';
-import { IDataSourceGenerator } from '@barca/shared/core/data/data.source.generator';
+import { IDataSourceGenerator } from '@barca/shared/generator/generator';
 
 export class MockDynamicDataSourceGenerator implements IDataSourceGenerator {
   /**
@@ -11,7 +11,7 @@ export class MockDynamicDataSourceGenerator implements IDataSourceGenerator {
    * @param config
    * @private
    */
-  createDataSource(config: MockDynamicDataSourceConfig): Observable<any> {
+  create(config: MockDynamicDataSourceConfig): Observable<any> {
     const { intervalTime = 5000, dataGenerator } = config;
     const ticker = interval(intervalTime);
     const dataGeneratorFun = new Function(dataGenerator);

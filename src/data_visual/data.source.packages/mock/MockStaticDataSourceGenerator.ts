@@ -1,6 +1,6 @@
 import { MockStaticDataSourceConfig } from './interface';
 import { BehaviorSubject } from 'rxjs/index';
-import { IDataSourceGenerator } from '@barca/shared/core/data/data.source.generator';
+import { IDataSourceGenerator } from '@barca/shared/generator/generator';
 
 export class MockStaticDataSourceGenerator implements IDataSourceGenerator {
   /**
@@ -9,7 +9,7 @@ export class MockStaticDataSourceGenerator implements IDataSourceGenerator {
    * @returns {Observable<any>}
    * @private
    */
-  createDataSource(config: MockStaticDataSourceConfig) {
+  create(config: MockStaticDataSourceConfig) {
     return new BehaviorSubject(config.data);
   }
 }

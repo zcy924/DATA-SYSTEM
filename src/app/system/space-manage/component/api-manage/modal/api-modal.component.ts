@@ -99,7 +99,7 @@ export class ApiModalComponent implements OnInit {
     };
 
     const gen = generatorRepo.getGenerator(this.generatorPath);
-    gen.createDataSource(api).subscribe(data => {
+    gen.create(api).subscribe(data => {
       this.formData.responseText = JSON.stringify(data, null, 2);
     });
   }

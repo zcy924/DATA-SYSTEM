@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { DataSourceConfig } from './data.source.config';
-import { GeneratorRepositoryManager } from '../../repository/generator.repository.manager';
+import { GeneratorRepositoryManager } from '../../generator/generator.repository.manager';
 
 
 export class DataSourceFactory {
@@ -27,7 +27,7 @@ export class DataSourceFactory {
       if (this._geneRepoManager.has(generatorPath)) {
         return this._geneRepoManager
           .getDataSourceGeneratorByPath(generatorPath)
-          .createDataSource(generatorParams);
+          .create(generatorParams);
       }
     }
   }
