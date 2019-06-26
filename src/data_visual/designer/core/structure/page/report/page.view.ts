@@ -1,9 +1,9 @@
-import { contextMenuHelper } from '../../../helper/context.menu.helper';
+import { contextMenuHelper } from '../../../../helper/context.menu.helper';
 import { ReportPageKernel } from './page.kernel';
-import { RepaintMask, repaintMaskGenerator } from '../../../helper/mask.helper';
-import { boxSelectHelper } from '../../../helper/box.select.helper';
-import { BasePageConfig } from '../../../../shared/core/page/page.config';
-import { View } from '../../structure/view';
+import { RepaintMask, repaintMaskGenerator } from '../../../../helper/mask.helper';
+import { boxSelectHelper } from '../../../../helper/box.select.helper';
+import { BasePageConfig } from '../../../../../shared/core/page/page.config';
+import { ViewEventTarget } from '@barca/shared';
 
 const TEMPLATE = `
     <div class="report-region">
@@ -22,7 +22,7 @@ const TEMPLATE = `
     </div>
 `;
 
-export class PageView extends View {
+export class PageView extends ViewEventTarget {
 
   $element: JQuery;
   protected readonly _$canvas: JQuery;
@@ -159,16 +159,15 @@ export class PageView extends View {
   }
 
   private _bindEvent() {
-    const eventTarget = this._eventTarget;
     this.$element.find('.u-edit-mask').on('click', () => {
-      eventTarget.dispatchEvent('deactivateRegion');
+      this.dispatchEvent('deactivateRegion');
     });
 
     this.$grid
       .on('click', ($event) => {
         if ($event.target === this.$grid[0]) {
           console.log('dispatch select');
-          eventTarget.dispatchEvent('select');
+          this.dispatchEvent('select');
         }
       })
       .on('dragstart', ($event: JQuery.Event) => {
@@ -190,7 +189,7 @@ export class PageView extends View {
             document.removeEventListener('mouseup', mouseup);
             boxSelectHelper.hide();
             console.log('dispatch boxSelect');
-            this._eventTarget.dispatchEvent('boxSelect', left, top, width, height);
+            this.dispatchEvent('boxSelect', left, top, width, height);
           };
         document.addEventListener('mousemove', mousemove);
         document.addEventListener('mouseup', mouseup);

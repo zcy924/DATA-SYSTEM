@@ -1,7 +1,7 @@
 import { ReportPageKernel } from '../page/report/page.kernel';
 import { regionDefinitionMap } from '../region/region.definition.map';
-import { session } from '../../utils/session';
-import { GraphicCreateAction } from '../operate/graphic.create.action';
+import { session } from '../../../utils/session';
+import { GraphicCreateAction } from '../../operate/graphic.create.action';
 import { ReportPageOuter } from '../page/report/page.outer';
 import { Region } from '../region/region';
 import { GraphicWrapper } from './graphic.wrapper';

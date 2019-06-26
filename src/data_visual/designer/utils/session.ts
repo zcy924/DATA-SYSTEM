@@ -1,5 +1,5 @@
 import { Subject } from 'rxjs';
-import { ReportPageOuter } from '../core/page/report/page.outer';
+import { ReportPageOuter } from '../core/structure/page/report/page.outer';
 import { SiderLeftComponent } from '../layout/sider/sider.left.component';
 
 class Session {

@@ -1,12 +1,12 @@
 import {addEventListener1, isString, NOOP} from './dashboard.canvas';
-import {contextMenuHelper} from '../../../helper/context.menu.helper';
+import {contextMenuHelper} from '../../../../helper/context.menu.helper';
 import {Split} from './split';
 import {SplitPair} from './split.pair';
-import { Container } from '../../container/container.interface';
-import { Card } from '../../container/card.container';
-import { Cube } from '../../container/cube.container';
-import { CarouselRotate } from '../../container/carousel.container';
-import { Box } from '../../container/box.container';
+import { Container } from '../../../container/container.interface';
+import { Card } from '../../../container/card.container';
+import { Cube } from '../../../container/cube.container';
+import { CarouselRotate } from '../../../container/carousel.container';
+import { Box } from '../../../container/box.container';
 
 let count = 0, dragSourcePair: SplitPair;
 

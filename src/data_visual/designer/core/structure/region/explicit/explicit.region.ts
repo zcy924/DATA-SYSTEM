@@ -1,5 +1,5 @@
 import { Region } from '../region';
-import { clipboard } from '../../../utils/clipboard';
+import { clipboard } from '../../../../utils/clipboard';
 import { RegionModel, RegionState } from '../region.model';
 import { ExplicitRegionView } from './explicit.region.view';
 import { IReportPageInnerFacade } from '../../page/report/page.interface';

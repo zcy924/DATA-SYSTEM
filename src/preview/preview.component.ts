@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, KeyValueDiffers } from '@angular/core';
 import * as _ from 'lodash';
-import { ReportPageOuter } from '../data_visual/designer/core/page/report/page.outer';
+import { ReportPageOuter } from '../data_visual/designer/core/structure/page/report/page.outer';
 import { session } from '../data_visual/designer/utils/session';
 
 @Component({

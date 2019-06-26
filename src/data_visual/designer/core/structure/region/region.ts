@@ -1,9 +1,9 @@
-import { IGraphic } from '../../../shared/core/graphic/graphic';
+import { IGraphic } from '../../../../shared/core/graphic/graphic';
 import { GraphicWrapper } from '../graphic/graphic.wrapper';
 import { IReportPageInnerFacade } from '../page/report/page.interface';
 import { RegionModel, RegionState } from './region.model';
 import { RegionView } from './region.view';
-import { IRegion } from '../../../shared/core/region/region';
+import { IRegion } from '../../../../shared/core/region/region';
 
 
 export abstract class Region implements IRegion {

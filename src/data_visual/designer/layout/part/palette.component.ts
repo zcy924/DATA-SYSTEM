@@ -2,7 +2,7 @@ import { AfterViewInit, Component } from '@angular/core';
 import * as _ from 'lodash';
 import { grabHelper } from '../designer.header.component';
 import { ComponentRepositoryManager } from '../../../shared/repository/component.repository.manager';
-import { graphicFactory } from '../../core/graphic/graphic.factory';
+import { graphicFactory } from '../../core/structure/graphic/graphic.factory';
 import { session } from '../../utils/session';
 
 @Component({

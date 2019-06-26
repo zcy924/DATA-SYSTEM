@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { debounceTime, delay } from 'rxjs/operators';
-import { Region } from '../../core/region/region';
-import { IReportPageInnerFacade } from '../../core/page/report/page.interface';
+import { Region } from '../../core/structure/region/region';
+import { IReportPageInnerFacade } from '../../core/structure/page/report/page.interface';
 import { session } from '../../utils/session';
 import { Destroyable } from '@barca/shared';
 

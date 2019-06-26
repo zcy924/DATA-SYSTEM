@@ -1,4 +1,4 @@
-import {Region} from '../core/region/region';
+import {Region} from '../core/structure/region/region';
 import { IPlugin } from './plugin';
 import { EventBus } from '@barca/shared';
 

@@ -1,4 +1,4 @@
-import { Region } from '../region/region';
+import { Region } from '../structure/region/region';
 import { Observable, Subject } from 'rxjs';
 
 export class RegionManager {

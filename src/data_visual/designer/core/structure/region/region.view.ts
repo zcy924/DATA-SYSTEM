@@ -1,19 +1,19 @@
-import { View } from '../structure/view';
 import { fromEvent, Subscription } from 'rxjs';
 import { throttleTime } from 'rxjs/internal/operators';
-import { closestNum } from '../../utils/common';
+import { closestNum } from '../../../utils/common';
 import { Region } from './region';
 import { RegionModel } from './region.model';
-import { contextMenuHelper, ContextMenuItem } from '../../helper/context.menu.helper';
-import { resizeTipHelper } from '../../helper/resize.tip.helper';
-import { Rectangle } from '@barca/shared';
+import { contextMenuHelper, ContextMenuItem } from '../../../helper/context.menu.helper';
+import { resizeTipHelper } from '../../../helper/resize.tip.helper';
+import { Rectangle, ViewEventTarget } from '@barca/shared';
 
 type IContextMenuGenerator = () => Array<ContextMenuItem | 'split'>;
 
-export abstract class RegionView extends View {
+export abstract class RegionView extends ViewEventTarget {
   protected _controller: Region;
   protected _model: RegionModel;
 
+  $element: JQuery;
   $fill: JQuery;
   protected _$mover: JQuery;
 
@@ -113,7 +113,7 @@ export abstract class RegionView extends View {
           this.$element.removeClass('no-transition');
           resizeTipHelper.hide();
           handleResize(event.pageX, event.pageY);
-          this._eventTarget.dispatchEvent('resizeEnd');
+          this.dispatchEvent('resizeEnd');
         }
       };
 
@@ -203,14 +203,14 @@ export abstract class RegionView extends View {
       })
       .on('singleClick', ($event: JQuery.Event, $singleClickEvent: JQuery.Event) => {
         if ($singleClickEvent.ctrlKey) {
-          this._eventTarget.dispatchEvent('ctrlSelect');
+          this.dispatchEvent('ctrlSelect');
         } else {
-          this._eventTarget.dispatchEvent('select');
+          this.dispatchEvent('select');
         }
 
       })
       .on('dblclick', ($event: JQuery.Event) => {
-        this._eventTarget.dispatchEvent('activateRegion');
+        this.dispatchEvent('activateRegion');
       });
   }
 

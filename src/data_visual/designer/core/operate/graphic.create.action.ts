@@ -1,9 +1,9 @@
-import { regionDefinitionMap } from '../region/region.definition.map';
-import { IReportPageInnerFacade } from '../page/report/page.interface';
+import { regionDefinitionMap } from '../structure/region/region.definition.map';
+import { IReportPageInnerFacade } from '../structure/page/report/page.interface';
 import { ComponentRepositoryManager } from '../../../shared/repository/component.repository.manager';
 import { IComponentOption } from '../../../shared/interface/file/component.option';
-import { Region } from '../region/region';
-import { GraphicWrapper } from '../graphic/graphic.wrapper';
+import { Region } from '../structure/region/region';
+import { GraphicWrapper } from '../structure/graphic/graphic.wrapper';
 import { IAction } from './action';
 
 /**

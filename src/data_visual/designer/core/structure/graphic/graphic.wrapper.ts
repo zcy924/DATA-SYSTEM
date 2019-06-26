@@ -1,7 +1,7 @@
 import { combineLatest, Observable, Subject, Subscription } from 'rxjs';
-import { GraphicConfigManager } from '../config/design/graphic.config.manager';
+import { GraphicConfigManager } from '../../config/design/graphic.config.manager';
 import { distinctUntilChanged, tap } from 'rxjs/operators';
-import { dataModelManager } from '../../data/data.model.manager';
+import { dataModelManager } from '../../../data/data.model.manager';
 import { Region } from '../region/region';
 
 import * as _ from 'lodash';

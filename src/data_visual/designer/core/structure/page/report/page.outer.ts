@@ -1,12 +1,12 @@
 import { ReportPageKernel } from './page.kernel';
-import { session } from '../../../utils/session';
-import { PageConfigComponent } from '../../../../components/page.config/page.config.component';
+import { session } from '../../../../utils/session';
+import { PageConfigComponent } from '../../../../../components/page.config/page.config.component';
 import { ComponentRef } from '@angular/core';
-import { BasePageConfig } from '../../../../shared/core/page/page.config';
+import { BasePageConfig } from '../../../../../shared/core/page/page.config';
 import { IReportPageInnerFacade } from './page.interface';
-import { PageConfigRuntime } from '../../../../runtime/page.config.runtime';
+import { PageConfigRuntime } from '../../../../../runtime/page.config.runtime';
 import * as _ from 'lodash';
-import { IFileStructure } from '../../../../shared/interface/file/file.structure';
+import { IFileStructure } from '../../../../../shared/interface/file/file.structure';
 import { Region } from '../../region/region';
 import { graphicFactory } from '../../graphic/graphic.factory';
 import { ReportPageInnerFacadeImpl } from './page.inner.facade';

@@ -1,6 +1,6 @@
-import { Region } from '../region/region';
-import { ReportPageKernel } from '../page/report/page.kernel';
-import { RegionState } from '../region/region.model';
+import { Region } from '../structure/region/region';
+import { ReportPageKernel } from '../structure/page/report/page.kernel';
+import { RegionState } from '../structure/region/region.model';
 
 /**
  * 记录当前页面被激活的图表   并处理图标激活时 页面和图表状态的改变。

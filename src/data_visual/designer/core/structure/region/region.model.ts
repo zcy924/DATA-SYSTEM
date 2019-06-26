@@ -1,6 +1,6 @@
-import { closestNum } from '../../utils/common';
+import { closestNum } from '../../../utils/common';
 import * as _ from 'lodash';
-import { IRegionOption } from '../../../shared/interface/file/component.option';
+import { IRegionOption } from '../../../../shared/interface/file/component.option';
 import { Dimensions, ModelEventTarget, Rectangle } from '@barca/shared';
 
 export enum RegionState {

@@ -1,5 +1,5 @@
-import { Region } from '../region/region';
-import { RegionState } from '../region/region.model';
+import { Region } from '../structure/region/region';
+import { RegionState } from '../structure/region/region.model';
 
 enum SelectStatus {
   default, single, multi

@@ -1,20 +1,20 @@
-import { BasePageConfig } from '../../../../shared/core/page/page.config';
-import { clipboard } from '../../../utils/clipboard';
-import { ISelectManager, SelectManager } from '../../manager/select.manager';
-import { RegionManager } from '../../manager/region.manager';
-import { ActivateManager } from '../../manager/activate.manager';
-import { ConfigSourceManager } from '../../config/config.source.manager';
-import { dataOptionManager } from '../../../data/data.source.config.manager';
-import { DataSourceManager } from '../../../../shared/core/data/data.source.manager';
-import { GeneratorRepositoryManager } from '../../../../shared/repository/generator.repository.manager';
-import { ComponentRepositoryManager } from '../../../../shared/repository/component.repository.manager';
+import { BasePageConfig } from '../../../../../shared/core/page/page.config';
+import { clipboard } from '../../../../utils/clipboard';
+import { ISelectManager, SelectManager } from '../../../manager/select.manager';
+import { RegionManager } from '../../../manager/region.manager';
+import { ActivateManager } from '../../../manager/activate.manager';
+import { ConfigSourceManager } from '../../../config/config.source.manager';
+import { dataOptionManager } from '../../../../data/data.source.config.manager';
+import { DataSourceManager } from '../../../../../shared/core/data/data.source.manager';
+import { GeneratorRepositoryManager } from '../../../../../shared/repository/generator.repository.manager';
+import { ComponentRepositoryManager } from '../../../../../shared/repository/component.repository.manager';
 import { graphicFactory } from '../../graphic/graphic.factory';
-import { ActionManager } from '../../operate/action.manager';
+import { ActionManager } from '../../../operate/action.manager';
 import { PageConfig } from './page.outer';
 import { PageView } from './page.view';
-import { StandardCompRepo } from '../../../../component.packages/standard/main';
-import { CustomCompRepo } from '../../../../component.packages/custom/main';
-import { standardGeneratorRepo } from '../../../../data.source.packages/mock/main';
+import { StandardCompRepo } from '../../../../../component.packages/standard/main';
+import { CustomCompRepo } from '../../../../../component.packages/custom/main';
+import { standardGeneratorRepo } from '../../../../../data.source.packages/mock/main';
 import { IPage } from '@barca/shared';
 
 export class ReportPageKernel implements IPage {
