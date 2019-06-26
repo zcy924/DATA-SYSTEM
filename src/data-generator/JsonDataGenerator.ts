@@ -6,7 +6,7 @@ import { IDataSourceGenerator } from '../data_visual/shared/generator/generator'
 
 export class JsonDataGenerator implements IDataSourceGenerator {
 
-  create(api: any): Observable<any> {
+  generate(api: any): Observable<any> {
 
     if (api.url === (null || '' || undefined)) {
       return;

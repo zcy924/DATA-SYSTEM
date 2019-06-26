@@ -8,5 +8,5 @@ export interface IDataSourceGenerator {
    * 根据选项信息生成数据源
    * @param option
    */
-  create(option: any): Observable<any>;
+  generate(option: any): Observable<any>;
 }

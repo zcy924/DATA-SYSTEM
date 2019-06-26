@@ -14,7 +14,7 @@ import { IDataSourceGeneratorMeta } from './generator.meta';
  */
 export class GeneratorRepository {
 
-  private _map: Map<string, IDataSourceGeneratorMeta> = new Map<string, IDataSourceGeneratorMeta>();
+  private _generatorMap: Map<string, IDataSourceGeneratorMeta> = new Map<string, IDataSourceGeneratorMeta>();
 
   constructor(private _key: string, private _name: string) {
 
@@ -29,12 +29,12 @@ export class GeneratorRepository {
   }
 
   has(key: string) {
-    return this._map.has(key);
+    return this._generatorMap.has(key);
   }
 
   register(geneMeta: IDataSourceGeneratorMeta) {
     if (geneMeta) {
-      this._map.set(geneMeta.key, geneMeta);
+      this._generatorMap.set(geneMeta.key, geneMeta);
     }
   }
 
@@ -51,8 +51,8 @@ export class GeneratorRepository {
    * @param key
    */
   getGenerator(key: string): IDataSourceGenerator {
-    if (this._map.has(key)) {
-      const meta = this._map.get(key);
+    if (this._generatorMap.has(key)) {
+      const meta = this._generatorMap.get(key);
       return meta.generator || (meta.generator = new meta.generatorDef());
     }
   }
@@ -62,8 +62,8 @@ export class GeneratorRepository {
    * @param key
    */
   getGeneratorDef(key: string): Type<IDataSourceGenerator> {
-    if (this._map.has(key)) {
-      return this._map.get(key).generatorDef;
+    if (this._generatorMap.has(key)) {
+      return this._generatorMap.get(key).generatorDef;
     }
   }
 }

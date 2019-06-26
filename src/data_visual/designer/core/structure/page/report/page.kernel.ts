@@ -38,7 +38,7 @@ export class ReportPageKernel implements IPage {
   constructor(private _mode: 'design' | 'runtime') {
     this.compRepoManager.addComponentRepository(StandardCompRepo);
     this.compRepoManager.addComponentRepository(CustomCompRepo);
-    this.geneRepoManager.addGeneratorRepository(standardGeneratorRepo);
+    this.geneRepoManager.addRepository(standardGeneratorRepo);
 
     this.view = new PageView(this);
     this.pageConfig = new PageConfig(_mode);

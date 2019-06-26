@@ -11,7 +11,7 @@ export class MockDynamicDataSourceGenerator implements IDataSourceGenerator {
    * @param config
    * @private
    */
-  create(config: MockDynamicDataSourceConfig): Observable<any> {
+  generate(config: MockDynamicDataSourceConfig): Observable<any> {
     const { intervalTime = 5000, dataGenerator } = config;
     const ticker = interval(intervalTime);
     const dataGeneratorFun = new Function(dataGenerator);

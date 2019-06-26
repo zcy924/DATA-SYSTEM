@@ -26,8 +26,8 @@ export class DataSourceFactory {
       const { generatorPath, generatorParams } = dataSourceConfig;
       if (this._geneRepoManager.has(generatorPath)) {
         return this._geneRepoManager
-          .getDataSourceGeneratorByPath(generatorPath)
-          .create(generatorParams);
+          .getGenerator(generatorPath)
+          .generate(generatorParams);
       }
     }
   }

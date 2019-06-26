@@ -9,7 +9,7 @@ export class MockStaticDataSourceGenerator implements IDataSourceGenerator {
    * @returns {Observable<any>}
    * @private
    */
-  create(config: MockStaticDataSourceConfig) {
+  generate(config: MockStaticDataSourceConfig) {
     return new BehaviorSubject(config.data);
   }
 }

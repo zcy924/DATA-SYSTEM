@@ -117,9 +117,9 @@ export class Runtime {
     if (_.isArray(geneRepo)) {
       geneRepo
         .forEach(value => this._geneRepoManager
-          .addGeneratorRepository(value));
+          .addRepository(value));
     } else {
-      this._geneRepoManager.addGeneratorRepository(geneRepo);
+      this._geneRepoManager.addRepository(geneRepo);
     }
   }
 

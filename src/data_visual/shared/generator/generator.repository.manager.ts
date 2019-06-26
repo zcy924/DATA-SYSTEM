@@ -22,25 +22,33 @@ export class GeneratorRepositoryManager {
   private constructor() {
   }
 
-  addGeneratorRepository(geneRepo: GeneratorRepository) {
-    if (geneRepo) {
-      this._map.set(geneRepo.key, geneRepo);
+  addRepository(repo: GeneratorRepository) {
+    if (repo) {
+      this._map.set(repo.key, repo);
     }
   }
 
-  includes(array: Array<string>): boolean {
+  removeRepository(repo: GeneratorRepository) {
+    if (this._map.has(repo.key)) {
+      this._map.delete(repo.key);
+    }
+  }
+
+  /**
+   * 判断是否支持指定的数据源生成器库
+   * @param repoKeyArray
+   */
+  includes(repoKeyArray: Array<string>): boolean {
     const keys = Array.from(this._map.keys());
-    return array.every((value) => {
+    return repoKeyArray.every((value) => {
       return keys.includes(value);
     });
   }
 
-  removeGeneratorRepository(geneRepo: GeneratorRepository) {
-    if (this._map.has(geneRepo.key)) {
-      this._map.delete(geneRepo.key);
-    }
-  }
-
+  /**
+   * 给定路径的数据源生成器是否存在
+   * @param path
+   */
   has(path: string) {
     const [repoKey, geneKey] = path.split('$');
     if (this._map.has(repoKey)) {
@@ -50,14 +58,24 @@ export class GeneratorRepositoryManager {
     }
   }
 
-  getDataSourceGeneratorByPath(path: string) {
+  /**
+   * 根据路径获得数据源生成器  例如：repo1$mockDataSource
+   * repo1  数据源生成器仓库名称
+   * mockDataSource 数据源生成器ID
+   * @param path
+   */
+  getGenerator(path: string) {
     const [repoKey, geneKey] = path.split('$');
     if (this._map.has(repoKey)) {
       return this._map.get(repoKey).getGenerator(geneKey);
     }
   }
 
-  getGeneratorRepository(key: string) {
+  /**
+   * 根据ID获得数据源生成器仓库
+   * @param key
+   */
+  getRepository(key: string): GeneratorRepository {
     return this._map.get(key);
   }
 
