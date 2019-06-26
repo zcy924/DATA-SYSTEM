@@ -3,7 +3,7 @@ import { session } from '../../../utils/session';
 import { DesignGraphicConfig } from '../../../../shared/core/source/config.source/design.config.source';
 
 import { GraphicConfigManager } from './graphic.config.manager';
-import { graphicConfigDefinitionMap } from '../../../config/graphic.config.definition.map';
+import { graphicConfigDefinitionMap } from '../../../../components/graphic.config/graphic.config.definition.map';
 import { Type } from '../../../../shared/common/type';
 
 export class DesignConfigSourceFactory implements IConfigSourceFactory {

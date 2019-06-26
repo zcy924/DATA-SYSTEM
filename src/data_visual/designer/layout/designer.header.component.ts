@@ -3,15 +3,14 @@ import { session } from '../utils/session';
 import * as FileSaver from 'file-saver';
 import * as moment from 'moment';
 import { CommService } from '../service/comm.service';
-import { designerStorage } from '../../utils/designer.storage';
+import { designerStorage } from '../utils/designer.storage';
 import { FilterTools, HelperTools, MoreTools } from './overlay.template';
-import { Dimensions } from '../core/interface';
 import { ActivatedRoute } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
 import { ComponentRepositoryManager } from '../../shared/repository/component.repository.manager';
 import { graphicFactory } from '../core/graphic/graphic.factory';
 import { imageDimensions$ } from '../utils/common';
-import { Destroyable } from '@barca/shared';
+import { Destroyable, Dimensions } from '@barca/shared';
 
 @Component({
   selector: 'app-designer-header',

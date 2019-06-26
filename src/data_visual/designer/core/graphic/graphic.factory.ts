@@ -1,5 +1,5 @@
 import { ReportPageKernel } from '../page/report/page.kernel';
-import { regionDefinitionMap } from '../../config/region.definition.map';
+import { regionDefinitionMap } from '../region/region.definition.map';
 import { session } from '../../utils/session';
 import { GraphicCreateAction } from '../operate/graphic.create.action';
 import { ReportPageOuter } from '../page/report/page.outer';

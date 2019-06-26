@@ -1,4 +1,4 @@
-import { regionDefinitionMap } from '../../config/region.definition.map';
+import { regionDefinitionMap } from '../region/region.definition.map';
 import { IReportPageInnerFacade } from '../page/report/page.interface';
 import { ComponentRepositoryManager } from '../../../shared/repository/component.repository.manager';
 import { IComponentOption } from '../../../shared/interface/file/component.option';

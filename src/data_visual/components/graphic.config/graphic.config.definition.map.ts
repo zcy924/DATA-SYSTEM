@@ -1,12 +1,12 @@
-import { BarConfigComponent } from '../../components/graphic.config/chart/bar.config.component';
-import { ImageConfigComponent } from '../../components/graphic.config/auxiliary/image.config.component';
-import { LineConfigComponent } from '../../components/graphic.config/chart/line.config.component';
-import { PieConfigComponent } from '../../components/graphic.config/chart/pie.config.component';
-import { TextConfigComponent } from '../../components/graphic.config/auxiliary/text.config.component';
-import { GaugeConfigComponent } from '../../components/graphic.config/chart/gauge.config.component';
-import { RingConfigComponent } from '../../components/graphic.config/chart/ring.config.component';
-import { MapConfigComponent } from '../../components/graphic.config/chart/map.config.component';
-import { WordCloudConfigComponent } from '../../components/graphic.config/chart/word.cloud.config.component';
+import { BarConfigComponent } from './chart/bar.config.component';
+import { ImageConfigComponent } from './auxiliary/image.config.component';
+import { LineConfigComponent } from './chart/line.config.component';
+import { PieConfigComponent } from './chart/pie.config.component';
+import { TextConfigComponent } from './auxiliary/text.config.component';
+import { GaugeConfigComponent } from './chart/gauge.config.component';
+import { RingConfigComponent } from './chart/ring.config.component';
+import { MapConfigComponent } from './chart/map.config.component';
+import { WordCloudConfigComponent } from './chart/word.cloud.config.component';
 
 export const graphicConfigDefinitionMap = new Map();
 

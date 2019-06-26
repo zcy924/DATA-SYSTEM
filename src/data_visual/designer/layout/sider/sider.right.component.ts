@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DesignerBodyComponent } from '../designer.body.component';
-import { dataModelList } from '../../../utils/dataModel';
+import { dataModelList } from '../../utils/dataModel';
 import { HttpClient } from '@angular/common/http';
 import { dataModelManager } from '../../data/data.model.manager';
 import { DataSourceConfigManager } from '../../data/data.source.config.manager';

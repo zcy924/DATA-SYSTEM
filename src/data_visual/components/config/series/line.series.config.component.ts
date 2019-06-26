@@ -10,7 +10,7 @@ import { NG_VALUE_ACCESSOR, NgForm } from '@angular/forms';
 
 import { NzModalService } from 'ng-zorro-antd';
 import { CustomControlValueAccessor } from '../CustomControlValueAccessor';
-import { draggableHeler } from '../../../utils/draggable.helper';
+import { draggableHelper } from '../../../designer/utils/draggable.helper';
 import { contextMenuHelper } from '../../../designer/helper/context.menu.helper';
 import { NzModalFilterComponent } from '../../graphic.config/common/filter.modal.component';
 import { debounceTime } from 'rxjs/operators';
@@ -74,7 +74,7 @@ export class LineSeriesConfigComponent extends CustomControlValueAccessor implem
     // 火狐中取消drop默认行为，阻止打开URL
     event.preventDefault();
 
-    target.push(draggableHeler.dragInfo);
+    target.push(draggableHelper.dragInfo);
 
     this.option.encode = {
       x: this.seriesX.map(item => item.name),

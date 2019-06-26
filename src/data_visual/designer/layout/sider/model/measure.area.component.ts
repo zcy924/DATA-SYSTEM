@@ -2,7 +2,7 @@ import {
   AfterViewInit,
   Component, ElementRef, HostBinding, OnDestroy,
 } from '@angular/core';
-import { draggableHeler } from '../../../../utils/draggable.helper';
+import { draggableHelper } from '../../../utils/draggable.helper';
 import { DataModel } from '../../../data/data.model.interface';
 import { dataModelManager } from '../../../data/data.model.manager';
 import { Destroyable } from '@barca/shared';
@@ -36,7 +36,7 @@ export class MeasureAreaComponent extends Destroyable implements AfterViewInit, 
   doDragStart(event: DragEvent, item) {
     event.dataTransfer
       .setData('Text', (<HTMLElement>event.target).getAttribute('fieldid'));
-    draggableHeler.dragInfo = item;
+    draggableHelper.dragInfo = item;
   }
 
   toggleList(event: MouseEvent) {

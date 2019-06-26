@@ -3,10 +3,10 @@ import { fromEvent, Subscription } from 'rxjs';
 import { throttleTime } from 'rxjs/internal/operators';
 import { closestNum } from '../../utils/common';
 import { Region } from './region';
-import { CoordinatesAndDimensions } from '../interface';
 import { RegionModel } from './region.model';
 import { contextMenuHelper, ContextMenuItem } from '../../helper/context.menu.helper';
 import { resizeTipHelper } from '../../helper/resize.tip.helper';
+import { Rectangle } from '@barca/shared';
 
 type IContextMenuGenerator = () => Array<ContextMenuItem | 'split'>;
 
@@ -33,7 +33,7 @@ export abstract class RegionView extends View {
     let offsetX, offsetY,
       scale = 1,
       offset: JQuery.Coordinates,
-      snapshot: CoordinatesAndDimensions,
+      snapshot: Rectangle,
       which: string,
       subscription: Subscription;
 

@@ -1,4 +1,3 @@
-import { IPage } from '../../interface';
 import { BasePageConfig } from '../../../../shared/core/page/page.config';
 import { clipboard } from '../../../utils/clipboard';
 import { ISelectManager, SelectManager } from '../../manager/select.manager';
@@ -16,6 +15,7 @@ import { PageView } from './page.view';
 import { StandardCompRepo } from '../../../../component.packages/standard/main';
 import { CustomCompRepo } from '../../../../component.packages/custom/main';
 import { standardGeneratorRepo } from '../../../../data.source.packages/mock/main';
+import { IPage } from '@barca/shared';
 
 export class ReportPageKernel implements IPage {
 

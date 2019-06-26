@@ -6,4 +6,4 @@ class DraggableHelper {
   dragInfo: any;
 }
 
-export const draggableHeler = new DraggableHelper();
+export const draggableHelper = new DraggableHelper();

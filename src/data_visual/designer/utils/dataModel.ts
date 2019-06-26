@@ -1,4 +1,4 @@
-import { dataModelManager } from '../designer/data/data.model.manager';
+import { dataModelManager } from '../data/data.model.manager';
 
 const windowMask = `
 <div class="m-window m-window-mask mask-transparent" style="z-index: 405;">

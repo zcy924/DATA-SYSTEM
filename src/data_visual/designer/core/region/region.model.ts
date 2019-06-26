@@ -1,8 +1,7 @@
 import { closestNum } from '../../utils/common';
-import { CoordinatesAndDimensions, Dimensions } from '../interface';
 import * as _ from 'lodash';
 import { IRegionOption } from '../../../shared/interface/file/component.option';
-import { ModelEventTarget } from '@barca/shared';
+import { Dimensions, ModelEventTarget, Rectangle } from '@barca/shared';
 
 export enum RegionState {
   default, selected, multiSelected, activated
@@ -67,7 +66,7 @@ export class RegionModel extends ModelEventTarget {
     return _.pick(this._option, ['width', 'height']);
   }
 
-  get snapshot(): CoordinatesAndDimensions {
+  get snapshot(): Rectangle {
     return _.pick(this._option, ['left', 'top', 'width', 'height']);
   }
 

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { switchMap } from 'rxjs/operators';
 
 import { CommService } from '../service/comm.service';
-import { designerStorage } from '../../utils/designer.storage';
+import { designerStorage } from '../utils/designer.storage';
 
 @Component({
   selector: 'app-designer',

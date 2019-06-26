@@ -3,7 +3,7 @@ import {
   Component, ElementRef, HostBinding, OnDestroy,
   ViewEncapsulation,
 } from '@angular/core';
-import { draggableHeler } from '../../../../utils/draggable.helper';
+import { draggableHelper } from '../../../utils/draggable.helper';
 import { fromEvent } from 'rxjs';
 import { DataModel } from '../../../data/data.model.interface';
 import { dataModelManager } from '../../../data/data.model.manager';
@@ -40,7 +40,7 @@ export class DimensionAreaComponent extends Destroyable implements AfterViewInit
   doDragStart(event: DragEvent, item) {
     event.dataTransfer
       .setData('Text', (<HTMLElement>event.target).getAttribute('fieldid'));
-    draggableHeler.dragInfo = item;
+    draggableHelper.dragInfo = item;
   }
 
   dragStartForDragBar(event: DragEvent) {
