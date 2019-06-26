@@ -15,7 +15,7 @@ import {DesignGraphicConfig} from '../../../shared/core/source/config.source/des
 import {removeUndefined} from '../../../designer/utils/common';
 import {debounceTime} from 'rxjs/operators';
 import * as _ from 'lodash';
-import { convertData, provinceCityMap } from '../../../designer/data/geo.map';
+import { convertData, provinceCityMap } from './geo.map';
 
 const data = [
   {name: '济南市', value: 390},

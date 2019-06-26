@@ -1,10 +1,8 @@
 import {Type} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Chart} from './graphic.view/chart';
-
-import { IGraphic } from '@barca/shared/core/graphic/graphic';
-import { contextMenuHelper } from '@barca/shared/utils/context.menu.helper';
-import { ModelEventTarget } from '@barca/shared';
+import { IGraphic, ModelEventTarget } from '@barca/shared';
+import { contextMenuHelper } from '../../../designer/helper/context.menu.helper';
 
 
 const template = `

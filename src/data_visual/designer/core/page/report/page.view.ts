@@ -1,4 +1,4 @@
-import { contextMenuHelper } from '../../../../shared/utils/context.menu.helper';
+import { contextMenuHelper } from '../../../helper/context.menu.helper';
 import { ReportPageKernel } from './page.kernel';
 import { RepaintMask, repaintMaskGenerator } from '../../../helper/mask.helper';
 import { boxSelectHelper } from '../../../helper/box.select.helper';

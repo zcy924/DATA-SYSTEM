@@ -14,11 +14,11 @@ import {NgForm} from '@angular/forms';
 import {dataModelManager} from '../../../designer/data/data.model.manager';
 
 import {NzModalService} from 'ng-zorro-antd';
-import {Dimension} from '../../../designer/data/data.model.interface';
 import {DesignGraphicConfig} from '../../../shared/core/source/config.source/design.config.source';
 import {ChartPieConfig} from '../../../component.packages/standard/chart/pie.chart.graphic';
 import {debounceTime} from 'rxjs/operators';
 import {removeUndefined} from '../../../designer/utils/common';
+import { IDataSourceDimension } from '@barca/shared';
 
 @Component({
   selector: 'app-pie-config',
@@ -59,8 +59,8 @@ export class PieConfigComponent extends DesignGraphicConfig implements AfterView
     }]
   };
 
-  seriesX: Array<Dimension> = [];
-  seriesY: Array<Dimension> = [];
+  seriesX: Array<IDataSourceDimension> = [];
+  seriesY: Array<IDataSourceDimension> = [];
   private _differ: KeyValueDiffer<any, any>;
 
   private _innerOption;

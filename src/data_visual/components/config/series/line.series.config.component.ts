@@ -6,21 +6,21 @@ import {
   Output, TemplateRef,
   ViewChild,
 } from '@angular/core';
-import {NG_VALUE_ACCESSOR, NgForm} from '@angular/forms';
+import { NG_VALUE_ACCESSOR, NgForm } from '@angular/forms';
 
-import {NzModalService} from 'ng-zorro-antd';
-import {CustomControlValueAccessor} from '../CustomControlValueAccessor';
-import {draggableHeler} from '../../../utils/draggable.helper';
-import {contextMenuHelper} from '../../../shared/utils/context.menu.helper';
-import {NzModalFilterComponent} from '../../graphic.config/common/filter.modal.component';
-import {debounceTime} from 'rxjs/operators';
-import { Dimension } from '../../../designer/data/data.model.interface';
+import { NzModalService } from 'ng-zorro-antd';
+import { CustomControlValueAccessor } from '../CustomControlValueAccessor';
+import { draggableHeler } from '../../../utils/draggable.helper';
+import { contextMenuHelper } from '../../../designer/helper/context.menu.helper';
+import { NzModalFilterComponent } from '../../graphic.config/common/filter.modal.component';
+import { debounceTime } from 'rxjs/operators';
 import { LineSeriesConfig } from '../../../component.packages/standard/chart/echart.interface/series/line.series';
+import { IDataSourceDimension } from '@barca/shared';
 
 export const LINE_SERIES_CONFIG_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => LineSeriesConfigComponent),
-  multi: true
+  multi: true,
 };
 
 @Component({
@@ -29,17 +29,17 @@ export const LINE_SERIES_CONFIG_VALUE_ACCESSOR: any = {
   styleUrls: ['./line.series.config.component.less'],
   providers: [LINE_SERIES_CONFIG_VALUE_ACCESSOR],
   host: {
-    '[attr.seriesName]': 'option.name'
-  }
+    '[attr.seriesName]': 'option.name',
+  },
 })
 export class LineSeriesConfigComponent extends CustomControlValueAccessor implements AfterViewInit {
 
   @ViewChild(NgForm) ngForm: NgForm;
   @ViewChild('modalTitle') tplTitle: TemplateRef<any>;
 
-  @Input() option: LineSeriesConfig = {type: 'line', name: 'hahaha'};
-  @Input() seriesX: Array<Dimension> = [];
-  @Input() seriesY: Array<Dimension> = [];
+  @Input() option: LineSeriesConfig = { type: 'line', name: 'hahaha' };
+  @Input() seriesX: Array<IDataSourceDimension> = [];
+  @Input() seriesY: Array<IDataSourceDimension> = [];
 
   @Output() seriesChange = new EventEmitter();
 
@@ -70,7 +70,7 @@ export class LineSeriesConfigComponent extends CustomControlValueAccessor implem
     event.preventDefault();
   }
 
-  drop(event: DragEvent, target: Array<Dimension>) {
+  drop(event: DragEvent, target: Array<IDataSourceDimension>) {
     // 火狐中取消drop默认行为，阻止打开URL
     event.preventDefault();
 
@@ -85,41 +85,41 @@ export class LineSeriesConfigComponent extends CustomControlValueAccessor implem
   }
 
 
-  axisClick($event: MouseEvent, target: Array<Dimension>, index: number) {
+  axisClick($event: MouseEvent, target: Array<IDataSourceDimension>, index: number) {
     contextMenuHelper.open([
       {
         displayName: '修改显示名称',
         callback: () => {
           console.log('复制');
-        }
+        },
       }, {
         displayName: '筛选器',
         icon: 'u-icn-filter',
         callback: () => {
           this.createComponentModal((<HTMLElement>$event.target).getAttribute('fieldName'));
           contextMenuHelper.close();
-        }
+        },
       }, {
         displayName: '设置数轴',
-        icon: 'u-icn-axis'
+        icon: 'u-icn-axis',
       }, {
-        displayName: '编辑总计'
+        displayName: '编辑总计',
       }, {
-        displayName: '取消总计'
+        displayName: '取消总计',
       }, 'split', {
         displayName: '排序',
-        icon: 'u-icn-sort-amount-asc'
+        icon: 'u-icn-sort-amount-asc',
       }, {
         displayName: '设置跳转',
         children: [
           {
-            displayName: '设置跳转报告页'
+            displayName: '设置跳转报告页',
           }, {
-            displayName: '设置跳转报表'
+            displayName: '设置跳转报表',
           }, {
-            displayName: '设置跳转链接'
-          }
-        ]
+            displayName: '设置跳转链接',
+          },
+        ],
       }, 'split', {
         displayName: '移除',
         icon: 'u-icn-delete',
@@ -129,8 +129,8 @@ export class LineSeriesConfigComponent extends CustomControlValueAccessor implem
             target.splice(index, 1);
             contextMenuHelper.close();
           });
-        }
-      }
+        },
+      },
     ], $event.pageX, $event.pageY, $event, true);
   }
 
@@ -144,7 +144,7 @@ export class LineSeriesConfigComponent extends CustomControlValueAccessor implem
       nzComponentParams: {
         title: 'title in component',
         subtitle: 'component sub title，will be changed after 2 sec',
-        fieldName: fieldName
+        fieldName: fieldName,
       },
       nzOnOk: (data) => {
         console.log(data);
@@ -153,12 +153,12 @@ export class LineSeriesConfigComponent extends CustomControlValueAccessor implem
           name: 'listFilter',
           config: {
             fieldName: fieldName,
-            list: data.goodList
-          }
+            list: data.goodList,
+          },
         }];
 
         // this._updateSeries();
-      }
+      },
       // nzFooter: [{
       //   label: 'change component tilte from outside',
       //   onClick: (componentInstance) => {

@@ -5,7 +5,7 @@ import {
   KeyValueDifferFactory,
   KeyValueDiffers,
 } from './keyvalue_differs';
-import { isJsObject, looseIdentical, stringify } from './common';
+import { isJsObject, looseIdentical, stringify } from '../utils';
 
 
 export class DefaultKeyValueDifferFactory<K, V> implements KeyValueDifferFactory {
