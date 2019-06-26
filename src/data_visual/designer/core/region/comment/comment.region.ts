@@ -1,13 +1,13 @@
-import {RegionController} from '../region.controller';
+import {Region} from '../region';
 import {RegionModel, RegionState} from '../region.model';
 import {CommentRegionView} from './comment.region.view';
 import {clipboard} from '../../../utils/clipboard';
-import {IReportPage} from '../../page/report/page.interface';
+import {IReportPageInnerFacade} from '../../page/report/page.interface';
 
 
-export class CommentRegion extends RegionController {
+export class CommentRegion extends Region {
 
-  constructor(protected _page: IReportPage) {
+  constructor(protected _page: IReportPageInnerFacade) {
     super();
     this._model = new RegionModel();
     this._view = new CommentRegionView(this, this._model);

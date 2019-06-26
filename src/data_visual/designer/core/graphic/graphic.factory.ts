@@ -1,16 +1,16 @@
-import { ReportPageInner } from '../page/report/page.inner';
+import { ReportPageKernel } from '../page/report/page.kernel';
 import { regionDefinitionMap } from '../../config/region.definition.map';
 import { session } from '../../utils/session';
 import { GraphicCreateAction } from '../operate/graphic.create.action';
 import { ReportPageOuter } from '../page/report/page.outer';
-import { RegionController } from '../region/region.controller';
+import { Region } from '../region/region';
 import { GraphicWrapper } from './graphic.wrapper';
 
 class GraphicFactory {
   /**
    *
    * @param {string} graphicName
-   * @param {ReportPageInner} page
+   * @param {ReportPageKernel} page
    * @param {number} x
    * @param {number} y
    * @param configOption  创建图片的时候，会从外部传入图片信息
@@ -26,7 +26,7 @@ class GraphicFactory {
 
   paste(graphicMeta: any, x?: number, y?: number) {
     if (regionDefinitionMap.has(graphicMeta.region.regionKey)) {
-      const region: RegionController = new (regionDefinitionMap.get(graphicMeta.region.regionKey))(session.currentPage.reportPage);
+      const region: Region = new (regionDefinitionMap.get(graphicMeta.region.regionKey))(session.currentPage.reportPage);
 
       region.init(graphicMeta.region.regionOption);
 

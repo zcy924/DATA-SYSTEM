@@ -1,18 +1,18 @@
-import { RegionController } from '../region/region.controller';
-import { ReportPageInner } from '../page/report/page.inner';
+import { Region } from '../region/region';
+import { ReportPageKernel } from '../page/report/page.kernel';
 import { RegionState } from '../region/region.model';
 
 /**
  * 记录当前页面被激活的图表   并处理图标激活时 页面和图表状态的改变。
  */
 export class ActivateManager {
-  private _activatedRegion: RegionController;
+  private _activatedRegion: Region;
 
-  constructor(private _page: ReportPageInner) {
+  constructor(private _page: ReportPageKernel) {
 
   }
 
-  activate(region: RegionController) {
+  activate(region: Region) {
     // 改变图表自身状态
     region.state = RegionState.activated;
     // 改变页面状态
@@ -30,7 +30,7 @@ export class ActivateManager {
     }
   }
 
-  regionResize(region: RegionController) {
+  regionResize(region: Region) {
     this._page.view.repaintMask(region.$element);
   }
 

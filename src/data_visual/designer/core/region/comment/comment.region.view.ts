@@ -8,7 +8,7 @@ import { closestNum } from '../../../utils/common';
 import { PieChartGraphic } from '../../../../component.packages/standard/chart/pie.chart.graphic';
 import { resizeTipHelper } from '../../../helper/resize.tip.helper';
 import { contextMenuHelper } from '../../../../shared/utils/context.menu.helper';
-import { RegionController } from '../region.controller';
+import { Region } from '../region';
 
 const template = `
 <div class="m-dashbox">
@@ -34,7 +34,7 @@ export class CommentRegionView extends RegionView {
     height: 30,
   };
 
-  constructor(protected _controller: RegionController, protected _model: RegionModel) {
+  constructor(protected _controller: Region, protected _model: RegionModel) {
     super();
 
     this.$element = $(template);

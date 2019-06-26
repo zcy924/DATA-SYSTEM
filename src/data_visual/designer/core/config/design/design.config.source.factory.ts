@@ -4,7 +4,7 @@ import { DesignGraphicConfig } from '../../../../shared/core/source/config.sourc
 
 import { GraphicConfigManager } from './graphic.config.manager';
 import { graphicConfigDefinitionMap } from '../../../config/graphic.config.definition.map';
-import { Type } from '../../../../shared/interface/type';
+import { Type } from '../../../../shared/common/type';
 
 export class DesignConfigSourceFactory implements IConfigSourceFactory {
 

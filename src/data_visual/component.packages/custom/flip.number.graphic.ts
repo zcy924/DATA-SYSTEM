@@ -55,7 +55,7 @@ export class FlipNumberGraphic extends DefaultGraphic {
    * 1、初始化视图
    * 2、给视图绑定事件处理函数
    * 3、建立父子关系
-   * @param {RegionController} region
+   * @param {Region} region
    */
   constructor(region: any) {
     super();

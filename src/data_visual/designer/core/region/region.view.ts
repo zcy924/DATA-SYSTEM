@@ -2,7 +2,7 @@ import { View } from '../structure/view';
 import { fromEvent, Subscription } from 'rxjs';
 import { throttleTime } from 'rxjs/internal/operators';
 import { closestNum } from '../../utils/common';
-import { RegionController } from './region.controller';
+import { Region } from './region';
 import { CoordinatesAndDimensions } from '../interface';
 import { RegionModel } from './region.model';
 import { contextMenuHelper, ContextMenuItem } from '../../../shared/utils/context.menu.helper';
@@ -11,7 +11,7 @@ import { resizeTipHelper } from '../../helper/resize.tip.helper';
 type IContextMenuGenerator = () => Array<ContextMenuItem | 'split'>;
 
 export abstract class RegionView extends View {
-  protected _controller: RegionController;
+  protected _controller: Region;
   protected _model: RegionModel;
 
   $fill: JQuery;

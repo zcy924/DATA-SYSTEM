@@ -1,8 +1,8 @@
 import { regionDefinitionMap } from '../../config/region.definition.map';
-import { IReportPage } from '../page/report/page.interface';
-import { ComponentRepositoryManager } from '../../../shared/manager/component.repository.manager';
+import { IReportPageInnerFacade } from '../page/report/page.interface';
+import { ComponentRepositoryManager } from '../../../shared/core/repository/component.repository.manager';
 import { IComponentOption } from '../../../shared/file/component.option';
-import { RegionController } from '../region/region.controller';
+import { Region } from '../region/region';
 import { GraphicWrapper } from '../graphic/graphic.wrapper';
 import { IAction } from './action';
 
@@ -11,9 +11,9 @@ import { IAction } from './action';
  */
 export class GraphicCreateAction implements IAction {
 
-  private _region: RegionController;
+  private _region: Region;
 
-  constructor(private _graphicPath: string, private _page: IReportPage,
+  constructor(private _graphicPath: string, private _page: IReportPageInnerFacade,
               private _x: number, private _y: number, private _configOption?: any) {
 
   }
@@ -25,7 +25,7 @@ export class GraphicCreateAction implements IAction {
       const componentOption: IComponentOption = compRepoManager.getComponentMeta(this._graphicPath).componentOption;
 
       if (regionDefinitionMap.has(componentOption.region.regionKey)) {
-        const region: RegionController = new (regionDefinitionMap.get(componentOption.region.regionKey))(this._page);
+        const region: Region = new (regionDefinitionMap.get(componentOption.region.regionKey))(this._page);
         region.init(null);
         region.setCoordinates(this._x, this._y);
         if (componentOption.region.regionOption) {

@@ -1,4 +1,4 @@
-import { Type } from './type';
+import { Type } from '../common/type';
 import { IDataSourceGenerator } from '../core/data/data.source.generator';
 
 export interface IDataSourceGeneratorMeta {

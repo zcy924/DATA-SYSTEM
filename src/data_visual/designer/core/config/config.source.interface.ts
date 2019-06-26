@@ -1,5 +1,5 @@
 import {DesignGraphicConfig} from '../../../shared/core/source/config.source/design.config.source';
-import { Type } from '../../../shared/interface/type';
+import { Type } from '../../../shared/common/type';
 
 
 export interface IConfigSourceOption {

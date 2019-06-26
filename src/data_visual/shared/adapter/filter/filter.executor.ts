@@ -1,4 +1,4 @@
-import { Type } from '../../interface/type';
+import { Type } from '../../common/type';
 import { ListFilter } from './list.filter';
 import { SortFilter } from './sort.filter';
 import { BaseFilter, IFilterConfig } from './filter.interface';

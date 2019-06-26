@@ -1,8 +1,8 @@
-import { RegionController } from '../region.controller';
+import { Region } from '../region';
 import { clipboard } from '../../../utils/clipboard';
 import { RegionModel, RegionState } from '../region.model';
 import { ExplicitRegionView } from './explicit.region.view';
-import { IReportPage } from '../../page/report/page.interface';
+import { IReportPageInnerFacade } from '../../page/report/page.interface';
 
 /**
  *
@@ -30,9 +30,9 @@ import { IReportPage } from '../../page/report/page.interface';
 /**
  * 1、创建模型并初始化  模型数据是独立的
  */
-export class ExplicitRegion extends RegionController {
+export class ExplicitRegion extends Region {
 
-  constructor(protected _page: IReportPage) {
+  constructor(protected _page: IReportPageInnerFacade) {
     super();
     this._model = new RegionModel();
     this._view = new ExplicitRegionView(this, this._model);

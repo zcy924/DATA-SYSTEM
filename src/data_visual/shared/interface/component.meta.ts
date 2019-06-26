@@ -1,4 +1,4 @@
-import { Type } from './type';
+import { Type } from '../common/type';
 import { IComponentOption } from '../file/component.option';
 import { IGraphic } from '../core/graphic/graphic';
 

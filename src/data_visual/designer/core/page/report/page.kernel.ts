@@ -7,8 +7,8 @@ import { ActivateManager } from '../../manager/activate.manager';
 import { ConfigSourceManager } from '../../config/config.source.manager';
 import { dataOptionManager } from '../../../data/data.source.config.manager';
 import { DataSourceManager } from '../../../../shared/core/data/data.source.manager';
-import { GeneratorRepositoryManager } from '../../../../shared/manager/generator.repository.manager';
-import { ComponentRepositoryManager } from '../../../../shared/manager/component.repository.manager';
+import { GeneratorRepositoryManager } from '../../../../shared/core/repository/generator.repository.manager';
+import { ComponentRepositoryManager } from '../../../../shared/core/repository/component.repository.manager';
 import { graphicFactory } from '../../graphic/graphic.factory';
 import { ActionManager } from '../../operate/action.manager';
 import { PageConfig } from './page.outer';
@@ -17,7 +17,7 @@ import { StandardCompRepo } from '../../../../component.packages/standard/main';
 import { CustomCompRepo } from '../../../../component.packages/custom/main';
 import { standardGeneratorRepo } from '../../../../data.source.packages/mock/main';
 
-export class ReportPageInner implements IPage {
+export class ReportPageKernel implements IPage {
 
   public pageConfig: PageConfig;
   public view: PageView;

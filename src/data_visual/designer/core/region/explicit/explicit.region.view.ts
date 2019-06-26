@@ -1,6 +1,6 @@
 import { RegionView } from '../region.view';
 import { RegionModel, RegionState } from '../region.model';
-import { RegionController } from '../region.controller';
+import { Region } from '../region';
 
 const template = `
 <div class="m-dashbox">
@@ -24,7 +24,7 @@ export class ExplicitRegionView extends RegionView {
   private _refresh = () => {
   };
 
-  constructor(protected _controller: RegionController, protected _model: RegionModel) {
+  constructor(protected _controller: Region, protected _model: RegionModel) {
     super();
     const $element = this.$element = $(template);
     this.$fill = $element.find('.g-fill');

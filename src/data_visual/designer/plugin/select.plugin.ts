@@ -1,4 +1,4 @@
-import {RegionController} from '../core/region/region.controller';
+import {Region} from '../core/region/region';
 import { IPlugin } from './plugin';
 import { EventBus } from '@barca/shared';
 
@@ -10,8 +10,8 @@ enum SelectStatus {
  * 被删除的region如何剔除
  */
 class Store {
-  private _selected: RegionController = null;
-  private _multiSelectArray: Array<RegionController> = [];
+  private _selected: Region = null;
+  private _multiSelectArray: Array<Region> = [];
 
   get status(): SelectStatus {
     if (this._selected === null) {
@@ -31,10 +31,10 @@ class Store {
 
   /**
    * 判断传入region是否被选中
-   * @param {RegionController} region
+   * @param {Region} region
    * @returns {boolean}
    */
-  isSelected(region: RegionController) {
+  isSelected(region: Region) {
     return this._selected === region ? true : false;
   }
 
@@ -44,14 +44,14 @@ class Store {
    * 删除元素的时候，判断该Region是否被选中
    * 如果没有被选中 那么只删除当前region
    * 否则删除r被选中的region组
-   * @param {RegionController} region
+   * @param {Region} region
    * @returns {boolean}
    */
-  include(region: RegionController) {
+  include(region: Region) {
     return this._multiSelectArray.includes(region);
   }
 
-  addSelected(region: RegionController) {
+  addSelected(region: Region) {
     if (this._selected === region) {
       return;
     } else {
@@ -65,14 +65,14 @@ class Store {
    * multiselected的数目不能低于二   这个规则在添加方法最后不需要校验，但在删除方法最后需要校验
    * @param region
    */
-  addMultiSelected(region: RegionController) {
+  addMultiSelected(region: Region) {
     if (!this.include(region)) {
       // region.multiSelect();
       this._multiSelectArray.push(region);
     }
   }
 
-  removeMultiSelected(region: RegionController) {
+  removeMultiSelected(region: Region) {
     if (this._multiSelectArray.includes(region)) {
       // region.multiUnselect();
       this._multiSelectArray.splice(this._multiSelectArray.indexOf(region), 1);
@@ -85,7 +85,7 @@ class Store {
     }
   }
 
-  clearSelected(): RegionController {
+  clearSelected(): Region {
     const retRegion = this._selected;
     this._selected = null;
     // retRegion && retRegion.unselect();
@@ -108,7 +108,7 @@ class Store {
    * 当元素从页面删除的时候 需要清空selectManager对它的引用
    * @param region
    */
-  delete(region: RegionController) {
+  delete(region: Region) {
     if (this._selected === region) {
       this._selected = null;
     } else if (this.include(region)) {
@@ -121,9 +121,9 @@ abstract class State {
   protected constructor(protected store: Store) {
   }
 
-  abstract select(region: RegionController);
+  abstract select(region: Region);
 
-  abstract ctrlSelect(region: RegionController);
+  abstract ctrlSelect(region: Region);
 }
 
 class StateDefault extends State {
@@ -131,11 +131,11 @@ class StateDefault extends State {
     super(store);
   }
 
-  select(region: RegionController) {
+  select(region: Region) {
     this.store.addSelected(region);
   }
 
-  ctrlSelect(region: RegionController) {
+  ctrlSelect(region: Region) {
     this.select(region);
   }
 }
@@ -145,11 +145,11 @@ class StateSelected extends State {
     super(store);
   }
 
-  select(region: RegionController) {
+  select(region: Region) {
     this.store.addSelected(region);
   }
 
-  ctrlSelect(region: RegionController) {
+  ctrlSelect(region: Region) {
     if (this.store.isSelected(region)) {
       return;
     } else {
@@ -164,12 +164,12 @@ class StateMultiSelected extends State {
     super(store);
   }
 
-  select(region: RegionController) {
+  select(region: Region) {
     this.store.clearTotalMultiSelected();
     this.store.addSelected(region);
   }
 
-  ctrlSelect(region: RegionController) {
+  ctrlSelect(region: Region) {
     if (this.store.include(region)) {
       this.store.removeMultiSelected(region);
     } else {

@@ -1,5 +1,5 @@
 import { contextMenuHelper } from '../../../../shared/utils/context.menu.helper';
-import { ReportPageInner } from './page.inner';
+import { ReportPageKernel } from './page.kernel';
 import { RepaintMask, repaintMaskGenerator } from '../../../helper/mask.helper';
 import { boxSelectHelper } from '../../../helper/box.select.helper';
 import { BasePageConfig } from '../../../../shared/core/page/page.config';
@@ -37,7 +37,7 @@ export class PageView extends View {
   private _width: number;
   private _height: number;
 
-  constructor(private _page: ReportPageInner) {
+  constructor(private _page: ReportPageKernel) {
     super();
 
     const $element = this.$element = $(TEMPLATE);

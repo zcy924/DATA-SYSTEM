@@ -1,22 +1,22 @@
 import { IGraphic } from '../../../shared/core/graphic/graphic';
 import { GraphicWrapper } from '../graphic/graphic.wrapper';
-import { IReportPage } from '../page/report/page.interface';
+import { IReportPageInnerFacade } from '../page/report/page.interface';
 import { RegionModel, RegionState } from './region.model';
 import { RegionView } from './region.view';
 import { IRegion } from '../../../shared/core/region/region';
 
 
-export abstract class RegionController implements IRegion {
+export abstract class Region implements IRegion {
 
   // 模型层
-  protected _page: IReportPage;
+  protected _page: IReportPageInnerFacade;
   protected _model: RegionModel;
   protected _view: RegionView;
   protected _graphicWrapper: GraphicWrapper;
 
   private _methodMap: Map<string, Function> = new Map();
 
-  get page(): IReportPage {
+  get page(): IReportPageInnerFacade {
     return this._page;
   }
 

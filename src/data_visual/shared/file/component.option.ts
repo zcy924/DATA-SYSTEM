@@ -6,7 +6,7 @@ export interface IComponentOption {
       height?: number;
     };
   };
-  graphic: IGraphicOption
+  graphic: IGraphicOption;
 }
 
 export interface IRegionOption {

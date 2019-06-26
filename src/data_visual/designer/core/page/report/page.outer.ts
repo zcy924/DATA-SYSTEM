@@ -1,15 +1,16 @@
-import { ReportPageInner } from './page.inner';
+import { ReportPageKernel } from './page.kernel';
 import { session } from '../../../utils/session';
 import { PageConfigComponent } from '../../../../components/page.config/page.config.component';
 import { ComponentRef } from '@angular/core';
 import { BasePageConfig } from '../../../../shared/core/page/page.config';
-import { IReportPage } from './page.interface';
+import { IReportPageInnerFacade } from './page.interface';
 import { PageConfigRuntime } from '../../../../runtime/page.config.runtime';
 import * as _ from 'lodash';
 import { IFileStructure } from '../../../../shared/file/file.structure';
-import { RegionController } from '../../region/region.controller';
+import { Region } from '../../region/region';
 import { graphicFactory } from '../../graphic/graphic.factory';
-import { ReportPage } from './page';
+import { ReportPageInnerFacadeImpl } from './page.inner.facade';
+import { VERSION_INFO } from './page.utils';
 
 export class PageConfig {
 
@@ -55,39 +56,15 @@ export class PageConfig {
   }
 }
 
-
 export class ReportPageOuter {
 
-  private static readonly _version = '1.0.0';
-  private static readonly _versionPattern = /^\d+\.\d+\.\d+$/;
-  private _pageInner: ReportPageInner;
-  private _page: IReportPage;
-
-  static get version() {
-    return this._version;
-  }
-
-  private accept(versionNo: string): boolean {
-    if (ReportPageOuter._versionPattern.test(versionNo)) {
-      const [a, b, c] = versionNo.match(/\d+/g),
-        [ta, tb, tc] = ReportPageOuter._version.match(/\d+/g);
-      if (a === ta && parseInt(tb) >= parseInt(b)) {
-        return true;
-      } else {
-        return false;
-      }
-
-    } else {
-      console.log('版本号格式错误:' + versionNo);
-      return false;
-    }
-
-  }
+  private _pageInner: ReportPageKernel;
+  private _page: IReportPageInnerFacade;
 
   constructor(mode: 'design' | 'runtime') {
-    this._pageInner = new ReportPageInner(mode);
+    this._pageInner = new ReportPageKernel(mode);
     this._pageInner.init();
-    this._page = new ReportPage(this._pageInner);
+    this._page = new ReportPageInnerFacadeImpl(this._pageInner);
   }
 
   get mode(): 'design' | 'runtime' {
@@ -102,7 +79,7 @@ export class ReportPageOuter {
     return this._pageInner.view.offset();
   }
 
-  get reportPage(): IReportPage {
+  get reportPage(): IReportPageInnerFacade {
     return this._page;
   }
 
@@ -138,7 +115,7 @@ export class ReportPageOuter {
    */
   private _checkVersion(file: IFileStructure) {
     const version = _.get(file, 'manifest.version');
-    return version ? this.accept(version) : false;
+    return version ? VERSION_INFO.accept(version) : false;
   }
 
   private _checkDependencies(file: IFileStructure) {
@@ -167,7 +144,7 @@ export class ReportPageOuter {
     console.log(JSON.stringify(keys), paths);
     return {
       manifest: {
-        version: ReportPageOuter._version,
+        version: VERSION_INFO.version,
       },
       dependencies: {
         generatorRepositories: keys,
@@ -183,7 +160,7 @@ export class ReportPageOuter {
    * 对于单个图表 释放数据源 释放配置源 解绑dom事件绑定
    */
   clear() {
-    this._pageInner.regionManager.regionArray.forEach((value: RegionController) => {
+    this._pageInner.regionManager.regionArray.forEach((value: Region) => {
       value.destroy();
     });
   }

@@ -1,4 +1,4 @@
-import { RegionController } from '../region/region.controller';
+import { Region } from '../region/region';
 import { RegionState } from '../region/region.model';
 
 enum SelectStatus {
@@ -9,7 +9,7 @@ enum SelectStatus {
  * 被删除的region如何剔除
  */
 class Store {
-  private _selectArray: Array<RegionController> = [];
+  private _selectArray: Array<Region> = [];
 
   get status(): SelectStatus {
     switch (this._selectArray.length) {
@@ -32,14 +32,14 @@ class Store {
    * 删除元素的时候，判断该Region是否被选中
    * 如果没有被选中 那么只删除当前region
    * 否则删除r被选中的region组
-   * @param {RegionController} region
+   * @param {Region} region
    * @returns {boolean}
    */
-  include(region: RegionController) {
+  include(region: Region) {
     return this._selectArray.includes(region);
   }
 
-  addRegion(region: RegionController) {
+  addRegion(region: Region) {
     if (!this.include(region)) {
       this._selectArray.push(region);
       if (this._selectArray.length > 1) {
@@ -54,7 +54,7 @@ class Store {
     }
   }
 
-  removeRegion(region: RegionController) {
+  removeRegion(region: Region) {
     if (this._selectArray.includes(region)) {
       region.state = RegionState.default;
       this._selectArray.splice(this._selectArray.indexOf(region), 1);
@@ -76,7 +76,7 @@ class Store {
    * 当元素从页面删除的时候 需要清空selectManager对它的引用
    * @param region
    */
-  delete(region: RegionController) {
+  delete(region: Region) {
     if (this.include(region)) {
       this._selectArray.splice(this._selectArray.indexOf(region), 1);
     }
@@ -92,9 +92,9 @@ abstract class State {
   protected constructor(protected store: Store) {
   }
 
-  abstract select(region: RegionController);
+  abstract select(region: Region);
 
-  abstract ctrlSelect(region: RegionController);
+  abstract ctrlSelect(region: Region);
 }
 
 class StateDefault extends State {
@@ -102,11 +102,11 @@ class StateDefault extends State {
     super(store);
   }
 
-  select(region: RegionController) {
+  select(region: Region) {
     this.store.addRegion(region);
   }
 
-  ctrlSelect(region: RegionController) {
+  ctrlSelect(region: Region) {
     this.store.addRegion(region);
   }
 }
@@ -116,7 +116,7 @@ class StateSelected extends State {
     super(store);
   }
 
-  select(region: RegionController) {
+  select(region: Region) {
     if (this.store.include(region)) {
       return;
     } else {
@@ -125,7 +125,7 @@ class StateSelected extends State {
     }
   }
 
-  ctrlSelect(region: RegionController) {
+  ctrlSelect(region: Region) {
     if (this.store.include(region)) {
       this.store.removeRegion(region);
     } else {
@@ -139,12 +139,12 @@ class StateMultiSelected extends State {
     super(store);
   }
 
-  select(region: RegionController) {
+  select(region: Region) {
     this.store.clear();
     this.store.addRegion(region);
   }
 
-  ctrlSelect(region: RegionController) {
+  ctrlSelect(region: Region) {
     if (this.store.include(region)) {
       this.store.removeRegion(region);
     } else {
@@ -176,11 +176,11 @@ export class SelectManager extends Store implements ISelectManager {
     }
   }
 
-  select(region: RegionController) {
+  select(region: Region) {
     this.state.select(region);
   }
 
-  ctrlSelect(region: RegionController) {
+  ctrlSelect(region: Region) {
     this.state.ctrlSelect(region);
   }
 
@@ -195,13 +195,13 @@ export class SelectManager extends Store implements ISelectManager {
 export interface ISelectManager {
   selectedArray;
 
-  select(region: RegionController);
+  select(region: Region);
 
-  ctrlSelect(region: RegionController);
+  ctrlSelect(region: Region);
 
-  include(region: RegionController): boolean;
+  include(region: Region): boolean;
 
-  delete(region: RegionController);
+  delete(region: Region);
 
   clear();
 

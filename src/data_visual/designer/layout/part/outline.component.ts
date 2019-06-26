@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { debounceTime, delay } from 'rxjs/operators';
-import { RegionController } from '../../core/region/region.controller';
-import { IReportPage } from '../../core/page/report/page.interface';
+import { Region } from '../../core/region/region';
+import { IReportPageInnerFacade } from '../../core/page/report/page.interface';
 import { session } from '../../utils/session';
 import { Destroyable } from '@barca/shared';
 
@@ -21,15 +21,15 @@ export class OutlineComponent extends Destroyable implements AfterViewInit, OnDe
 
   ngAfterViewInit() {
     let _regionArrayChangeSubscription: Subscription, _subscription = new Subscription();
-    _subscription.add(session.pageChange.subscribe((currentPage: IReportPage) => {
+    _subscription.add(session.pageChange.subscribe((currentPage: IReportPageInnerFacade) => {
       if (_regionArrayChangeSubscription) {
         _regionArrayChangeSubscription.unsubscribe();
         _subscription.remove(_regionArrayChangeSubscription);
       }
       _regionArrayChangeSubscription = currentPage
-        .regionArray$.pipe(debounceTime(50),delay(100)).subscribe((regionArray: Array<RegionController>) => {
+        .regionArray$.pipe(debounceTime(50),delay(100)).subscribe((regionArray: Array<Region>) => {
           console.log('regionArray', regionArray.length, regionArray);
-          this.list = regionArray.map((region: RegionController) => {
+          this.list = regionArray.map((region: Region) => {
             return region.invoke('desc');
           });
         });

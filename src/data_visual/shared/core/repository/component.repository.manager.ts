@@ -1,8 +1,8 @@
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { delay } from 'rxjs/operators';
-import { Type } from '../interface/type';
-import { IGraphic } from '../core/graphic/graphic';
-import { ComponentRepository } from '../core/repository/component.repository';
+import { Type } from '../../common/type';
+import { IGraphic } from '../graphic/graphic';
+import { ComponentRepository } from './component.repository';
 import * as _ from 'lodash';
 
 /**
@@ -70,13 +70,6 @@ export class ComponentRepositoryManager {
     return this._paletteConfig$.asObservable().pipe(delay(100));
   }
 
-  private _updatePaletteConfig() {
-    this._paletteConfig$.next(Array.from(this._map.values()).map(value => {
-      return value.paletteConfig;
-    }));
-
-  }
-
   /**
    * 根据路径信息获取组件元数据
    * @param {string} path
@@ -110,5 +103,12 @@ export class ComponentRepositoryManager {
       this._map.clear();
       this._map = null;
     }
+  }
+
+  private _updatePaletteConfig() {
+    this._paletteConfig$.next(Array.from(this._map.values()).map(value => {
+      return value.paletteConfig;
+    }));
+
   }
 }

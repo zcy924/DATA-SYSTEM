@@ -1,11 +1,11 @@
 
 import { Observable } from 'rxjs';
-import { RegionController } from '../../region/region.controller';
+import { Region } from '../../region/region';
 
 /**
  *
  */
-export interface IReportPage {
+export interface IReportPageInnerFacade {
 
   mode: 'design' | 'runtime';
   /**
@@ -17,27 +17,27 @@ export interface IReportPage {
 
   topIndex: number;
 
-  focusRegion: RegionController;
+  focusRegion: Region;
 
-  regionArray: Array<RegionController>;
+  regionArray: Array<Region>;
 
-  regionArray$: Observable<Array<RegionController>>;
+  regionArray$: Observable<Array<Region>>;
 
-  selectedArray: Array<RegionController>;
+  selectedArray: Array<Region>;
 
-  addChild(region: RegionController);
+  addChild(region: Region);
 
-  removeChild(region: RegionController);
+  removeChild(region: Region);
 
-  select(region: RegionController);
+  select(region: Region);
 
-  ctrlSelect(region: RegionController);
+  ctrlSelect(region: Region);
 
-  isSelected(region: RegionController): boolean;
+  isSelected(region: Region): boolean;
 
-  activateRegion(region: RegionController);
+  activateRegion(region: Region);
 
-  regionResize(region: RegionController);
+  regionResize(region: Region);
 
   getMockConfigSource(option: any);
 
