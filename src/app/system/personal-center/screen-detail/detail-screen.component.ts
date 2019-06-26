@@ -4,7 +4,7 @@ import {switchMap} from 'rxjs/operators';
 import {HttpResponse} from "@angular/common/http";
 import {NzMessageService} from "ng-zorro-antd";
 import {PersonalCenterService} from "../personal-center.service";
-import { ReportPageOuter } from '../../../../data_visual/designer/core/page/report/page.outer';
+import { ReportPageOuter } from '../../../../data_visual/designer/core/structure/page/report/page.outer';
 import { session } from '../../../../data_visual/designer/utils/session';
 import { PageRuntime } from '../../../../data_visual/runtime/page.runtime';
 import { Runtime } from '../../../../data_visual/runtime';

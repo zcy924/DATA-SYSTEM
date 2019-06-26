@@ -6,7 +6,7 @@ import { HttpResponse } from "@angular/common/http";
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { ReportKeepModalComponent } from './modal/report-keep-modal.component';
 import { PersonalCenterService } from '../../../personal-center/personal-center.service';
-import { ReportPageOuter } from '../../../../../data_visual/designer/core/page/report/page.outer';
+import { ReportPageOuter } from '../../../../../data_visual/designer/core/structure/page/report/page.outer';
 import { session } from '../../../../../data_visual/designer/utils/session';
 import { Runtime } from '../../../../../data_visual/runtime';
 import { StandardCompRepo } from '../../../../../data_visual/component.packages/standard';

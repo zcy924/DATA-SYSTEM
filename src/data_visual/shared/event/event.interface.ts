@@ -1,7 +1,7 @@
 export interface IEventTarget {
-  addEventListener(eventName: string, callback: () => void);
+  addEventListener(eventName: string, callback: (...params) => void);
 
-  removeEventListener(eventName: string, callback?: () => void);
+  removeEventListener(eventName: string, callback?: (...params) => void);
 
   dispatchEvent(...args: Array<any>);
 }

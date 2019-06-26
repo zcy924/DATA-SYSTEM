@@ -10,6 +10,6 @@ export class LoginService {
   // url = environment.TEST_URL;
   constructor(private httpClient: HttpClient) {}
   login(params): Observable<any> {
-    return this.httpClient.post('localhost:8080/data-reporter/ipa/company/login', params);
+    return this.httpClient.post('10.34.12.129:8081/data-reporter/ipa/company/login', params);
   }
 }

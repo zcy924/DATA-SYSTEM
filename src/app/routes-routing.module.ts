@@ -20,7 +20,6 @@ import { CompanyManageComponent } from './system/company-manage/company-manage.c
 import { HarfScreenComponent } from './layout/harfscreen/harfscreen.component';
 import { PlatformManageComponent } from './system/platform-manage/platform-manage.component';
 import { LoginComponent } from './system/login/login.component';
-import { Log } from '@angular/core/testing/src/logger';
 import { DesignerComponent } from '../data_visual/designer/layout/designer.component';
 import { AuthGuard } from '@core/guard/auth-guard.service';
 
