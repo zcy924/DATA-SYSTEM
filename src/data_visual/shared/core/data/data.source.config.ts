@@ -1,4 +1,4 @@
-import { IDataSourceConfig } from '../../file/data.source.config';
+import { IDataSourceConfig } from '../../interface/file/data.source.config';
 
 /**
  * DataOption 不可更改

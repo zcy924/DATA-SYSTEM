@@ -1,5 +1,6 @@
 import { BaseEventTarget } from './event';
 import { IRegion } from '../core/region';
+import { IPage } from '../core/page';
 
 type ICallback = (event: EventMessage) => void;
 

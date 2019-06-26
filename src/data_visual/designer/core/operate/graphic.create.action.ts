@@ -1,7 +1,7 @@
 import { regionDefinitionMap } from '../../config/region.definition.map';
 import { IReportPageInnerFacade } from '../page/report/page.interface';
-import { ComponentRepositoryManager } from '../../../shared/core/repository/component.repository.manager';
-import { IComponentOption } from '../../../shared/file/component.option';
+import { ComponentRepositoryManager } from '../../../shared/repository/component.repository.manager';
+import { IComponentOption } from '../../../shared/interface/file/component.option';
 import { Region } from '../region/region';
 import { GraphicWrapper } from '../graphic/graphic.wrapper';
 import { IAction } from './action';

@@ -8,7 +8,7 @@ import { FilterTools, HelperTools, MoreTools } from './overlay.template';
 import { Dimensions } from '../core/interface';
 import { ActivatedRoute } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
-import { ComponentRepositoryManager } from '../../shared/core/repository/component.repository.manager';
+import { ComponentRepositoryManager } from '../../shared/repository/component.repository.manager';
 import { graphicFactory } from '../core/graphic/graphic.factory';
 import { imageDimensions$ } from '../utils/common';
 import { Destroyable } from '@barca/shared';

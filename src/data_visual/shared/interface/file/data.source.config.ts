@@ -4,7 +4,7 @@ export interface IDataSourceConfig {
   comment?: string;
   metaData: {
     dataType: string;
-    dimensions?: Array<Dimension>;
+    dimensions?: Array<IDataSourceDimension>;
   },
   generatorPath: string;
   generatorParams: any;
@@ -12,7 +12,7 @@ export interface IDataSourceConfig {
   [key: string]: any;
 }
 
-export interface Dimension {
+export interface IDataSourceDimension {
   name: string;
   displayName?: string;
   comment?: string;

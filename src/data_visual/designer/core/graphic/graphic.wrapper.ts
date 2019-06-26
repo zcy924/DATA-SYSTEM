@@ -2,14 +2,17 @@ import { combineLatest, Observable, Subject, Subscription } from 'rxjs';
 import { GraphicConfigManager } from '../config/design/graphic.config.manager';
 import { distinctUntilChanged, tap } from 'rxjs/operators';
 import { dataModelManager } from '../../data/data.model.manager';
-import { GraphicOption, IGraphicOption } from '../../../shared/file/component.option';
-import { IGraphic } from '../../../shared/core/graphic/graphic';
-import { ComponentRepositoryManager } from '../../../shared/core/repository/component.repository.manager';
-import { getParameterName, guid } from '../../../shared/core/utils/tools';
 import { Region } from '../region/region';
 
 import * as _ from 'lodash';
-import { ChangedItem } from '@barca/shared';
+import {
+  ChangedItem,
+  ComponentRepositoryManager,
+  getParameterName,
+  GraphicOption, guid,
+  IGraphic,
+  IGraphicOption,
+} from '@barca/shared';
 
 
 /**

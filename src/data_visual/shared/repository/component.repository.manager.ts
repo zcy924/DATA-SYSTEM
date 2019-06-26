@@ -1,7 +1,7 @@
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { delay } from 'rxjs/operators';
-import { Type } from '../../common/type';
-import { IGraphic } from '../graphic/graphic';
+import { Type } from '../common/type';
+import { IGraphic } from '../core/graphic/graphic';
 import { ComponentRepository } from './component.repository';
 import * as _ from 'lodash';
 

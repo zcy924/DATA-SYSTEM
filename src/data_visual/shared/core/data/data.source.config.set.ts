@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 
 import { DataSourceConfig } from './data.source.config';
-import { IDataSourceConfig } from '../../file/data.source.config';
+import { IDataSourceConfig } from '../../interface/file/data.source.config';
 
 export class DataSourceConfigSet {
 

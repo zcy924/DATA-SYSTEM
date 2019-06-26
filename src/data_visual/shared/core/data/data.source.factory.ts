@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { DataSourceConfig } from './data.source.config';
-import { GeneratorRepositoryManager } from '../repository/generator.repository.manager';
+import { GeneratorRepositoryManager } from '../../repository/generator.repository.manager';
 
 
 export class DataSourceFactory {

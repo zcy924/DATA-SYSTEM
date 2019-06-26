@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
-import { Type } from '../../common/type';
-import { IDataSourceGenerator } from '../data/data.source.generator';
-import { IDataSourceGeneratorMeta } from '../../interface/generator.meta';
+import { Type } from '../common/type';
+import { IDataSourceGenerator } from '../core/data/data.source.generator';
+import { IDataSourceGeneratorMeta } from '../interface/generator.meta';
 
 
 /**

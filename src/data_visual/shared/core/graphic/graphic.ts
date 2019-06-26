@@ -10,7 +10,7 @@ export interface IGraphic {
    */
   init(...params: Array<any>);
 
-  accept(modelObservable: Observable<any>): Subscription;
+  accept(model$: Observable<any>): Subscription;
 
   /**
    * 更新全局样式 目前只有Echart图表使用的到
@@ -20,7 +20,9 @@ export interface IGraphic {
 
   resize();
 
-  // graphic进入交互状态
+  /**
+   * graphic进入交互状态
+   */
   activate();
 
   deactivate();
