@@ -1,57 +1,33 @@
-import {IConfigSourceFactory} from '../../../shared/core/config/config.source.factory';
-import {DesignConfigSourceFactory} from '../config/design/design.config.source.factory';
-import {RuntimeConfigSourceFactory} from '../../../runtime/config/runtime.config.source.factory';
-import {combineLatest, Observable} from 'rxjs';
-import {IConfigSourceOption} from '../config/config.source.interface';
-import { DataSourceFactory } from '../../../shared/core/data/data.source.factory';
+import { IConfigSourceOption } from '../config/config.source.interface';
+import { ConfigSourceManager } from '../config/config.source.manager';
+import { DataSourceManager, Destroyable } from '@barca/shared';
+import { ModelSource } from './model.source';
+import { dataSourceConfigManager } from '../../data/data.source.config.manager';
 
-export class ModelSourceFactory {
-  private static _modelSourceFactoryForDesign: ModelSourceFactory;
-  private static _modelSourceFactoryForRuntime: ModelSourceFactory;
+export class ModelSourceFactory extends Destroyable {
 
-  private _configSourceFactory: IConfigSourceFactory;
+  private _configSourceManager: ConfigSourceManager;
+  private _dataSourceManager: DataSourceManager;
 
-  static getInstance(mode: 'design' | 'runtime'): ModelSourceFactory {
-    let modelSourceFactory: ModelSourceFactory;
-    switch (mode) {
-      case 'design':
-        if (!this._modelSourceFactoryForDesign) {
-          this._modelSourceFactoryForDesign = new ModelSourceFactory(mode);
-        }
-        modelSourceFactory = this._modelSourceFactoryForDesign;
-        break;
-      case 'runtime':
-        if (!this._modelSourceFactoryForRuntime) {
-          this._modelSourceFactoryForRuntime = new ModelSourceFactory(mode);
-        }
-        modelSourceFactory = this._modelSourceFactoryForRuntime;
-        break;
-    }
-    return modelSourceFactory;
+  constructor() {
+    super();
+    this._configSourceManager = new ConfigSourceManager();
+    this._dataSourceManager = new DataSourceManager(dataSourceConfigManager.getDataSourceConfigSet('space1'));
+    this.addSubscription(() => {
+      this._configSourceManager = null;
+      this._dataSourceManager = null;
+    });
   }
 
-  constructor(modelSourceFactoryType: 'design' | 'runtime') {
-    switch (modelSourceFactoryType) {
-      case 'design':
-        this._configSourceFactory = DesignConfigSourceFactory.getInstance();
-        break;
-      case 'runtime':
-        this._configSourceFactory = RuntimeConfigSourceFactory.getInstance();
-        break;
-    }
-  }
-
-  getModelSource(modelOption: ModelOption): Observable<Array<any>> {
-
-    const configSource = this._configSourceFactory.getConfigSource(modelOption.configOption),
-      dataSource = DataSourceFactory.getInstance().getDataSource(modelOption.dataOption);
-
-    return combineLatest(configSource, dataSource);
+  getModelSource(modelOption: IModelOption): ModelSource {
+    const ret = new ModelSource(this._configSourceManager, this._dataSourceManager);
+    ret.init(modelOption.configSourceOption, modelOption.dataSourceKey);
+    return ret;
 
   }
 }
 
-interface ModelOption {
-  configOption: IConfigSourceOption;
-  dataOption: any;
+interface IModelOption {
+  configSourceOption: IConfigSourceOption;
+  dataSourceKey: any;
 }

@@ -46,6 +46,6 @@ export class DataSourceConfigManager {
 
 DataSourceConfigManager.getInstance().addDataSourceConfigSet('space1', new DataSourceConfigSet(array));
 
-export const dataOptionManager = DataSourceConfigManager.getInstance();
+export const dataSourceConfigManager = DataSourceConfigManager.getInstance();
 
 

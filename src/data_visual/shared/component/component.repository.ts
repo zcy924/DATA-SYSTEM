@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { IComponentMeta, IPaletteMeta } from '../interface/component.meta';
+import { IComponentMeta, IPaletteMeta } from './component.meta';
 
 /**
  *  组件库
@@ -10,7 +10,7 @@ import { IComponentMeta, IPaletteMeta } from '../interface/component.meta';
  *  组件库是不可修改对象  所以
  */
 export class ComponentRepository {
-  private _map: Map<string, ComponentMeta> = new Map<string, ComponentMeta>();
+  private _componentMap: Map<string, ComponentMeta> = new Map<string, ComponentMeta>();
 
   constructor(private _key: string, private _name: string) {
 
@@ -27,7 +27,7 @@ export class ComponentRepository {
   register(compMeta: IComponentMeta) {
     if (compMeta) {
       _.set(compMeta, 'componentOption.graphic.graphicPath', this._key + '$' + compMeta.key);
-      this._map.set(compMeta.key, new ComponentMeta(compMeta));
+      this._componentMap.set(compMeta.key, new ComponentMeta(compMeta));
     }
   }
 
@@ -40,11 +40,11 @@ export class ComponentRepository {
   }
 
   has(key: string): boolean {
-    return this._map.has(key);
+    return this._componentMap.has(key);
   }
 
   getComponents(convert: Function): Array<IPaletteMeta> {
-    return Array.from(this._map.values(), (v) => {
+    return Array.from(this._componentMap.values(), (v) => {
       return convert(v);
     });
   }
@@ -53,12 +53,12 @@ export class ComponentRepository {
     return {
       key: this._key,
       name: this._name,
-      children: _.compact(Array.from(this._map.values()).map(value => value.paletteMeta)),
+      children: _.compact(Array.from(this._componentMap.values()).map(value => value.paletteMeta)),
     };
   }
 
   getComponentMeta(key: string): ComponentMeta {
-    return this._map.get(key);
+    return this._componentMap.get(key);
   }
 
 }
