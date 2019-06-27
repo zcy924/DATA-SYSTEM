@@ -11,7 +11,7 @@ import {NgForm} from '@angular/forms';
 
 import {dataModelManager} from '../../../designer/data/data.model.manager';
 
-import {DesignerGraphicConfig} from '../../../shared/core/config/designer.config.source';
+import {ConfigSourceComponent} from '../../../shared/core/config/config.source.component';
 import {ChartLineOption} from '../../../component.packages/standard/chart/line.chart.graphic';
 import {debounceTime} from 'rxjs/operators';
 import {removeUndefined} from '../../../designer/utils/common';
@@ -22,7 +22,7 @@ import {removeUndefined} from '../../../designer/utils/common';
   templateUrl: './line.config.component.html',
   styleUrls: ['./line.config.component.less']
 })
-export class LineConfigComponent extends DesignerGraphicConfig implements AfterViewInit, OnInit {
+export class LineConfigComponent extends ConfigSourceComponent implements AfterViewInit, OnInit {
 
   @ViewChild(NgForm) ngForm: NgForm;
   @ViewChild('modalTitle') tplTitle: TemplateRef<any>;

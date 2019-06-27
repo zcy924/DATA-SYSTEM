@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {NzModalService} from 'ng-zorro-antd';
-import {DesignerGraphicConfig} from '../../../shared/core/config/designer.config.source';
+import {ConfigSourceComponent} from '../../../shared/core/config/config.source.component';
 
 import {removeUndefined} from '../../../designer/utils/common';
 import {debounceTime} from 'rxjs/operators';
@@ -19,7 +19,7 @@ import * as _ from 'lodash';
   templateUrl: './map.config.component.html',
   styleUrls: ['./map.config.component.less']
 })
-export class WordCloudConfigComponent extends DesignerGraphicConfig implements AfterViewInit, OnInit {
+export class WordCloudConfigComponent extends ConfigSourceComponent implements AfterViewInit, OnInit {
 
   @ViewChild(NgForm) ngForm: NgForm;
 

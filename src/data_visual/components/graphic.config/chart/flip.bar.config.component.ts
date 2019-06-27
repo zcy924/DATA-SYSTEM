@@ -10,7 +10,7 @@ import {NgForm} from '@angular/forms';
 import {dataModelManager} from '../../../designer/data/data.model.manager';
 
 import {NzModalService} from 'ng-zorro-antd';
-import {DesignerGraphicConfig} from '../../../shared/core/config/designer.config.source';
+import {ConfigSourceComponent} from '../../../shared/core/config/config.source.component';
 
 import {removeUndefined} from '../../../designer/utils/common';
 import {debounceTime} from 'rxjs/operators';
@@ -26,7 +26,7 @@ var data = [13.7, 13.4, 13.5, 16.1, 17.4];
   templateUrl: './map.config.component.html',
   styleUrls: ['./map.config.component.less']
 })
-export class FlipBarConfigComponent extends DesignerGraphicConfig implements AfterViewInit, OnInit {
+export class FlipBarConfigComponent extends ConfigSourceComponent implements AfterViewInit, OnInit {
 
   @ViewChild(NgForm) ngForm: NgForm;
 

@@ -14,7 +14,7 @@ import {NgForm} from '@angular/forms';
 import {dataModelManager} from '../../../designer/data/data.model.manager';
 
 import {NzModalService} from 'ng-zorro-antd';
-import {DesignerGraphicConfig} from '../../../shared/core/config/designer.config.source';
+import {ConfigSourceComponent} from '../../../shared/core/config/config.source.component';
 import {ChartPieConfig} from '../../../component.packages/standard/chart/pie.chart.graphic';
 import {debounceTime} from 'rxjs/operators';
 import {removeUndefined} from '../../../designer/utils/common';
@@ -25,7 +25,7 @@ import { IDataSourceDimension } from '@barca/shared';
   templateUrl: './pie.config.component.html',
   styleUrls: ['./pie.config.component.less']
 })
-export class PieConfigComponent extends DesignerGraphicConfig implements AfterViewInit, OnInit {
+export class PieConfigComponent extends ConfigSourceComponent implements AfterViewInit, OnInit {
 
   @ViewChild(NgForm) ngForm: NgForm;
   @ViewChild('modalTitle') tplTitle: TemplateRef<any>;

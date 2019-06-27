@@ -2,7 +2,7 @@ import { session } from '../../utils/session';
 
 import { ConfigSourceComponentRefManager } from './config.source.component.ref.manager';
 import { graphicConfigDefinitionMap } from '../../../components/graphic.config/graphic.config.definition.map';
-import { DesignerGraphicConfig, IConfigSourceFactory, Type } from '@barca/shared';
+import { ConfigSourceComponent, IConfigSourceFactory, IConfigSourceOption, Type } from '@barca/shared';
 
 /**
  * 设计时 配置源工厂
@@ -22,8 +22,8 @@ export class DesignerConfigSourceFactory implements IConfigSourceFactory {
   private constructor() {
   }
 
-  getConfigSource({ graphicId, graphicKey, configOption }: { graphicId: string, graphicKey: string, configOption: any }) {
-    const configComponentDefinition: Type<DesignerGraphicConfig> = graphicConfigDefinitionMap.get(graphicKey),
+  getConfigSource({ graphicId, graphicKey, configOption }: IConfigSourceOption) {
+    const configComponentDefinition: Type<ConfigSourceComponent> = graphicConfigDefinitionMap.get(graphicKey),
       configComponentRef = session.siderLeftComponent.forwardCreateGraphicConfig(configComponentDefinition);
 
     configComponentRef.instance.importOption(configOption);

@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/internal/Observable';
 import { BehaviorSubject } from 'rxjs';
-import { IConfigSourceFactory, keyValueDiffers } from '@barca/shared';
+import { IConfigSourceFactory, IConfigSourceOption, keyValueDiffers } from '@barca/shared';
 
 export class RuntimeConfigSourceFactory implements IConfigSourceFactory {
   private static _configSourceFactory: IConfigSourceFactory;
@@ -16,7 +16,7 @@ export class RuntimeConfigSourceFactory implements IConfigSourceFactory {
   private constructor() {
   }
 
-  getConfigSource(configSourceOption: { graphicId: string, graphicKey: string, configOption: any }): Observable<any> {
+  getConfigSource(configSourceOption: IConfigSourceOption): Observable<any> {
     const
       option = configSourceOption.configOption,
       changes = keyValueDiffers.find({}).create().diff(option),

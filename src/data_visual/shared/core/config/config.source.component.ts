@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ChangedItem, ModelEventTarget } from '../../event';
 
-export abstract class DesignerGraphicConfig extends ModelEventTarget {
+export abstract class ConfigSourceComponent extends ModelEventTarget {
   option: any;
   protected _subject: Subject<any>;
 

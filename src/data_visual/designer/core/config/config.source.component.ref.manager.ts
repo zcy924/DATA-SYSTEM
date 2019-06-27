@@ -1,6 +1,6 @@
 import {ComponentRef} from '@angular/core';
 import { session } from '../../utils/session';
-import { DesignerGraphicConfig } from '@barca/shared';
+import { ConfigSourceComponent } from '@barca/shared';
 
 /**
  * 缓存应用中创建的GraphConfigComponent
@@ -22,7 +22,7 @@ export class ConfigSourceComponentRefManager {
     return this._map.has(id);
   }
 
-  add(id: string, graphicConfig: ComponentRef<DesignerGraphicConfig>) {
+  add(id: string, graphicConfig: ComponentRef<ConfigSourceComponent>) {
     this._map.set(id, graphicConfig);
   }
 
