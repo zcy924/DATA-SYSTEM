@@ -1,21 +1,23 @@
-import { BasePageConfig } from '../../../../../shared/core/page/page.config';
 import { clipboard } from '../../../../utils/clipboard';
 import { ISelectManager, SelectManager } from '../../../manager/select.manager';
 import { RegionManager } from '../../../manager/region.manager';
 import { ActivateManager } from '../../../manager/activate.manager';
 import { ConfigSourceManager } from '../../../config/config.source.manager';
 import { dataSourceConfigSetManager } from '../../../../data/data.source.config.set.manager';
-import { DataSourceManager } from '../../../../../shared/core/data/data.source.manager';
-import { GeneratorRepositoryManager } from '../../../../../shared/generator/generator.repository.manager';
-import { ComponentRepositoryManager } from '../../../../../shared/component/component.repository.manager';
 import { graphicFactory } from '../../graphic/graphic.factory';
 import { ActionManager } from '../../../operate/action.manager';
-import { PageConfig } from './page.outer';
+import { PageConfig } from './page.config';
 import { PageView } from './page.view';
-import { StandardCompRepo } from '../../../../../component.packages/standard/main';
-import { CustomCompRepo } from '../../../../../component.packages/custom/main';
-import { standardGeneratorRepo } from '../../../../../data.source.packages/mock/main';
-import { IPage } from '@barca/shared';
+import {
+  BasePageConfig,
+  ComponentRepositoryManager,
+  DataSourceManager,
+  GeneratorRepositoryManager,
+  IPage,
+} from '@barca/shared';
+import { StandardCompRepo } from '../../../../../component.packages/standard';
+import { CustomCompRepo } from '../../../../../component.packages/custom';
+import { standardGeneratorRepo } from '../../../../../data.source.packages/mock';
 
 export class ReportPageKernel implements IPage {
 

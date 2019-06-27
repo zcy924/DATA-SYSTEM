@@ -1,60 +1,11 @@
 import { ReportPageKernel } from './page.kernel';
-import { session } from '../../../../utils/session';
-import { PageConfigComponent } from '../../../../../components/page.config/page.config.component';
-import { ComponentRef } from '@angular/core';
-import { BasePageConfig } from '../../../../../shared/core/page/page.config';
 import { IReportPageInnerFacade } from './page.interface';
-import { PageConfigRuntime } from '../../../../../runtime/page.config.runtime';
 import * as _ from 'lodash';
 import { IFileStructure } from '../../../../../shared/interface/file/file.structure';
 import { Region } from '../../region/region';
 import { graphicFactory } from '../../graphic/graphic.factory';
 import { ReportPageInnerFacadeImpl } from './page.inner.facade';
 import { VERSION_INFO } from './page.utils';
-
-export class PageConfig {
-
-  private _inner: BasePageConfig | ComponentRef<BasePageConfig>;
-
-  constructor(private _mode: 'design' | 'runtime') {
-    switch (_mode) {
-      case 'design':
-        this._inner = session.siderLeftComponent.forwardCreateCanvasConfig(PageConfigComponent);
-        break;
-      case 'runtime':
-        this._inner = new PageConfigRuntime() as any;
-        break;
-    }
-  }
-
-  get model(): BasePageConfig {
-    if (this._inner instanceof BasePageConfig) {
-      return this._inner;
-    } else {
-      return this._inner.instance;
-    }
-  }
-
-  show() {
-    if (this._inner instanceof BasePageConfig) {
-
-    } else {
-      session.siderLeftComponent.attachDataProperty(this._inner.hostView);
-    }
-  }
-
-  hide() {
-
-  }
-
-  destroy() {
-    if (this._inner instanceof BasePageConfig) {
-    } else {
-      this._inner.destroy();
-      this._inner = null;
-    }
-  }
-}
 
 export class ReportPageOuter {
 
