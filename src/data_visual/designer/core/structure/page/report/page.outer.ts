@@ -1,33 +1,33 @@
 import { ReportPageKernel } from './page.kernel';
 import { IReportPageInnerFacade } from './page.interface';
 import * as _ from 'lodash';
-import { IFileStructure } from '../../../../../shared/interface/file/file.structure';
 import { Region } from '../../region/region';
 import { graphicFactory } from '../../graphic/graphic.factory';
 import { ReportPageInnerFacadeImpl } from './page.inner.facade';
 import { VERSION_INFO } from './page.utils';
+import { IFileStructure } from '@barca/shared';
 
 export class ReportPageOuter {
 
-  private _pageInner: ReportPageKernel;
+  private _pageKernel: ReportPageKernel;
   private _page: IReportPageInnerFacade;
 
   constructor(mode: 'design' | 'runtime') {
-    this._pageInner = new ReportPageKernel(mode);
-    this._pageInner.init();
-    this._page = new ReportPageInnerFacadeImpl(this._pageInner);
+    this._pageKernel = new ReportPageKernel(mode);
+    this._pageKernel.init();
+    this._page = new ReportPageInnerFacadeImpl(this._pageKernel);
   }
 
   get mode(): 'design' | 'runtime' {
-    return this._pageInner.mode;
+    return this._pageKernel.mode;
   }
 
   get $element() {
-    return this._pageInner.view.$element;
+    return this._pageKernel.view.$element;
   }
 
   offset() {
-    return this._pageInner.view.offset();
+    return this._pageKernel.view.offset();
   }
 
   get reportPage(): IReportPageInnerFacade {
@@ -35,7 +35,7 @@ export class ReportPageOuter {
   }
 
   get actionManager() {
-    return this._pageInner && this._pageInner.actionManager;
+    return this._pageKernel && this._pageKernel.actionManager;
   }
 
   /**
@@ -45,41 +45,18 @@ export class ReportPageOuter {
    * @param file
    */
   load(file: IFileStructure) {
-    if (file.main && this._checkFile(file)) {
-      file.main.option && this._pageInner.pageConfig.model.importOption(file.main.option);
+    if (file.main) {
+      file.main.option && this._pageKernel.config.model.importOption(file.main.option);
       file.main.children && file.main.children.forEach((value) => {
         graphicFactory.paste(value);
       });
     }
-
-  }
-
-  private _checkFile(file: IFileStructure): boolean {
-    return this._checkVersion(file) && this._checkDependencies(file);
-  }
-
-  /**
-   * 若版本号为空，则不可以打开
-   * @param {IFileStructure} file
-   * @returns {boolean}
-   * @private
-   */
-  private _checkVersion(file: IFileStructure) {
-    const version = _.get(file, 'manifest.version');
-    return version ? VERSION_INFO.accept(version) : false;
-  }
-
-  private _checkDependencies(file: IFileStructure) {
-    const { componentRepositories, generatorRepositories } =
-      _.get(file, 'dependencies', { componentRepositories: [], generatorRepositories: [] });
-    return this._pageInner.compRepoManager.includes(componentRepositories)
-      && this._pageInner.geneRepoManager.includes(generatorRepositories);
   }
 
   save() {
     const main = {
-      option: this._pageInner.pageConfig.model.exportOption(),
-      children: this._pageInner.regionManager.saveAs(),
+      option: this._pageKernel.config.model.exportOption(),
+      children: this._pageKernel.regionManager.saveAs(),
     };
     let keys = _.uniq(main.children.map((value, index, array) => {
         return value.graphic.dataSourceKey;
@@ -88,9 +65,9 @@ export class ReportPageOuter {
         return value.graphic.graphicPath;
       }));
 
-    const dataSourceConfigArray = this._pageInner.dataSourceManager.getDataSourceConfigArray(keys);
+    const dataSourceConfigArray = this._pageKernel.dataSourceManager.getDataSourceConfigArray(keys);
 
-    keys = this._pageInner.dataSourceManager.getDependencies(keys);
+    keys = this._pageKernel.dataSourceManager.getDependencies(keys);
     paths = _.uniq(paths.map(value => value.split('$')[0]));
     console.log(JSON.stringify(keys), paths);
     return {
@@ -111,19 +88,19 @@ export class ReportPageOuter {
    * 对于单个图表 释放数据源 释放配置源 解绑dom事件绑定
    */
   clear() {
-    this._pageInner.regionManager.regionArray.forEach((value: Region) => {
+    this._pageKernel.regionManager.regionArray.forEach((value: Region) => {
       value.destroy();
     });
   }
 
   enterFullScreen() {
-    this._pageInner.view.enterFullScreen();
+    this._pageKernel.view.enterFullScreen();
   }
 
   destroy() {
     if (this._page) {
-      this._pageInner.destroy();
-      this._pageInner = null;
+      this._pageKernel.destroy();
+      this._pageKernel = null;
       this._page.destroy();
       this._page = null;
     }

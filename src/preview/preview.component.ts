@@ -14,7 +14,7 @@ export class PreviewComponent implements AfterViewInit {
 
   leftPanelState = false;
 
-  constructor(private _elementRef: ElementRef, private _differs: KeyValueDiffers) {
+  constructor() {
   }
 
   ngAfterViewInit() {

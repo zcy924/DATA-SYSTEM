@@ -10,18 +10,13 @@ import { PageConfig } from './page.config';
 import { PageView } from './page.view';
 import {
   BasePageConfig,
-  ComponentRepositoryManager,
-  DataSourceManager,
-  GeneratorRepositoryManager,
+  DataSourceManager, Destroyable,
   IPage,
 } from '@barca/shared';
-import { StandardCompRepo } from '../../../../../component.packages/standard';
-import { CustomCompRepo } from '../../../../../component.packages/custom';
-import { standardGeneratorRepo } from '../../../../../data.source.packages/mock';
 
-export class ReportPageKernel implements IPage {
+export class ReportPageKernel extends Destroyable implements IPage {
 
-  public pageConfig: PageConfig;
+  public config: PageConfig;
   public view: PageView;
 
   // manager
@@ -33,17 +28,14 @@ export class ReportPageKernel implements IPage {
   public dataSourceManager: DataSourceManager;
   public actionManager: ActionManager;
 
-  public compRepoManager = ComponentRepositoryManager.getInstance();
-  public geneRepoManager = GeneratorRepositoryManager.getInstance();
+
 
 
   constructor(private _mode: 'design' | 'runtime') {
-    this.compRepoManager.addComponentRepository(StandardCompRepo);
-    this.compRepoManager.addComponentRepository(CustomCompRepo);
-    this.geneRepoManager.addRepository(standardGeneratorRepo);
+    super();
 
     this.view = new PageView(this);
-    this.pageConfig = new PageConfig(_mode);
+    this.config = new PageConfig(_mode);
 
     this.regionManager = new RegionManager();
     this.selectManager = new SelectManager();
@@ -52,6 +44,14 @@ export class ReportPageKernel implements IPage {
     this.configSourceManager = new ConfigSourceManager();
     this.dataSourceManager = new DataSourceManager(dataSourceConfigSetManager.getItem('space1'));
     this.actionManager = new ActionManager();
+
+    this.addSubscription(()=>{
+      this.activateManager.destroy();
+      this.regionManager.regionArray.forEach(value => value.destroy());
+      this.regionManager.destroy();
+      this.selectManager.destroy();
+      this.view.destroy();
+    })
   }
 
   get mode(): 'design' | 'runtime' {
@@ -59,8 +59,8 @@ export class ReportPageKernel implements IPage {
   }
 
   init() {
-    this.accept(this.pageConfig.model);
-    this.view.accept(this.pageConfig.model);
+    this.accept(this.config.model);
+    this.view.accept(this.config.model);
     this._init();
   }
 
@@ -86,7 +86,7 @@ export class ReportPageKernel implements IPage {
     this.view
       .addEventListener('select', () => {
         this.selectManager.clear();
-        this.pageConfig.show();
+        this.config.show();
       })
       .addEventListener('boxSelect', (left, top, width, height) => {
         const array = this.regionManager.selectByBox(left, top, width, height);
@@ -150,14 +150,6 @@ export class ReportPageKernel implements IPage {
 
   unselect() {
 
-  }
-
-  destroy() {
-    this.activateManager.destroy();
-    this.regionManager.regionArray.forEach(value => value.destroy());
-    this.regionManager.destroy();
-    this.selectManager.destroy();
-    this.view.destroy();
   }
 }
 
