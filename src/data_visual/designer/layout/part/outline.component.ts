@@ -21,7 +21,7 @@ export class OutlineComponent extends Destroyable implements AfterViewInit, OnDe
 
   ngAfterViewInit() {
     let _regionArrayChangeSubscription: Subscription, _subscription = new Subscription();
-    _subscription.add(session.pageChange.subscribe((currentPage: IReportPageInnerFacade) => {
+    _subscription.add(session.page.subscribe((currentPage: IReportPageInnerFacade) => {
       if (_regionArrayChangeSubscription) {
         _regionArrayChangeSubscription.unsubscribe();
         _subscription.remove(_regionArrayChangeSubscription);

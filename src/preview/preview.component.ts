@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, ElementRef, KeyValueDiffers } from '@angular/core';
-import * as _ from 'lodash';
-import { ReportPageOuter } from '../data_visual/designer/core/structure/page/report/page.outer';
+import { AfterViewInit, Component } from '@angular/core';
+import { ReportPage } from '../data_visual/designer/core/structure/page/report/page.outer';
 import { session } from '../data_visual/designer/utils/session';
+import { reportPageBuilder } from '../data_visual/designer/core/structure/page/report/page.builder';
 
 @Component({
   selector: 'app-designer-body',
@@ -10,7 +10,7 @@ import { session } from '../data_visual/designer/utils/session';
 })
 export class PreviewComponent implements AfterViewInit {
 
-  report: ReportPageOuter;
+  report: ReportPage;
 
   leftPanelState = false;
 
@@ -19,7 +19,7 @@ export class PreviewComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      const report = this.report = session.currentPage = new ReportPageOuter('design');
+      const report = this.report = session.currentPage = reportPageBuilder.build('design');
       $('.app-content').prepend(report.$element);
       // this.report.load();
     }, 100);

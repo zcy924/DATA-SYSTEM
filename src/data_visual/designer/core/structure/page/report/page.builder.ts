@@ -4,7 +4,7 @@ import { CustomCompRepo } from '../../../../../component.packages/custom';
 import { standardGeneratorRepo } from '../../../../../data.source.packages/mock';
 import * as _ from 'lodash';
 import { VERSION_INFO } from './page.utils';
-import { ReportPageOuter } from './page.outer';
+import { ReportPage } from './page.outer';
 
 export class ReportPageBuilder {
 
@@ -17,12 +17,12 @@ export class ReportPageBuilder {
     this._geneRepoManager.addRepository(standardGeneratorRepo);
   }
 
-  build(mode: 'design' | 'runtime', file: IFileStructure) {
-    if (this._checkFile(file)) {
-      const ret = new ReportPageOuter(mode);
+  build(mode: 'design' | 'runtime', file?: IFileStructure) {
+    const ret = new ReportPage(mode);
+    if (file && this._checkFile(file)) {
       ret.load(file);
-      return ret;
     }
+    return ret;
   }
 
   private _checkFile(file: IFileStructure): boolean {
@@ -48,4 +48,4 @@ export class ReportPageBuilder {
   }
 }
 
-const reportPageBuilder = new ReportPageBuilder();
+export const reportPageBuilder = new ReportPageBuilder();

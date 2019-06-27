@@ -7,10 +7,9 @@ import { designerStorage } from '../utils/designer.storage';
 import { FilterTools, HelperTools, MoreTools } from './overlay.template';
 import { ActivatedRoute } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
-import { ComponentRepositoryManager } from '../../shared/component/component.repository.manager';
 import { graphicFactory } from '../core/structure/graphic/graphic.factory';
 import { imageDimensions$ } from '../utils/common';
-import { Destroyable, Dimensions } from '@barca/shared';
+import { ComponentRepositoryManager, Destroyable, Dimensions } from '@barca/shared';
 
 @Component({
   selector: 'app-designer-header',

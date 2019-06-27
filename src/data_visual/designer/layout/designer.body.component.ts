@@ -1,7 +1,8 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy } from '@angular/core';
 import { session } from '../utils/session';
 import * as _ from 'lodash';
-import { ReportPageOuter } from '../core/structure/page/report/page.outer';
+import { ReportPage } from '../core/structure/page/report/page.outer';
+import { reportPageBuilder } from '../core/structure/page/report/page.builder';
 
 @Component({
   selector: 'app-designer-body',
@@ -11,7 +12,7 @@ import { ReportPageOuter } from '../core/structure/page/report/page.outer';
 export class DesignerBodyComponent implements AfterViewInit, OnDestroy {
 
   private _$element: JQuery;
-  report: ReportPageOuter;
+  report: ReportPage;
 
   leftPanelState = false;
 
@@ -37,7 +38,7 @@ export class DesignerBodyComponent implements AfterViewInit, OnDestroy {
     //   $('.app-content').prepend(report.$element);
     // }, 100);
 
-    const report = this.report = session.currentPage = new ReportPageOuter('design');
+    const report = this.report = session.currentPage = reportPageBuilder.build('design');
     $('.app-content').prepend(report.$element);
 
     // const dashboardCanvas = new DashboardCanvas();

@@ -1,19 +1,23 @@
 import { Subject } from 'rxjs';
-import { ReportPageOuter } from '../core/structure/page/report/page.outer';
+import { ReportPage } from '../core/structure/page/report/page.outer';
 import { SiderLeftComponent } from '../layout/sider/sider.left.component';
 
 class Session {
-  private _currentPage: ReportPageOuter;
+  private _currentPage: ReportPage;
   siderLeftComponent: SiderLeftComponent;
-  pageChange = new Subject();
+  page = new Subject();
 
-  set currentPage(value: ReportPageOuter) {
+  set currentPage(value: ReportPage) {
     this._currentPage = value;
-    this.pageChange.next(value.reportPage);
+    this.page.next(value.reportPage);
   }
 
   get currentPage() {
     return this._currentPage;
+  }
+
+  get $currentPage() {
+    return this.page.asObservable();
   }
 }
 

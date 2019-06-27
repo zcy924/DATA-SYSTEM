@@ -5,17 +5,26 @@ import { Region } from '../../region/region';
 import { graphicFactory } from '../../graphic/graphic.factory';
 import { ReportPageInnerFacadeImpl } from './page.inner.facade';
 import { VERSION_INFO } from './page.utils';
-import { IFileStructure } from '@barca/shared';
+import { Destroyable, IFileStructure } from '@barca/shared';
 
-export class ReportPageOuter {
+export class ReportPage extends Destroyable {
 
   private _pageKernel: ReportPageKernel;
-  private _page: IReportPageInnerFacade;
+  private _pageInnerFacade: IReportPageInnerFacade;
 
   constructor(mode: 'design' | 'runtime') {
+    super();
     this._pageKernel = new ReportPageKernel(mode);
     this._pageKernel.init();
-    this._page = new ReportPageInnerFacadeImpl(this._pageKernel);
+    this._pageInnerFacade = new ReportPageInnerFacadeImpl(this._pageKernel);
+    this.addSubscription(()=>{
+      if (!this.destroyed) {
+        this._pageKernel.destroy();
+        this._pageKernel = null;
+        this._pageInnerFacade.destroy();
+        this._pageInnerFacade = null;
+      }
+    })
   }
 
   get mode(): 'design' | 'runtime' {
@@ -31,7 +40,7 @@ export class ReportPageOuter {
   }
 
   get reportPage(): IReportPageInnerFacade {
-    return this._page;
+    return this._pageInnerFacade;
   }
 
   get actionManager() {
@@ -96,14 +105,4 @@ export class ReportPageOuter {
   enterFullScreen() {
     this._pageKernel.view.enterFullScreen();
   }
-
-  destroy() {
-    if (this._page) {
-      this._pageKernel.destroy();
-      this._pageKernel = null;
-      this._page.destroy();
-      this._page = null;
-    }
-  }
-
 }
