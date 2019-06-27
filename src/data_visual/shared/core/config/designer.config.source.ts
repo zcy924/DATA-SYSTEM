@@ -1,10 +1,14 @@
 import * as _ from 'lodash';
-import {BehaviorSubject} from 'rxjs';
-import {GraphicConfig} from '../../config/graphic.config';
-import { ChangedItem } from '../../../event';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { ChangedItem, ModelEventTarget } from '../../event';
 
-export class DesignerGraphicConfig extends GraphicConfig {
+export abstract class DesignerGraphicConfig extends ModelEventTarget {
   option: any;
+  protected _subject: Subject<any>;
+
+  get configSource(): Observable<any> {
+    return this._subject;
+  }
 
   exportOption() {
     return _.cloneDeep(this.option);

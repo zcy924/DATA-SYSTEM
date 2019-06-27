@@ -1,5 +1,4 @@
-import {DesignerGraphicConfig} from '../../../shared/core/source/config.source/designer.config.source';
-import { Type } from '../../../shared/common/type';
+import { DesignerGraphicConfig, Type } from '@barca/shared';
 
 export interface IConfigSourceOption {
   graphicId: string;

@@ -2,7 +2,7 @@ import { IConfigSourceOption } from '../config/config.source.interface';
 import { ConfigSourceManager } from '../config/config.source.manager';
 import { DataSourceManager, Destroyable } from '@barca/shared';
 import { ModelSource } from './model.source';
-import { dataSourceConfigManager } from '../../data/data.source.config.manager';
+import { dataSourceConfigSetManager } from '../../data/data.source.config.set.manager';
 
 export class ModelSourceFactory extends Destroyable {
 
@@ -12,7 +12,7 @@ export class ModelSourceFactory extends Destroyable {
   constructor() {
     super();
     this._configSourceManager = new ConfigSourceManager();
-    this._dataSourceManager = new DataSourceManager(dataSourceConfigManager.getDataSourceConfigSet('space1'));
+    this._dataSourceManager = new DataSourceManager(dataSourceConfigSetManager.getItem('space1'));
     this.addSubscription(() => {
       this._configSourceManager = null;
       this._dataSourceManager = null;

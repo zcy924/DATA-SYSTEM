@@ -12,7 +12,7 @@ export interface DataModel {
  *
  * dataset.source 第一行/列是否是 维度名 信息。
  * 可选值：
- * null/undefine：默认，自动探测。
+ * null/undefined：默认，自动探测。
  * true：第一行/列是维度名信息。
  * false：第一行/列直接开始是数据。
  */

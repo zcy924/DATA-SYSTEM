@@ -10,7 +10,7 @@ import { DesignerBodyComponent } from '../designer.body.component';
 import { dataModelList } from '../../utils/dataModel';
 import { HttpClient } from '@angular/common/http';
 import { dataModelManager } from '../../data/data.model.manager';
-import { DataSourceConfigManager } from '../../data/data.source.config.manager';
+import { DataSourceConfigSetManager } from '../../data/data.source.config.set.manager';
 import { Destroyable } from '@barca/shared';
 
 @Component({
@@ -39,7 +39,7 @@ export class SiderRightComponent extends Destroyable implements AfterViewInit, O
 
 
   ngAfterViewInit() {
-    dataModelManager.dataOptionSet = DataSourceConfigManager.getInstance().getDataSourceConfigSet('space1');
+    dataModelManager.dataOptionSet = DataSourceConfigSetManager.getInstance().getItem('space1');
 
     const subscription = dataModelManager.modelNameObservable.subscribe((modelName) => {
       this.modelName = modelName;

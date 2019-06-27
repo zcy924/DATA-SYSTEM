@@ -1,5 +1,5 @@
 import { combineLatest, Observable, Subject, Subscription } from 'rxjs';
-import { GraphicConfigManager } from '../../config/graphic.config.manager';
+import { ConfigSourceComponentRefManager } from '../../config/config.source.component.ref.manager';
 import { distinctUntilChanged, tap } from 'rxjs/operators';
 import { dataModelManager } from '../../../data/data.model.manager';
 import { Region } from '../region/region';
@@ -145,10 +145,10 @@ export class GraphicWrapper {
 
     // 运行时不需要调用此方法
     dataModelManager.switchDataModel(this._graphicOption.dataSourceKey, false);
-    if (!GraphicConfigManager.getInstance().has(this._uuid)) {
+    if (!ConfigSourceComponentRefManager.getInstance().has(this._uuid)) {
       this.switchConfigSource();
     }
-    GraphicConfigManager.getInstance().activate(this._uuid);
+    ConfigSourceComponentRefManager.getInstance().activate(this._uuid);
   }
 
   get optionAccessor() {

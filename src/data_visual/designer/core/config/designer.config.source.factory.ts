@@ -1,6 +1,6 @@
 import { session } from '../../utils/session';
 
-import { GraphicConfigManager } from './graphic.config.manager';
+import { ConfigSourceComponentRefManager } from './config.source.component.ref.manager';
 import { graphicConfigDefinitionMap } from '../../../components/graphic.config/graphic.config.definition.map';
 import { DesignerGraphicConfig, IConfigSourceFactory, Type } from '@barca/shared';
 
@@ -27,7 +27,7 @@ export class DesignerConfigSourceFactory implements IConfigSourceFactory {
       configComponentRef = session.siderLeftComponent.forwardCreateGraphicConfig(configComponentDefinition);
 
     configComponentRef.instance.importOption(configOption);
-    GraphicConfigManager.getInstance().add(graphicId, configComponentRef);
+    ConfigSourceComponentRefManager.getInstance().add(graphicId, configComponentRef);
 
     return configComponentRef.instance.configSource;
   }

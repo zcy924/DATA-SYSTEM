@@ -9,7 +9,7 @@ import {
 import {NgForm} from '@angular/forms';
 
 import {NzModalService} from 'ng-zorro-antd';
-import {DesignerGraphicConfig} from '../../../shared/core/source/config.source/designer.config.source';
+import {DesignerGraphicConfig} from '../../../shared/core/config/designer.config.source';
 import {debounceTime} from 'rxjs/operators';
 import * as _ from 'lodash';
 

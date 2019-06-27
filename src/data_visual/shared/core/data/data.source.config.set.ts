@@ -2,22 +2,31 @@ import * as _ from 'lodash';
 
 import { DataSourceConfig } from './data.source.config';
 import { IDataSourceConfig } from '../../interface/file/data.source.config';
+import { Destroyable } from '../../common';
 
-export class DataSourceConfigSet {
+export class DataSourceConfigSet extends Destroyable {
 
   private _parent: DataSourceConfigSet;
   private _array: Array<DataSourceConfig> = [];
 
   constructor(dataSourceConfigArray?: IDataSourceConfig | Array<IDataSourceConfig>) {
-    if (dataSourceConfigArray) {
-      this.load(dataSourceConfigArray);
-    }
+    super();
+    this.load(dataSourceConfigArray);
+    this.addSubscription(() => {
+      this._array.splice(0);
+      this._array = null;
+
+      this._parent = null;
+    });
   }
 
   set parent(value: DataSourceConfigSet) {
     this._parent = value;
   }
 
+  /**
+   *
+   */
   get values(): Array<DataSourceConfig> {
     if (this._parent) {
       return this._parent.values.concat(this._array);
@@ -27,8 +36,8 @@ export class DataSourceConfigSet {
   }
 
   has(id: string): boolean {
-    return (this._array.findIndex((value) => {
-      return value.id === id;
+    return (this._array.findIndex((dataSourceConfig: DataSourceConfig) => {
+      return dataSourceConfig.id === id;
     }) >= 0) || (this._parent ? this._parent.has(id) : false);
   }
 
@@ -43,20 +52,12 @@ export class DataSourceConfigSet {
       array.forEach((value) => {
         this._load(value);
       });
-    } else {
+    } else if (_.isObjectLike(array)) {
       this._load(array);
     }
   }
 
-
-  private _load(dataOptionOption: IDataSourceConfig) {
-    this._array.push(new DataSourceConfig(dataOptionOption));
-  }
-
-  destroy() {
-    this._array.splice(0);
-    this._array = null;
-
-    this._parent = null;
+  private _load(dataSourceConfigOption: IDataSourceConfig) {
+    this._array.push(new DataSourceConfig(dataSourceConfigOption));
   }
 }

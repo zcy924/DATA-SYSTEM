@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, EventEmitter, KeyValueDiffer, KeyValueDiffers, OnInit, Output, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {DesignerGraphicConfig} from '../../../shared/core/source/config.source/designer.config.source';
+import {DesignerGraphicConfig} from '../../../shared/core/config/designer.config.source';
 
 @Component({
   selector: 'app-header-config',

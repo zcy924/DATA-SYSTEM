@@ -7,12 +7,12 @@ import { DesignerGraphicConfig } from '@barca/shared';
  * note：
  * 缓存的是设计时配置源
  */
-export class GraphicConfigManager {
-  private static _graphicConfigManager: GraphicConfigManager;
+export class ConfigSourceComponentRefManager {
+  private static _componentRefManager: ConfigSourceComponentRefManager;
   private _map = new Map();
 
   static getInstance() {
-    return this._graphicConfigManager = this._graphicConfigManager || new GraphicConfigManager();
+    return this._componentRefManager = this._componentRefManager || new ConfigSourceComponentRefManager();
   }
 
   private constructor() {
@@ -40,6 +40,5 @@ export class GraphicConfigManager {
       session.siderLeftComponent.attachDataProperty(componentRef.hostView);
     }
   }
-
 
 }

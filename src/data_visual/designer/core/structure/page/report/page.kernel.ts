@@ -4,7 +4,7 @@ import { ISelectManager, SelectManager } from '../../../manager/select.manager';
 import { RegionManager } from '../../../manager/region.manager';
 import { ActivateManager } from '../../../manager/activate.manager';
 import { ConfigSourceManager } from '../../../config/config.source.manager';
-import { dataSourceConfigManager } from '../../../../data/data.source.config.manager';
+import { dataSourceConfigSetManager } from '../../../../data/data.source.config.set.manager';
 import { DataSourceManager } from '../../../../../shared/core/data/data.source.manager';
 import { GeneratorRepositoryManager } from '../../../../../shared/generator/generator.repository.manager';
 import { ComponentRepositoryManager } from '../../../../../shared/component/component.repository.manager';
@@ -48,7 +48,7 @@ export class ReportPageKernel implements IPage {
     this.activateManager = new ActivateManager(this);
 
     this.configSourceManager = new ConfigSourceManager();
-    this.dataSourceManager = new DataSourceManager(dataSourceConfigManager.getDataSourceConfigSet('space1'));
+    this.dataSourceManager = new DataSourceManager(dataSourceConfigSetManager.getItem('space1'));
     this.actionManager = new ActionManager();
   }
 
