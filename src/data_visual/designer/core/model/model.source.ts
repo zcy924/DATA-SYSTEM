@@ -74,7 +74,7 @@ export class ModelSource {
     });
   }
 
-  model() {
+  model(): Observable<any> {
     return this._subject;
   }
 
