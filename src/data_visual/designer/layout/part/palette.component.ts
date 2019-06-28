@@ -1,8 +1,6 @@
 import { AfterViewInit, Component } from '@angular/core';
-import * as _ from 'lodash';
 import { grabHelper } from '../designer.header.component';
 import { ComponentRepositoryManager } from '../../../shared/component/component.repository.manager';
-import { graphicFactory } from '../../core/structure/graphic/graphic.factory';
 import { session } from '../../utils/session';
 
 @Component({
@@ -29,7 +27,7 @@ export class PaletteComponent implements AfterViewInit {
       mouseUp = (event: MouseEvent) => {
         console.log('document mouseup', event, session.currentPage.offset());
 
-        graphicFactory.createByName(componentPath, session.currentPage,
+        session.currentPage.createGraphic(componentPath,
           event.pageX - session.currentPage.offset().left - grabHelper.offsetX,
           event.pageY - session.currentPage.offset().top - grabHelper.offsetY);
         grabHelper.hidden();

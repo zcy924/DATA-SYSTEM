@@ -7,7 +7,6 @@ import { designerStorage } from '../utils/designer.storage';
 import { FilterTools, HelperTools, MoreTools } from './overlay.template';
 import { ActivatedRoute } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
-import { graphicFactory } from '../core/structure/graphic/graphic.factory';
 import { imageDimensions$ } from '../utils/common';
 import { ComponentRepositoryManager, Destroyable, Dimensions } from '@barca/shared';
 
@@ -35,11 +34,11 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
     const subscription = designerStorage.reportInfo$.subscribe((reportInfo: any) => {
 
       if (url == 'report-designer') {
-        console.log('reportInfo.Report.attr',reportInfo.Report.attr);
+        console.log('reportInfo.Report.attr', reportInfo.Report.attr);
         this.reportTile = reportInfo.Report.reportName;
         reportInfo.Report ? this.doLoad(reportInfo.Report.attr) : null;
       } else {
-        console.log('reportInfo.attr',reportInfo.attr);
+        console.log('reportInfo.attr', reportInfo.attr);
         this.reportTile = reportInfo.name;
         reportInfo.attr ? this.doLoad(reportInfo.attr) : null;
       }
@@ -74,9 +73,9 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
     //
     // FileSaver.saveAs(blob, `zijin.template.${moment().format('YYYYMMDDHHmmss')}.json`);
     const url = this._router.snapshot.routeConfig.path;
-    this._router.queryParams.subscribe(data=>{
+    this._router.queryParams.subscribe(data => {
       this.spaceId = data.spaceId;
-    })
+    });
     const params = Object.assign({},
       designerStorage.reportInfo.Report,
       {
@@ -156,7 +155,7 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
         }, () => {
         }, () => {
           if (session.currentPage) {
-            graphicFactory.newGraphicByName(session.currentPage, 'standard$image.graphic', 200, 200, option);
+            session.currentPage.createGraphic('standard$image.graphic', 200, 200, option);
           }
         });
       (<HTMLFormElement>file.parentElement).reset();
@@ -174,7 +173,7 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
     const mouseUp = (event: MouseEvent) => {
       console.log('document mouseup', event, session.currentPage.offset());
 
-      graphicFactory.createByName(componentPath, session.currentPage,
+      session.currentPage.createGraphic(componentPath,
         event.pageX - session.currentPage.offset().left - grabHelper.offsetX,
         event.pageY - session.currentPage.offset().top - grabHelper.offsetY);
       grabHelper.hidden();
@@ -235,7 +234,7 @@ class PopupWrapper {
     const mouseUp = (event: MouseEvent) => {
       console.log('document mouseup', event, session.currentPage.offset());
 
-      graphicFactory.createByName(componentPath, session.currentPage,
+      session.currentPage.createGraphic(componentPath,
         event.pageX - session.currentPage.offset().left - grabHelper.offsetX,
         event.pageY - session.currentPage.offset().top - grabHelper.offsetY);
       grabHelper.hidden();
@@ -284,24 +283,26 @@ class GrabHelper {
     backgroundImage: 'url("https://ydcdn.nosdn.127.net/dash-online/img/holder-automatic.8f656e5b7d.svg")',
     backgroundSize: '320px 224px',
   };
-  private _option;
+  private _offsetX;
+  private _offsetY;
 
   constructor(template: string) {
     this._$element = $(template);
   }
 
   get offsetX() {
-    return this._option.width / 2;
+    return this._offsetX;
   }
 
   get offsetY() {
-    return this._option.height / 2;
+    return this._offsetY;
   }
 
   show(left: number, top: number, option?: { width: number, height: number, backgroundImage: string }) {
-    this._option = option ? option : this._defaultOption;
-    this._$element.css(this._option);
-    this._$element.css({ backgroundSize: `${this._option.width}px ${this._option.height}px` });
+    const targetOption = option || this._defaultOption;
+    this._offsetX = targetOption.width / 2;
+    this._offsetY = targetOption.height / 2;
+    this._$element.css(Object.assign({ backgroundSize: `${targetOption.width}px ${targetOption.height}px` }, targetOption));
     if (!this._state) {
       $('body').append(this._$element);
       this._state = true;
@@ -312,6 +313,11 @@ class GrabHelper {
     });
   }
 
+  /**
+   * 刷新浮动层位置
+   * @param left event.pageX
+   * @param top event.pageY
+   */
   refresh(left: number, top: number) {
     this._$element.css({
       left: left - this.offsetX,
@@ -319,8 +325,11 @@ class GrabHelper {
     });
   }
 
+  /**
+   * 隐藏浮动层
+   */
   hidden() {
-    this._option = null;
+    this._offsetX = this._offsetY = 0;
     this._$element.detach();
     this._state = false;
   }

@@ -2,10 +2,11 @@ import { ReportPageKernel } from './page.kernel';
 import { IReportPageInnerFacade } from './page.interface';
 import * as _ from 'lodash';
 import { Region } from '../../region/region';
-import { graphicFactory } from '../../graphic/graphic.factory';
 import { ReportPageInnerFacadeImpl } from './page.inner.facade';
 import { VERSION_INFO } from './page.utils';
 import { Destroyable, IFileStructure } from '@barca/shared';
+import { GraphicActionCreate } from '../../../operate/graphic.action.create';
+import { addGraphicToPage, GraphicActionPaste } from '../../../operate/graphic.action.paste';
 
 export class ReportPage extends Destroyable {
 
@@ -17,14 +18,14 @@ export class ReportPage extends Destroyable {
     this._pageKernel = new ReportPageKernel(mode);
     this._pageKernel.init();
     this._pageInnerFacade = new ReportPageInnerFacadeImpl(this._pageKernel);
-    this.addSubscription(()=>{
+    this.addSubscription(() => {
       if (!this.destroyed) {
         this._pageKernel.destroy();
         this._pageKernel = null;
         this._pageInnerFacade.destroy();
         this._pageInnerFacade = null;
       }
-    })
+    });
   }
 
   get mode(): 'design' | 'runtime' {
@@ -57,9 +58,13 @@ export class ReportPage extends Destroyable {
     if (file.main) {
       file.main.option && this._pageKernel.config.model.importOption(file.main.option);
       file.main.children && file.main.children.forEach((value) => {
-        graphicFactory.paste(value);
+        this._paste(value);
       });
     }
+  }
+
+  private _paste(graphicMeta) {
+    addGraphicToPage(this._pageInnerFacade, graphicMeta);
   }
 
   save() {
@@ -90,6 +95,21 @@ export class ReportPage extends Destroyable {
       main,
       data: dataSourceConfigArray,
     };
+  }
+
+  /**
+   *  创建新的图表
+   * @param graphicName
+   * @param x
+   * @param y
+   * @param configOption 创建图片的时候，会从外部传入图片信息
+   */
+  createGraphic(graphicName: string, x: number, y: number, configOption?: any) {
+    this._pageKernel.actionManager.execute(new GraphicActionCreate(this._pageInnerFacade, graphicName, x, y, configOption));
+  }
+
+  paste(graphicMeta: any, x?: number, y?: number) {
+    this._pageKernel.actionManager.execute(new GraphicActionPaste(this._pageInnerFacade, graphicMeta, x, y));
   }
 
   /**

@@ -87,3 +87,6 @@ export function isJsObject(o: any): boolean {
   return o !== null && (typeof o === 'function' || typeof o === 'object');
 }
 
+export function deepClone(object: any) {
+  return JSON.parse(JSON.stringify(object));
+}

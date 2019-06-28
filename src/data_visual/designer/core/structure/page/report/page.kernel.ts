@@ -4,7 +4,6 @@ import { RegionManager } from '../../../manager/region.manager';
 import { ActivateManager } from '../../../manager/activate.manager';
 import { ConfigSourceManager } from '../../../config/config.source.manager';
 import { dataSourceConfigSetManager } from '../../../../data/data.source.config.set.manager';
-import { graphicFactory } from '../../graphic/graphic.factory';
 import { ActionManager } from '../../../operate/action.manager';
 import { PageConfig } from './page.config';
 import { PageView } from './page.view';
@@ -13,6 +12,7 @@ import {
   DataSourceManager, Destroyable,
   IPage,
 } from '@barca/shared';
+import { session } from '../../../../utils/session';
 
 export class ReportPageKernel extends Destroyable implements IPage {
 
@@ -29,8 +29,6 @@ export class ReportPageKernel extends Destroyable implements IPage {
   public actionManager: ActionManager;
 
 
-
-
   constructor(private _mode: 'design' | 'runtime') {
     super();
 
@@ -45,13 +43,13 @@ export class ReportPageKernel extends Destroyable implements IPage {
     this.dataSourceManager = new DataSourceManager(dataSourceConfigSetManager.getItem('space1'));
     this.actionManager = new ActionManager();
 
-    this.addSubscription(()=>{
+    this.addSubscription(() => {
       this.activateManager.destroy();
       this.regionManager.regionArray.forEach(value => value.destroy());
       this.regionManager.destroy();
       this.selectManager.destroy();
       this.view.destroy();
-    })
+    });
   }
 
   get mode(): 'design' | 'runtime' {
@@ -102,26 +100,7 @@ export class ReportPageKernel extends Destroyable implements IPage {
 
     this.view.contextMenuGenerator = () => {
       return [
-        /*     {
-               displayName: '新建 柱状图',
-               callback: ($event) => {
-                 // 如何建立关联
-                 graphicFactory.createByName('barChart', this, $event.offsetX, $event.offsetY);
-                 contextMenuHelper.close();
-               }
-             }, {
-               displayName: '新建注释',
-               callback: ($event) => {
-                 graphicFactory.createByName('commentAuxiliary', this, $event.offsetX, $event.offsetY);
-                 contextMenuHelper.close();
-               }
-             }, {
-               displayName: '新建文本',
-               callback: ($event) => {
-                 graphicFactory.createByName('textAuxiliary', this, $event.offsetX, $event.offsetY);
-                 contextMenuHelper.close();
-               }
-             },*/ 'split', {
+        'split', {
           displayName: '剪切',
           shortcut: 'Ctrl+X',
         }, {
@@ -130,7 +109,7 @@ export class ReportPageKernel extends Destroyable implements IPage {
           enable: clipboard.hasData(),
           callback: ($event) => {
             console.log('粘贴', clipboard.getData());
-            graphicFactory.paste(clipboard.getData(), $event.offsetX, $event.offsetY);
+            session.currentPage.paste(clipboard.getData(), $event.offsetX, $event.offsetY);
             return false;
           },
         }, {

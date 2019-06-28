@@ -1,19 +1,18 @@
 import { regionDefinitionMap } from '../structure/region/region.definition.map';
 import { IReportPageInnerFacade } from '../structure/page/report/page.interface';
-import { ComponentRepositoryManager } from '../../../shared/component/component.repository.manager';
-import { IComponentOption } from '../../../shared/interface/file/component.option';
 import { Region } from '../structure/region/region';
 import { GraphicWrapper } from '../structure/graphic/graphic.wrapper';
 import { IAction } from './action';
+import { ComponentRepositoryManager, deepClone, IComponentOption } from '@barca/shared';
 
 /**
  * 图表创建动作
  */
-export class GraphicCreateAction implements IAction {
+export class GraphicActionCreate implements IAction {
 
   private _region: Region;
 
-  constructor(private _graphicPath: string, private _page: IReportPageInnerFacade,
+  constructor(private _pageInnerFacade: IReportPageInnerFacade, private _graphicPath: string,
               private _x: number, private _y: number, private _configOption?: any) {
 
   }
@@ -24,8 +23,9 @@ export class GraphicCreateAction implements IAction {
     if (compRepoManager.has(this._graphicPath)) {
       const componentOption: IComponentOption = compRepoManager.getComponentMeta(this._graphicPath).componentOption;
 
+      // 创建region
       if (regionDefinitionMap.has(componentOption.region.regionKey)) {
-        const region: Region = new (regionDefinitionMap.get(componentOption.region.regionKey))(this._page);
+        const region: Region = new (regionDefinitionMap.get(componentOption.region.regionKey))(this._pageInnerFacade);
         region.init(null);
         region.setCoordinates(this._x, this._y);
         if (componentOption.region.regionOption) {
@@ -33,11 +33,14 @@ export class GraphicCreateAction implements IAction {
           region.setDimensions(width, height);
         }
 
+        // 创建graphic
         const graphicWrapper = new GraphicWrapper(region);
         if (this._configOption) {
-          graphicWrapper.init(Object.assign({}, componentOption.graphic, { configOption: JSON.parse(JSON.stringify(this._configOption)) }));
+          graphicWrapper.init(
+            Object.assign({}, componentOption.graphic, { configOption: deepClone(this._configOption) }),
+          );
         } else {
-          graphicWrapper.init(JSON.parse(JSON.stringify(componentOption.graphic)));
+          graphicWrapper.init(deepClone(componentOption.graphic));
         }
 
 
