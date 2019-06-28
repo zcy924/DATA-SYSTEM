@@ -13,18 +13,18 @@ class ResizeTipHelper {
     this._$span = this._$element.find('span');
   }
 
-  show(left: number, top: number, width: number, height: number) {
+  show(pointerLeft: number, pointerTop: number, regionLeft: number, regionTop: number) {
     $('body').append(this._$element);
-    this.refresh(left, top, width, height);
+    this.refresh(pointerLeft, pointerTop, regionLeft, regionTop);
     this._$element.show();
   }
 
-  refresh(left: number, top: number, width: number, height: number) {
+  refresh(left: number, top: number, regionLeft: number, regionTop: number) {
     this._$element.css({
       left,
       top
     });
-    this._$span.text(`${width} × ${height}`);
+    this._$span.text(`${regionLeft} × ${regionTop}`);
   }
 
   hide() {

@@ -3,6 +3,7 @@ import { clipboard } from '../../../../utils/clipboard';
 import { RegionModel, RegionState } from '../region.model';
 import { ExplicitRegionView } from './explicit.region.view';
 import { IReportPageInnerFacade } from '../../page/report/page.interface';
+import { GraphicActionDelete } from '../../../operate/graphic.action.delete';
 
 /**
  *
@@ -96,11 +97,9 @@ export class ExplicitRegion extends Region {
           callback: () => {
             if (this.page.isSelected(this)) {
               const arr = this.page.selectedArray;
-              arr.forEach((value) => {
-                value.destroy();
-              });
+              this._page.actionManager.execute(new GraphicActionDelete(this._page, arr));
             } else {
-              this.destroy();
+              this._page.actionManager.execute(new GraphicActionDelete(this._page, [this]));
             }
             return false;
           },

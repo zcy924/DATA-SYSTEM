@@ -1,6 +1,6 @@
-
 import { Observable } from 'rxjs';
 import { Region } from '../../region/region';
+import { ActionManager } from '../../../operate/action.manager';
 
 /**
  *
@@ -24,6 +24,8 @@ export interface IReportPageInnerFacade {
   regionArray$: Observable<Array<Region>>;
 
   selectedArray: Array<Region>;
+
+  actionManager: ActionManager;
 
   addChild(region: Region);
 

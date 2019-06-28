@@ -6,7 +6,8 @@ import { ReportPageInnerFacadeImpl } from './page.inner.facade';
 import { VERSION_INFO } from './page.utils';
 import { Destroyable, IFileStructure } from '@barca/shared';
 import { GraphicActionCreate } from '../../../operate/graphic.action.create';
-import { addGraphicToPage, GraphicActionPaste } from '../../../operate/graphic.action.paste';
+import { GraphicActionPaste } from '../../../operate/graphic.action.paste';
+import { addGraphicToPage } from '../../../operate/action.utils';
 
 export class ReportPage extends Destroyable {
 
@@ -108,8 +109,8 @@ export class ReportPage extends Destroyable {
     this._pageKernel.actionManager.execute(new GraphicActionCreate(this._pageInnerFacade, graphicName, x, y, configOption));
   }
 
-  paste(graphicMeta: any, x?: number, y?: number) {
-    this._pageKernel.actionManager.execute(new GraphicActionPaste(this._pageInnerFacade, graphicMeta, x, y));
+  paste(componentOption: any, x?: number, y?: number) {
+    this._pageKernel.actionManager.execute(new GraphicActionPaste(this._pageInnerFacade, componentOption, x, y));
   }
 
   /**

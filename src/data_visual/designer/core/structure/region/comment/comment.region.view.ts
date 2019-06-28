@@ -34,7 +34,7 @@ export class CommentRegionView extends RegionView {
     height: 30,
   };
 
-  constructor(protected _controller: Region, protected _model: RegionModel) {
+  constructor(protected _region: Region, protected _model: RegionModel) {
     super();
 
     this.$element = $(template);
@@ -132,7 +132,7 @@ export class CommentRegionView extends RegionView {
       });
     }
     if (this._model.state === RegionState.activated) {
-      this._controller.page.regionResize(this._controller);
+      this._region.page.regionResize(this._region);
     }
   }
 

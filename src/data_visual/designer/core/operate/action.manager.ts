@@ -1,7 +1,7 @@
-import { IAction } from './action';
+import { IAction, IActionManager } from './action';
 
 
-export class ActionManager {
+export class ActionManager implements IActionManager{
   private _actionArray: Array<IAction> = [];
   private _pointer = -1;
 

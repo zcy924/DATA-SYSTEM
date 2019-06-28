@@ -44,6 +44,10 @@ export class ReportPageInnerFacadeImpl implements IReportPageInnerFacade {
     return this._pageKernel.selectManager.selectedArray;
   }
 
+  get actionManager() {
+    return this._pageKernel.actionManager;
+  }
+
 
   addChild(child: Region) {
     this._pageKernel.regionManager.add(child);

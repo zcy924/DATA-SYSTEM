@@ -5,12 +5,13 @@ import { Region } from './region';
 import { RegionModel } from './region.model';
 import { contextMenuHelper, ContextMenuItem } from '../../helper/context.menu.helper';
 import { resizeTipHelper } from '../../helper/resize.tip.helper';
-import { Rectangle, ViewEventTarget } from '@barca/shared';
+import { Coordinates, Rectangle, ViewEventTarget } from '@barca/shared';
+import { GraphicActionMove } from '../../operate/graphic.action.move';
 
 type IContextMenuGenerator = () => Array<ContextMenuItem | 'split'>;
 
 export abstract class RegionView extends ViewEventTarget {
-  protected _controller: Region;
+  protected _region: Region;
   protected _model: RegionModel;
 
   $element: JQuery;
@@ -119,7 +120,7 @@ export abstract class RegionView extends ViewEventTarget {
 
     this.$element.find('div.u-resize>.draggable')
       .on('dragstart', ($event: JQuery.Event) => {
-        scale = this._controller.page.scale;
+        scale = this._region.page.scale;
         offset = this.$element.offset();
         snapshot = model.snapshot;
         which = (<HTMLElement>$event.currentTarget).dataset.which;
@@ -150,39 +151,45 @@ export abstract class RegionView extends ViewEventTarget {
    * @private
    */
   protected _bindEventForMover() {
-    let subscription: Subscription,
+    let mouseMoveSubscription: Subscription,
       scale,
       originPageX,
       originPageY,
-      snapshot: JQuery.Coordinates,
+      moveStartSnapshot: Coordinates,
+      moveStopSnapshot: Coordinates,
       timeoutHandle;
 
     const model = this._model, dragEndHandler = (event: MouseEvent) => {
-      if (subscription) {
-        subscription.unsubscribe();
-        subscription = null;
+      if (mouseMoveSubscription) {
+        mouseMoveSubscription.unsubscribe();
+        mouseMoveSubscription = null;
         document.removeEventListener('mouseup', dragEndHandler);
         this.$element.removeClass('no-transition');
         resizeTipHelper.hide();
+        this._region.page.actionManager.execute(new GraphicActionMove(this._region, moveStartSnapshot, moveStopSnapshot));
       }
     };
 
     this._$mover
       .on('dragstart', ($event: JQuery.Event) => {
         this.$element.addClass('no-transition');
-        scale = this._controller.page.scale;
+        scale = this._region.page.scale;
         originPageX = $event.pageX;
         originPageY = $event.pageY;
-        snapshot = model.coordinates;
-        resizeTipHelper.show(originPageX, originPageY, snapshot.left, snapshot.top);
+        moveStartSnapshot = model.coordinates;
+        resizeTipHelper.show(originPageX, originPageY, moveStartSnapshot.left, moveStartSnapshot.top);
 
-        subscription = fromEvent(document, 'mousemove')
+        mouseMoveSubscription = fromEvent(document, 'mousemove')
           .pipe(throttleTime(20))
           .subscribe((mouseEvent: MouseEvent) => {
             const offsetLeft = mouseEvent.pageX - originPageX,
               offsetTop = mouseEvent.pageY - originPageY;
-            model.left = snapshot.left + Math.round(offsetLeft / scale);
-            model.top = snapshot.top + Math.round(offsetTop / scale);
+            model.left = moveStartSnapshot.left + Math.round(offsetLeft / scale);
+            model.top = moveStartSnapshot.top + Math.round(offsetTop / scale);
+            moveStopSnapshot = {
+              left: model.left,
+              top: model.top,
+            };
             this.refresh();
             resizeTipHelper.refresh(mouseEvent.pageX, mouseEvent.pageY, model.left, model.top);
           });
@@ -226,7 +233,7 @@ export abstract class RegionView extends ViewEventTarget {
     this._$mover.off('dragstart click singleClick dblclick contextmenu');
     this.$element.remove();
     this._contextMenuGenerator = null;
-    this._controller = null;
+    this._region = null;
     this._model = null;
     super.destroy();
   }

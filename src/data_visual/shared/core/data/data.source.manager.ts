@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
 import * as _ from 'lodash';
 import { DataSourceFactory } from './data.source.factory';
-import { IDataSourceConfig } from '../../interface/file/data.source.config';
 import { DataSourceConfigSet } from './data.source.config.set';
+import { IDataSourceConfig } from '../../interface/file';
 
 /**
  * 每个页面都有自己的DataSourceManager

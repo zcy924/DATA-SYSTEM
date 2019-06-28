@@ -1,7 +1,7 @@
 import { closestNum } from '../../../utils/common';
 import * as _ from 'lodash';
 import { IRegionOption } from '../../../../shared/interface/file/component.option';
-import { Dimensions, ModelEventTarget, Rectangle } from '@barca/shared';
+import { Coordinates, Dimensions, ModelEventTarget, Rectangle } from '@barca/shared';
 
 export enum RegionState {
   default, selected, multiSelected, activated
@@ -58,7 +58,7 @@ export class RegionModel extends ModelEventTarget {
     return this._option.zIndex;
   }
 
-  get coordinates(): JQuery.Coordinates {
+  get coordinates(): Coordinates {
     return _.pick(this._option, ['left', 'top']);
   }
 

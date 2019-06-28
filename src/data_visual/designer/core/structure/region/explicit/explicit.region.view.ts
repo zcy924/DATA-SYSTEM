@@ -24,7 +24,7 @@ export class ExplicitRegionView extends RegionView {
   private _refresh = () => {
   };
 
-  constructor(protected _controller: Region, protected _model: RegionModel) {
+  constructor(protected _region: Region, protected _model: RegionModel) {
     super();
     const $element = this.$element = $(template);
     this.$fill = $element.find('.g-fill');
@@ -35,7 +35,7 @@ export class ExplicitRegionView extends RegionView {
    * 事件绑定
    */
   init() {
-    if (this._controller.page.mode === 'design') {
+    if (this._region.page.mode === 'design') {
       this._bindEvent();
     }
   }
@@ -88,7 +88,7 @@ export class ExplicitRegionView extends RegionView {
       });
       // 激活状态下需要更新辅助元素mask的状态
       if (model.state === RegionState.activated) {
-        this._controller.page.regionResize(this._controller);
+        this._region.page.regionResize(this._region);
       }
     };
   }

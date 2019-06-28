@@ -4,9 +4,10 @@ import { IReportPageInnerFacade } from '../page/report/page.interface';
 import { RegionModel, RegionState } from './region.model';
 import { RegionView } from './region.view';
 import { IRegion } from '../../../../shared/core/region/region';
+import { Destroyable } from '@barca/shared';
 
 
-export abstract class Region implements IRegion {
+export abstract class Region extends Destroyable implements IRegion {
 
   // 模型层
   protected _page: IReportPageInnerFacade;
@@ -15,6 +16,25 @@ export abstract class Region implements IRegion {
   protected _graphicWrapper: GraphicWrapper;
 
   private _methodMap: Map<string, Function> = new Map();
+
+  protected constructor() {
+    super();
+    this.addSubscription(()=>{
+      // 1、销毁内部对象
+      // 2、解除事件绑定
+      // 3、解除当前对象的属性引用
+      if (this._graphicWrapper) {
+        this._graphicWrapper.destroy();
+        this._graphicWrapper = null;
+      }
+      this._page.removeChild(this);
+      this._page = null;
+
+      this._methodMap.clear();
+
+      this._view.destroy();
+    })
+  }
 
   get page(): IReportPageInnerFacade {
     return this._page;
@@ -82,25 +102,6 @@ export abstract class Region implements IRegion {
       return this._methodMap.get(name)(...args);
     }
   }
-
-  /**
-   * 1、销毁内部对象
-   * 2、解除事件绑定
-   * 3、解除当前对象的属性引用
-   */
-  destroy() {
-    if (this._graphicWrapper) {
-      this._graphicWrapper.destroy();
-      this._graphicWrapper = null;
-    }
-    this._page.removeChild(this);
-    this._page = null;
-
-    this._methodMap.clear();
-
-    this._view.destroy();
-  }
-
 
 }
 

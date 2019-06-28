@@ -46,7 +46,8 @@ export class ImageGraphic extends DefaultGraphic {
       });
     }).register('add.image image', (key, oldValue, newValue) => {
       if (this._view && newValue && newValue.dataUrl) {
-        region.setDimensions && region.setDimensions(newValue.width, newValue.height);
+        // region.setDimensions(newValue.width, newValue.height);
+        console.log('222222222222222222222222222222');
         this._view.update(newValue);
       }
     });
