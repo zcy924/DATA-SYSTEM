@@ -1,29 +1,46 @@
 import { BehaviorSubject, combineLatest, Observable, Subject, Subscription } from 'rxjs';
 import { ConfigSourceManager } from '../config/config.source.manager';
-import { DataSourceManager, GraphicOption } from '@barca/shared';
+import { DataSourceManager, Destroyable, GraphicOption } from '@barca/shared';
 import * as _ from 'lodash';
 
-export class ModelSource {
+export class ModelSource extends Destroyable {
 
-  private _graphicOption;
+  private _graphicOption: GraphicOption;
 
   private _modelSubject: Subject<any> = new BehaviorSubject(null);
   private _modelSubscription: Subscription;
 
-  private _subscription: Subscription;
   private _config$: Observable<any>;
   private _data$: Observable<any>;
-
-  private _dataSourceKey: string;
+  private _combineSubscription: Subscription;
 
   constructor(
     private _configSourceManger: ConfigSourceManager,
     private _dataSourceManager: DataSourceManager) {
+    super();
+    this.addSubscription(() => {
+      if (this._modelSubscription) {
+        this._modelSubscription.unsubscribe();
+        this._modelSubscription = null;
+      }
+      if (this._modelSubject) {
+        this._modelSubject.unsubscribe();
+      }
+      if (this._combineSubscription) {
+        this._combineSubscription.unsubscribe();
+        this._combineSubscription = null;
+      }
+      this._config$ = this._data$ = this._graphicOption = null;
+    });
+  }
 
+  get graphicOption(): GraphicOption {
+    return this._graphicOption;
   }
 
   init(graphicOption: GraphicOption) {
     const { graphicId, graphicKey, configOption, dataSourceKey } = this._graphicOption = graphicOption;
+    // 有configOption一般粘贴，或者打开新的文件时 会走这条路
     if (configOption) {
       this._config$ = this._configSourceManger
         .getMockConfigSource({
@@ -43,7 +60,7 @@ export class ModelSource {
     this._data$ = this._dataSourceManager.getDataSource(dataSourceKey);
 
     // 两个组件必须同时打开  不然收不到信息
-    this._subscription = combineLatest(this._config$, this._data$)
+    this._combineSubscription = combineLatest(this._config$, this._data$)
       .subscribe(([config, data]) => {
         this._modelSubject.next([config, data]);
       });
@@ -62,8 +79,8 @@ export class ModelSource {
   }
 
   switchConfigSource() {
-    if (this._subscription) {
-      this._subscription.unsubscribe();
+    if (this._combineSubscription) {
+      this._combineSubscription.unsubscribe();
     }
     const { graphicId, graphicKey, configOption } = this._graphicOption;
     this._config$ = this._configSourceManger.getConfigSource({
@@ -71,18 +88,18 @@ export class ModelSource {
       graphicKey,
       configOption,
     });
-    this._subscription = combineLatest(this._config$, this._data$).subscribe(([config, data]) => {
+    this._combineSubscription = combineLatest(this._config$, this._data$).subscribe(([config, data]) => {
       this._modelSubject.next([config, data]);
     });
   }
 
   switchDataSource(dataSourceKey: string) {
-    this._dataSourceKey = dataSourceKey;
-    if (this._subscription) {
-      this._subscription.unsubscribe();
+    this._graphicOption.dataSourceKey = dataSourceKey;
+    if (this._combineSubscription) {
+      this._combineSubscription.unsubscribe();
     }
     this._data$ = this._dataSourceManager.getDataSource(dataSourceKey);
-    this._subscription = combineLatest(this._config$, this._data$).subscribe(([config, data]) => {
+    this._combineSubscription = combineLatest(this._config$, this._data$).subscribe(([config, data]) => {
       this._modelSubject.next({
         config, data,
       });

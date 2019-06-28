@@ -7,40 +7,45 @@ import { Region } from '../region/region';
 import * as _ from 'lodash';
 import {
   ChangedItem, componentRepositoryManager,
-  ComponentRepositoryManager,
+  ComponentRepositoryManager, Destroyable,
   getParameterName,
   GraphicOption, guid,
   IGraphic,
   IGraphicOption,
 } from '@barca/shared';
+import { ModelSource } from '../../model/model.source';
 
 
 /**
  *
  * 管理组件的ConfigSource和DataSource
  */
-export class GraphicWrapper {
+export class GraphicWrapper extends Destroyable {
 
-  // 组件唯一编号
-  private _uuid: string;
-
+  private _modelSource: ModelSource;
   private _graphic: IGraphic;
-  private _graphicOption: GraphicOption;
 
-  private _config$: Observable<any>;
-  private _data$: Observable<any>;
-
-  private _configSubject = new Subject();
-  private _configSubscription: Subscription;
   private _modelSubscription: Subscription;
 
   private _optionAccessor: Function;
 
   constructor(private _region: Region) {
+    super();
+    this.addSubscription(() => {
+      if (this._modelSubscription) {
+        this._modelSubscription.unsubscribe();
+        this._modelSubscription = null;
+      }
+      this._modelSource.destroy();
+      if (this._graphic) {
+        this._graphic.destroy();
+        this._graphic = null;
+      }
+    });
   }
 
   get uuid(): string {
-    return this._uuid;
+    return this._modelSource.graphicOption.graphicId;
   }
 
   get $element() {
@@ -55,8 +60,8 @@ export class GraphicWrapper {
    * @param graphicOption
    */
   init(option: IGraphicOption) {
-    const graphicOption = this._graphicOption = new GraphicOption(option);
-    const { graphicId, graphicKey, graphicPath, dataSourceKey, configOption } = graphicOption;
+    const graphicOption = new GraphicOption(option);
+    const { graphicId, graphicPath } = graphicOption;
     // 创建graphic对象
     if (componentRepositoryManager.has(graphicPath)) {
       this._graphic = new (componentRepositoryManager.getComponentMeta(graphicPath).graphicDef)();
@@ -70,75 +75,22 @@ export class GraphicWrapper {
       this._region.addChild(this);
     }
 
-    this._configSubscription = this._configSubject
-      .pipe(distinctUntilChanged())
-      .subscribe((model: Array<ChangedItem> | ChangedItem) => {
-        if (_.isArray(model)) {
-          this._graphicOption.configOption = Object.assign({}, model[0].option);
-        } else if (!_.isNull(model)) {
-          this._graphicOption.configOption = Object.assign({}, model.option);
-        }
-      });
+    graphicOption.graphicId = graphicId || guid(10, 16);
 
-    this._uuid = graphicId || guid(10, 16);
-
-    // 有configOption一般粘贴，或者打开新的文件时 会走这条路
-    if (configOption) {
-      this._config$ = this._region.page
-        .getMockConfigSource({
-          graphicId: this._uuid,
-          graphicKey,
-          configOption,
-        });
-    } else {
-      // 如果是新建 则肯定是调用设计时的configFactory
-      this._config$ = this._region.page
-        .getConfigSource({
-          graphicId: this._uuid,
-          graphicKey,
-          configOption,
-        });
-    }
-    this._data$ = this._region.page.getDataSource(dataSourceKey);
-
-    // 两个组件必须同时打开  不然收不到信息
-    this._modelSubscription = this._graphic
-      .accept(combineLatest(this._config$, this._data$)
-        .pipe(tap(([config, data]: Array<any>) => {
-          this._configSubject.next(config);
-        })));
+    this._modelSource = new ModelSource(this._region.page.configSourceManager, this._region.page.dataSourceManager);
+    this._modelSource.init(graphicOption);
+    this._modelSubscription = this._graphic.accept(this._modelSource.model$());
   }
 
   /**
    * 切换配置源
    */
   switchConfigSource() {
-    if (this._modelSubscription) {
-      this._modelSubscription.unsubscribe();
-    }
-    this._config$ = this._region.page.getConfigSource({
-      graphicId: this._uuid,
-      graphicKey: this._graphicOption.graphicKey,
-      configOption: this._graphicOption.configOption,
-    });
-    this._modelSubscription = this._graphic.accept(combineLatest(this._config$, this._data$)
-      .pipe(tap((modelArray: Array<any>) => {
-        const [config, data] = modelArray;
-        this._configSubject.next(config);
-      })));
+    this._modelSource.switchConfigSource();
   }
 
   switchDataSource(dataSourceKey: string) {
-    this._graphicOption.dataSourceKey = dataSourceKey;
-    if (this._modelSubscription) {
-      this._modelSubscription.unsubscribe();
-    }
-    this._data$ = this._region.page.getDataSource(dataSourceKey);
-    this._modelSubscription = this._graphic.accept(combineLatest(this._config$, this._data$)
-      .pipe(tap((modelArray: Array<any>) => {
-        const [config, data] = modelArray;
-        this._configSubject.next(config);
-      })));
+    this._modelSource.switchDataSource(dataSourceKey);
   }
 
   // 激活配置面板
@@ -146,15 +98,15 @@ export class GraphicWrapper {
     this._region.page.focusRegion = this._region;
 
     // 运行时不需要调用此方法
-    dataModelManager.switchDataModel(this._graphicOption.dataSourceKey, false);
-    if (!ConfigSourceComponentRefManager.getInstance().has(this._uuid)) {
+    dataModelManager.switchDataModel(this._modelSource.graphicOption.dataSourceKey, false);
+    if (!ConfigSourceComponentRefManager.getInstance().has(this.uuid)) {
       this.switchConfigSource();
     }
-    ConfigSourceComponentRefManager.getInstance().activate(this._uuid);
+    ConfigSourceComponentRefManager.getInstance().activate(this.uuid);
   }
 
   get optionAccessor() {
-    return this._optionAccessor || (() => Object.assign({}, this._graphicOption.value));
+    return this._optionAccessor || (() => Object.assign({}, this._modelSource.graphicOption.value));
   }
 
   set optionAccessor(value: Function) {
@@ -193,21 +145,6 @@ export class GraphicWrapper {
   deactivate() {
     if (this._graphic) {
       this._graphic.deactivate();
-    }
-  }
-
-  destroy() {
-    if (this._configSubscription) {
-      this._configSubscription.unsubscribe();
-      this._configSubscription = null;
-    }
-    if (this._modelSubscription) {
-      this._modelSubscription.unsubscribe();
-      this._modelSubscription = null;
-    }
-    if (this._graphic) {
-      this._graphic.destroy();
-      this._graphic = null;
     }
   }
 }

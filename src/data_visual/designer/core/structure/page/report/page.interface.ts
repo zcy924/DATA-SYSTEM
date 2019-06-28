@@ -1,6 +1,8 @@
 import { Observable } from 'rxjs';
 import { Region } from '../../region/region';
 import { ActionManager } from '../../../operate/action.manager';
+import { ConfigSourceManager } from '../../../config/config.source.manager';
+import { DataSourceManager } from '@barca/shared';
 
 /**
  *
@@ -24,6 +26,10 @@ export interface IReportPageInnerFacade {
   regionArray$: Observable<Array<Region>>;
 
   selectedArray: Array<Region>;
+
+  configSourceManager: ConfigSourceManager;
+
+  dataSourceManager: DataSourceManager;
 
   actionManager: ActionManager;
 

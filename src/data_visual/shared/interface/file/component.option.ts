@@ -28,6 +28,10 @@ export class GraphicOption {
   constructor(private _option: IGraphicOption) {
   }
 
+  set graphicId(id: string) {
+    this._option.graphicId = id;
+  }
+
   get graphicId() {
     return this._option.graphicId;
   }

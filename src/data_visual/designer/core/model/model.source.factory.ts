@@ -20,7 +20,7 @@ export class ModelSourceFactory extends Destroyable {
 
   getModelSource(modelOption: IModelOption): ModelSource {
     const ret = new ModelSource(this._configSourceManager, this._dataSourceManager);
-    ret.init(modelOption.configSourceOption, modelOption.dataSourceKey);
+    // ret.init(modelOption.configSourceOption, modelOption.dataSourceKey);
     return ret;
 
   }

@@ -44,6 +44,14 @@ export class ReportPageInnerFacadeImpl implements IReportPageInnerFacade {
     return this._pageKernel.selectManager.selectedArray;
   }
 
+  get configSourceManager() {
+    return this._pageKernel.configSourceManager;
+  }
+
+  get dataSourceManager() {
+    return this._pageKernel.dataSourceManager;
+  }
+
   get actionManager() {
     return this._pageKernel.actionManager;
   }
