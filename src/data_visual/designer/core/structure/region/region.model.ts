@@ -45,7 +45,10 @@ export class RegionModel extends ModelEventTarget {
       height,
     };
     this._state = RegionState.default;
-
+    this.addSubscription(() => {
+      this._option = null;
+      this._state = null;
+    });
   }
 
   set zIndex(value: number) {
@@ -66,7 +69,7 @@ export class RegionModel extends ModelEventTarget {
     return _.pick(this._option, ['width', 'height']);
   }
 
-  get snapshot(): Rectangle {
+  get rectangle(): Rectangle {
     return _.pick(this._option, ['left', 'top', 'width', 'height']);
   }
 
@@ -144,11 +147,5 @@ export class RegionModel extends ModelEventTarget {
 
   exportModel() {
     return Object.assign({}, this._option);
-  }
-
-  destroy() {
-    super.destroy();
-    this._option = null;
-    this._state = null;
   }
 }

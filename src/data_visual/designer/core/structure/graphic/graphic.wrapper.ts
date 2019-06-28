@@ -130,6 +130,7 @@ export class GraphicWrapper extends Destroyable {
 
 
   resize() {
+    console.log('graphicWrapper Resize');
     if (this._graphic) {
       this._graphic.resize();
     }

@@ -63,6 +63,7 @@ export class ExplicitRegion extends Region {
         this._page.ctrlSelect(this);
       })
       .addEventListener('resizeEnd', () => {
+        console.log('resizeEnd handle:this._graphicWrapper.resize()');
         if (this._graphicWrapper) {
           this._graphicWrapper.resize();
         }

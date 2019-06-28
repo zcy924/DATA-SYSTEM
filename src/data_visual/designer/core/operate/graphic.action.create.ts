@@ -31,7 +31,6 @@ export class GraphicActionCreate implements IAction {
         if (componentOption.region.regionOption) {
           const { width, height } = componentOption.region.regionOption;
           region.setDimensions(width, height);
-          console.log('@!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
         }
 
         // 创建graphic

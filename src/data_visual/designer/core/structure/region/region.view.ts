@@ -7,6 +7,7 @@ import { contextMenuHelper, ContextMenuItem } from '../../helper/context.menu.he
 import { resizeTipHelper } from '../../helper/resize.tip.helper';
 import { Coordinates, Rectangle, ViewEventTarget } from '@barca/shared';
 import { GraphicActionMove } from '../../operate/graphic.action.move';
+import { GraphicActionResize } from '../../operate/graphic.action.resize';
 
 type IContextMenuGenerator = () => Array<ContextMenuItem | 'split'>;
 
@@ -30,13 +31,18 @@ export abstract class RegionView extends ViewEventTarget {
 
   abstract refresh();
 
+  /**
+   * 给region添加resize功能
+   * @private
+   */
   protected _bindEventForResize() {
     let offsetX, offsetY,
       scale = 1,
-      offset: JQuery.Coordinates,
-      snapshot: Rectangle,
+      offset: Coordinates,
+      resizeStartRectangle: Rectangle,
+      resizeStopRectangle: Rectangle,
       which: string,
-      subscription: Subscription;
+      mouseMoveSubscription: Subscription;
 
     // 进行缩放转换
     const
@@ -45,17 +51,17 @@ export abstract class RegionView extends ViewEventTarget {
       handleResize = (pageX, pageY) => {
         switch (which) {
           case 'resize-left':
-            if (pageX < (offset.left + snapshot.width)) {
+            if (pageX < (offset.left + resizeStartRectangle.width)) {
               offsetX = closestNum(getReal(pageX - offset.left));
-              model.left = snapshot.left + offsetX;
-              model.width = snapshot.width - offsetX;
+              model.left = resizeStartRectangle.left + offsetX;
+              model.width = resizeStartRectangle.width - offsetX;
             }
             break;
           case 'resize-top':
-            if (pageY < (offset.top + snapshot.height)) {
+            if (pageY < (offset.top + resizeStartRectangle.height)) {
               offsetY = closestNum(getReal(pageY - offset.top));
-              model.top = snapshot.top + offsetY;
-              model.height = snapshot.height - offsetY;
+              model.top = resizeStartRectangle.top + offsetY;
+              model.height = resizeStartRectangle.height - offsetY;
             }
             break;
           case 'resize-right':
@@ -64,18 +70,18 @@ export abstract class RegionView extends ViewEventTarget {
             }
             break;
           case 'resize-topLeft':
-            if (pageY < (offset.top + snapshot.height) && pageX < (offset.left + snapshot.width)) {
+            if (pageY < (offset.top + resizeStartRectangle.height) && pageX < (offset.left + resizeStartRectangle.width)) {
               offsetX = closestNum(getReal(pageX - offset.left)),
                 offsetY = closestNum(getReal(pageY - offset.top));
-              model.setCoordinates(snapshot.left + offsetX, snapshot.top + offsetY);
-              model.setDimensions(snapshot.width - offsetX, snapshot.height - offsetY);
+              model.setCoordinates(resizeStartRectangle.left + offsetX, resizeStartRectangle.top + offsetY);
+              model.setDimensions(resizeStartRectangle.width - offsetX, resizeStartRectangle.height - offsetY);
             }
             break;
           case 'resize-topRight':
-            if (pageY < (offset.top + snapshot.height)) {
+            if (pageY < (offset.top + resizeStartRectangle.height)) {
               offsetY = closestNum(getReal(pageY - offset.top));
-              model.top = snapshot.top + offsetY;
-              model.height = snapshot.height - offsetY;
+              model.top = resizeStartRectangle.top + offsetY;
+              model.height = resizeStartRectangle.height - offsetY;
             }
             if (pageX > offset.left) {
               model.width = closestNum(getReal(pageX - offset.left));
@@ -90,10 +96,10 @@ export abstract class RegionView extends ViewEventTarget {
             }
             break;
           case 'resize-bottomLeft':
-            if (pageX < (offset.left + snapshot.width)) {
+            if (pageX < (offset.left + resizeStartRectangle.width)) {
               offsetX = closestNum(getReal(pageX - offset.left));
-              model.left = snapshot.left + offsetX;
-              model.width = snapshot.width - offsetX;
+              model.left = resizeStartRectangle.left + offsetX;
+              model.width = resizeStartRectangle.width - offsetX;
             }
             if (pageY > offset.top) {
               model.height = getReal(pageY - offset.top);
@@ -107,13 +113,15 @@ export abstract class RegionView extends ViewEventTarget {
         }
       },
       dragEndHandler = (event: MouseEvent) => {
-        if (subscription) {
-          subscription.unsubscribe();
-          subscription = null;
+        if (mouseMoveSubscription) {
+          mouseMoveSubscription.unsubscribe();
+          mouseMoveSubscription = null;
           document.removeEventListener('mouseup', dragEndHandler);
           this.$element.removeClass('no-transition');
           resizeTipHelper.hide();
           handleResize(event.pageX, event.pageY);
+          resizeStopRectangle = model.rectangle;
+          this._region.page.actionManager.execute(new GraphicActionResize(this._region, resizeStartRectangle, resizeStopRectangle));
           this.dispatchEvent('resizeEnd');
         }
       };
@@ -122,13 +130,13 @@ export abstract class RegionView extends ViewEventTarget {
       .on('dragstart', ($event: JQuery.Event) => {
         scale = this._region.page.scale;
         offset = this.$element.offset();
-        snapshot = model.snapshot;
+        resizeStartRectangle = model.rectangle;
         which = (<HTMLElement>$event.currentTarget).dataset.which;
         resizeTipHelper.show($event.pageX, $event.pageY, model.width, model.height);
         this.$element.addClass('no-transition');
 
         // 监听鼠标移动
-        subscription =
+        mouseMoveSubscription =
           fromEvent(document, 'mousemove')
             .pipe(throttleTime(30))
             .subscribe((mouseEvent: MouseEvent) => {
@@ -155,8 +163,8 @@ export abstract class RegionView extends ViewEventTarget {
       scale,
       originPageX,
       originPageY,
-      moveStartSnapshot: Coordinates,
-      moveStopSnapshot: Coordinates,
+      moveStartCoordinates: Coordinates,
+      moveStopCoordinates: Coordinates,
       timeoutHandle;
 
     const model = this._model, dragEndHandler = (event: MouseEvent) => {
@@ -166,7 +174,7 @@ export abstract class RegionView extends ViewEventTarget {
         document.removeEventListener('mouseup', dragEndHandler);
         this.$element.removeClass('no-transition');
         resizeTipHelper.hide();
-        this._region.page.actionManager.execute(new GraphicActionMove(this._region, moveStartSnapshot, moveStopSnapshot));
+        this._region.page.actionManager.execute(new GraphicActionMove(this._region, moveStartCoordinates, moveStopCoordinates));
       }
     };
 
@@ -176,17 +184,17 @@ export abstract class RegionView extends ViewEventTarget {
         scale = this._region.page.scale;
         originPageX = $event.pageX;
         originPageY = $event.pageY;
-        moveStartSnapshot = model.coordinates;
-        resizeTipHelper.show(originPageX, originPageY, moveStartSnapshot.left, moveStartSnapshot.top);
+        moveStartCoordinates = model.coordinates;
+        resizeTipHelper.show(originPageX, originPageY, moveStartCoordinates.left, moveStartCoordinates.top);
 
         mouseMoveSubscription = fromEvent(document, 'mousemove')
           .pipe(throttleTime(20))
           .subscribe((mouseEvent: MouseEvent) => {
             const offsetLeft = mouseEvent.pageX - originPageX,
               offsetTop = mouseEvent.pageY - originPageY;
-            model.left = moveStartSnapshot.left + Math.round(offsetLeft / scale);
-            model.top = moveStartSnapshot.top + Math.round(offsetTop / scale);
-            moveStopSnapshot = {
+            model.left = moveStartCoordinates.left + Math.round(offsetLeft / scale);
+            model.top = moveStartCoordinates.top + Math.round(offsetTop / scale);
+            moveStopCoordinates = {
               left: model.left,
               top: model.top,
             };

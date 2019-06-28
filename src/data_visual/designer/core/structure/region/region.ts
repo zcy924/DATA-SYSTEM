@@ -4,7 +4,7 @@ import { IReportPageInnerFacade } from '../page/report/page.interface';
 import { RegionModel, RegionState } from './region.model';
 import { RegionView } from './region.view';
 import { IRegion } from '../../../../shared/core/region/region';
-import { Destroyable } from '@barca/shared';
+import { Destroyable, Coordinates, Dimensions, Rectangle } from '@barca/shared';
 
 
 export abstract class Region extends Destroyable implements IRegion {
@@ -19,7 +19,7 @@ export abstract class Region extends Destroyable implements IRegion {
 
   protected constructor() {
     super();
-    this.addSubscription(()=>{
+    this.addSubscription(() => {
       // 1、销毁内部对象
       // 2、解除事件绑定
       // 3、解除当前对象的属性引用
@@ -33,7 +33,7 @@ export abstract class Region extends Destroyable implements IRegion {
       this._methodMap.clear();
 
       this._view.destroy();
-    })
+    });
   }
 
   get page(): IReportPageInnerFacade {
@@ -60,6 +60,26 @@ export abstract class Region extends Destroyable implements IRegion {
     return this._model.zIndex;
   }
 
+  set coordinates({ left, top }: Coordinates) {
+    this._model.setCoordinates(left, top);
+    this._view.refresh();
+  }
+
+  set dimensions({ width, height }: Dimensions) {
+    this._model.setDimensions(width, height);
+    this._view.refresh();
+    this._graphicWrapper && this._graphicWrapper.resize();
+  }
+
+  set rectangle({ left, top, width, height }: Rectangle) {
+    this._model.setCoordinates(left, top);
+    this._model.setDimensions(width, height);
+    this._view.refresh();
+    setTimeout(()=>{
+      this._graphicWrapper && this._graphicWrapper.resize();
+    },200)
+  }
+
   init(regionOption: any) {
 
   }
@@ -79,7 +99,7 @@ export abstract class Region extends Destroyable implements IRegion {
     }
   }
 
-  setCoordinates(left, top) {
+  setCoordinates(left: number, top: number) {
     this._model.setCoordinates(left, top);
     this._view.refresh();
   }

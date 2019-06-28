@@ -79,6 +79,7 @@ export class ExplicitRegionView extends RegionView {
       });
 
     this._refresh = () => {
+      console.log('explicit region view refresh');
       this.$element.css({
         width: model.width,
         height: model.height,
