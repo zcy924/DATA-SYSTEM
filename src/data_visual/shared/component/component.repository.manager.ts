@@ -3,6 +3,7 @@ import { delay } from 'rxjs/operators';
 import { Type } from '../common/type';
 import { IGraphic } from '../core/graphic/graphic';
 import { ComponentRepository } from './component.repository';
+import { Destroyable } from '../common';
 
 /**
  * 设计时和运行时都会使用到ComponentRepositoryManager
@@ -11,7 +12,7 @@ import { ComponentRepository } from './component.repository';
  * 设计器只能新建该manager中存在的Graphic
  * 运行时只能识别该manager中存在的Graphic
  */
-export class ComponentRepositoryManager {
+export class ComponentRepositoryManager extends Destroyable {
   private static _manager: ComponentRepositoryManager;
 
   private _map: Map<string, ComponentRepository> = new Map();
@@ -25,6 +26,13 @@ export class ComponentRepositoryManager {
   }
 
   private constructor() {
+    super();
+    this.addSubscription(() => {
+      if (this._map) {
+        this._map.clear();
+        this._map = null;
+      }
+    });
   }
 
   addComponentRepository(compRepo: ComponentRepository) {
@@ -96,14 +104,6 @@ export class ComponentRepositoryManager {
     }
   }
 
-
-  destroy() {
-    if (this._map) {
-      this._map.clear();
-      this._map = null;
-    }
-  }
-
   private _updatePaletteConfig() {
     this._paletteConfig$.next(Array.from(this._map.values()).map(value => {
       return value.paletteConfig;
@@ -111,3 +111,5 @@ export class ComponentRepositoryManager {
 
   }
 }
+
+export const componentRepositoryManager = ComponentRepositoryManager.getInstance();

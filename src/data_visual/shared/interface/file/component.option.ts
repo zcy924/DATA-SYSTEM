@@ -28,6 +28,10 @@ export class GraphicOption {
   constructor(private _option: IGraphicOption) {
   }
 
+  get graphicId() {
+    return this._option.graphicId;
+  }
+
   get graphicPath() {
     return this._option.graphicPath;
   }
@@ -36,9 +40,6 @@ export class GraphicOption {
     return this.graphicPath ? this.graphicPath.split('$')[1] : null;
   }
 
-  get graphicId() {
-    return this._option.graphicId;
-  }
 
   set configOption(value) {
     this._option.configOption = value;

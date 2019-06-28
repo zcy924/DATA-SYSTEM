@@ -6,7 +6,7 @@ import { Region } from '../region/region';
 
 import * as _ from 'lodash';
 import {
-  ChangedItem,
+  ChangedItem, componentRepositoryManager,
   ComponentRepositoryManager,
   getParameterName,
   GraphicOption, guid,
@@ -21,10 +21,12 @@ import {
  */
 export class GraphicWrapper {
 
+  // 组件唯一编号
   private _uuid: string;
-  private _graphicOption: GraphicOption;
 
   private _graphic: IGraphic;
+  private _graphicOption: GraphicOption;
+
   private _config$: Observable<any>;
   private _data$: Observable<any>;
 
@@ -54,10 +56,10 @@ export class GraphicWrapper {
    */
   init(option: IGraphicOption) {
     const graphicOption = this._graphicOption = new GraphicOption(option);
-    const { graphicId, graphicKey, graphicPath, dataSourceKey, configOption } = graphicOption,
-      compRepo = ComponentRepositoryManager.getInstance();
-    if (compRepo.has(graphicPath)) {
-      this._graphic = new (compRepo.getComponentMeta(graphicPath).graphicDef)();
+    const { graphicId, graphicKey, graphicPath, dataSourceKey, configOption } = graphicOption;
+    // 创建graphic对象
+    if (componentRepositoryManager.has(graphicPath)) {
+      this._graphic = new (componentRepositoryManager.getComponentMeta(graphicPath).graphicDef)();
       const paramNameArray = getParameterName(this._graphic.init), map = {
         region: this._region,
         wrapper: this,
