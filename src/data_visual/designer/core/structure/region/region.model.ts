@@ -61,18 +61,6 @@ export class RegionModel extends ModelEventTarget {
     return this._option.zIndex;
   }
 
-  get coordinates(): Coordinates {
-    return _.pick(this._option, ['left', 'top']);
-  }
-
-  get dimensions(): Dimensions {
-    return _.pick(this._option, ['width', 'height']);
-  }
-
-  get rectangle(): Rectangle {
-    return _.pick(this._option, ['left', 'top', 'width', 'height']);
-  }
-
   get left(): number {
     return this._option.left;
   }
@@ -87,6 +75,18 @@ export class RegionModel extends ModelEventTarget {
 
   get height() {
     return this._option.height;
+  }
+
+  get coordinates(): Coordinates {
+    return _.pick(this._option, ['left', 'top']);
+  }
+
+  get dimensions(): Dimensions {
+    return _.pick(this._option, ['width', 'height']);
+  }
+
+  get rectangle(): Rectangle {
+    return _.pick(this._option, ['left', 'top', 'width', 'height']);
   }
 
   get state(): RegionState {
@@ -117,12 +117,19 @@ export class RegionModel extends ModelEventTarget {
     }
   }
 
-  setCoordinates(left: number, top: number) {
+  set coordinates({ left, top }: Coordinates) {
     this._option.left = closestNum(left);
     this._option.top = closestNum(top);
   }
 
-  setDimensions(width: number, height: number) {
+  set dimensions({ width, height }: Dimensions) {
+    this._option.width = closestNum(width);
+    this._option.height = closestNum(height);
+  }
+
+  set rectangle({ left, top, width, height }: Rectangle) {
+    this._option.left = closestNum(left);
+    this._option.top = closestNum(top);
     this._option.width = closestNum(width);
     this._option.height = closestNum(height);
   }
@@ -130,9 +137,13 @@ export class RegionModel extends ModelEventTarget {
   zoom(width: number, height: number, preserveAspectRatio?: boolean) {
     if (preserveAspectRatio) {
       height = (this.height * width) / this.width;
-      this.setDimensions(width, height);
+      this.dimensions = {
+        width, height,
+      };
     } else {
-      this.setDimensions(width, height);
+      this.dimensions = {
+        width, height,
+      };
     }
   }
 

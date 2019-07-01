@@ -21,6 +21,18 @@ export abstract class RegionView extends ViewEventTarget {
 
   private _contextMenuGenerator: IContextMenuGenerator;
 
+  protected constructor() {
+    super();
+    this.addSubscription(() => {
+      this.$element.find('div.u-resize>.draggable').off('dragstart');
+      this._$mover.off('dragstart click singleClick dblclick contextmenu');
+      this.$element.remove();
+      this._contextMenuGenerator = null;
+      this._region = null;
+      this._model = null;
+    });
+  }
+
   set contextMenuGenerator(generator: IContextMenuGenerator) {
     this._contextMenuGenerator = generator;
   }
@@ -73,8 +85,13 @@ export abstract class RegionView extends ViewEventTarget {
             if (pageY < (offset.top + resizeStartRectangle.height) && pageX < (offset.left + resizeStartRectangle.width)) {
               offsetX = closestNum(getReal(pageX - offset.left)),
                 offsetY = closestNum(getReal(pageY - offset.top));
-              model.setCoordinates(resizeStartRectangle.left + offsetX, resizeStartRectangle.top + offsetY);
-              model.setDimensions(resizeStartRectangle.width - offsetX, resizeStartRectangle.height - offsetY);
+              model.coordinates = {
+                left: resizeStartRectangle.left + offsetX,
+                top: resizeStartRectangle.top + offsetY,
+              };
+              model.dimensions = {
+                width: resizeStartRectangle.width - offsetX, height: resizeStartRectangle.height - offsetY,
+              };
             }
             break;
           case 'resize-topRight':
@@ -160,9 +177,6 @@ export abstract class RegionView extends ViewEventTarget {
    */
   protected _bindEventForMover() {
     let mouseMoveSubscription: Subscription,
-      scale,
-      originPageX,
-      originPageY,
       moveStartCoordinates: Coordinates,
       moveStopCoordinates: Coordinates,
       timeoutHandle;
@@ -181,19 +195,16 @@ export abstract class RegionView extends ViewEventTarget {
     this._$mover
       .on('dragstart', ($event: JQuery.Event) => {
         this.$element.addClass('no-transition');
-        scale = this._region.page.scale;
-        originPageX = $event.pageX;
-        originPageY = $event.pageY;
+        const scale = this._region.page.scale;
+        let { pageX: originPageX, pageY: originPageY } = $event;
         moveStartCoordinates = model.coordinates;
         resizeTipHelper.show(originPageX, originPageY, moveStartCoordinates.left, moveStartCoordinates.top);
 
         mouseMoveSubscription = fromEvent(document, 'mousemove')
           .pipe(throttleTime(20))
           .subscribe((mouseEvent: MouseEvent) => {
-            const offsetLeft = mouseEvent.pageX - originPageX,
-              offsetTop = mouseEvent.pageY - originPageY;
-            model.left = moveStartCoordinates.left + Math.round(offsetLeft / scale);
-            model.top = moveStartCoordinates.top + Math.round(offsetTop / scale);
+            model.left = moveStartCoordinates.left + ((mouseEvent.pageX - originPageX) / scale);
+            model.top = moveStartCoordinates.top + ((mouseEvent.pageY - originPageY) / scale);
             moveStopCoordinates = {
               left: model.left,
               top: model.top,
@@ -234,15 +245,5 @@ export abstract class RegionView extends ViewEventTarget {
       contextMenuHelper.open(this._contextMenuGenerator(), $event.pageX, $event.pageY, $event);
       return false;
     });
-  }
-
-  destroy() {
-    this.$element.find('div.u-resize>.draggable').off('dragstart');
-    this._$mover.off('dragstart click singleClick dblclick contextmenu');
-    this.$element.remove();
-    this._contextMenuGenerator = null;
-    this._region = null;
-    this._model = null;
-    super.destroy();
   }
 }

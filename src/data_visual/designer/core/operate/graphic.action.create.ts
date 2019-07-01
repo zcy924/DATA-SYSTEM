@@ -13,7 +13,7 @@ export class GraphicActionCreate implements IAction {
   private _region: Region;
 
   constructor(private _pageInnerFacade: IReportPageInnerFacade, private _graphicPath: string,
-              private _x: number, private _y: number, private _configOption?: any) {
+              private _left: number, private _top: number, private _configOption?: any) {
 
   }
 
@@ -27,10 +27,13 @@ export class GraphicActionCreate implements IAction {
       if (regionDefinitionMap.has(componentOption.region.regionKey)) {
         const region: Region = new (regionDefinitionMap.get(componentOption.region.regionKey))(this._pageInnerFacade);
         region.init(null);
-        region.setCoordinates(this._x, this._y);
+        region.coordinates = {
+          left: this._left,
+          top: this._top,
+        };
         if (componentOption.region.regionOption) {
           const { width, height } = componentOption.region.regionOption;
-          region.setDimensions(width, height);
+          region.dimensions = { width, height };
         }
 
         // 创建graphic

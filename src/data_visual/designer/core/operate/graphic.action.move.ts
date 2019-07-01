@@ -12,13 +12,17 @@ export class GraphicActionMove implements IAction {
 
   forward() {
     if (!this._region.destroyed) {
-      this._region.setCoordinates(this._target.left, this._target.top);
+      this._region.coordinates = {
+        left: this._target.left, top: this._target.top,
+      };
     }
   }
 
   backward() {
     if (!this._region.destroyed) {
-      this._region.setCoordinates(this._origin.left, this._origin.top);
+      this._region.coordinates = {
+        left: this._origin.left, top: this._origin.top,
+      };
     }
   }
 }

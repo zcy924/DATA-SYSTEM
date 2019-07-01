@@ -60,24 +60,23 @@ export abstract class Region extends Destroyable implements IRegion {
     return this._model.zIndex;
   }
 
-  set coordinates({ left, top }: Coordinates) {
-    this._model.setCoordinates(left, top);
+  set coordinates(coordinates: Coordinates) {
+    this._model.coordinates = coordinates;
     this._view.refresh();
   }
 
-  set dimensions({ width, height }: Dimensions) {
-    this._model.setDimensions(width, height);
+  set dimensions(dimensions: Dimensions) {
+    this._model.dimensions = dimensions;
     this._view.refresh();
     this._graphicWrapper && this._graphicWrapper.resize();
   }
 
-  set rectangle({ left, top, width, height }: Rectangle) {
-    this._model.setCoordinates(left, top);
-    this._model.setDimensions(width, height);
+  set rectangle(value: Rectangle) {
+    this._model.rectangle = value;
     this._view.refresh();
-    setTimeout(()=>{
+    setTimeout(() => {
       this._graphicWrapper && this._graphicWrapper.resize();
-    },200)
+    }, 200);
   }
 
   init(regionOption: any) {
@@ -97,17 +96,6 @@ export abstract class Region extends Destroyable implements IRegion {
     if (this._graphicWrapper) {
       this._graphicWrapper.updateTheme(theme);
     }
-  }
-
-  setCoordinates(left: number, top: number) {
-    this._model.setCoordinates(left, top);
-    this._view.refresh();
-  }
-
-  setDimensions(width: number, height: number) {
-    this._model.setDimensions(width, height);
-    this._view.refresh();
-    this._graphicWrapper && this._graphicWrapper.resize();
   }
 
   abstract getOption();
