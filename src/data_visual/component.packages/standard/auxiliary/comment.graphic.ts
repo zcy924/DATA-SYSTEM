@@ -37,7 +37,9 @@ export class CommentGraphic extends DefaultGraphic {
 
   update(option: any) {
     if (this._view) {
-      this._region.setDimensions(option.width, option.height);
+      this._region.dimensions = {
+        width: option.width, height: option.height,
+      };
       this._view.update(option);
     }
   }

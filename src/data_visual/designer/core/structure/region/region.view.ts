@@ -1,6 +1,5 @@
 import { fromEvent, Subscription } from 'rxjs';
 import { throttleTime } from 'rxjs/internal/operators';
-import { closestNum } from '../../../utils/common';
 import { Region } from './region';
 import { RegionModel } from './region.model';
 import { contextMenuHelper, ContextMenuItem } from '../../helper/context.menu.helper';
@@ -21,6 +20,10 @@ export abstract class RegionView extends ViewEventTarget {
 
   private _contextMenuGenerator: IContextMenuGenerator;
 
+  set contextMenuGenerator(generator: IContextMenuGenerator) {
+    this._contextMenuGenerator = generator;
+  }
+
   protected constructor() {
     super();
     this.addSubscription(() => {
@@ -31,10 +34,6 @@ export abstract class RegionView extends ViewEventTarget {
       this._region = null;
       this._model = null;
     });
-  }
-
-  set contextMenuGenerator(generator: IContextMenuGenerator) {
-    this._contextMenuGenerator = generator;
   }
 
   abstract init();
@@ -48,118 +47,28 @@ export abstract class RegionView extends ViewEventTarget {
    * @private
    */
   protected _bindEventForResize() {
-    let offsetX, offsetY,
-      scale = 1,
-      offset: Coordinates,
-      resizeStartRectangle: Rectangle,
-      resizeStopRectangle: Rectangle,
-      which: string,
-      mouseMoveSubscription: Subscription;
+    let mouseMoveSubscription: Subscription;
 
     // 进行缩放转换
     const
-      getReal = (num) => Math.round(num / scale),
-      model = this._model,
-      handleResize = (pageX, pageY) => {
-        switch (which) {
-          case 'resize-left':
-            if (pageX < (offset.left + resizeStartRectangle.width)) {
-              offsetX = closestNum(getReal(pageX - offset.left));
-              model.left = resizeStartRectangle.left + offsetX;
-              model.width = resizeStartRectangle.width - offsetX;
-            }
-            break;
-          case 'resize-top':
-            if (pageY < (offset.top + resizeStartRectangle.height)) {
-              offsetY = closestNum(getReal(pageY - offset.top));
-              model.top = resizeStartRectangle.top + offsetY;
-              model.height = resizeStartRectangle.height - offsetY;
-            }
-            break;
-          case 'resize-right':
-            if (pageX > offset.left) {
-              model.width = closestNum(getReal(pageX - offset.left));
-            }
-            break;
-          case 'resize-topLeft':
-            if (pageY < (offset.top + resizeStartRectangle.height) && pageX < (offset.left + resizeStartRectangle.width)) {
-              offsetX = closestNum(getReal(pageX - offset.left)),
-                offsetY = closestNum(getReal(pageY - offset.top));
-              model.coordinates = {
-                left: resizeStartRectangle.left + offsetX,
-                top: resizeStartRectangle.top + offsetY,
-              };
-              model.dimensions = {
-                width: resizeStartRectangle.width - offsetX, height: resizeStartRectangle.height - offsetY,
-              };
-            }
-            break;
-          case 'resize-topRight':
-            if (pageY < (offset.top + resizeStartRectangle.height)) {
-              offsetY = closestNum(getReal(pageY - offset.top));
-              model.top = resizeStartRectangle.top + offsetY;
-              model.height = resizeStartRectangle.height - offsetY;
-            }
-            if (pageX > offset.left) {
-              model.width = closestNum(getReal(pageX - offset.left));
-            }
-            break;
-          case 'resize-bottomRight':
-            if (pageX > offset.left) {
-              model.width = getReal(pageX - offset.left);
-            }
-            if (pageY > offset.top) {
-              model.height = getReal(pageY - offset.top);
-            }
-            break;
-          case 'resize-bottomLeft':
-            if (pageX < (offset.left + resizeStartRectangle.width)) {
-              offsetX = closestNum(getReal(pageX - offset.left));
-              model.left = resizeStartRectangle.left + offsetX;
-              model.width = resizeStartRectangle.width - offsetX;
-            }
-            if (pageY > offset.top) {
-              model.height = getReal(pageY - offset.top);
-            }
-            break;
-          case 'resize-bottom':
-            if (pageY > offset.top) {
-              model.height = getReal(pageY - offset.top);
-            }
-            break;
-        }
-      },
       dragEndHandler = (event: MouseEvent) => {
         if (mouseMoveSubscription) {
           mouseMoveSubscription.unsubscribe();
           mouseMoveSubscription = null;
           document.removeEventListener('mouseup', dragEndHandler);
-          this.$element.removeClass('no-transition');
-          resizeTipHelper.hide();
-          handleResize(event.pageX, event.pageY);
-          resizeStopRectangle = model.rectangle;
-          this._region.page.actionManager.execute(new GraphicActionResize(this._region, resizeStartRectangle, resizeStopRectangle));
-          this.dispatchEvent('resizeEnd');
+          this.dispatchEvent('resizeEnd' , event.pageX, event.pageY);
         }
       };
 
     this.$element.find('div.u-resize>.draggable')
       .on('dragstart', ($event: JQuery.Event) => {
-        scale = this._region.page.scale;
-        offset = this.$element.offset();
-        resizeStartRectangle = model.rectangle;
-        which = (<HTMLElement>$event.currentTarget).dataset.which;
-        resizeTipHelper.show($event.pageX, $event.pageY, model.width, model.height);
-        this.$element.addClass('no-transition');
-
+        this.dispatchEvent('resizeStart', $event.pageX, $event.pageY, (<HTMLElement>$event.currentTarget).dataset.which);
         // 监听鼠标移动
         mouseMoveSubscription =
           fromEvent(document, 'mousemove')
             .pipe(throttleTime(30))
             .subscribe((mouseEvent: MouseEvent) => {
-              handleResize(mouseEvent.pageX, mouseEvent.pageY);
-              resizeTipHelper.refresh(mouseEvent.pageX, mouseEvent.pageY, model.width, model.height);
-              this.refresh();
+              this.dispatchEvent('resizing', mouseEvent.pageX, mouseEvent.pageY);
             });
         // 解除对伸缩事件的监听
         document.addEventListener('mouseup', dragEndHandler);
@@ -177,40 +86,24 @@ export abstract class RegionView extends ViewEventTarget {
    */
   protected _bindEventForMover() {
     let mouseMoveSubscription: Subscription,
-      moveStartCoordinates: Coordinates,
-      moveStopCoordinates: Coordinates,
       timeoutHandle;
 
-    const model = this._model, dragEndHandler = (event: MouseEvent) => {
+    const dragEndHandler = (event: MouseEvent) => {
       if (mouseMoveSubscription) {
         mouseMoveSubscription.unsubscribe();
         mouseMoveSubscription = null;
         document.removeEventListener('mouseup', dragEndHandler);
-        this.$element.removeClass('no-transition');
-        resizeTipHelper.hide();
-        this._region.page.actionManager.execute(new GraphicActionMove(this._region, moveStartCoordinates, moveStopCoordinates));
+        this.dispatchEvent('moveEnd', event.pageX, event.pageY);
       }
     };
 
     this._$mover
       .on('dragstart', ($event: JQuery.Event) => {
-        this.$element.addClass('no-transition');
-        const scale = this._region.page.scale;
-        let { pageX: originPageX, pageY: originPageY } = $event;
-        moveStartCoordinates = model.coordinates;
-        resizeTipHelper.show(originPageX, originPageY, moveStartCoordinates.left, moveStartCoordinates.top);
-
+        this.dispatchEvent('moveStart', $event.pageX, $event.pageY);
         mouseMoveSubscription = fromEvent(document, 'mousemove')
-          .pipe(throttleTime(20))
+        // .pipe(throttleTime(10))
           .subscribe((mouseEvent: MouseEvent) => {
-            model.left = moveStartCoordinates.left + ((mouseEvent.pageX - originPageX) / scale);
-            model.top = moveStartCoordinates.top + ((mouseEvent.pageY - originPageY) / scale);
-            moveStopCoordinates = {
-              left: model.left,
-              top: model.top,
-            };
-            this.refresh();
-            resizeTipHelper.refresh(mouseEvent.pageX, mouseEvent.pageY, model.left, model.top);
+            this.dispatchEvent('moving', mouseEvent.pageX, mouseEvent.pageY);
           });
         document.addEventListener('mouseup', dragEndHandler);
         return false;

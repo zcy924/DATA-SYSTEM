@@ -61,28 +61,61 @@ export class RegionModel extends ModelEventTarget {
     return this._option.zIndex;
   }
 
+  set left(param: number) {
+    this._option.left = closestNum(param);
+  }
+
   get left(): number {
     return this._option.left;
+  }
+
+  set top(param: number) {
+    this._option.top = closestNum(param);
   }
 
   get top(): number {
     return this._option.top;
   }
 
+  set width(width: number) {
+    this._option.width = closestNum(width);
+  }
+
   get width() {
     return this._option.width;
+  }
+
+  set height(height: number) {
+    this._option.height = closestNum(height);
   }
 
   get height() {
     return this._option.height;
   }
 
+  set coordinates({ left, top }: Coordinates) {
+    this._option.left = closestNum(left);
+    this._option.top = closestNum(top);
+  }
+
   get coordinates(): Coordinates {
     return _.pick(this._option, ['left', 'top']);
   }
 
+  set dimensions({ width, height }: Dimensions) {
+    this._option.width = closestNum(width);
+    this._option.height = closestNum(height);
+  }
+
   get dimensions(): Dimensions {
     return _.pick(this._option, ['width', 'height']);
+  }
+
+  set rectangle({ left, top, width, height }: Rectangle) {
+    this._option.left = closestNum(left);
+    this._option.top = closestNum(top);
+    this._option.width = closestNum(width);
+    this._option.height = closestNum(height);
   }
 
   get rectangle(): Rectangle {
@@ -93,45 +126,12 @@ export class RegionModel extends ModelEventTarget {
     return this._state;
   }
 
-  set left(param: number) {
-    this._option.left = closestNum(param);
-  }
-
-  set top(param: number) {
-    this._option.top = closestNum(param);
-  }
-
-  set width(width: number) {
-    this._option.width = closestNum(width);
-  }
-
-  set height(height: number) {
-    this._option.height = closestNum(height);
-  }
-
   set state(param: RegionState) {
     if (this._state !== param) {
       const changedItem = { key: 'state', oldValue: this._state, newValue: param, option: null };
       this._state = param;
       this._trigger(changedItem);
     }
-  }
-
-  set coordinates({ left, top }: Coordinates) {
-    this._option.left = closestNum(left);
-    this._option.top = closestNum(top);
-  }
-
-  set dimensions({ width, height }: Dimensions) {
-    this._option.width = closestNum(width);
-    this._option.height = closestNum(height);
-  }
-
-  set rectangle({ left, top, width, height }: Rectangle) {
-    this._option.left = closestNum(left);
-    this._option.top = closestNum(top);
-    this._option.width = closestNum(width);
-    this._option.height = closestNum(height);
   }
 
   zoom(width: number, height: number, preserveAspectRatio?: boolean) {

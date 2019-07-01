@@ -26,12 +26,12 @@ export abstract class FilterNode implements IGraphicView {
 
   abstract destroy();
 
-  addEventListener(eventName: string, callback: Function) {
+  addEventListener(eventName: string, callback: (...params) => void) {
     this._event.addEventListener(eventName, callback);
     return this;
   }
 
-  removeEventListener(eventName: string, fn?: Function) {
+  removeEventListener(eventName: string, fn?: (...params) => void) {
     this._event.removeEventListener(eventName, fn);
     return this;
   }

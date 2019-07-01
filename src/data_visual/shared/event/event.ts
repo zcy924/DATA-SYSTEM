@@ -11,7 +11,7 @@ import { IEventTarget } from './event.interface';
  * 创建这个函数同样需要内存，过度使用会导致难以跟踪维护
  */
 export class BaseEventTarget extends Destroyable implements IEventTarget {
-  private _map: Map<string, Array<Function>> = new Map();
+  private _map: Map<string, Array<(...params) => void>> = new Map();
 
   constructor() {
     super();
@@ -23,7 +23,7 @@ export class BaseEventTarget extends Destroyable implements IEventTarget {
     });
   }
 
-  addEventListener(eventName: string, callback: Function): IEventTarget {
+  addEventListener(eventName: string, callback: (...params) => void): IEventTarget {
     if (eventName && callback) {
       if (!this._map.has(eventName)) {
         this._map.set(eventName, [callback]);
@@ -34,7 +34,7 @@ export class BaseEventTarget extends Destroyable implements IEventTarget {
     return this;
   }
 
-  removeEventListener(eventName: string, callback?: Function) {
+  removeEventListener(eventName: string, callback?: (...params) => void) {
     const fns = this._map.get(eventName);
     if (!fns) {
       return false;

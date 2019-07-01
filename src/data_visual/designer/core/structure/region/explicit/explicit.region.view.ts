@@ -32,6 +32,7 @@ export class ExplicitRegionView extends RegionView {
   }
 
   /**
+   * 设计模式和运行模式  执行不同的初始逻辑
    * 事件绑定
    */
   init() {

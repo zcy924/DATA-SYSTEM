@@ -4,6 +4,10 @@ import { RegionModel, RegionState } from '../region.model';
 import { ExplicitRegionView } from './explicit.region.view';
 import { IReportPageInnerFacade } from '../../page/report/page.interface';
 import { GraphicActionDelete } from '../../../operate/graphic.action.delete';
+import { resizeTipHelper } from '../../../helper/resize.tip.helper';
+import { Coordinates, Rectangle } from '@barca/shared';
+import { GraphicActionMove } from '../../../operate/graphic.action.move';
+import { GraphicActionResize } from '../../../operate/graphic.action.resize';
 
 /**
  *
@@ -55,21 +59,150 @@ export class ExplicitRegion extends Region {
   }
 
   private _init() {
-    this._view
+
+    let scale = 1;
+
+    // move相关辅助变量
+    let originPageX, originPageY, moveStartCoordinates: Coordinates, moveStopCoordinates: Coordinates;
+
+    // resize相关辅助变量
+    let which: string,
+      offsetX, offsetY,
+      offset: Coordinates,
+      resizeStartRectangle: Rectangle;
+
+
+    const model = this._model, view = this._view,
+      getReal = (num) => (num / scale),
+      handleResize = (pageX, pageY) => {
+        switch (which) {
+          case 'resize-left':
+            if (pageX < (offset.left + resizeStartRectangle.width)) {
+              offsetX = getReal(pageX - offset.left);
+              model.left = resizeStartRectangle.left + offsetX;
+              model.width = resizeStartRectangle.width - offsetX;
+            }
+            break;
+          case 'resize-top':
+            if (pageY < (offset.top + resizeStartRectangle.height)) {
+              offsetY = getReal(pageY - offset.top);
+              model.top = resizeStartRectangle.top + offsetY;
+              model.height = resizeStartRectangle.height - offsetY;
+            }
+            break;
+          case 'resize-right':
+            if (pageX > offset.left) {
+              model.width = getReal(pageX - offset.left);
+            }
+            break;
+          case 'resize-topLeft':
+            if (pageY < (offset.top + resizeStartRectangle.height) && pageX < (offset.left + resizeStartRectangle.width)) {
+              offsetX = getReal(pageX - offset.left),
+                offsetY = getReal(pageY - offset.top);
+              model.coordinates = {
+                left: resizeStartRectangle.left + offsetX,
+                top: resizeStartRectangle.top + offsetY,
+              };
+              model.dimensions = {
+                width: resizeStartRectangle.width - offsetX, height: resizeStartRectangle.height - offsetY,
+              };
+            }
+            break;
+          case 'resize-topRight':
+            if (pageY < (offset.top + resizeStartRectangle.height)) {
+              offsetY = getReal(pageY - offset.top);
+              model.top = resizeStartRectangle.top + offsetY;
+              model.height = resizeStartRectangle.height - offsetY;
+            }
+            if (pageX > offset.left) {
+              model.width = getReal(pageX - offset.left);
+            }
+            break;
+          case 'resize-bottomRight':
+            if (pageX > offset.left) {
+              model.width = getReal(pageX - offset.left);
+            }
+            if (pageY > offset.top) {
+              model.height = getReal(pageY - offset.top);
+            }
+            break;
+          case 'resize-bottomLeft':
+            if (pageX < (offset.left + resizeStartRectangle.width)) {
+              offsetX = getReal(pageX - offset.left);
+              model.left = resizeStartRectangle.left + offsetX;
+              model.width = resizeStartRectangle.width - offsetX;
+            }
+            if (pageY > offset.top) {
+              model.height = getReal(pageY - offset.top);
+            }
+            break;
+          case 'resize-bottom':
+            if (pageY > offset.top) {
+              model.height = getReal(pageY - offset.top);
+            }
+            break;
+        }
+      };
+
+
+    view
       .addEventListener('select', () => {
         this._page.select(this);
       })
       .addEventListener('ctrlSelect', () => {
         this._page.ctrlSelect(this);
       })
-      .addEventListener('resizeEnd', () => {
+      .addEventListener('activateRegion', () => {
+        this._page.activateRegion(this);
+      })
+      .addEventListener('moveStart', (pageX, pageY) => {
+        view.$element.addClass('no-transition');
+        moveStartCoordinates = model.coordinates;
+        resizeTipHelper.show(
+          originPageX = pageX,
+          originPageY = pageY,
+          moveStartCoordinates.left,
+          moveStartCoordinates.top);
+      })
+      .addEventListener('moving', (pageX, pageY) => {
+        const scale = this._page.scale;
+        model.left = moveStartCoordinates.left + ((pageX - originPageX) / scale);
+        model.top = moveStartCoordinates.top + ((pageY - originPageY) / scale);
+        moveStopCoordinates = {
+          left: model.left,
+          top: model.top,
+        };
+        resizeTipHelper.refresh(pageX, pageY, model.left, model.top);
+        view.refresh();
+      })
+      .addEventListener('moveEnd', () => {
+        view.$element.removeClass('no-transition');
+        resizeTipHelper.hide();
+        this._page.actionManager.execute(new GraphicActionMove(this, moveStartCoordinates, moveStopCoordinates));
+      })
+      .addEventListener('resizeStart', (pageX, pageY, targetWhich) => {
+        scale = this._page.scale;
+        offset = view.$element.offset();
+        resizeStartRectangle = model.rectangle;
+        which = targetWhich;
+        resizeTipHelper.show(pageX, pageY, model.width, model.height);
+        this.$element.addClass('no-transition');
+      })
+      .addEventListener('resizing', (pageX, pageY) => {
+        handleResize(pageX, pageY);
+        resizeTipHelper.refresh(pageX, pageY, model.width, model.height);
+        view.refresh();
+      })
+      .addEventListener('resizeEnd', (pageX, pageY) => {
+        view.$element.removeClass('no-transition');
+        handleResize(pageX, pageY);
+        resizeTipHelper.hide();
+        this._page.actionManager.execute(new GraphicActionResize(this, resizeStartRectangle, model.rectangle));
+
         console.log('resizeEnd handle:this._graphicWrapper.resize()');
         if (this._graphicWrapper) {
           this._graphicWrapper.resize();
         }
-      })
-      .addEventListener('activateRegion', () => {
-        this._page.activateRegion(this);
       });
 
     this._view.contextMenuGenerator = () => {
