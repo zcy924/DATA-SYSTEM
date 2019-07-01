@@ -36,24 +36,16 @@ export abstract class Region extends Destroyable implements IRegion {
     });
   }
 
+  get $element() {
+    return this._view.$element;
+  }
+
   get page(): IReportPageInnerFacade {
     return this._page;
   }
 
   get graphicWrapper(): GraphicWrapper {
     return this._graphicWrapper;
-  }
-
-  get $element() {
-    return this._view.$element;
-  }
-
-  set state(param: RegionState) {
-    this._model.state = param;
-  }
-
-  get state() {
-    return this._model.state;
   }
 
   get index(): number {
@@ -79,6 +71,14 @@ export abstract class Region extends Destroyable implements IRegion {
     }, 200);
   }
 
+  set state(param: RegionState) {
+    this._model.state = param;
+  }
+
+  get state() {
+    return this._model.state;
+  }
+
   init(regionOption: any) {
 
   }
@@ -98,8 +98,6 @@ export abstract class Region extends Destroyable implements IRegion {
     }
   }
 
-  abstract getOption();
-
   addMethod(name: string, method: Function) {
     this._methodMap.set(name, method);
   }
@@ -110,6 +108,8 @@ export abstract class Region extends Destroyable implements IRegion {
       return this._methodMap.get(name)(...args);
     }
   }
+
+  abstract getOption();
 
 }
 

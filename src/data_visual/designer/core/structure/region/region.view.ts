@@ -3,10 +3,7 @@ import { throttleTime } from 'rxjs/internal/operators';
 import { Region } from './region';
 import { RegionModel } from './region.model';
 import { contextMenuHelper, ContextMenuItem } from '../../helper/context.menu.helper';
-import { resizeTipHelper } from '../../helper/resize.tip.helper';
-import { Coordinates, Rectangle, ViewEventTarget } from '@barca/shared';
-import { GraphicActionMove } from '../../operate/graphic.action.move';
-import { GraphicActionResize } from '../../operate/graphic.action.resize';
+import { ViewEventTarget } from '@barca/shared';
 
 type IContextMenuGenerator = () => Array<ContextMenuItem | 'split'>;
 
@@ -37,8 +34,6 @@ export abstract class RegionView extends ViewEventTarget {
   }
 
   abstract init();
-
-  abstract accept(model: RegionModel);
 
   abstract refresh();
 

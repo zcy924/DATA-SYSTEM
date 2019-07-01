@@ -48,17 +48,16 @@ export class ExplicitRegion extends Region {
   init(regionOption: any) {
     // 事件绑定 监听用户点击
     this._view.init();
-    // 监听RegionModel
-    this._view.accept(this._model);
+
     // 事件绑定 监听RegionView事件
-    this._init();
+    this._bind();
     // 监听RegionModel
-    this.accept(this._model);
+    this._accept();
     regionOption && this._model.importModel(regionOption);
     this._view.refresh();
   }
 
-  private _init() {
+  private _bind() {
 
     let scale = 1;
 
@@ -269,9 +268,37 @@ export class ExplicitRegion extends Region {
     };
   }
 
-  accept(model: RegionModel) {
+  private _accept() {
+    const model = this._model, view = this._view;
     model
       .register('state', (key, oldValue, newValue, option) => {
+        if (oldValue !== newValue) {
+          switch (oldValue) {
+            case RegionState.selected:
+              this.$element.removeClass('selected');
+              break;
+            case RegionState.multiSelected:
+              this.$element.removeClass('multi-selected');
+              break;
+            case RegionState.activated:
+              this.$element.removeClass('activated');
+          }
+          switch (newValue) {
+            case RegionState.default:
+              this.$element.removeClass('selected multi-selected activated');
+              break;
+            case RegionState.selected:
+              this.$element.addClass('selected');
+              break;
+            case RegionState.multiSelected:
+              this.$element.addClass('multi-selected');
+              break;
+            case RegionState.activated:
+              this.$element.addClass('activated');
+              break;
+          }
+        }
+
         switch (newValue) {
           case RegionState.default:
             if (oldValue === RegionState.activated) {
@@ -287,6 +314,12 @@ export class ExplicitRegion extends Region {
             this._graphicWrapper && this._graphicWrapper.activate();
             break;
         }
+      })
+      .register('left top width height', (key, oldValue, newValue, option) => {
+
+      })
+      .register('z-index', (key, oldValue, newValue, option) => {
+        view.$element.css('z-index', newValue);
       });
   }
 
