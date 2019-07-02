@@ -2,10 +2,7 @@ import { fromEvent, Subscription } from 'rxjs';
 import { throttleTime } from 'rxjs/internal/operators';
 import { Region } from './region';
 import { RegionModel } from './region.model';
-import { contextMenuHelper, ContextMenuItem } from '../../helper/context.menu.helper';
 import { ViewEventTarget } from '@barca/shared';
-
-type IContextMenuGenerator = () => Array<ContextMenuItem | 'split'>;
 
 export abstract class RegionView extends ViewEventTarget {
   protected _region: Region;
@@ -15,22 +12,8 @@ export abstract class RegionView extends ViewEventTarget {
   $fill: JQuery;
   protected _$mover: JQuery;
 
-  private _contextMenuGenerator: IContextMenuGenerator;
-
-  set contextMenuGenerator(generator: IContextMenuGenerator) {
-    this._contextMenuGenerator = generator;
-  }
-
   protected constructor() {
     super();
-    this.addSubscription(() => {
-      this.$element.find('div.u-resize>.draggable').off('dragstart');
-      this._$mover.off('dragstart click singleClick dblclick contextmenu');
-      this.$element.remove();
-      this._contextMenuGenerator = null;
-      this._region = null;
-      this._model = null;
-    });
   }
 
   abstract init();
@@ -42,20 +25,18 @@ export abstract class RegionView extends ViewEventTarget {
    * @private
    */
   protected _bindEventForResize() {
-    let mouseMoveSubscription: Subscription;
-
-    // 进行缩放转换
-    const
+    let mouseMoveSubscription: Subscription,
+      draggable$ = this.$element.find('div.u-resize>.draggable'),
       dragEndHandler = (event: MouseEvent) => {
         if (mouseMoveSubscription) {
           mouseMoveSubscription.unsubscribe();
           mouseMoveSubscription = null;
           document.removeEventListener('mouseup', dragEndHandler);
-          this.dispatchEvent('resizeEnd' , event.pageX, event.pageY);
+          this.dispatchEvent('resizeEnd', event.pageX, event.pageY);
         }
       };
 
-    this.$element.find('div.u-resize>.draggable')
+    draggable$
       .on('dragstart', ($event: JQuery.Event) => {
         this.dispatchEvent('resizeStart', $event.pageX, $event.pageY, (<HTMLElement>$event.currentTarget).dataset.which);
         // 监听鼠标移动
@@ -70,7 +51,12 @@ export abstract class RegionView extends ViewEventTarget {
 
         return false;
       });
-    // 事件对象
+    this.onDestroy(() => {
+      // 此处释放局部变量，防止出现内存泄漏
+      draggable$.off('dragstart');
+      draggable$ = null;
+      dragEndHandler = null;
+    });
   }
 
   /**
@@ -81,16 +67,15 @@ export abstract class RegionView extends ViewEventTarget {
    */
   protected _bindEventForMover() {
     let mouseMoveSubscription: Subscription,
-      timeoutHandle;
-
-    const dragEndHandler = (event: MouseEvent) => {
-      if (mouseMoveSubscription) {
-        mouseMoveSubscription.unsubscribe();
-        mouseMoveSubscription = null;
-        document.removeEventListener('mouseup', dragEndHandler);
-        this.dispatchEvent('moveEnd', event.pageX, event.pageY);
-      }
-    };
+      timeoutHandle,
+      dragEndHandler = (event: MouseEvent) => {
+        if (mouseMoveSubscription) {
+          mouseMoveSubscription.unsubscribe();
+          mouseMoveSubscription = null;
+          document.removeEventListener('mouseup', dragEndHandler);
+          this.dispatchEvent('moveEnd', event.pageX, event.pageY);
+        }
+      };
 
     this._$mover
       .on('dragstart', ($event: JQuery.Event) => {
@@ -126,12 +111,30 @@ export abstract class RegionView extends ViewEventTarget {
       .on('dblclick', ($event: JQuery.Event) => {
         this.dispatchEvent('activateRegion');
       });
+
+    this.onDestroy(() => {
+      if (mouseMoveSubscription) {
+        mouseMoveSubscription.unsubscribe();
+        mouseMoveSubscription = null;
+        document.removeEventListener('mouseup', dragEndHandler);
+      }
+      dragEndHandler=null;
+
+      if (timeoutHandle) {
+        clearTimeout(timeoutHandle);
+        timeoutHandle = null;
+      }
+      this._$mover.off('dragstart click singleClick dblclick');
+    });
   }
 
   protected _bindContextEvent() {
     this._$mover.on('contextmenu', ($event: JQuery.Event) => {
-      contextMenuHelper.open(this._contextMenuGenerator(), $event.pageX, $event.pageY, $event);
+      this.dispatchEvent('rightClick', $event);
       return false;
+    });
+    this.onDestroy(() => {
+      this._$mover.off('contextmenu');
     });
   }
 }

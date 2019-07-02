@@ -15,7 +15,7 @@ export class BaseEventTarget extends Destroyable implements IEventTarget {
 
   constructor() {
     super();
-    this.addSubscription(() => {
+    this.onDestroy(() => {
       if (this._map) {
         this._map.clear();
         this._map = null;

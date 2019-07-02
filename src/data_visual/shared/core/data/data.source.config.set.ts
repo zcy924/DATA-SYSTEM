@@ -12,7 +12,7 @@ export class DataSourceConfigSet extends Destroyable {
   constructor(dataSourceConfigArray?: IDataSourceConfig | Array<IDataSourceConfig>) {
     super();
     this.load(dataSourceConfigArray);
-    this.addSubscription(() => {
+    this.onDestroy(() => {
       this._array.splice(0);
       this._array = null;
 

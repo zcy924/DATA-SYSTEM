@@ -31,7 +31,7 @@ export class GraphicWrapper extends Destroyable {
 
   constructor(private _region: Region) {
     super();
-    this.addSubscription(() => {
+    this.onDestroy(() => {
       if (this._modelSubscription) {
         this._modelSubscription.unsubscribe();
         this._modelSubscription = null;

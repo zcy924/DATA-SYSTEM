@@ -12,7 +12,7 @@ export class ModelSourceFactory extends Destroyable {
     super();
     this._configSourceManager = new ConfigSourceManager();
     this._dataSourceManager = new DataSourceManager(dataSourceConfigSetManager.getItem('space1'));
-    this.addSubscription(() => {
+    this.onDestroy(() => {
       this._configSourceManager = null;
       this._dataSourceManager = null;
     });

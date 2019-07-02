@@ -19,7 +19,7 @@ export class ReportPage extends Destroyable {
     this._pageKernel = new ReportPageKernel(mode);
     this._pageKernel.init();
     this._pageInnerFacade = new ReportPageInnerFacadeImpl(this._pageKernel);
-    this.addSubscription(() => {
+    this.onDestroy(() => {
       if (!this.destroyed) {
         this._pageKernel.destroy();
         this._pageKernel = null;

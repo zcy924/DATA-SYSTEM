@@ -27,7 +27,7 @@ export class ComponentRepositoryManager extends Destroyable {
 
   private constructor() {
     super();
-    this.addSubscription(() => {
+    this.onDestroy(() => {
       if (this._map) {
         this._map.clear();
         this._map = null;

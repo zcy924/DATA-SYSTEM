@@ -1,3 +1,7 @@
+/**
+ * 谁创建 谁销毁，注意是否存在销毁时序（例如： A对象不能在B对象销毁前销毁）
+ * 在创建的地方销毁
+ */
 export class Destroyable {
   private _destroyed = false;
   private _callbacksForDestroy: Array<Function> = [];
@@ -14,9 +18,6 @@ export class Destroyable {
     }
   }
 
-  protected addSubscription(callback: Function) {
-    this.onDestroy(callback);
-  }
 
   destroy() {
     if (!this._destroyed) {

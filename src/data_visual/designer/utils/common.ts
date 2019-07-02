@@ -25,6 +25,14 @@ export function removeUndefined(obj) {
   }
 }
 
+export function pick(source: any, props: Array<string>): any {
+  const target = {};
+  props.forEach((propName: string) => {
+    target[propName] = source[propName];
+  });
+  return target;
+}
+
 /**
  * 获得图片资源的长宽信息
  * @param dataURL

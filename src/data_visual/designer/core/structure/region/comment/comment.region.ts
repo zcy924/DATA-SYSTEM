@@ -68,6 +68,9 @@ export class CommentRegion extends Region {
     this._model.state = param;
   }
 
+  sync() {
+  }
+
   /**
    * 点击mask  当前激活的region调用deactivate
    */

@@ -18,7 +18,7 @@ export class ModelSource extends Destroyable {
     private _configSourceManger: ConfigSourceManager,
     private _dataSourceManager: DataSourceManager) {
     super();
-    this.addSubscription(() => {
+    this.onDestroy(() => {
       if (this._modelSubscription) {
         this._modelSubscription.unsubscribe();
         this._modelSubscription = null;

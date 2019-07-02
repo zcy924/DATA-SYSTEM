@@ -1,19 +1,9 @@
-import { closestNum } from '../../../utils/common';
-import * as _ from 'lodash';
-import { IRegionOption } from '../../../../shared/interface/file/component.option';
-import { Coordinates, Dimensions, ModelEventTarget, Rectangle } from '@barca/shared';
+import { closestNum, pick } from '../../../utils/common';
+import { Coordinates, Dimensions, IRegionOption, ModelEventTarget, Rectangle } from '@barca/shared';
 
 export enum RegionState {
   default, selected, multiSelected, activated
 }
-
-// export interface IRegionModel extends IModelEventTarget {
-//   zIndex: number;
-//   coordinates: JQuery.Coordinates;
-//   dimensions: Dimensions;
-//
-//   [key: string]: any;
-// }
 
 
 /**
@@ -45,7 +35,7 @@ export class RegionModel extends ModelEventTarget {
       height,
     };
     this._state = RegionState.default;
-    this.addSubscription(() => {
+    this.onDestroy(() => {
       this._option = null;
       this._state = null;
     });
@@ -99,7 +89,7 @@ export class RegionModel extends ModelEventTarget {
   }
 
   get coordinates(): Coordinates {
-    return _.pick(this._option, ['left', 'top']);
+    return pick(this._option, ['left', 'top']) as Coordinates;
   }
 
   set dimensions({ width, height }: Dimensions) {
@@ -108,7 +98,7 @@ export class RegionModel extends ModelEventTarget {
   }
 
   get dimensions(): Dimensions {
-    return _.pick(this._option, ['width', 'height']);
+    return pick(this._option, ['width', 'height']) as Dimensions;
   }
 
   set rectangle({ left, top, width, height }: Rectangle) {
@@ -119,7 +109,7 @@ export class RegionModel extends ModelEventTarget {
   }
 
   get rectangle(): Rectangle {
-    return _.pick(this._option, ['left', 'top', 'width', 'height']);
+    return pick(this._option, ['left', 'top', 'width', 'height']) as Rectangle;
   }
 
   get state(): RegionState {

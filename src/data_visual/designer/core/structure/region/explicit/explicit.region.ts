@@ -8,6 +8,7 @@ import { resizeTipHelper } from '../../../helper/resize.tip.helper';
 import { Coordinates, Rectangle } from '@barca/shared';
 import { GraphicActionMove } from '../../../operate/graphic.action.move';
 import { GraphicActionResize } from '../../../operate/graphic.action.resize';
+import { contextMenuHelper } from '../../../helper/context.menu.helper';
 
 /**
  *
@@ -39,22 +40,77 @@ export class ExplicitRegion extends Region {
 
   constructor(protected _page: IReportPageInnerFacade) {
     super();
-    this._model = new RegionModel();
-    this._view = new ExplicitRegionView(this, this._model);
+  }
 
-    this._page.addChild(this);
+  /**
+   * 用户单击mover的时候调用select，进入选中状态
+   *
+   * unselect 点击画布  所有的region、调用unselect方法
+   *
+   * 用户双击mover，进入激活状态   此时已经调用了select
+   *
+   * 点击mask  当前激活的region调用deactivate
+   */
+  set state(param: RegionState) {
+    this._model.state = param;
   }
 
   init(regionOption: any) {
-    // 事件绑定 监听用户点击
-    this._view.init();
+
+    this._model = new RegionModel();
+    const view = this._view = new ExplicitRegionView(this, this._model);
+
+    this._page.addChild(this);
+
+    // 事件绑定 将浏览器事件转换为RegionView事件
+    view.init();
 
     // 事件绑定 监听RegionView事件
     this._bind();
     // 监听RegionModel
     this._accept();
     regionOption && this._model.importModel(regionOption);
-    this._view.refresh();
+
+    this.sync();
+
+    this.onDestroy(() => {
+      this._model.destroy();
+      this._model = null;
+
+      this._view.destroy();
+      this._view = null;
+
+      this._page = null;
+    });
+  }
+
+  /**
+   * 同步视图和数据模型
+   */
+  sync() {
+    this._view.$element.css({
+      width: this._model.width,
+      height: this._model.height,
+      left: this._model.left,
+      top: this._model.top,
+      zIndex: this._model.zIndex,
+    });
+
+    // 激活状态下需要更新辅助元素mask的状态
+    if (this._model.state === RegionState.activated) {
+      this._page.regionResize(this);
+    }
+  }
+
+  getOption() {
+    const retObj = {
+      region: {
+        regionKey: 'explicit.region',
+        regionOption: this._model.exportModel(),
+      },
+      graphic: this._graphicWrapper.getOption(),
+    };
+    return retObj;
   }
 
   private _bind() {
@@ -62,14 +118,15 @@ export class ExplicitRegion extends Region {
     let scale = 1;
 
     // move相关辅助变量
-    let originPageX, originPageY, moveStartCoordinates: Coordinates, moveStopCoordinates: Coordinates;
+    let originPageX, originPageY,
+      moveStartCoordinates: Coordinates,
+      moveStopCoordinates: Coordinates;
 
     // resize相关辅助变量
     let which: string,
       offsetX, offsetY,
       offset: Coordinates,
       resizeStartRectangle: Rectangle;
-
 
     const model = this._model, view = this._view,
       getReal = (num) => (num / scale),
@@ -143,6 +200,66 @@ export class ExplicitRegion extends Region {
         }
       };
 
+    const contextMenu = [
+      {
+        displayName: '复制',
+        shortcut: 'Ctrl+C',
+        callback: () => {
+          clipboard.saveData(this.getOption());
+          console.log('复制:', this.getOption());
+          return false;
+        },
+      },
+      {
+        displayName: '剪切',
+        shortcut: 'Ctrl+X',
+        callback: () => {
+          clipboard.saveData(this.getOption());
+          this.destroy();
+          return false;
+        },
+      },
+      {
+        displayName: '删除',
+        shortcut: 'Backspace',
+        callback: () => {
+          if (this.page.isSelected(this)) {
+            const arr = this.page.selectedArray;
+            this._page.actionManager.execute(new GraphicActionDelete(this._page, arr));
+          } else {
+            this._page.actionManager.execute(new GraphicActionDelete(this._page, [this]));
+          }
+          return false;
+        },
+      }, 'split', {
+        displayName: '上移一层',
+        shortcut: 'F',
+        callback: () => {
+          this._model.zIndex = this._model.zIndex + 1;
+          return false;
+        },
+      }, {
+        displayName: '下移一层',
+        shortcut: 'B',
+        callback: () => {
+          this._model.zIndex = this._model.zIndex - 1;
+          return false;
+        },
+      }, {
+        displayName: '置顶',
+        shortcut: 'R',
+        callback: () => {
+          this._model.zIndex = this._page.topIndex + 1;
+          return false;
+        },
+      }, {
+        displayName: '置底',
+        shortcut: 'K',
+        callback: () => {
+          this._model.zIndex = this._page.bottomIndex - 1;
+          return false;
+        },
+      }];
 
     view
       .addEventListener('select', () => {
@@ -155,6 +272,7 @@ export class ExplicitRegion extends Region {
         this._page.activateRegion(this);
       })
       .addEventListener('moveStart', (pageX, pageY) => {
+        scale = this._page.scale;
         view.$element.addClass('no-transition');
         moveStartCoordinates = model.coordinates;
         resizeTipHelper.show(
@@ -164,7 +282,6 @@ export class ExplicitRegion extends Region {
           moveStartCoordinates.top);
       })
       .addEventListener('moving', (pageX, pageY) => {
-        const scale = this._page.scale;
         model.left = moveStartCoordinates.left + ((pageX - originPageX) / scale);
         model.top = moveStartCoordinates.top + ((pageY - originPageY) / scale);
         moveStopCoordinates = {
@@ -172,7 +289,8 @@ export class ExplicitRegion extends Region {
           top: model.top,
         };
         resizeTipHelper.refresh(pageX, pageY, model.left, model.top);
-        view.refresh();
+        this.sync();
+        ;
       })
       .addEventListener('moveEnd', () => {
         view.$element.removeClass('no-transition');
@@ -190,7 +308,7 @@ export class ExplicitRegion extends Region {
       .addEventListener('resizing', (pageX, pageY) => {
         handleResize(pageX, pageY);
         resizeTipHelper.refresh(pageX, pageY, model.width, model.height);
-        view.refresh();
+        this.sync();
       })
       .addEventListener('resizeEnd', (pageX, pageY) => {
         view.$element.removeClass('no-transition');
@@ -202,70 +320,10 @@ export class ExplicitRegion extends Region {
         if (this._graphicWrapper) {
           this._graphicWrapper.resize();
         }
+      })
+      .addEventListener('rightClick', ($event) => {
+        contextMenuHelper.open(contextMenu, $event.pageX, $event.pageY, $event);
       });
-
-    this._view.contextMenuGenerator = () => {
-      return [
-        {
-          displayName: '复制',
-          shortcut: 'Ctrl+C',
-          callback: () => {
-            clipboard.saveData(this.getOption());
-            console.log('复制:', this.getOption());
-            return false;
-          },
-        },
-        {
-          displayName: '剪切',
-          shortcut: 'Ctrl+X',
-          callback: () => {
-            clipboard.saveData(this.getOption());
-            this.destroy();
-            return false;
-          },
-        },
-        {
-          displayName: '删除',
-          shortcut: 'Backspace',
-          callback: () => {
-            if (this.page.isSelected(this)) {
-              const arr = this.page.selectedArray;
-              this._page.actionManager.execute(new GraphicActionDelete(this._page, arr));
-            } else {
-              this._page.actionManager.execute(new GraphicActionDelete(this._page, [this]));
-            }
-            return false;
-          },
-        }, 'split', {
-          displayName: '上移一层',
-          shortcut: 'F',
-          callback: () => {
-            this._model.zIndex = this._model.zIndex + 1;
-            return false;
-          },
-        }, {
-          displayName: '下移一层',
-          shortcut: 'B',
-          callback: () => {
-            this._model.zIndex = this._model.zIndex - 1;
-            return false;
-          },
-        }, {
-          displayName: '置顶',
-          shortcut: 'R',
-          callback: () => {
-            this._model.zIndex = this._page.topIndex + 1;
-            return false;
-          },
-        }, {
-          displayName: '置底',
-          shortcut: 'K',
-          callback: () => {
-            this._model.zIndex = this._page.bottomIndex - 1;
-            return false;
-          },
-        }];
-    };
   }
 
   private _accept() {
@@ -323,27 +381,4 @@ export class ExplicitRegion extends Region {
       });
   }
 
-  /**
-   * 用户单击mover的时候调用select，进入选中状态
-   *
-   * unselect 点击画布  所有的region、调用unselect方法
-   *
-   * 用户双击mover，进入激活状态   此时已经调用了select
-   *
-   * 点击mask  当前激活的region调用deactivate
-   */
-  set state(param: RegionState) {
-    this._model.state = param;
-  }
-
-  getOption() {
-    const retObj = {
-      region: {
-        regionKey: 'explicit.region',
-        regionOption: this._model.exportModel(),
-      },
-      graphic: this._graphicWrapper.getOption(),
-    };
-    return retObj;
-  }
 }

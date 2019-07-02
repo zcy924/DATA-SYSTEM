@@ -57,7 +57,7 @@ export class EventBus extends BaseEventTarget {
 
   private constructor() {
     super();
-    this.addSubscription(() => {
+    this.onDestroy(() => {
       if (this._methodCache) {
         this._methodCache.clear();
         this._methodCache = null;

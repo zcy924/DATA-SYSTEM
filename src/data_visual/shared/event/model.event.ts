@@ -7,7 +7,7 @@ export class ModelEventTarget extends Destroyable implements IModelEventTarget{
 
   constructor() {
     super();
-    this.addSubscription(() => {
+    this.onDestroy(() => {
       if (this._listenerMap) {
         this._listenerMap.clear();
         this._listenerMap = null;

@@ -15,6 +15,7 @@ export interface IRegionOption {
   top: number;
   width: number;
   height: number;
+  [key: string]: any;
 }
 
 export interface IGraphicOption {

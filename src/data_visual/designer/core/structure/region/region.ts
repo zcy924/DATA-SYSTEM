@@ -19,7 +19,7 @@ export abstract class Region extends Destroyable implements IRegion {
 
   protected constructor() {
     super();
-    this.addSubscription(() => {
+    this.onDestroy(() => {
       // 1、销毁内部对象
       // 2、解除事件绑定
       // 3、解除当前对象的属性引用
@@ -54,18 +54,18 @@ export abstract class Region extends Destroyable implements IRegion {
 
   set coordinates(coordinates: Coordinates) {
     this._model.coordinates = coordinates;
-    this._view.refresh();
+    this.sync();
   }
 
   set dimensions(dimensions: Dimensions) {
     this._model.dimensions = dimensions;
-    this._view.refresh();
+    this.sync();
     this._graphicWrapper && this._graphicWrapper.resize();
   }
 
   set rectangle(value: Rectangle) {
     this._model.rectangle = value;
-    this._view.refresh();
+    this.sync();
     setTimeout(() => {
       this._graphicWrapper && this._graphicWrapper.resize();
     }, 200);
@@ -82,6 +82,8 @@ export abstract class Region extends Destroyable implements IRegion {
   init(regionOption: any) {
 
   }
+
+  abstract sync();
 
   /**
    * 模型层关联，展现层关联

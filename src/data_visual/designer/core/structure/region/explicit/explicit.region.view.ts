@@ -26,6 +26,14 @@ export class ExplicitRegionView extends RegionView {
     const $element = this.$element = $(template);
     this.$fill = $element.find('.g-fill');
     this._$mover = $element.find('.u-mover');
+
+    this.onDestroy(() => {
+      this.$fill = this._$mover = null;
+      this.$element.remove();
+      this.$element = null;
+      this._region = this._model = null;
+
+    });
   }
 
   /**

@@ -43,7 +43,7 @@ export class ReportPageKernel extends Destroyable implements IPage {
     this.dataSourceManager = new DataSourceManager(dataSourceConfigSetManager.getItem('space1'));
     this.actionManager = new ActionManager();
 
-    this.addSubscription(() => {
+    this.onDestroy(() => {
       this.activateManager.destroy();
       this.regionManager.regionArray.forEach(value => value.destroy());
       this.regionManager.destroy();
