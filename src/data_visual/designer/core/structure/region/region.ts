@@ -1,10 +1,8 @@
-import { IGraphic } from '../../../../shared/core/graphic/graphic';
 import { GraphicWrapper } from '../graphic/graphic.wrapper';
 import { IReportPageInnerFacade } from '../page/report/page.interface';
 import { RegionModel, RegionState } from './region.model';
 import { RegionView } from './region.view';
-import { IRegion } from '../../../../shared/core/region/region';
-import { Destroyable, Coordinates, Dimensions, Rectangle } from '@barca/shared';
+import { Destroyable, Coordinates, Dimensions, Rectangle, IRegion } from '@barca/shared';
 
 
 export abstract class Region extends Destroyable implements IRegion {

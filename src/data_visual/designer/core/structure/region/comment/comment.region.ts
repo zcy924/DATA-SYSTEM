@@ -34,18 +34,18 @@ export class CommentRegion extends Region {
         this._page.activateRegion(this);
       });
 
-    this._view.contextMenuGenerator = () => {
-      return [{
-        displayName: '复制',
-        shortcut: 'Ctrl+C',
-        callback: () => {
-          console.log('复制');
-          clipboard.saveData(this.getOption());
-          console.log(this.getOption());
-          return false;
-        }
-      }];
-    };
+    // this._view.contextMenuGenerator = () => {
+    //   return [{
+    //     displayName: '复制',
+    //     shortcut: 'Ctrl+C',
+    //     callback: () => {
+    //       console.log('复制');
+    //       clipboard.saveData(this.getOption());
+    //       console.log(this.getOption());
+    //       return false;
+    //     }
+    //   }];
+    // };
   }
 
   /**
