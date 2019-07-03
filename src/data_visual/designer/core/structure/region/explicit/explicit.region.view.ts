@@ -35,7 +35,9 @@ export class ExplicitRegionView extends RegionView {
     this._$mover = $element.find('.u-mover');
 
     if (this._region.page.mode === 'design') {
-      this._bindEvent();
+      this._bindEventForResize();
+      this._bindEventForMover();
+      this._bindContextEvent();
     }
 
     this.onDestroy(() => {
@@ -65,11 +67,4 @@ export class ExplicitRegionView extends RegionView {
       this._region.page.regionResize(this._region);
     }
   }
-
-  private _bindEvent() {
-    this._bindEventForResize();
-    this._bindEventForMover();
-    this._bindContextEvent();
-  }
-
 }

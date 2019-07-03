@@ -6,7 +6,7 @@ import {
   ViewContainerRef, ViewRef
 } from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {BasePageConfig} from '../../../shared/core/page/page.config';
+import {BasePageConfigComponent} from '../../../shared/core/page/page.config';
 import {DataHeaderComponent} from '../../../components/graphic.config/html/header.component';
 import {ConfigSourceComponent} from '../../../shared/core/config/config.source.component';
 import {DesignerBodyComponent} from '../designer.body.component';
@@ -87,12 +87,12 @@ export class SiderLeftComponent implements AfterViewInit {
     return retComponentRef;
   }
 
-  forwardCreateCanvasConfig(type: Type<BasePageConfig>): ComponentRef<BasePageConfig> {
-    let retComponentRef: ComponentRef<BasePageConfig>;
+  forwardCreateCanvasConfig(type: Type<BasePageConfigComponent>): ComponentRef<BasePageConfigComponent> {
+    let retComponentRef: ComponentRef<BasePageConfigComponent>;
     this.zone.run(() => {
       // this.shadowContainer.detach();
       // this.shadowContainer.clear();
-      const factory: ComponentFactory<BasePageConfig> =
+      const factory: ComponentFactory<BasePageConfigComponent> =
         this.resolver.resolveComponentFactory(type);
       retComponentRef = this.componentRef = this.shadowContainer.createComponent(factory);
       // this.componentRef.instance.type = type;

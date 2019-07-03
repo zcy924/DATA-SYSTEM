@@ -1,4 +1,4 @@
-import { BasePageConfig } from '@barca/shared';
+import { BasePageConfigComponent } from '@barca/shared';
 import { ComponentRef } from '@angular/core';
 import { session } from '../../../../utils/session';
 import { PageConfigComponent } from '../../../../../components/page.config/page.config.component';
@@ -6,7 +6,7 @@ import { PageConfigRuntime } from '../../../../../runtime/page.config.runtime';
 
 export class PageConfig {
 
-  private _inner: BasePageConfig | ComponentRef<BasePageConfig>;
+  private _inner: BasePageConfigComponent | ComponentRef<BasePageConfigComponent>;
 
   constructor(private _mode: 'design' | 'runtime') {
     switch (_mode) {
@@ -19,8 +19,8 @@ export class PageConfig {
     }
   }
 
-  get model(): BasePageConfig {
-    if (this._inner instanceof BasePageConfig) {
+  get model(): BasePageConfigComponent {
+    if (this._inner instanceof BasePageConfigComponent) {
       return this._inner;
     } else {
       return this._inner.instance;
@@ -28,7 +28,7 @@ export class PageConfig {
   }
 
   show() {
-    if (this._inner instanceof BasePageConfig) {
+    if (this._inner instanceof BasePageConfigComponent) {
 
     } else {
       session.siderLeftComponent.attachDataProperty(this._inner.hostView);
@@ -40,7 +40,7 @@ export class PageConfig {
   }
 
   destroy() {
-    if (this._inner instanceof BasePageConfig) {
+    if (this._inner instanceof BasePageConfigComponent) {
     } else {
       this._inner.destroy();
       this._inner = null;

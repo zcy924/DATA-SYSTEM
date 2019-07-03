@@ -12,12 +12,14 @@ export abstract class RegionView extends ViewEventTarget {
   $fill: JQuery;
   protected _$mover: JQuery;
 
-  protected constructor() {
-    super();
-  }
-
+  /**
+   * region view 的初始化工作，比如创建dom结构、事件转换等
+   */
   abstract init();
 
+  /**
+   * 刷新视图
+   */
   abstract refresh();
 
   /**
@@ -42,7 +44,7 @@ export abstract class RegionView extends ViewEventTarget {
         // 监听鼠标移动
         mouseMoveSubscription =
           fromEvent(document, 'mousemove')
-            .pipe(throttleTime(30))
+            .pipe(throttleTime(20))
             .subscribe((mouseEvent: MouseEvent) => {
               this.dispatchEvent('resizing', mouseEvent.pageX, mouseEvent.pageY);
             });

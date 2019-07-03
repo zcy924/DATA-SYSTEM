@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import { ModelEventTarget } from '../../event';
 
 
-export class BasePageConfig extends ModelEventTarget {
+export class BasePageConfigComponent extends ModelEventTarget {
   option: any;
 
   exportOption() {

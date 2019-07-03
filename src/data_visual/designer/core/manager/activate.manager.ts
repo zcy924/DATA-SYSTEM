@@ -1,15 +1,21 @@
 import { Region } from '../structure/region/region';
 import { ReportPageKernel } from '../structure/page/report/page.kernel';
 import { RegionState } from '../structure/region/region.model';
+import { Destroyable } from '@barca/shared';
 
 /**
+ * 每一个设计时页面都有一个ActivateManager用来管理当前被激活的区域
  * 记录当前页面被激活的图表   并处理图标激活时 页面和图表状态的改变。
  */
-export class ActivateManager {
+export class ActivateManager extends Destroyable{
   private _activatedRegion: Region;
 
   constructor(private _page: ReportPageKernel) {
-
+    super();
+    this.onDestroy(()=>{
+      this._activatedRegion=null;
+      this._page=null;
+    })
   }
 
   activate(region: Region) {
@@ -38,9 +44,4 @@ export class ActivateManager {
   get regionActivated() {
     return !!this._activatedRegion;
   }
-
-  destroy() {
-    this._activatedRegion = null;
-  }
-
 }

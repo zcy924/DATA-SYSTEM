@@ -1,5 +1,6 @@
 import { Region } from '../structure/region/region';
 import { RegionState } from '../structure/region/region.model';
+import { Destroyable } from '@barca/shared';
 
 enum SelectStatus {
   default, single, multi
@@ -8,8 +9,16 @@ enum SelectStatus {
 /**
  * 被删除的region如何剔除
  */
-class Store {
+class Store extends Destroyable {
   private _selectArray: Array<Region> = [];
+
+  constructor() {
+    super();
+    this.onDestroy(() => {
+      this._selectArray.splice(0);
+      this._selectArray = null;
+    });
+  }
 
   get status(): SelectStatus {
     switch (this._selectArray.length) {
@@ -81,15 +90,14 @@ class Store {
       this._selectArray.splice(this._selectArray.indexOf(region), 1);
     }
   }
-
-  destroy() {
-    this._selectArray.splice(0);
-    this._selectArray = null;
-  }
 }
 
-abstract class State {
-  protected constructor(protected store: Store) {
+abstract class State extends Destroyable {
+  protected constructor(protected _store: Store) {
+    super();
+    this.onDestroy(() => {
+      this._store = null;
+    });
   }
 
   abstract select(region: Region);
@@ -103,11 +111,11 @@ class StateDefault extends State {
   }
 
   select(region: Region) {
-    this.store.addRegion(region);
+    this._store.addRegion(region);
   }
 
   ctrlSelect(region: Region) {
-    this.store.addRegion(region);
+    this._store.addRegion(region);
   }
 }
 
@@ -117,19 +125,19 @@ class StateSelected extends State {
   }
 
   select(region: Region) {
-    if (this.store.include(region)) {
+    if (this._store.include(region)) {
       return;
     } else {
-      this.store.clear();
-      this.store.addRegion(region);
+      this._store.clear();
+      this._store.addRegion(region);
     }
   }
 
   ctrlSelect(region: Region) {
-    if (this.store.include(region)) {
-      this.store.removeRegion(region);
+    if (this._store.include(region)) {
+      this._store.removeRegion(region);
     } else {
-      this.store.addRegion(region);
+      this._store.addRegion(region);
     }
   }
 }
@@ -140,20 +148,20 @@ class StateMultiSelected extends State {
   }
 
   select(region: Region) {
-    this.store.clear();
-    this.store.addRegion(region);
+    this._store.clear();
+    this._store.addRegion(region);
   }
 
   ctrlSelect(region: Region) {
-    if (this.store.include(region)) {
-      this.store.removeRegion(region);
+    if (this._store.include(region)) {
+      this._store.removeRegion(region);
     } else {
-      this.store.addRegion(region);
+      this._store.addRegion(region);
     }
   }
 }
 
-export class SelectManager extends Store implements ISelectManager {
+export class SelectManager extends Store {
   private _stateDefault: State;
   private _stateSelected: State;
   private _stateMultiSelected: State;
@@ -163,6 +171,12 @@ export class SelectManager extends Store implements ISelectManager {
     this._stateDefault = new StateDefault(this);
     this._stateSelected = new StateSelected(this);
     this._stateMultiSelected = new StateMultiSelected(this);
+
+    this.onDestroy(() => {
+      this._stateDefault = null;
+      this._stateSelected = null;
+      this._stateMultiSelected = null;
+    });
   }
 
   private get state(): State {
@@ -183,27 +197,4 @@ export class SelectManager extends Store implements ISelectManager {
   ctrlSelect(region: Region) {
     this.state.ctrlSelect(region);
   }
-
-  destroy() {
-    super.destroy();
-    this._stateDefault = null;
-    this._stateSelected = null;
-    this._stateMultiSelected = null;
-  }
-}
-
-export interface ISelectManager {
-  selectedArray;
-
-  select(region: Region);
-
-  ctrlSelect(region: Region);
-
-  include(region: Region): boolean;
-
-  delete(region: Region);
-
-  clear();
-
-  destroy();
 }

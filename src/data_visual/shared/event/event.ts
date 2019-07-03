@@ -20,7 +20,7 @@ export class BaseEventTarget extends Destroyable implements IEventTarget {
         this._map.clear();
         this._map = null;
       }
-    });
+    }, 999);
   }
 
   addEventListener(eventName: string, callback: (...params) => void): IEventTarget {

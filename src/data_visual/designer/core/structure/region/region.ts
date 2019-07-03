@@ -51,7 +51,7 @@ export abstract class Region extends Destroyable implements IRegion {
     this.sync();
     setTimeout(() => {
       this._graphicWrapper && this._graphicWrapper.resize();
-    }, 200);
+    }, 100);
   }
 
   set state(param: RegionState) {
@@ -69,8 +69,6 @@ export abstract class Region extends Destroyable implements IRegion {
       this._methodMap.clear();
     });
   }
-
-  abstract sync();
 
   /**
    * 模型层关联，展现层关联
@@ -97,6 +95,8 @@ export abstract class Region extends Destroyable implements IRegion {
       return this._methodMap.get(name)(...args);
     }
   }
+
+  abstract sync();
 
   abstract getOption();
 

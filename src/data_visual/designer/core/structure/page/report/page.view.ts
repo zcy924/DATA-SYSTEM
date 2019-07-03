@@ -2,8 +2,8 @@ import { contextMenuHelper } from '../../../helper/context.menu.helper';
 import { ReportPageKernel } from './page.kernel';
 import { RepaintMask, repaintMaskGenerator } from '../../../helper/mask.helper';
 import { boxSelectHelper } from '../../../helper/box.select.helper';
-import { BasePageConfig } from '../../../../../shared/core/page/page.config';
-import { ViewEventTarget } from '@barca/shared';
+
+import { BasePageConfigComponent, ViewEventTarget } from '@barca/shared';
 
 const TEMPLATE = `
     <div class="report-region">
@@ -25,8 +25,8 @@ const TEMPLATE = `
 export class PageView extends ViewEventTarget {
 
   $element: JQuery;
-  protected readonly _$canvas: JQuery;
-  protected readonly _$box: JQuery;
+  protected _$canvas: JQuery;
+  protected _$box: JQuery;
   $grid: JQuery;
 
   private _contextMenuGenerator: Function;
@@ -39,7 +39,9 @@ export class PageView extends ViewEventTarget {
 
   constructor(private _page: ReportPageKernel) {
     super();
+  }
 
+  init() {
     const $element = this.$element = $(TEMPLATE);
 
     this._$canvas = $element.find('.report-canvas');
@@ -49,6 +51,12 @@ export class PageView extends ViewEventTarget {
     this._repaintMask = repaintMaskGenerator(this.$element.find('.u-edit-mask'));
 
     this._init();
+
+    this.onDestroy(() => {
+      this._$canvas = this._$box = this.$grid = this._repaintMask = null;
+      this.$element.remove();
+      this.$element = null;
+    });
   }
 
   /**
@@ -61,7 +69,7 @@ export class PageView extends ViewEventTarget {
 
   protected _init() {
     this.$grid.attr('draggable', 'true');
-    this._bind();
+    this._bindEvent();
   }
 
   /**
@@ -81,7 +89,7 @@ export class PageView extends ViewEventTarget {
     this._refresh();
   }
 
-  public accept(model: BasePageConfig) {
+  public accept(model: BasePageConfigComponent) {
     model.register('remove.backgroundClass', (key, oldValue, newValue) => {
       this._$box.removeClass('background1 background2 background3 background4');
     });
@@ -152,21 +160,23 @@ export class PageView extends ViewEventTarget {
     }
   }
 
-  // 试图到模型
-  private _bind() {
-    this._bindEvent();
-    this._bindContextEvent();
-  }
-
+  /**
+   * event transform
+   * @private
+   */
   private _bindEvent() {
-    this.$element.find('.u-edit-mask').on('click', () => {
+    let $editMask = this.$element.find('.u-edit-mask');
+    $editMask.on('click', () => {
       this.dispatchEvent('deactivateRegion');
+    });
+    this.onDestroy(() => {
+      $editMask.off('click');
+      $editMask = null;
     });
 
     this.$grid
       .on('click', ($event) => {
         if ($event.target === this.$grid[0]) {
-          console.log('dispatch select');
           this.dispatchEvent('select');
         }
       })
@@ -174,6 +184,7 @@ export class PageView extends ViewEventTarget {
         if (this._page.activateManager.regionActivated) {
           return false;
         }
+
         const startPageX = $event.pageX, startPageY = $event.pageY;
         let left: number, top: number, width: number, height: number;
         const
@@ -188,7 +199,6 @@ export class PageView extends ViewEventTarget {
             document.removeEventListener('mousemove', mousemove);
             document.removeEventListener('mouseup', mouseup);
             boxSelectHelper.hide();
-            console.log('dispatch boxSelect');
             this.dispatchEvent('boxSelect', left, top, width, height);
           };
         document.addEventListener('mousemove', mousemove);
@@ -200,20 +210,16 @@ export class PageView extends ViewEventTarget {
       .on('dragover', ($event: JQuery.Event) => {
         (<DragEvent>$event.originalEvent).dataTransfer.dropEffect = 'copyMove';
         $event.preventDefault();
+      })
+      .on('contextmenu', ($event: JQuery.Event) => {
+        if (this._contextMenuGenerator) {
+          contextMenuHelper.open(this._contextMenuGenerator(), $event.pageX, $event.pageY, $event);
+        }
+        return false;
       });
-  }
 
-  private _bindContextEvent() {
-    this.$grid.contextmenu(($event: JQuery.Event) => {
-      if (this._contextMenuGenerator) {
-        contextMenuHelper.open(this._contextMenuGenerator(), $event.pageX, $event.pageY, $event);
-      }
-      return false;
+    this.onDestroy(() => {
+      this.$grid.off('click dragstart dragover contextmenu');
     });
-  }
-
-
-  destroy() {
-    this._repaintMask = null;
   }
 }

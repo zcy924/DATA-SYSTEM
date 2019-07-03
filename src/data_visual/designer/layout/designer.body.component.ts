@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnDestroy } from '@angular/core';
 import { session } from '../utils/session';
 import * as _ from 'lodash';
 import { ReportPage } from '../core/structure/page/report/page.outer';
-import { reportPageBuilder } from '../core/structure/page/report/page.builder';
+import { reportPageBuilder } from '../startup/page.builder';
 
 @Component({
   selector: 'app-designer-body',

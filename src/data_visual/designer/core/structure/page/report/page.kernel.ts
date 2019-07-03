@@ -1,5 +1,5 @@
 import { clipboard } from '../../../../utils/clipboard';
-import { ISelectManager, SelectManager } from '../../../manager/select.manager';
+import { SelectManager } from '../../../manager/select.manager';
 import { RegionManager } from '../../../manager/region.manager';
 import { ActivateManager } from '../../../manager/activate.manager';
 import { ConfigSourceManager } from '../../../config/config.source.manager';
@@ -8,7 +8,7 @@ import { ActionManager } from '../../../operate/action.manager';
 import { PageConfig } from './page.config';
 import { PageView } from './page.view';
 import {
-  BasePageConfig,
+  BasePageConfigComponent,
   DataSourceManager, Destroyable,
   IPage,
 } from '@barca/shared';
@@ -21,7 +21,7 @@ export class ReportPageKernel extends Destroyable implements IPage {
 
   // manager
   public regionManager: RegionManager;
-  public selectManager: ISelectManager;
+  public selectManager: SelectManager;
   public activateManager: ActivateManager;
 
   public configSourceManager: ConfigSourceManager;
@@ -33,6 +33,8 @@ export class ReportPageKernel extends Destroyable implements IPage {
     super();
 
     this.view = new PageView(this);
+    this.view.init();
+
     this.config = new PageConfig(_mode);
 
     this.regionManager = new RegionManager();
@@ -64,9 +66,9 @@ export class ReportPageKernel extends Destroyable implements IPage {
 
   /**
    * 监听model事件
-   * @param {BasePageConfig} model
+   * @param {BasePageConfigComponent} model
    */
-  accept(model: BasePageConfig) {
+  accept(model: BasePageConfigComponent) {
     model.register('themeMode', (key, oldValue, newValue) => {
       this.regionManager.regionArray.forEach((item) => {
         item.updateTheme(newValue);

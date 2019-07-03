@@ -1,10 +1,10 @@
 import { ComponentRepositoryManager, GeneratorRepositoryManager, IFileStructure } from '@barca/shared';
-import { StandardCompRepo } from '../../../../../component.packages/standard';
-import { CustomCompRepo } from '../../../../../component.packages/custom';
-import { standardGeneratorRepo } from '../../../../../data.source.packages/mock';
+import { StandardCompRepo } from '../../component.packages/standard';
+import { CustomCompRepo } from '../../component.packages/custom';
+import { standardGeneratorRepo } from '../../data.source.packages/mock';
+import { VERSION_INFO } from '../core/structure/page/report/page.utils';
+import { ReportPage } from '../core/structure/page/report/page.outer';
 import * as _ from 'lodash';
-import { VERSION_INFO } from './page.utils';
-import { ReportPage } from './page.outer';
 
 export class ReportPageBuilder {
 
