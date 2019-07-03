@@ -56,14 +56,17 @@ export class ExplicitRegion extends Region {
   }
 
   init(regionOption: any) {
+    super.init(regionOption);
 
     this._model = new RegionModel();
+
     const view = this._view = new ExplicitRegionView(this, this._model);
+    // 事件绑定 将浏览器事件转换为RegionView事件
+    view.init();
 
     this._page.addChild(this);
 
-    // 事件绑定 将浏览器事件转换为RegionView事件
-    view.init();
+
 
     // 事件绑定 监听RegionView事件
     this._bind();
@@ -74,13 +77,27 @@ export class ExplicitRegion extends Region {
     this.sync();
 
     this.onDestroy(() => {
+      // 1、销毁内部对象
+      // 2、解除事件绑定
+      // 3、解除当前对象的属性引用
+      if (this._graphicWrapper) {
+        this._graphicWrapper.destroy();
+        this._graphicWrapper = null;
+      }
+      // 单纯的从相关的array中将region对象移除，并没有调用region的相关方法
+      this._page.removeChild(this);
+      this._page = null;
+    });
+    this.onDestroy(() => {
+      // 解除对象绑定
       this._model.destroy();
       this._model = null;
 
+      // 解除dom事件绑定
+      // 删除dom元素
+      // 解除对象关系
       this._view.destroy();
       this._view = null;
-
-      this._page = null;
     });
   }
 

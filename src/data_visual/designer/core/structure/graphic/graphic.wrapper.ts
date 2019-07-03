@@ -1,13 +1,11 @@
-import { combineLatest, Observable, Subject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ConfigSourceComponentRefManager } from '../../config/config.source.component.ref.manager';
-import { distinctUntilChanged, tap } from 'rxjs/operators';
 import { dataModelManager } from '../../../data/data.model.manager';
 import { Region } from '../region/region';
 
-import * as _ from 'lodash';
 import {
-  ChangedItem, componentRepositoryManager,
-  ComponentRepositoryManager, Destroyable,
+  componentRepositoryManager,
+  Destroyable,
   getParameterName,
   GraphicOption, guid,
   IGraphic,
@@ -31,17 +29,6 @@ export class GraphicWrapper extends Destroyable {
 
   constructor(private _region: Region) {
     super();
-    this.onDestroy(() => {
-      if (this._modelSubscription) {
-        this._modelSubscription.unsubscribe();
-        this._modelSubscription = null;
-      }
-      this._modelSource.destroy();
-      if (this._graphic) {
-        this._graphic.destroy();
-        this._graphic = null;
-      }
-    });
   }
 
   get uuid(): string {
@@ -80,6 +67,21 @@ export class GraphicWrapper extends Destroyable {
     this._modelSource = new ModelSource(this._region.page.configSourceManager, this._region.page.dataSourceManager);
     this._modelSource.init(graphicOption);
     this._modelSubscription = this._graphic.accept(this._modelSource.model$());
+
+    this.onDestroy(() => {
+      if (this._modelSubscription) {
+        this._modelSubscription.unsubscribe();
+        this._modelSubscription = null;
+      }
+      this._modelSource.destroy();
+      if (this._graphic) {
+        this._graphic.destroy();
+        this._graphic = null;
+      }
+
+      this._optionAccessor = null;
+      this._region = null;
+    });
   }
 
   /**

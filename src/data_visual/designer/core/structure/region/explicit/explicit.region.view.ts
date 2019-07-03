@@ -23,17 +23,6 @@ export class ExplicitRegionView extends RegionView {
 
   constructor(protected _region: Region, protected _model: RegionModel) {
     super();
-    const $element = this.$element = $(template);
-    this.$fill = $element.find('.g-fill');
-    this._$mover = $element.find('.u-mover');
-
-    this.onDestroy(() => {
-      this.$fill = this._$mover = null;
-      this.$element.remove();
-      this.$element = null;
-      this._region = this._model = null;
-
-    });
   }
 
   /**
@@ -41,9 +30,20 @@ export class ExplicitRegionView extends RegionView {
    * 事件绑定
    */
   init() {
+    const $element = this.$element = $(template);
+    this.$fill = $element.find('.g-fill');
+    this._$mover = $element.find('.u-mover');
+
     if (this._region.page.mode === 'design') {
       this._bindEvent();
     }
+
+    this.onDestroy(() => {
+      this.$fill = this._$mover = null;
+      this.$element.remove();
+      this.$element = null;
+      this._region = this._model = null;
+    }, 2);
   }
 
   /**

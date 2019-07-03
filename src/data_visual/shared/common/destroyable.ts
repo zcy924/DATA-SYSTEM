@@ -10,10 +10,11 @@ export class Destroyable {
     return this._destroyed;
   }
 
-  protected onDestroy(callback: Function) {
+  protected onDestroy(callback: Function, order: number = 1) {
     if (this._destroyed) {
       throw new Error('该对象已经销毁！');
     } else {
+      (callback as any)._order = order;
       this._callbacksForDestroy.push(callback);
     }
   }
@@ -21,8 +22,12 @@ export class Destroyable {
 
   destroy() {
     if (!this._destroyed) {
+      this._callbacksForDestroy.sort((a, b) => {
+        return (a as any)._order - (b as any)._order;
+      });
       this._callbacksForDestroy.forEach((callback: Function) => {
         try {
+          delete (callback as any)._order;
           callback.apply(null);
         } catch (e) {
           console.error(e);

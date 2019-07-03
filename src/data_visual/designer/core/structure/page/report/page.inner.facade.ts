@@ -57,9 +57,9 @@ export class ReportPageInnerFacadeImpl implements IReportPageInnerFacade {
   }
 
 
-  addChild(child: Region) {
-    this._pageKernel.regionManager.add(child);
-    this._pageKernel.view.$grid.append(child.$element);
+  addChild(region: Region) {
+    this._pageKernel.regionManager.add(region);
+    this._pageKernel.view.$grid.append(region.$element);
   }
 
   removeChild(child: Region) {

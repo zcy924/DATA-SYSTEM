@@ -13,25 +13,10 @@ export abstract class Region extends Destroyable implements IRegion {
   protected _view: RegionView;
   protected _graphicWrapper: GraphicWrapper;
 
-  private _methodMap: Map<string, Function> = new Map();
+  private _methodMap: Map<string, Function>;
 
   protected constructor() {
     super();
-    this.onDestroy(() => {
-      // 1、销毁内部对象
-      // 2、解除事件绑定
-      // 3、解除当前对象的属性引用
-      if (this._graphicWrapper) {
-        this._graphicWrapper.destroy();
-        this._graphicWrapper = null;
-      }
-      this._page.removeChild(this);
-      this._page = null;
-
-      this._methodMap.clear();
-
-      this._view.destroy();
-    });
   }
 
   get $element() {
@@ -78,7 +63,11 @@ export abstract class Region extends Destroyable implements IRegion {
   }
 
   init(regionOption: any) {
+    this._methodMap = new Map();
 
+    this.onDestroy(() => {
+      this._methodMap.clear();
+    });
   }
 
   abstract sync();

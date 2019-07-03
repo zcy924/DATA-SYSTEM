@@ -5,6 +5,7 @@ import { Region } from '../structure/region/region';
 import { GraphicWrapper } from '../structure/graphic/graphic.wrapper';
 
 export function addGraphicToPage(pageInnerFacade: IReportPageInnerFacade, componentOption: IComponentOption, left?: number, top?: number) {
+
   if (regionDefinitionMap.has(componentOption.region.regionKey)) {
     // 创建region
     // 第一步创建region对象
