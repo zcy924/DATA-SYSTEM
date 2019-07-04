@@ -25,7 +25,7 @@ export class MeasureAreaComponent extends Destroyable implements AfterViewInit, 
   }
 
   ngAfterViewInit() {
-    const subscription = dataModelManager.currentDataModelObservable.subscribe((dataModel) => {
+    const subscription = dataModelManager.currentDataMode$.subscribe((dataModel) => {
       this.dataModel = dataModel;
     });
     this.onDestroy(() => {

@@ -105,6 +105,9 @@ abstract class State extends Destroyable {
   abstract ctrlSelect(region: Region);
 }
 
+/**
+ * 页面未选中任何region
+ */
 class StateDefault extends State {
   constructor(store) {
     super(store);
@@ -161,9 +164,15 @@ class StateMultiSelected extends State {
   }
 }
 
+/**
+ * 管理被选中的region
+ */
 export class SelectManager extends Store {
+  // 当前页面没有任何region被选中
   private _stateDefault: State;
+  // 当前页面有且只有一个region被选中
   private _stateSelected: State;
+  // 当前页面至少有两个region被选中
   private _stateMultiSelected: State;
 
   constructor() {
@@ -190,10 +199,19 @@ export class SelectManager extends Store {
     }
   }
 
+  /**
+   * 用户点击region，选中图表
+   * 之前选择的图表会被清空
+   * @param region
+   */
   select(region: Region) {
     this.state.select(region);
   }
 
+  /**
+   * 摁住ctrl键，点击region
+   * @param region
+   */
   ctrlSelect(region: Region) {
     this.state.ctrlSelect(region);
   }

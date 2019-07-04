@@ -41,7 +41,7 @@ export class SiderRightComponent extends Destroyable implements AfterViewInit, O
   ngAfterViewInit() {
     dataModelManager.dataOptionSet = DataSourceConfigSetManager.getInstance().getItem('space1');
 
-    const subscription = dataModelManager.modelNameObservable.subscribe((modelName) => {
+    const subscription = dataModelManager.modelName$.subscribe((modelName) => {
       this.modelName = modelName;
     });
 

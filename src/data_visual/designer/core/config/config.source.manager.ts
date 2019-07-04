@@ -1,7 +1,7 @@
-import { IConfigSourceFactory } from '../../../shared/core/config/config.source.factory';
 import { DesignerConfigSourceFactory } from './designer.config.source.factory';
 import { RuntimeConfigSourceFactory } from '../../../runtime/config/runtime.config.source.factory';
 import { Observable } from 'rxjs';
+import { IConfigSourceFactory } from '@barca/shared';
 
 /**
  *  每个页面对应一个ConfigSourceManager

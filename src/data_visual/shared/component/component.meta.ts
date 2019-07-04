@@ -1,7 +1,6 @@
-import { Type } from '../common/type';
-import { IComponentOption } from '../interface/file/component.option';
-import { IGraphic } from '../core/graphic/graphic';
-
+import { IComponentOption } from '../interface/file';
+import { IGraphic } from '../core/graphic';
+import { Type } from '../common';
 
 export interface IComponentMeta {
   key: string;

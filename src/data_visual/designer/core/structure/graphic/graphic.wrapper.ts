@@ -16,7 +16,6 @@ import { ModelSource } from '../../model/model.source';
 
 /**
  *
- * 管理组件的ConfigSource和DataSource
  */
 export class GraphicWrapper extends Destroyable {
 
@@ -61,7 +60,14 @@ export class GraphicWrapper extends Destroyable {
       }));
       this._region.addChild(this);
     }
+    this.onDestroy(() => {
+      if (this._graphic) {
+        this._graphic.destroy();
+        this._graphic = null;
+      }
+    });
 
+    // 创建modelSource
     graphicOption.graphicId = graphicId || guid(10, 16);
 
     this._modelSource = new ModelSource(this._region.page.configSourceManager, this._region.page.dataSourceManager);
@@ -74,10 +80,6 @@ export class GraphicWrapper extends Destroyable {
         this._modelSubscription = null;
       }
       this._modelSource.destroy();
-      if (this._graphic) {
-        this._graphic.destroy();
-        this._graphic = null;
-      }
 
       this._optionAccessor = null;
       this._region = null;

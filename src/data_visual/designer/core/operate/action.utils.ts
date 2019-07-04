@@ -10,26 +10,15 @@ export function addGraphicToPage(pageInnerFacade: IReportPageInnerFacade, compon
     // 创建region
     // 第一步创建region对象
     const region: Region = new (regionDefinitionMap.get(componentOption.region.regionKey))(pageInnerFacade);
-    // 第二步初始化region
-    region.init(componentOption.region.regionOption);
 
     if (Number.isInteger(left) && Number.isInteger(top)) {
-      region.coordinates = {
+      Object.assign(componentOption.region.regionOption, {
         left, top,
-      };
+      });
     }
+    // 第二步初始化region
+    region.init(componentOption.region.regionOption, componentOption.graphic);
 
-    const graphicWrapper = new GraphicWrapper(region);
-    graphicWrapper.init(componentOption.graphic);
-
-    setTimeout(() => {
-      if (componentOption.region.regionOption) {
-        const { width, height } = componentOption.region.regionOption;
-        region.dimensions = { width, height };
-      }
-      graphicWrapper.resize();
-    }, 200);
-
-    return { region, graphicWrapper };
+    return { region };
   }
 }

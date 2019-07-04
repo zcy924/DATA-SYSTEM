@@ -26,35 +26,18 @@ export class GraphicActionCreate implements IAction {
       // 创建region
       if (regionDefinitionMap.has(componentOption.region.regionKey)) {
         const region: Region = new (regionDefinitionMap.get(componentOption.region.regionKey))(this._pageInnerFacade);
-        region.init(null);
-        region.coordinates = {
-          left: this._left,
-          top: this._top,
-        };
-        if (componentOption.region.regionOption) {
-          const { width, height } = componentOption.region.regionOption;
-          region.dimensions = { width, height };
-        }
-
-        // 创建graphic
-        const graphicWrapper = new GraphicWrapper(region);
-        if (this._configOption) {
-          graphicWrapper.init(
-            Object.assign({}, componentOption.graphic, { configOption: deepClone(this._configOption) }),
-          );
-        } else {
-          graphicWrapper.init(deepClone(componentOption.graphic));
-        }
-
-
-        setTimeout(() => {
-          graphicWrapper.resize();
-        }, 200);
+        region.init(Object.assign({}, componentOption.region.regionOption, {
+            left: this._left,
+            top: this._top,
+          }),
+          this._configOption ?
+            Object.assign({}, componentOption.graphic, { configOption: deepClone(this._configOption) }) :
+            deepClone(componentOption.graphic));
 
         this._region = region;
 
         return {
-          region, graphicWrapper,
+          region,
         };
       }
     }

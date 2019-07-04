@@ -1,5 +1,8 @@
 import { IDataSourceDimension } from '@barca/shared';
 
+/**
+ * 用于数据模型选择面板的数据绑定
+ */
 export interface DataModel {
   id: string;
   displayName: string;
@@ -8,8 +11,7 @@ export interface DataModel {
 }
 
 /**
- *
- *
+ * Echart相关数据结构
  * dataset.source 第一行/列是否是 维度名 信息。
  * 可选值：
  * null/undefined：默认，自动探测。

@@ -3,21 +3,21 @@ import {
   Component,
   EventEmitter,
   KeyValueDiffer,
-  KeyValueDiffers,
+  KeyValueDiffers, OnDestroy,
   OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { BasePageConfigComponent } from '../../shared/core/page/page.config';
 import { debounceTime } from 'rxjs/operators';
+import { BasePageConfigComponent } from '@barca/shared';
 
 @Component({
   selector: 'app-page-config',
   templateUrl: './page.config.component.html',
   styleUrls: ['./page.config.component.less'],
 })
-export class PageConfigComponent extends BasePageConfigComponent implements AfterViewInit, OnInit {
+export class PageConfigComponent extends BasePageConfigComponent implements AfterViewInit, OnInit, OnDestroy {
 
   @ViewChild(NgForm) ngForm: NgForm;
   @Output() output = new EventEmitter();
@@ -88,7 +88,8 @@ export class PageConfigComponent extends BasePageConfigComponent implements Afte
   }
 
   ngAfterViewInit() {
-    this.ngForm.valueChanges.pipe(debounceTime(200)).subscribe((value) => {
+    let subscription = this.ngForm.valueChanges.pipe(debounceTime(200)).subscribe((value) => {
+      console.log('************************');
       const array = [], changes = this._differ.diff(value);
       if (changes) {
         changes.forEachRemovedItem((record) => {
@@ -120,6 +121,14 @@ export class PageConfigComponent extends BasePageConfigComponent implements Afte
         this._batchTrigger(array);
       }
     });
+    this.onDestroy(() => {
+      subscription.unsubscribe();
+      subscription = null;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy();
   }
 
 }

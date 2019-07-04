@@ -14,7 +14,7 @@ export class GraphicActionPaste implements IAction {
   }
 
   forward() {
-    const { region, graphicWrapper } = addGraphicToPage(this._pageInnerFacade, this._graphicMeta, this._x, this._y);
+    const { region } = addGraphicToPage(this._pageInnerFacade, this._graphicMeta, this._x, this._y);
     this._region = region;
   }
 

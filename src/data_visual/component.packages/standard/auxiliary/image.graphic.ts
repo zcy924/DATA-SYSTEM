@@ -1,6 +1,7 @@
 import { Observable, Subscription } from 'rxjs';
 import { ImageAuxiliary } from './graphic.view/image.auxiliary';
 import { DefaultGraphic } from '@barca/shared/core/graphic/default.graphic';
+import * as _ from 'lodash';
 
 const template = `
 <div class="graphic m-graphic m-graphic-image">
@@ -46,10 +47,14 @@ export class ImageGraphic extends DefaultGraphic {
       });
     }).register('add.image image', (key, oldValue, newValue) => {
       if (this._view && newValue && newValue.dataUrl) {
-        // region.setDimensions(newValue.width, newValue.height);
-        console.log('222222222222222222222222222222');
-        this._view.update(newValue);
+        if (!region.dimensions.width || (_.isNumber(region.dimensions.width) && region.dimensions.width === 0)) {
+          region.dimensions = {
+            width: newValue.width, height: newValue.height,
+          };
+          console.log('22222222222222222');
+        }
       }
+      this._view.update(newValue);
     });
   }
 

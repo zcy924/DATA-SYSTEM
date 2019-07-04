@@ -50,6 +50,7 @@ export class ReportPageKernel extends Destroyable implements IPage {
       this.regionManager.regionArray.forEach(value => value.destroy());
       this.regionManager.destroy();
       this.selectManager.destroy();
+      this.config.destroy();
       this.view.destroy();
     });
   }

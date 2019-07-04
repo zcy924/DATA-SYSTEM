@@ -2,7 +2,7 @@ import { GraphicWrapper } from '../graphic/graphic.wrapper';
 import { IReportPageInnerFacade } from '../page/report/page.interface';
 import { RegionModel, RegionState } from './region.model';
 import { RegionView } from './region.view';
-import { Destroyable, Coordinates, Dimensions, Rectangle, IRegion } from '@barca/shared';
+import { Destroyable, Coordinates, Dimensions, Rectangle, IRegion, IGraphicOption } from '@barca/shared';
 
 
 export abstract class Region extends Destroyable implements IRegion {
@@ -46,6 +46,10 @@ export abstract class Region extends Destroyable implements IRegion {
     this._graphicWrapper && this._graphicWrapper.resize();
   }
 
+  get dimensions() {
+    return this._model.dimensions;
+  }
+
   set rectangle(value: Rectangle) {
     this._model.rectangle = value;
     this.sync();
@@ -62,7 +66,7 @@ export abstract class Region extends Destroyable implements IRegion {
     return this._model.state;
   }
 
-  init(regionOption: any) {
+  init(regionOption: any, graphic?: IGraphicOption) {
     this._methodMap = new Map();
 
     this.onDestroy(() => {

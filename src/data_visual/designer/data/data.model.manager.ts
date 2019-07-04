@@ -1,19 +1,28 @@
-import {Dataset, DataModel} from './data.model.interface';
-import {Observable, Subject} from 'rxjs';
-import { DataSourceConfigSet } from '../../shared/core/data/data.source.config.set';
+import { Dataset, DataModel } from './data.model.interface';
+import { Observable, Subject } from 'rxjs';
 import { session } from '../utils/session';
+import { DataSourceConfigSet, Destroyable } from '@barca/shared';
 
 /**
  * 该类不可以跟DataSourceManager合并 DataModelPlugin只认DataModelManager说话
  * 切换Graphic
  */
-class DataModelManager {
+class DataModelManager extends Destroyable {
   private _map: Map<string, DataModel> = new Map();
   private _currentDataModel: DataModel;
 
   private _dataOptionSet: DataSourceConfigSet;
   private _modelNameSubject = new Subject<string>();
   private _dataModelSubject = new Subject<DataModel>();
+
+  constructor() {
+    super();
+    this.onDestroy(() => {
+      this._modelNameSubject.unsubscribe();
+      this._dataModelSubject.unsubscribe();
+      this._modelNameSubject = this._dataModelSubject = null;
+    });
+  }
 
   set dataOptionSet(value: DataSourceConfigSet) {
     if (value) {
@@ -24,26 +33,12 @@ class DataModelManager {
     }
   }
 
-  get modelNameObservable(): Observable<string> {
+  get modelName$(): Observable<string> {
     return this._modelNameSubject.asObservable();
   }
 
-  get currentDataModelObservable(): Observable<DataModel> {
+  get currentDataMode$(): Observable<DataModel> {
     return this._dataModelSubject.asObservable();
-  }
-
-  updateState(dataModelType: string, dataModelID: string) {
-
-  }
-
-  addDataModel(id: string, displayName: string, dimensions: any) {
-    this._map.set(id, {
-      id,
-      displayName,
-      dimensions,
-      state: {collapsedDimension: false, collapsedMeasure: false}
-    });
-    return this;
   }
 
   get list(): Array<{ id: string, displayName: string }> {
@@ -51,18 +46,28 @@ class DataModelManager {
     this._map.forEach((value: DataModel, key, map) => {
       retArray.push({
         id: value.id,
-        displayName: value.displayName
+        displayName: value.displayName,
       });
     });
     return retArray;
   }
 
-  has(id: string): boolean {
-    return this._map.has(id);
+  addDataModel(id: string, displayName: string, dimensions: any) {
+    this._map.set(id, {
+      id,
+      displayName,
+      dimensions,
+      state: { collapsedDimension: false, collapsedMeasure: false },
+    });
+    return this;
   }
 
   getDataModel(id: string): DataModel {
     return this._map.get(id);
+  }
+
+  has(id: string): boolean {
+    return this._map.has(id);
   }
 
   switchDataModel(id: string, updateGraphic: boolean = true): DataModel {
@@ -79,7 +84,7 @@ class DataModelManager {
   }
 
   clear() {
-
+    this._map.clear();
   }
 
   get current(): Dataset {

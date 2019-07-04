@@ -5,10 +5,11 @@ import { ExplicitRegionView } from './explicit.region.view';
 import { IReportPageInnerFacade } from '../../page/report/page.interface';
 import { GraphicActionDelete } from '../../../operate/graphic.action.delete';
 import { resizeTipHelper } from '../../../helper/resize.tip.helper';
-import { Coordinates, Rectangle } from '@barca/shared';
+import { Coordinates, IGraphicOption, Rectangle } from '@barca/shared';
 import { GraphicActionMove } from '../../../operate/graphic.action.move';
 import { GraphicActionResize } from '../../../operate/graphic.action.resize';
 import { contextMenuHelper } from '../../../helper/context.menu.helper';
+import { GraphicWrapper } from '../../graphic/graphic.wrapper';
 
 /**
  *
@@ -55,26 +56,36 @@ export class ExplicitRegion extends Region {
     this._model.state = param;
   }
 
-  init(regionOption: any) {
-    super.init(regionOption);
+  init(regionOption: any, graphic?: IGraphicOption) {
+    super.init(regionOption,graphic);
 
+    // 1、初始化region model
     this._model = new RegionModel();
+    regionOption && this._model.importModel(regionOption);
 
-    const view = this._view = new ExplicitRegionView(this, this._model);
+    this._view = new ExplicitRegionView(this, this._model);
     // 事件绑定 将浏览器事件转换为RegionView事件
-    view.init();
-
-    this._page.addChild(this);
-
-
+    this._view.init();
 
     // 事件绑定 监听RegionView事件
     this._bind();
     // 监听RegionModel
     this._accept();
-    regionOption && this._model.importModel(regionOption);
+
+    this._page.addChild(this);
 
     this.sync();
+
+    const graphicWrapper = new GraphicWrapper(this);
+    graphicWrapper.init(graphic);
+
+    setTimeout(() => {
+      // if (componentOption.region.regionOption) {
+      //   const { width, height } = componentOption.region.regionOption;
+      //   region.dimensions = { width, height };
+      // }
+      graphicWrapper.resize();
+    }, 200);
 
     this.onDestroy(() => {
       // 1、销毁内部对象
@@ -84,11 +95,7 @@ export class ExplicitRegion extends Region {
         this._graphicWrapper.destroy();
         this._graphicWrapper = null;
       }
-      // 单纯的从相关的array中将region对象移除，并没有调用region的相关方法
-      this._page.removeChild(this);
-      this._page = null;
-    });
-    this.onDestroy(() => {
+
       // 解除对象绑定
       this._model.destroy();
       this._model = null;
@@ -98,6 +105,10 @@ export class ExplicitRegion extends Region {
       // 解除对象关系
       this._view.destroy();
       this._view = null;
+
+      // 单纯的从相关的array中将region对象移除，并没有调用region的相关方法
+      this._page.removeChild(this);
+      this._page = null;
     });
   }
 

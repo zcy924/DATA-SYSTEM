@@ -1,7 +1,7 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { ReportPage } from '../data_visual/designer/core/structure/page/report/page.outer';
 import { session } from '../data_visual/designer/utils/session';
-import { reportPageBuilder } from '../data_visual/designer/core/structure/page/report/page.builder';
+import { reportPageBuilder } from '../data_visual/designer/startup/page.builder';
 
 @Component({
   selector: 'app-designer-body',
