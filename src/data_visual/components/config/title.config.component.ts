@@ -7,10 +7,9 @@ import {NG_VALUE_ACCESSOR, NgForm} from '@angular/forms';
 
 import {CustomControlValueAccessor} from './CustomControlValueAccessor';
 
-import * as _ from 'lodash';
 import {removeUndefined} from '../../designer/utils/common';
 import {debounceTime} from 'rxjs/operators';
-import { Title } from '../../component.packages/standard/chart/echart.interface/title';
+import { Title } from '@data-studio/component/standard/lib/chart/echart.interface/title';
 
 export const Title_CONFIG_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,

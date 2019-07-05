@@ -1,10 +1,10 @@
 import { ComponentRepositoryManager, GeneratorRepositoryManager, IFileStructure } from '@data-studio/shared';
-import { StandardCompRepo } from '../../component.packages/standard';
-import { CustomCompRepo } from '../../component.packages/custom';
 import { standardGeneratorRepo } from '../../data.source.packages/mock';
 import { VERSION_INFO } from '../core/structure/page/report/page.utils';
 import { ReportPage } from '../core/structure/page/report/page.outer';
 import * as _ from 'lodash';
+import { StandardCompRepo } from '@data-studio/component/standard';
+import { CustomCompRepo } from '@data-studio/component/custom';
 
 export class ReportPageBuilder {
 

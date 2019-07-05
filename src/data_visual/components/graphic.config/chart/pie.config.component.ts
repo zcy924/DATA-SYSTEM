@@ -11,14 +11,13 @@ import {
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { dataModelManager } from '../../../designer/data/data.model.manager';
 
 import { NzModalService } from 'ng-zorro-antd';
 import { ConfigSourceComponent } from '@data-studio/shared';
-import { ChartPieConfig } from '../../../component.packages/standard/chart/pie.chart.graphic';
 import { debounceTime } from 'rxjs/operators';
 import { removeUndefined } from '../../../designer/utils/common';
 import { IDataSourceDimension } from '@data-studio/shared';
+import { ChartPieConfig } from '@data-studio/component/standard/lib/chart/pie.chart.graphic';
 
 @Component({
   selector: 'app-pie-config',

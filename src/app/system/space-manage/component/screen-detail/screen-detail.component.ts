@@ -6,9 +6,9 @@ import { HttpResponse } from '@angular/common/http';
 import { NzMessageService } from 'ng-zorro-antd';
 import { PageRuntime } from '@data-studio/runtime/lib/page.runtime';
 import { Runtime } from '@data-studio/runtime';
-import { StandardCompRepo } from '../../../../../data_visual/component.packages/standard';
-import { CustomCompRepo } from '../../../../../data_visual/component.packages/custom';
 import { standardGeneratorRepo } from '../../../../../data_visual/data.source.packages/mock';
+import { StandardCompRepo } from '@data-studio/component/standard';
+import { CustomCompRepo } from '@data-studio/component/custom';
 
 
 @Component({

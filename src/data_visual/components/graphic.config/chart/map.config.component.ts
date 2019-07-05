@@ -7,7 +7,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { dataModelManager } from '../../../designer/data/data.model.manager';
 
 import { NzModalService } from 'ng-zorro-antd';
 import { ConfigSourceComponent } from '@data-studio/shared';

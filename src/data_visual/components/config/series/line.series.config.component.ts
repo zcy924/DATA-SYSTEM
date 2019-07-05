@@ -14,8 +14,8 @@ import { draggableHelper } from '../../../designer/utils/draggable.helper';
 import { contextMenuHelper } from '../../../designer/core/helper/context.menu.helper';
 import { NzModalFilterComponent } from '../../graphic.config/common/filter.modal.component';
 import { debounceTime } from 'rxjs/operators';
-import { LineSeriesConfig } from '../../../component.packages/standard/chart/echart.interface/series/line.series';
 import { IDataSourceDimension } from '@data-studio/shared';
+import { LineSeriesConfig } from '@data-studio/component/standard/lib/chart/echart.interface/series/line.series';
 
 export const LINE_SERIES_CONFIG_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,

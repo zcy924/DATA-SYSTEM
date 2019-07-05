@@ -13,8 +13,8 @@ import { ConfigSourceComponent } from '@data-studio/shared';
 
 import { removeUndefined } from '../../../designer/utils/common';
 import { debounceTime } from 'rxjs/operators';
-import { ChartBarOption } from '../../../component.packages/standard/chart/bar.chart.graphic';
 import * as _ from 'lodash';
+import { ChartBarOption } from '@data-studio/component/standard/lib/chart/bar.chart.graphic';
 
 @Component({
   selector: 'app-table-config',
