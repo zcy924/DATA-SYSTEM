@@ -5,7 +5,7 @@ import {
 import { draggableHelper } from '../../../utils/draggable.helper';
 import { DataModel } from '../../../data/data.model.interface';
 import { dataModelManager } from '../../../data/data.model.manager';
-import { Destroyable } from '@barca/shared';
+import { Destroyable } from '@data-studio/shared';
 
 @Component({
   selector: 'app-measure-area',

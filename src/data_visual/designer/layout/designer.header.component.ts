@@ -8,7 +8,7 @@ import { FilterTools, HelperTools, MoreTools } from './overlay.template';
 import { ActivatedRoute } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
 import { imageDimensions$ } from '../utils/common';
-import { ComponentRepositoryManager, Destroyable, Dimensions } from '@barca/shared';
+import { ComponentRepositoryManager, Destroyable, Dimensions } from '@data-studio/shared';
 
 @Component({
   selector: 'app-designer-header',

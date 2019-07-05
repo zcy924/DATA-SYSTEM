@@ -10,7 +10,7 @@ import { WordCloudChartGraphic } from './chart/word.cloud.chart.graphic';
 import { GaugeChartGraphic } from './chart/gauge.chart.graphic';
 import { RingChartGraphic } from './chart/ring.chart.graphic';
 import { LinesChartGraphic } from './chart/lines.chart.graphic';
-import { ComponentRepository } from '@barca/shared/component/component.repository';
+import { ComponentRepository } from '@data-studio/shared';
 
 const compRepo = new ComponentRepository('standard', '标准组件库');
 

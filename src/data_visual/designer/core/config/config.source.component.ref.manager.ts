@@ -1,6 +1,6 @@
 import {ComponentRef} from '@angular/core';
 import { session } from '../../utils/session';
-import { ConfigSourceComponent } from '@barca/shared';
+import { ConfigSourceComponent } from '@data-studio/shared';
 
 /**
  * 缓存应用中创建的GraphConfigComponent

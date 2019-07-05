@@ -1,6 +1,6 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { grabHelper } from '../designer.header.component';
-import { ComponentRepositoryManager } from '../../../shared/component/component.repository.manager';
+import { ComponentRepositoryManager } from '@data-studio/shared';
 import { session } from '../../utils/session';
 
 @Component({

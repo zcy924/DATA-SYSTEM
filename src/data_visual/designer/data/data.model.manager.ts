@@ -1,7 +1,7 @@
 import { Dataset, DataModel } from './data.model.interface';
 import { Observable, Subject } from 'rxjs';
 import { session } from '../utils/session';
-import { DataSourceConfigSet, Destroyable } from '@barca/shared';
+import { DataSourceConfigSet, Destroyable } from '@data-studio/shared';
 
 /**
  * 该类不可以跟DataSourceManager合并 DataModelPlugin只认DataModelManager说话

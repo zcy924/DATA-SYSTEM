@@ -1,5 +1,5 @@
 import { IPlugin } from './plugin';
-import { EventBus, IPage } from '@barca/shared';
+import { EventBus, IPage } from '@data-studio/shared';
 
 export class PluginManager {
   constructor(private _page: IPage) {

@@ -1,6 +1,6 @@
 import {Region} from '../core/structure/region/region';
 import { IPlugin } from './plugin';
-import { EventBus } from '@barca/shared';
+import { EventBus } from '@data-studio/shared';
 
 enum SelectStatus {
   default, single, multi

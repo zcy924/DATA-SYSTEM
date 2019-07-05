@@ -1,6 +1,6 @@
 import {ChartGraphic} from '../chart.graphic';
 import {DefaultGraphicView} from '../../default.graphic.view';
-import { IGraphicView } from '@barca/shared/core/graphic/graphic.view';
+import { IGraphicView } from '@data-studio/shared';
 
 enum ChartState {
   uninitialized, initialized, normal, destroyed

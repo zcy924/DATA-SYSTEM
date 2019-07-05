@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
-import { BasePageConfigComponent } from '@barca/shared';
+import { BasePageConfigComponent } from '@data-studio/shared';
 
 @Component({
   selector: 'app-page-config',

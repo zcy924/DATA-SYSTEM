@@ -4,13 +4,12 @@ import { switchMap } from 'rxjs/operators';
 import { HttpResponse } from "@angular/common/http";
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { PersonalCenterService } from '../personal-center.service';
-import { ReportPage } from '../../../../data_visual/designer/core/structure/page/report/page.outer';
-import { session } from '../../../../data_visual/designer/utils/session';
-import { Runtime } from '../../../../data_visual/runtime';
 import { StandardCompRepo } from '../../../../data_visual/component.packages/standard';
 import { CustomCompRepo } from '../../../../data_visual/component.packages/custom';
 import { standardGeneratorRepo } from '../../../../data_visual/data.source.packages/mock';
-import { PageRuntime } from '../../../../data_visual/runtime/page.runtime';
+import { PageRuntime } from '@data-studio/runtime/lib/page.runtime';
+import { Runtime } from '@data-studio/runtime';
+
 
 
 @Component({

@@ -11,7 +11,7 @@ import {
   BasePageConfigComponent,
   DataSourceManager, Destroyable,
   IPage,
-} from '@barca/shared';
+} from '@data-studio/shared';
 import { session } from '../../../../utils/session';
 
 export class ReportPageKernel extends Destroyable implements IPage {

@@ -9,7 +9,7 @@ import {
   ViewChild
 } from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {ConfigSourceComponent} from '../../../shared/core/config/config.source.component';
+import {ConfigSourceComponent} from '@data-studio/shared';
 import {debounceTime} from 'rxjs/operators';
 
 @Component({

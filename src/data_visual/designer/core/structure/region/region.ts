@@ -2,7 +2,7 @@ import { GraphicWrapper } from '../graphic/graphic.wrapper';
 import { IReportPageInnerFacade } from '../page/report/page.interface';
 import { RegionModel, RegionState } from './region.model';
 import { RegionView } from './region.view';
-import { Destroyable, Coordinates, Dimensions, Rectangle, IRegion, IGraphicOption } from '@barca/shared';
+import { Destroyable, Coordinates, Dimensions, Rectangle, IRegion, IGraphicOption } from '@data-studio/shared';
 
 
 export abstract class Region extends Destroyable implements IRegion {

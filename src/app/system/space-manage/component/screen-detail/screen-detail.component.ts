@@ -4,11 +4,11 @@ import { SpaceManageService } from '../../space-manage.service';
 import { delay, switchMap } from 'rxjs/operators';
 import { HttpResponse } from '@angular/common/http';
 import { NzMessageService } from 'ng-zorro-antd';
-import { PageRuntime } from '../../../../../data_visual/runtime/page.runtime';
-import { Runtime } from '../../../../../data_visual/runtime/runtime';
-import { StandardCompRepo } from '../../../../../data_visual/component.packages/standard/main';
-import { CustomCompRepo } from '../../../../../data_visual/component.packages/custom/main';
-import { standardGeneratorRepo } from '../../../../../data_visual/data.source.packages/mock/main';
+import { PageRuntime } from '@data-studio/runtime/lib/page.runtime';
+import { Runtime } from '@data-studio/runtime';
+import { StandardCompRepo } from '../../../../../data_visual/component.packages/standard';
+import { CustomCompRepo } from '../../../../../data_visual/component.packages/custom';
+import { standardGeneratorRepo } from '../../../../../data_visual/data.source.packages/mock';
 
 
 @Component({

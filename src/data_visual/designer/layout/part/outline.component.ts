@@ -4,7 +4,7 @@ import { debounceTime, delay } from 'rxjs/operators';
 import { Region } from '../../core/structure/region/region';
 import { IReportPageInnerFacade } from '../../core/structure/page/report/page.interface';
 import { session } from '../../utils/session';
-import { Destroyable } from '@barca/shared';
+import { Destroyable } from '@data-studio/shared';
 
 
 @Component({

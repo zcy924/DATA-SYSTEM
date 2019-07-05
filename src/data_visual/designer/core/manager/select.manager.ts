@@ -1,6 +1,6 @@
 import { Region } from '../structure/region/region';
 import { RegionState } from '../structure/region/region.model';
-import { Destroyable } from '@barca/shared';
+import { Destroyable } from '@data-studio/shared';
 
 enum SelectStatus {
   default, single, multi

@@ -1,5 +1,5 @@
 import {DefaultGraphicView} from '../../default.graphic.view';
-import { IGraphic } from '@barca/shared/core/graphic/graphic';
+import { IGraphic } from '@data-studio/shared';
 
 interface CommentOption {
   text?: string;

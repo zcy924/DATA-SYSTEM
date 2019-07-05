@@ -10,7 +10,7 @@ import {
   GraphicOption, guid,
   IGraphic,
   IGraphicOption,
-} from '@barca/shared';
+} from '@data-studio/shared';
 import { ModelSource } from '../../model/model.source';
 
 

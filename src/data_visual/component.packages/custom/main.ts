@@ -1,7 +1,7 @@
 import { ClockGraphic } from './clock.graphic';
 import { FlipNumberGraphic } from './flip.number.graphic';
 import { TableGraphic } from './table.graphic';
-import { ComponentRepository } from '@barca/shared/component/component.repository';
+import { ComponentRepository } from '@data-studio/shared';
 
 const compRepo = new ComponentRepository('custom', '自定义组件库');
 

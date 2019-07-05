@@ -1,14 +1,9 @@
 import {
   AfterViewInit,
-  Component, EventEmitter, forwardRef, Input,
-  KeyValueDiffer,
-  KeyValueDiffers, NgZone,
-  Output, TemplateRef,
-  ViewChild,
+  Component, forwardRef, NgZone,
 } from '@angular/core';
 import {FormArray, FormControl, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
 
-import {NzModalService} from 'ng-zorro-antd';
 import {CustomControlValueAccessor} from './CustomControlValueAccessor';
 
 export const SERIES_CONFIG_VALUE_ACCESSOR: any = {

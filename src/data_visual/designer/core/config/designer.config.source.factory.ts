@@ -2,7 +2,7 @@ import { session } from '../../utils/session';
 
 import { ConfigSourceComponentRefManager } from './config.source.component.ref.manager';
 import { graphicConfigDefinitionMap } from '../../../components/graphic.config/graphic.config.definition.map';
-import { ConfigSourceComponent, IConfigSourceFactory, IConfigSourceOption, Type } from '@barca/shared';
+import { ConfigSourceComponent, IConfigSourceFactory, IConfigSourceOption, Type } from '@data-studio/shared';
 
 /**
  * 设计时 配置源工厂

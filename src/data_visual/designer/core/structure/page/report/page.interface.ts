@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { Region } from '../../region/region';
 import { ActionManager } from '../../../operate/action.manager';
 import { ConfigSourceManager } from '../../../config/config.source.manager';
-import { DataSourceManager } from '@barca/shared';
+import { DataSourceManager } from '@data-studio/shared';
 
 /**
  *

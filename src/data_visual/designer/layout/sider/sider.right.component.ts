@@ -8,10 +8,9 @@ import {
 import { NgForm } from '@angular/forms';
 import { DesignerBodyComponent } from '../designer.body.component';
 import { dataModelList } from '../../utils/dataModel';
-import { HttpClient } from '@angular/common/http';
 import { dataModelManager } from '../../data/data.model.manager';
 import { DataSourceConfigSetManager } from '../../data/data.source.config.set.manager';
-import { Destroyable } from '@barca/shared';
+import { Destroyable } from '@data-studio/shared';
 
 @Component({
   selector: 'app-sider-right',

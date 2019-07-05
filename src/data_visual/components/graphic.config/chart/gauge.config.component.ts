@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {NzModalService} from 'ng-zorro-antd';
-import {ConfigSourceComponent} from '../../../shared/core/config/config.source.component';
+import {ConfigSourceComponent} from '@data-studio/shared';
 
 import {removeUndefined} from '../../../designer/utils/common';
 import {debounceTime} from 'rxjs/operators';

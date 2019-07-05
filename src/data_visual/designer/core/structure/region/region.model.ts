@@ -1,5 +1,5 @@
 import { closestNum, pick } from '../../../utils/common';
-import { Coordinates, Dimensions, IRegionOption, ModelEventTarget, Rectangle } from '@barca/shared';
+import { Coordinates, Dimensions, IRegionOption, ModelEventTarget, Rectangle } from '@data-studio/shared';
 
 export enum RegionState {
   default, selected, multiSelected, activated

@@ -11,7 +11,7 @@ import {NgForm} from '@angular/forms';
 
 import {dataModelManager} from '../../../designer/data/data.model.manager';
 
-import {ConfigSourceComponent} from '../../../shared/core/config/config.source.component';
+import {ConfigSourceComponent} from '@data-studio/shared';
 import {ChartLineOption} from '../../../component.packages/standard/chart/line.chart.graphic';
 import {debounceTime} from 'rxjs/operators';
 import {removeUndefined} from '../../../designer/utils/common';

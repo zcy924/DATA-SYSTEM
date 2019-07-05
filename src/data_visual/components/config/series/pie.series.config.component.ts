@@ -14,7 +14,7 @@ import { draggableHelper } from '../../../designer/utils/draggable.helper';
 import { contextMenuHelper } from '../../../designer/core/helper/context.menu.helper';
 import { NzModalFilterComponent } from '../../graphic.config/common/filter.modal.component';
 import { PieSeriesConfig } from '../../../component.packages/standard/chart/echart.interface/series/pie.series';
-import { IDataSourceDimension } from '@barca/shared';
+import { IDataSourceDimension } from '@data-studio/shared';
 
 export const Pie_SERIES_CONFIG_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,

@@ -1,5 +1,5 @@
 import { IReportPageInnerFacade } from '../structure/page/report/page.interface';
-import { IComponentOption } from '@barca/shared';
+import { IComponentOption } from '@data-studio/shared';
 import { regionDefinitionMap } from '../structure/region/region.definition.map';
 import { Region } from '../structure/region/region';
 import { GraphicWrapper } from '../structure/graphic/graphic.wrapper';

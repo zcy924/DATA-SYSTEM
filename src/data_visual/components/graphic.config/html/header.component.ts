@@ -1,11 +1,20 @@
-import {AfterViewInit, Component, EventEmitter, KeyValueDiffer, KeyValueDiffers, OnInit, Output, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {ConfigSourceComponent} from '../../../shared/core/config/config.source.component';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  KeyValueDiffer,
+  KeyValueDiffers,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { ConfigSourceComponent } from '@data-studio/shared';
 
 @Component({
   selector: 'app-header-config',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.less']
+  styleUrls: ['./header.component.less'],
 })
 export class DataHeaderComponent extends ConfigSourceComponent implements AfterViewInit, OnInit {
 
@@ -15,7 +24,7 @@ export class DataHeaderComponent extends ConfigSourceComponent implements AfterV
 
   option = {
     text: '我是标题',
-    backgroundColor: undefined
+    backgroundColor: undefined,
   };
 
   private _differ: KeyValueDiffer<any, any>;

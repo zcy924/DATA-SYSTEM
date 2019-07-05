@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { Region } from '../../region/region';
 import { ReportPageInnerFacadeImpl } from './page.inner.facade';
 import { VERSION_INFO } from './page.utils';
-import { Destroyable, IFileStructure } from '@barca/shared';
+import { Destroyable, IFileStructure } from '@data-studio/shared';
 import { GraphicActionCreate } from '../../../operate/graphic.action.create';
 import { GraphicActionPaste } from '../../../operate/graphic.action.paste';
 import { addGraphicToPage } from '../../../operate/action.utils';

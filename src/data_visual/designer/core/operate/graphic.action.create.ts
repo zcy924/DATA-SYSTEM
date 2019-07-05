@@ -3,7 +3,7 @@ import { IReportPageInnerFacade } from '../structure/page/report/page.interface'
 import { Region } from '../structure/region/region';
 import { GraphicWrapper } from '../structure/graphic/graphic.wrapper';
 import { IAction } from './action';
-import { ComponentRepositoryManager, deepClone, IComponentOption } from '@barca/shared';
+import { ComponentRepositoryManager, deepClone, IComponentOption } from '@data-studio/shared';
 
 /**
  * 图表创建动作

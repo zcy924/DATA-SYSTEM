@@ -8,7 +8,7 @@ import { PieChartGraphic } from '../../../../../component.packages/standard/char
 import { resizeTipHelper } from '../../../helper/resize.tip.helper';
 import { contextMenuHelper } from '../../../helper/context.menu.helper';
 import { Region } from '../region';
-import { Dimensions } from '@barca/shared';
+import { Dimensions } from '@data-studio/shared';
 
 const template = `
 <div class="m-dashbox">

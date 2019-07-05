@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, EventEmitter, KeyValueDiffer, KeyValueDiffers, OnInit, Output, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {ConfigSourceComponent} from '../../../shared/core/config/config.source.component';
+import {ConfigSourceComponent} from '@data-studio/shared';
 
 @Component({
   selector: 'app-paragraph-config',

@@ -1,4 +1,4 @@
-import { IDataSourceDimension } from '@barca/shared';
+import { IDataSourceDimension } from '@data-studio/shared';
 
 /**
  * 用于数据模型选择面板的数据绑定

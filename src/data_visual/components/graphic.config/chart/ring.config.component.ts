@@ -4,19 +4,19 @@ import {
   KeyValueDiffer,
   KeyValueDiffers,
   OnInit,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { NgForm } from '@angular/forms';
 
-import {NzModalService} from 'ng-zorro-antd';
-import {ConfigSourceComponent} from '../../../shared/core/config/config.source.component';
-import {debounceTime} from 'rxjs/operators';
+import { NzModalService } from 'ng-zorro-antd';
+import { ConfigSourceComponent } from '@data-studio/shared';
+import { debounceTime } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 @Component({
   selector: 'app-ring-config',
   templateUrl: './map.config.component.html',
-  styleUrls: ['./map.config.component.less']
+  styleUrls: ['./map.config.component.less'],
 })
 export class RingConfigComponent extends ConfigSourceComponent implements AfterViewInit, OnInit {
 
@@ -32,11 +32,11 @@ export class RingConfigComponent extends ConfigSourceComponent implements AfterV
       subtext: '',
       x: 'center',
       textStyle: {
-        color: '#ccc'
-      }
+        color: '#ccc',
+      },
     },
     tooltip: {
-      show: false
+      show: false,
     },
     series: [{
       name: '访问来源',
@@ -49,41 +49,41 @@ export class RingConfigComponent extends ConfigSourceComponent implements AfterV
           color: '#fff',
           rich: {
             b: {
-              color: '#fff'
+              color: '#fff',
             },
             c: {
-              fontWeight: 'bold'
-            }
-          }
-        }
+              fontWeight: 'bold',
+            },
+          },
+        },
       },
       labelLine: {
         normal: {
           show: true,
           lineStyle: {
-            color: '#274862'
+            color: '#274862',
           },
-          length: 45
-        }
+          length: 45,
+        },
       },
       data: [{
         value: 335,
-        name: '危急'
+        name: '危急',
       },
         {
           value: 310,
-          name: '高危'
+          name: '高危',
         },
         {
           value: 234,
-          name: '中危'
+          name: '中危',
         },
         {
           value: 135,
-          name: '低危'
-        }
+          name: '低危',
+        },
       ],
-      z: 5
+      z: 5,
     },
       {
         type: 'pie',
@@ -93,18 +93,18 @@ export class RingConfigComponent extends ConfigSourceComponent implements AfterV
           itemStyle: {
             normal: {
               color: 'rgba(0,0,0,0)',
-              borderColor: 'rgba(0,0,0,0)'
-            }
-          }
+              borderColor: 'rgba(0,0,0,0)',
+            },
+          },
         }],
         labelLine: {
           normal: {
-            show: false
-          }
+            show: false,
+          },
         },
         z: 5,
         tooltip: {
-          show: false
+          show: false,
         },
         hoverAnimation: false,
         label: {
@@ -116,14 +116,14 @@ export class RingConfigComponent extends ConfigSourceComponent implements AfterV
               c: {
                 fontWeight: 'bold',
                 color: '#fff',
-                fontSize: 40
+                fontSize: 40,
               },
               text: {
-                color: '#5B7DA3'
-              }
-            }
-          }
-        }
+                color: '#5B7DA3',
+              },
+            },
+          },
+        },
       },
       {
         type: 'pie',
@@ -134,25 +134,25 @@ export class RingConfigComponent extends ConfigSourceComponent implements AfterV
             normal: {
               borderWidth: 2,
               color: 'rgba(0,0,0,0)',
-              borderColor: '#202D3C'
-            }
-          }
+              borderColor: '#202D3C',
+            },
+          },
         }],
         labelLine: {
           normal: {
-            show: false
-          }
+            show: false,
+          },
         },
         z: 1,
         tooltip: {
-          show: false
+          show: false,
         },
         hoverAnimation: false,
         label: {
           normal: {
-            show: false
-          }
-        }
+            show: false,
+          },
+        },
       },
       {
         name: 'x',
@@ -164,25 +164,25 @@ export class RingConfigComponent extends ConfigSourceComponent implements AfterV
             normal: {
               color: '#243443',
               shadowBlur: 50,
-              shadowColor: '#202E3B'
+              shadowColor: '#202E3B',
             },
             emphasis: {
               color: '#243443',
               shadowBlur: 50,
-              shadowColor: '#202E3B'
-            }
-          }
+              shadowColor: '#202E3B',
+            },
+          },
         }],
         labelLine: {
           normal: {
-            show: false
-          }
+            show: false,
+          },
         },
         z: 2,
         tooltip: {
-          show: false
+          show: false,
         },
-        hoverAnimation: false
+        hoverAnimation: false,
       },
       {
         name: 'x',
@@ -194,25 +194,25 @@ export class RingConfigComponent extends ConfigSourceComponent implements AfterV
             normal: {
               color: '#202E3B',
               shadowBlur: 50,
-              shadowColor: '#1C2834'
+              shadowColor: '#1C2834',
             },
             emphasis: {
               color: '#202E3B',
               shadowBlur: 50,
-              shadowColor: '#1C2834'
-            }
-          }
+              shadowColor: '#1C2834',
+            },
+          },
         }],
         labelLine: {
           normal: {
-            show: false
-          }
+            show: false,
+          },
         },
         z: 2,
         tooltip: {
-          show: false
+          show: false,
         },
-        hoverAnimation: false
+        hoverAnimation: false,
       },
       {
         name: 'x',
@@ -224,25 +224,25 @@ export class RingConfigComponent extends ConfigSourceComponent implements AfterV
             normal: {
               color: '#1C2834',
               shadowBlur: 50,
-              shadowColor: '#1b1e25'
+              shadowColor: '#1b1e25',
             },
             emphasis: {
               color: '#1C2834',
               shadowBlur: 50,
-              shadowColor: '#1b1e25'
-            }
-          }
+              shadowColor: '#1b1e25',
+            },
+          },
         }],
         labelLine: {
           normal: {
-            show: false
-          }
+            show: false,
+          },
         },
         z: 2,
         tooltip: {
-          show: false
+          show: false,
         },
-        hoverAnimation: false
+        hoverAnimation: false,
       },
       {
         name: 'x',
@@ -254,25 +254,25 @@ export class RingConfigComponent extends ConfigSourceComponent implements AfterV
             normal: {
               color: '#111A27',
               shadowBlur: 50,
-              shadowColor: '#1b1e25'
+              shadowColor: '#1b1e25',
             },
             emphasis: {
               color: '#111A27',
               shadowBlur: 50,
-              shadowColor: '#1b1e25'
-            }
-          }
+              shadowColor: '#1b1e25',
+            },
+          },
         }],
         labelLine: {
           normal: {
-            show: false
-          }
+            show: false,
+          },
         },
         z: 2,
         tooltip: {
-          show: false
+          show: false,
         },
-        hoverAnimation: false
+        hoverAnimation: false,
       },
       {
         name: 'x',
@@ -284,25 +284,25 @@ export class RingConfigComponent extends ConfigSourceComponent implements AfterV
             normal: {
               color: '#111A27',
               shadowBlur: 50,
-              shadowColor: '#1b1e25'
+              shadowColor: '#1b1e25',
             },
             emphasis: {
               color: '#111A27',
               shadowBlur: 50,
-              shadowColor: '#1b1e25'
-            }
-          }
+              shadowColor: '#1b1e25',
+            },
+          },
         }],
         labelLine: {
           normal: {
-            show: false
-          }
+            show: false,
+          },
         },
         z: 2,
         tooltip: {
-          show: false
+          show: false,
         },
-        hoverAnimation: false
+        hoverAnimation: false,
       },
       {
         name: 'x',
@@ -312,29 +312,29 @@ export class RingConfigComponent extends ConfigSourceComponent implements AfterV
           normal: {
             color: '#0C141C',
             shadowBlur: 50,
-            shadowColor: '#1b1e25'
+            shadowColor: '#1b1e25',
           },
           emphasis: {
             color: '#0C141C',
             shadowBlur: 50,
-            shadowColor: '#1b1e25'
-          }
+            shadowColor: '#1b1e25',
+          },
         },
         data: [{
-          value: 1
+          value: 1,
         }],
         labelLine: {
           normal: {
-            show: false
-          }
+            show: false,
+          },
         },
         z: 2,
         tooltip: {
-          show: false
+          show: false,
         },
-        hoverAnimation: false
-      }
-    ]
+        hoverAnimation: false,
+      },
+    ],
   };
 
   private _differ: KeyValueDiffer<any, any>;
@@ -359,7 +359,7 @@ export class RingConfigComponent extends ConfigSourceComponent implements AfterV
         key: 'option',
         oldValue: this._innerOption,
         newValue: this.option,
-        option: this.option
+        option: this.option,
       });
       this._innerOption = this.option;
     });

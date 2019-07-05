@@ -1,5 +1,4 @@
-import { IGraphicView } from '@barca/shared/core/graphic/graphic.view';
-import { ViewEventTarget } from '@barca/shared';
+import { IGraphicView, ViewEventTarget } from '@data-studio/shared';
 
 export abstract class DefaultGraphicView implements IGraphicView {
   $element: JQuery;

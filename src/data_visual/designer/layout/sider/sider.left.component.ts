@@ -3,19 +3,18 @@ import {
   Component,
   ComponentFactory, ComponentFactoryResolver, ComponentRef,
   KeyValueDiffer, NgZone, Type, ViewChild,
-  ViewContainerRef, ViewRef
+  ViewContainerRef, ViewRef,
 } from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {BasePageConfigComponent} from '../../../shared/core/page/page.config';
 import {DataHeaderComponent} from '../../../components/graphic.config/html/header.component';
-import {ConfigSourceComponent} from '../../../shared/core/config/config.source.component';
 import {DesignerBodyComponent} from '../designer.body.component';
 import { session } from '../../utils/session';
+import { ConfigSourceComponent, BasePageConfigComponent } from '@data-studio/shared';
 
 @Component({
   selector: 'app-sider-left',
   templateUrl: './sider.left.component.html',
-  styleUrls: ['./sider.left.component.less']
+  styleUrls: ['./sider.left.component.less'],
 })
 export class SiderLeftComponent implements AfterViewInit {
 

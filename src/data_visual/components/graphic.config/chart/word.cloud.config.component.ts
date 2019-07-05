@@ -4,20 +4,20 @@ import {
   KeyValueDiffer,
   KeyValueDiffers,
   OnInit,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {NzModalService} from 'ng-zorro-antd';
-import {ConfigSourceComponent} from '../../../shared/core/config/config.source.component';
+import { NgForm } from '@angular/forms';
+import { NzModalService } from 'ng-zorro-antd';
+import { ConfigSourceComponent } from '@data-studio/shared';
 
-import {removeUndefined} from '../../../designer/utils/common';
-import {debounceTime} from 'rxjs/operators';
+import { removeUndefined } from '../../../designer/utils/common';
+import { debounceTime } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 @Component({
   selector: 'app-word-cloud-config',
   templateUrl: './map.config.component.html',
-  styleUrls: ['./map.config.component.less']
+  styleUrls: ['./map.config.component.less'],
 })
 export class WordCloudConfigComponent extends ConfigSourceComponent implements AfterViewInit, OnInit {
 
@@ -30,13 +30,13 @@ export class WordCloudConfigComponent extends ConfigSourceComponent implements A
       x: 'left',
       textStyle: {
         fontSize: 23,
-        color: 'rgba(255, 255, 255, 0.8)'
-      }
+        color: 'rgba(255, 255, 255, 0.8)',
+      },
 
     },
     backgroundColor: 'rgba(13, 16, 41, 0.12)',
     tooltip: {
-      show: true
+      show: true,
     },
     series: [{
       name: '热点分析',
@@ -51,94 +51,94 @@ export class WordCloudConfigComponent extends ConfigSourceComponent implements A
       textPadding: 0,
       autoSize: {
         enable: true,
-        minSize: 6
+        minSize: 6,
       },
       textStyle: {
         normal: {
-          color: function () {
+          color: function() {
             return 'rgb(' + [
               Math.round(Math.random() * 255),
               Math.round(Math.random() * 255),
-              Math.round(Math.random() * 255)
+              Math.round(Math.random() * 255),
             ].join(',') + ')';
-          }
+          },
         },
         emphasis: {
           shadowBlur: 10,
-          shadowColor: '#333'
-        }
+          shadowColor: '#333',
+        },
       },
       data: [{
         name: 'Jayfee',
-        value: 666
+        value: 666,
       }, {
         name: 'Nancy',
-        value: 520
+        value: 520,
       }, {
         name: '生活资源',
-        value: '999'
+        value: '999',
       }, {
         name: '供热管理',
-        value: '888'
+        value: '888',
       }, {
         name: '供气质量',
-        value: '777'
+        value: '777',
       }, {
         name: '生活用水管理',
-        value: '688'
+        value: '688',
       }, {
         name: '一次供水问题',
-        value: '588'
+        value: '588',
       }, {
         name: '交通运输',
-        value: '516'
+        value: '516',
       }, {
         name: '城市交通',
-        value: '515'
+        value: '515',
       }, {
         name: '环境保护',
-        value: '483'
+        value: '483',
       }, {
         name: '房地产管理',
-        value: '462'
+        value: '462',
       }, {
         name: '城乡建设',
-        value: '449'
+        value: '449',
       }, {
         name: '社会保障与福利',
-        value: '429'
+        value: '429',
       }, {
         name: '社会保障',
-        value: '407'
+        value: '407',
       }, {
         name: '文体与教育管理',
-        value: '406'
+        value: '406',
       }, {
         name: '公共安全',
-        value: '406'
+        value: '406',
       }, {
         name: '公交运输管理',
-        value: '386'
+        value: '386',
       }, {
         name: '出租车运营管理',
-        value: '385'
+        value: '385',
       }, {
         name: '供热管理',
-        value: '375'
+        value: '375',
       }, {
         name: '市容环卫',
-        value: '355'
+        value: '355',
       }, {
         name: '自然资源管理',
-        value: '355'
+        value: '355',
       }, {
         name: '粉尘污染',
-        value: '335'
+        value: '335',
       }, {
         name: '噪声污染',
-        value: '324'
-      }]
-    }]
+        value: '324',
+      }],
+    }],
   };
 
   private _differ: KeyValueDiffer<any, any>;
@@ -164,7 +164,7 @@ export class WordCloudConfigComponent extends ConfigSourceComponent implements A
         key: 'option',
         oldValue: this._innerOption,
         newValue: this.option,
-        option: this.option
+        option: this.option,
       });
 
       this._innerOption = this.option;

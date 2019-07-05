@@ -1,6 +1,6 @@
 import { CommentAuxiliary } from './graphic.view/comment.auxiliary';
 import { Observable, Subscription } from 'rxjs';
-import { DefaultGraphic } from '@barca/shared/core/graphic/default.graphic';
+import { DefaultGraphic } from '@data-studio/shared';
 
 const template = `
 <div class="graphic m-graphic m-graphic-comment z-mode-edit">

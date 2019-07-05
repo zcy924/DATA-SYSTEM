@@ -1,6 +1,6 @@
 import { Observable, Subscription } from 'rxjs';
 import { ImageAuxiliary } from './graphic.view/image.auxiliary';
-import { DefaultGraphic } from '@barca/shared/core/graphic/default.graphic';
+import { DefaultGraphic } from '@data-studio/shared';
 import * as _ from 'lodash';
 
 const template = `

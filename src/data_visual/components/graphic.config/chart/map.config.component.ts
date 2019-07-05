@@ -4,43 +4,43 @@ import {
   KeyValueDiffer,
   KeyValueDiffers,
   OnInit,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {dataModelManager} from '../../../designer/data/data.model.manager';
+import { NgForm } from '@angular/forms';
+import { dataModelManager } from '../../../designer/data/data.model.manager';
 
-import {NzModalService} from 'ng-zorro-antd';
-import {ConfigSourceComponent} from '../../../shared/core/config/config.source.component';
+import { NzModalService } from 'ng-zorro-antd';
+import { ConfigSourceComponent } from '@data-studio/shared';
 
-import {removeUndefined} from '../../../designer/utils/common';
-import {debounceTime} from 'rxjs/operators';
+import { removeUndefined } from '../../../designer/utils/common';
+import { debounceTime } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { convertData, provinceCityMap } from './geo.map';
 
 const data = [
-  {name: '济南市', value: 390},
-  {name: '菏泽市', value: 158},
-  {name: '德州市', value: 252},
-  {name: '聊城市', value: 99},
-  {name: '泰安市', value: 189},
-  {name: '临沂市', value: 52},
-  {name: '淄博市', value: 158},
-  {name: '枣庄市', value: 152},
-  {name: '滨州市', value: 189},
-  {name: '潍坊市', value: 160},
-  {name: '东营市', value: 80},
-  {name: '青岛市', value: 180},
-  {name: '烟台市', value: 190},
-  {name: '威海市', value: 290},
-  {name: '日照市', value: 190},
-  {name: '济宁市', value: 190},
-  {name: '莱芜市', value: 290},
+  { name: '济南市', value: 390 },
+  { name: '菏泽市', value: 158 },
+  { name: '德州市', value: 252 },
+  { name: '聊城市', value: 99 },
+  { name: '泰安市', value: 189 },
+  { name: '临沂市', value: 52 },
+  { name: '淄博市', value: 158 },
+  { name: '枣庄市', value: 152 },
+  { name: '滨州市', value: 189 },
+  { name: '潍坊市', value: 160 },
+  { name: '东营市', value: 80 },
+  { name: '青岛市', value: 180 },
+  { name: '烟台市', value: 190 },
+  { name: '威海市', value: 290 },
+  { name: '日照市', value: 190 },
+  { name: '济宁市', value: 190 },
+  { name: '莱芜市', value: 290 },
 ];
 
 @Component({
   selector: 'app-map-config',
   templateUrl: './map.config.component.html',
-  styleUrls: ['./map.config.component.less']
+  styleUrls: ['./map.config.component.less'],
 })
 export class MapConfigComponent extends ConfigSourceComponent implements AfterViewInit, OnInit {
 
@@ -54,19 +54,19 @@ export class MapConfigComponent extends ConfigSourceComponent implements AfterVi
       subtext: '',
       x: 'center',
       textStyle: {
-        color: '#ccc'
-      }
+        color: '#ccc',
+      },
     },
 
     tooltip: {
       trigger: 'item',
-      formatter: function (params) {
-        if (typeof(params.value)[2] === 'undefined') {
+      formatter: function(params) {
+        if (typeof (params.value)[2] === 'undefined') {
           return params.name + ' : ' + params.value;
         } else {
           return params.name + ' : ' + params.value[2];
         }
-      }
+      },
     },
     legend: {
       orient: 'vertical',
@@ -74,8 +74,8 @@ export class MapConfigComponent extends ConfigSourceComponent implements AfterVi
       x: 'right',
       data: ['pm2.5'],
       textStyle: {
-        color: '#fff'
-      }
+        color: '#fff',
+      },
     },
     visualMap: {
       show: true,
@@ -99,18 +99,18 @@ export class MapConfigComponent extends ConfigSourceComponent implements AfterVi
         // color: ['#00467F', '#A5CC82'] // 蓝绿
         // color: ['#00467F', '#A5CC82'] // 蓝绿
 
-      }
+      },
     },
     geo: {
       show: true,
       map: '山东',
       label: {
         normal: {
-          show: false
+          show: false,
         },
         emphasis: {
           show: false,
-        }
+        },
       },
       roam: true,
       itemStyle: {
@@ -119,12 +119,12 @@ export class MapConfigComponent extends ConfigSourceComponent implements AfterVi
           borderColor: '#3fdaff',
           borderWidth: 2,
           shadowColor: 'rgba(63, 218, 255, 0.5)',
-          shadowBlur: 20
+          shadowBlur: 20,
         },
         emphasis: {
           areaColor: '#2B91B7',
-        }
-      }
+        },
+      },
     },
     series: [
       {
@@ -132,24 +132,24 @@ export class MapConfigComponent extends ConfigSourceComponent implements AfterVi
         type: 'scatter',
         coordinateSystem: 'geo',
         data: convertData(data, provinceCityMap['山东']),
-        symbolSize: function (val) {
+        symbolSize: function(val) {
           return val[2] / 20;
         },
         label: {
           normal: {
             formatter: '{b} 123',
             position: 'right',
-            show: true
+            show: true,
           },
           emphasis: {
-            show: true
-          }
+            show: true,
+          },
         },
         itemStyle: {
           normal: {
-            color: '#F4E925'
-          }
-        }
+            color: '#F4E925',
+          },
+        },
       },
       {
         type: 'map',
@@ -159,14 +159,14 @@ export class MapConfigComponent extends ConfigSourceComponent implements AfterVi
         showLegendSymbol: false, // 存在legend时显示
         label: {
           normal: {
-            show: false
+            show: false,
           },
           emphasis: {
             show: false,
             textStyle: {
-              color: '#fff'
-            }
-          }
+              color: '#fff',
+            },
+          },
         },
         roam: true,
         itemStyle: {
@@ -175,45 +175,45 @@ export class MapConfigComponent extends ConfigSourceComponent implements AfterVi
             borderColor: '#FFFFFF',
           },
           emphasis: {
-            areaColor: '#2B91B7'
-          }
+            areaColor: '#2B91B7',
+          },
         },
         animation: false,
-        data: data
+        data: data,
       },
       {
         name: 'Top 5',
         type: 'effectScatter',
         coordinateSystem: 'geo',
-        data: convertData(data.sort(function (a, b) {
+        data: convertData(data.sort(function(a, b) {
           return b.value - a.value;
         }).slice(0, 5), provinceCityMap['山东']),
-        symbolSize: function (val) {
+        symbolSize: function(val) {
           return val[2] / 15;
         },
         showEffectOn: 'render',
         rippleEffect: {
-          brushType: 'stroke'
+          brushType: 'stroke',
         },
         hoverAnimation: true,
         label: {
           normal: {
             formatter: '{b}',
             position: 'right',
-            show: true
-          }
+            show: true,
+          },
         },
         itemStyle: {
           normal: {
             color: '#F4E925',
             shadowBlur: 10,
-            shadowColor: '#05C3F9'
-          }
+            shadowColor: '#05C3F9',
+          },
         },
-        zlevel: 1
+        zlevel: 1,
       },
 
-    ]
+    ],
   };
 
   private _differ: KeyValueDiffer<any, any>;
@@ -243,7 +243,7 @@ export class MapConfigComponent extends ConfigSourceComponent implements AfterVi
         key: 'option',
         oldValue: this._innerOption,
         newValue: this.option,
-        option: this.option
+        option: this.option,
       });
       this._innerOption = this.option;
 

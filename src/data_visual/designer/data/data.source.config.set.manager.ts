@@ -1,5 +1,5 @@
 import { array } from './test';
-import { BaseStorage, DataSourceConfigSet } from '@barca/shared';
+import { BaseStorage, DataSourceConfigSet } from '@data-studio/shared';
 
 
 /**

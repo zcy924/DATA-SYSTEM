@@ -3,7 +3,7 @@ import { ReportPageKernel } from './page.kernel';
 import { RepaintMask, repaintMaskGenerator } from '../../../helper/mask.helper';
 import { boxSelectHelper } from '../../../helper/box.select.helper';
 
-import { BasePageConfigComponent, ViewEventTarget } from '@barca/shared';
+import { BasePageConfigComponent, ViewEventTarget } from '@data-studio/shared';
 
 const TEMPLATE = `
     <div class="report-region">

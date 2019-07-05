@@ -1,4 +1,4 @@
-import { ComponentRepositoryManager, GeneratorRepositoryManager, IFileStructure } from '@barca/shared';
+import { ComponentRepositoryManager, GeneratorRepositoryManager, IFileStructure } from '@data-studio/shared';
 import { StandardCompRepo } from '../../component.packages/standard';
 import { CustomCompRepo } from '../../component.packages/custom';
 import { standardGeneratorRepo } from '../../data.source.packages/mock';

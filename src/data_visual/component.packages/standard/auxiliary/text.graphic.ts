@@ -1,6 +1,6 @@
 import { TextAuxiliary } from './graphic.view/text.auxiliary';
 import { Observable, Subscription } from 'rxjs';
-import { DefaultGraphic } from '@barca/shared/core/graphic/default.graphic';
+import { DefaultGraphic } from '@data-studio/shared';
 
 const template = `
 <div class="graphic m-graphic m-graphic-text z-mode-edit">

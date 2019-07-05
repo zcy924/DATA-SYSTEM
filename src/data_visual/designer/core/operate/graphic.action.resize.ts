@@ -1,6 +1,6 @@
 import { Region } from '../structure/region/region';
 import { IAction } from './action';
-import { Rectangle } from '@barca/shared';
+import { Rectangle } from '@data-studio/shared';
 
 /**
  * 图表缩放动作

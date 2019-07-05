@@ -1,6 +1,6 @@
 import { BehaviorSubject, combineLatest, Observable, Subject, Subscription } from 'rxjs';
 import { ConfigSourceManager } from '../config/config.source.manager';
-import { DataSourceManager, Destroyable, GraphicOption } from '@barca/shared';
+import { DataSourceManager, Destroyable, GraphicOption } from '@data-studio/shared';
 import * as _ from 'lodash';
 
 export class ModelSource extends Destroyable {

@@ -1,6 +1,6 @@
 import { Region } from '../structure/region/region';
 import { IAction } from './action';
-import { Coordinates } from '@barca/shared';
+import { Coordinates } from '@data-studio/shared';
 
 /**
  * 图表移动动作

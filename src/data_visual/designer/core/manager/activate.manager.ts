@@ -1,7 +1,7 @@
 import { Region } from '../structure/region/region';
 import { ReportPageKernel } from '../structure/page/report/page.kernel';
 import { RegionState } from '../structure/region/region.model';
-import { Destroyable } from '@barca/shared';
+import { Destroyable } from '@data-studio/shared';
 
 /**
  * 每一个设计时页面都有一个ActivateManager用来管理当前被激活的区域

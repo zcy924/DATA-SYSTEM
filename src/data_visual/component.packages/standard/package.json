@@ -1,5 +1,5 @@
 {
-  "name": "@barca/standard",
+  "name": "@data-studio/standard",
   "version": "1.0.9",
   "description": "标准组件库",
   "main": "index.js",

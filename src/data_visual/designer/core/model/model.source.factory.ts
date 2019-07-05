@@ -1,5 +1,5 @@
 import { ConfigSourceManager } from '../config/config.source.manager';
-import { DataSourceManager, Destroyable, IConfigSourceOption } from '@barca/shared';
+import { DataSourceManager, Destroyable, IConfigSourceOption } from '@data-studio/shared';
 import { ModelSource } from './model.source';
 import { dataSourceConfigSetManager } from '../../data/data.source.config.set.manager';
 

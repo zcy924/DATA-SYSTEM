@@ -7,23 +7,23 @@ import {
   OnInit,
   Output,
   TemplateRef,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { NgForm } from '@angular/forms';
 
-import {dataModelManager} from '../../../designer/data/data.model.manager';
+import { dataModelManager } from '../../../designer/data/data.model.manager';
 
-import {NzModalService} from 'ng-zorro-antd';
-import {ConfigSourceComponent} from '../../../shared/core/config/config.source.component';
-import {ChartPieConfig} from '../../../component.packages/standard/chart/pie.chart.graphic';
-import {debounceTime} from 'rxjs/operators';
-import {removeUndefined} from '../../../designer/utils/common';
-import { IDataSourceDimension } from '@barca/shared';
+import { NzModalService } from 'ng-zorro-antd';
+import { ConfigSourceComponent } from '@data-studio/shared';
+import { ChartPieConfig } from '../../../component.packages/standard/chart/pie.chart.graphic';
+import { debounceTime } from 'rxjs/operators';
+import { removeUndefined } from '../../../designer/utils/common';
+import { IDataSourceDimension } from '@data-studio/shared';
 
 @Component({
   selector: 'app-pie-config',
   templateUrl: './pie.config.component.html',
-  styleUrls: ['./pie.config.component.less']
+  styleUrls: ['./pie.config.component.less'],
 })
 export class PieConfigComponent extends ConfigSourceComponent implements AfterViewInit, OnInit {
 
@@ -41,8 +41,8 @@ export class PieConfigComponent extends ConfigSourceComponent implements AfterVi
       bottom: 'auto',
       backgroundColor: 'transparent',
       textStyle: {
-        align: 'left'
-      }
+        align: 'left',
+      },
     },
     grid: {
       show: false,
@@ -51,12 +51,12 @@ export class PieConfigComponent extends ConfigSourceComponent implements AfterVi
       left: '10%',
       right: '10%',
       top: 60,
-      bottom: 60
+      bottom: 60,
     },
     series: [{
       name: '系列1',
-      type: 'pie'
-    }]
+      type: 'pie',
+    }],
   };
 
   seriesX: Array<IDataSourceDimension> = [];
@@ -89,7 +89,7 @@ export class PieConfigComponent extends ConfigSourceComponent implements AfterVi
     // this.option.dataset = datasetManager.current;
     this.option.series.push({
       type: 'pie',
-      name: 'test'
+      name: 'test',
     });
     this.output.emit(this.option);
   }
@@ -103,7 +103,7 @@ export class PieConfigComponent extends ConfigSourceComponent implements AfterVi
         key: 'option',
         oldValue: this._innerOption,
         newValue: value,
-        option: value
+        option: value,
       });
       this._innerOption = value;
 

@@ -1,8 +1,8 @@
-import { BasePageConfigComponent, Destroyable } from '@barca/shared';
+import { BasePageConfigComponent, Destroyable } from '@data-studio/shared';
 import { ComponentRef } from '@angular/core';
 import { session } from '../../../../utils/session';
 import { PageConfigComponent } from '../../../../../components/page.config/page.config.component';
-import { PageConfigRuntime } from '../../../../../runtime/page.config.runtime';
+import { PageConfigRuntime } from '@data-studio/runtime/lib/page.config.runtime';
 
 export class PageConfig extends Destroyable {
 

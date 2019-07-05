@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import {Observable, Subscription} from 'rxjs';
-import { DefaultGraphic } from '@barca/shared/core/graphic/default.graphic';
+import { DefaultGraphic } from '@data-studio/shared';
 
 const template = `
 <div class="flip-number-wrapper" style="justify-content: center;">

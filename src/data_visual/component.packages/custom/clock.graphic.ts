@@ -1,6 +1,6 @@
 import * as moment from 'moment';
 import {Observable} from 'rxjs';
-import { DefaultGraphic } from '@barca/shared/core/graphic/default.graphic';
+import { DefaultGraphic } from '@data-studio/shared';
 
 const template = `
 <div class="time-chart-container" 

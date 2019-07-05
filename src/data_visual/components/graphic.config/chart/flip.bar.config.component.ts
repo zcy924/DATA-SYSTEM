@@ -4,16 +4,16 @@ import {
   KeyValueDiffer,
   KeyValueDiffers,
   OnInit,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {dataModelManager} from '../../../designer/data/data.model.manager';
+import { NgForm } from '@angular/forms';
+import { dataModelManager } from '../../../designer/data/data.model.manager';
 
-import {NzModalService} from 'ng-zorro-antd';
-import {ConfigSourceComponent} from '../../../shared/core/config/config.source.component';
+import { NzModalService } from 'ng-zorro-antd';
+import { ConfigSourceComponent } from '@data-studio/shared';
 
-import {removeUndefined} from '../../../designer/utils/common';
-import {debounceTime} from 'rxjs/operators';
+import { removeUndefined } from '../../../designer/utils/common';
+import { debounceTime } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 var xData = ['正式', '预备', '支部', '总支', '党委'];
@@ -24,7 +24,7 @@ var data = [13.7, 13.4, 13.5, 16.1, 17.4];
 @Component({
   selector: 'app-flip-bar-config',
   templateUrl: './map.config.component.html',
-  styleUrls: ['./map.config.component.less']
+  styleUrls: ['./map.config.component.less'],
 })
 export class FlipBarConfigComponent extends ConfigSourceComponent implements AfterViewInit, OnInit {
 
@@ -36,7 +36,7 @@ export class FlipBarConfigComponent extends ConfigSourceComponent implements Aft
       text: '',
       textStyle: {
         color: '#fff',
-        fontSize: '22'
+        fontSize: '22',
       },
       subtextStyle: {
         color: '#90979c',
@@ -57,19 +57,19 @@ export class FlipBarConfigComponent extends ConfigSourceComponent implements Aft
       right: 15,
       bottom: 30,
       textStyle: {
-        color: '#fff'
-      }
+        color: '#fff',
+      },
     },
     yAxis: [{
       type: 'category',
       axisTick: {
-        show: false
+        show: false,
       },
       axisLine: {
         show: false,
         lineStyle: {
           color: '#363e83',
-        }
+        },
       },
       axisLabel: {
         inside: false,
@@ -86,38 +86,38 @@ export class FlipBarConfigComponent extends ConfigSourceComponent implements Aft
     }, {
       type: 'category',
       axisLine: {
-        show: true
+        show: true,
       },
       axisTick: {
-        show: false
+        show: false,
       },
       axisLabel: {
-        show: false
+        show: false,
       },
       splitArea: {
-        show: false
+        show: false,
       },
       splitLine: {
-        show: false
+        show: false,
       },
       data: xData,
     }],
     xAxis: {
       type: 'value',
       axisTick: {
-        show: false
+        show: false,
       },
       axisLine: {
         show: true,
         lineStyle: {
           color: '#2f3640',
-        }
+        },
       },
       splitLine: {
         show: false,
         lineStyle: {
           color: '#2f3640 ',
-        }
+        },
       },
       axisLabel: {
         textStyle: {
@@ -136,18 +136,18 @@ export class FlipBarConfigComponent extends ConfigSourceComponent implements Aft
           show: true,
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
             offset: 0,
-            color: '#00c0e9'
+            color: '#00c0e9',
           }, {
             offset: 1,
-            color: '#3b73cf'
+            color: '#3b73cf',
           }]),
           barBorderRadius: 50,
           borderWidth: 0,
         },
         emphasis: {
           shadowBlur: 15,
-          shadowColor: 'rgba(105,123, 214, 0.7)'
-        }
+          shadowColor: 'rgba(105,123, 214, 0.7)',
+        },
       },
       zlevel: 2,
       barWidth: '20%',
@@ -168,12 +168,12 @@ export class FlipBarConfigComponent extends ConfigSourceComponent implements Aft
               shadowOffsetX: 0,
               shadowOffsetY: 2,
             },
-          }
+          },
         },
         barWidth: '20%',
-        data: [30, 30, 30, 30, 30]
-      }
-    ]
+        data: [30, 30, 30, 30, 30],
+      },
+    ],
   };
 
   private _differ: KeyValueDiffer<any, any>;
@@ -203,7 +203,7 @@ export class FlipBarConfigComponent extends ConfigSourceComponent implements Aft
         key: 'option',
         oldValue: this._innerOption,
         newValue: this.option,
-        option: this.option
+        option: this.option,
       });
       this._innerOption = this.option;
 

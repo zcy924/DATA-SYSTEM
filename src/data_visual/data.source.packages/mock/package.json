@@ -1,5 +1,5 @@
 {
-  "name": "@barca/mock",
+  "name": "@data-studio/mock",
   "version": "1.0.6",
   "description": "数据源生成器库",
   "main": "index.js",

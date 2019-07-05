@@ -4,22 +4,22 @@ import {
   KeyValueDiffer,
   KeyValueDiffers,
   OnInit,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { NgForm } from '@angular/forms';
 
-import {NzModalService} from 'ng-zorro-antd';
-import {ConfigSourceComponent} from '../../../shared/core/config/config.source.component';
+import { NzModalService } from 'ng-zorro-antd';
+import { ConfigSourceComponent } from '@data-studio/shared';
 
-import {removeUndefined} from '../../../designer/utils/common';
-import {debounceTime} from 'rxjs/operators';
-import {ChartBarOption} from '../../../component.packages/standard/chart/bar.chart.graphic';
+import { removeUndefined } from '../../../designer/utils/common';
+import { debounceTime } from 'rxjs/operators';
+import { ChartBarOption } from '../../../component.packages/standard/chart/bar.chart.graphic';
 import * as _ from 'lodash';
 
 @Component({
   selector: 'app-bar-config',
   templateUrl: './bar.config.component.html',
-  styleUrls: ['./bar.config.component.less']
+  styleUrls: ['./bar.config.component.less'],
 })
 export class BarConfigComponent extends ConfigSourceComponent implements AfterViewInit, OnInit {
 
@@ -35,8 +35,8 @@ export class BarConfigComponent extends ConfigSourceComponent implements AfterVi
       bottom: 'auto',
       backgroundColor: 'transparent',
       textStyle: {
-        align: 'left'
-      }
+        align: 'left',
+      },
     },
     tooltip: {},
     grid: {
@@ -46,22 +46,22 @@ export class BarConfigComponent extends ConfigSourceComponent implements AfterVi
       left: '10%',
       right: '10%',
       top: 60,
-      bottom: 60
+      bottom: 60,
     },
     xAxis: {
       type: 'category',
       nameGap: 10,
       axisLabel: {},
-      axisTick: {}
+      axisTick: {},
     },
     yAxis: {
       axisLabel: {},
-      axisTick: {}
+      axisTick: {},
     },
     series: [{
       name: '系列1',
-      type: 'bar'
-    }]
+      type: 'bar',
+    }],
   };
 
   private _differ: KeyValueDiffer<any, any>;
@@ -89,7 +89,7 @@ export class BarConfigComponent extends ConfigSourceComponent implements AfterVi
         key: 'option',
         oldValue: this._innerOption,
         newValue: value,
-        option: value
+        option: value,
       });
 
     });

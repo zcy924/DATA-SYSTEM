@@ -1,11 +1,20 @@
-import {AfterViewInit, Component, EventEmitter, KeyValueDiffer, KeyValueDiffers, OnInit, Output, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {ConfigSourceComponent} from '../../../shared/core/config/config.source.component';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  KeyValueDiffer,
+  KeyValueDiffers,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { ConfigSourceComponent } from '@data-studio/shared';
 
 @Component({
   selector: 'app-comment-config',
   templateUrl: './comment.config.component.html',
-  styleUrls: ['./comment.config.component.less']
+  styleUrls: ['./comment.config.component.less'],
 })
 export class CommentConfigComponent extends ConfigSourceComponent implements AfterViewInit, OnInit {
 
@@ -14,7 +23,7 @@ export class CommentConfigComponent extends ConfigSourceComponent implements Aft
   @Output() output = new EventEmitter();
 
   option = {
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
   };
 
   private _differ: KeyValueDiffer<any, any>;
