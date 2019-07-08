@@ -1,14 +1,14 @@
 import { AfterViewInit, Component, ElementRef, KeyValueDiffers, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SpaceManageService } from '../../space-manage.service';
-import { delay, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { HttpResponse } from '@angular/common/http';
 import { NzMessageService } from 'ng-zorro-antd';
 import { PageRuntime } from '@data-studio/runtime/lib/page.runtime';
 import { Runtime } from '@data-studio/runtime';
-import { standardGeneratorRepo } from '../../../../../data_visual/data.source.packages/mock';
 import { StandardCompRepo } from '@data-studio/component/standard';
 import { CustomCompRepo } from '@data-studio/component/custom';
+import { standardGeneratorRepo } from '@data-studio/generator/mock';
 
 
 @Component({

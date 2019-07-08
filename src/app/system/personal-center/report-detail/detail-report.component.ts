@@ -4,11 +4,11 @@ import { switchMap } from 'rxjs/operators';
 import { HttpResponse } from "@angular/common/http";
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { PersonalCenterService } from '../personal-center.service';
-import { standardGeneratorRepo } from '../../../../data_visual/data.source.packages/mock';
 import { PageRuntime } from '@data-studio/runtime/lib/page.runtime';
 import { Runtime } from '@data-studio/runtime';
 import { StandardCompRepo } from '@data-studio/component/standard';
 import { CustomCompRepo } from '@data-studio/component/custom';
+import { standardGeneratorRepo } from '@data-studio/generator/mock';
 
 
 
