@@ -13,6 +13,7 @@ import {
   IPage,
 } from '@data-studio/shared';
 import { session } from '../../../../utils/session';
+import { contextMenuHelper } from '../../../helper/context.menu.helper';
 
 export class ReportPageKernel extends Destroyable implements IPage {
 
@@ -60,30 +61,41 @@ export class ReportPageKernel extends Destroyable implements IPage {
   }
 
   init() {
-    this.accept(this.config.model);
-    this.view.accept(this.config.model);
-    this._init();
-  }
-
-  /**
-   * 监听model事件
-   * @param {BasePageConfigComponent} model
-   */
-  accept(model: BasePageConfigComponent) {
-    model.register('themeMode', (key, oldValue, newValue) => {
+    // 1、监听model事件
+    this.config.model.register('themeMode', (key, oldValue, newValue) => {
       this.regionManager.regionArray.forEach((item) => {
         item.updateTheme(newValue);
       });
     });
-  }
+    this.view.accept(this.config.model);
 
+    // 2、监听PageView事件
+    this._init();
+  }
 
   /**
    * 监听PageView事件
-   * 设置View的上下文事件处理函数生成器
    * @private
    */
   private _init() {
+    let contextMenu = [
+      'split', {
+        displayName: '剪切',
+        shortcut: 'Ctrl+X',
+      }, {
+        displayName: '粘贴',
+        shortcut: 'Ctrl+X',
+        enable: clipboard.hasData(),
+        callback: ($event) => {
+          console.log('粘贴', clipboard.getData());
+          session.currentPage.paste(clipboard.getData(), $event.offsetX, $event.offsetY);
+          return false;
+        },
+      }, {
+        displayName: '删除',
+        shortcut: 'Backspace',
+      },
+    ];
     this.view
       .addEventListener('select', () => {
         this.selectManager.clear();
@@ -99,30 +111,18 @@ export class ReportPageKernel extends Destroyable implements IPage {
       })
       .addEventListener('deactivateRegion', () => {
         this.activateManager.deactivate();
+      })
+      .addEventListener('rightClick', ($event) => {
+        contextMenuHelper.open(contextMenu, $event.pageX, $event.pageY, $event);
       });
-
-    this.view.contextMenuGenerator = () => {
-      return [
-        'split', {
-          displayName: '剪切',
-          shortcut: 'Ctrl+X',
-        }, {
-          displayName: '粘贴',
-          shortcut: 'Ctrl+X',
-          enable: clipboard.hasData(),
-          callback: ($event) => {
-            console.log('粘贴', clipboard.getData());
-            session.currentPage.paste(clipboard.getData(), $event.offsetX, $event.offsetY);
-            return false;
-          },
-        }, {
-          displayName: '删除',
-          shortcut: 'Backspace',
-        },
-      ];
-    };
+    this.onDestroy(() => {
+      contextMenu = null;
+    });
   }
 
+  /**
+   * 当处于activated状态下  用户的快捷键将作用于当前页面
+   */
   activate() {
 
   }

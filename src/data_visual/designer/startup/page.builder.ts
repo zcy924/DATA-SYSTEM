@@ -17,6 +17,11 @@ export class ReportPageBuilder {
     this._geneRepoManager.addRepository(standardGeneratorRepo);
   }
 
+  /**
+   * 根据模式构建page对象
+   * @param mode
+   * @param file
+   */
   build(mode: 'design' | 'runtime', file?: IFileStructure) {
     const ret = new ReportPage(mode);
     if (file && this._checkFile(file)) {
@@ -30,6 +35,7 @@ export class ReportPageBuilder {
   }
 
   /**
+   * 版本号验证
    * 若版本号为空，则不可以打开
    * @param {IFileStructure} file
    * @returns {boolean}

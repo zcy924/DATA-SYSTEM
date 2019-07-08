@@ -1,8 +1,6 @@
-import { contextMenuHelper } from '../../../helper/context.menu.helper';
-import { ReportPageKernel } from './page.kernel';
 import { RepaintMask, repaintMaskGenerator } from '../../../helper/mask.helper';
 import { boxSelectHelper } from '../../../helper/box.select.helper';
-
+import { ReportPageKernel } from './page.kernel';
 import { BasePageConfigComponent, ViewEventTarget } from '@data-studio/shared';
 
 const TEMPLATE = `
@@ -25,11 +23,9 @@ const TEMPLATE = `
 export class PageView extends ViewEventTarget {
 
   $element: JQuery;
-  protected _$canvas: JQuery;
-  protected _$box: JQuery;
+  private _$canvas: JQuery;
+  private _$box: JQuery;
   $grid: JQuery;
-
-  private _contextMenuGenerator: Function;
 
   private _repaintMask: RepaintMask;
 
@@ -48,7 +44,7 @@ export class PageView extends ViewEventTarget {
     this._$box = $element.find('.report-box');
     this.$grid = $element.find('.report-grid');
 
-    this._repaintMask = repaintMaskGenerator(this.$element.find('.u-edit-mask'));
+    this._repaintMask = repaintMaskGenerator($element.find('.u-edit-mask'));
 
     this._init();
 
@@ -56,15 +52,17 @@ export class PageView extends ViewEventTarget {
       this._$canvas = this._$box = this.$grid = this._repaintMask = null;
       this.$element.remove();
       this.$element = null;
+
+      this._repaintMask = null;
     });
   }
 
   /**
    * 绘制遮罩层
-   * @param $target 突出现实的元素
+   * @param $targetRegion 突出现实的元素
    */
-  repaintMask($target: JQuery) {
-    this._repaintMask($target);
+  repaintMask($targetRegion: JQuery) {
+    this._repaintMask && this._repaintMask($targetRegion);
   }
 
   protected _init() {
@@ -134,10 +132,6 @@ export class PageView extends ViewEventTarget {
     this._$box[0].requestFullscreen();
   }
 
-  set contextMenuGenerator(generator: Function) {
-    this._contextMenuGenerator = generator;
-  }
-
   /**
    * 更新 视图中画布大小
    * @private
@@ -165,6 +159,7 @@ export class PageView extends ViewEventTarget {
    * @private
    */
   private _bindEvent() {
+    // 1、点击activate辅助元素事件转换
     let $editMask = this.$element.find('.u-edit-mask');
     $editMask.on('click', () => {
       this.dispatchEvent('deactivateRegion');
@@ -212,9 +207,7 @@ export class PageView extends ViewEventTarget {
         $event.preventDefault();
       })
       .on('contextmenu', ($event: JQuery.Event) => {
-        if (this._contextMenuGenerator) {
-          contextMenuHelper.open(this._contextMenuGenerator(), $event.pageX, $event.pageY, $event);
-        }
+        this.dispatchEvent('rightClick',$event);
         return false;
       });
 
