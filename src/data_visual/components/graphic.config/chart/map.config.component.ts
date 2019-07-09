@@ -9,7 +9,7 @@ import {
 import { NgForm } from '@angular/forms';
 
 import { NzModalService } from 'ng-zorro-antd';
-import { ConfigSourceComponent } from '@data-studio/shared';
+import { BaseConfigSourceComponent } from '@data-studio/shared';
 
 import { removeUndefined } from '../../../designer/utils/common';
 import { debounceTime } from 'rxjs/operators';
@@ -41,7 +41,7 @@ const data = [
   templateUrl: './map.config.component.html',
   styleUrls: ['./map.config.component.less'],
 })
-export class MapConfigComponent extends ConfigSourceComponent implements AfterViewInit, OnInit {
+export class MapConfigComponent extends BaseConfigSourceComponent implements AfterViewInit, OnInit {
 
   @ViewChild(NgForm) ngForm: NgForm;
 

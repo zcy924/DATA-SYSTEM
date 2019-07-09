@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import {NgForm} from '@angular/forms';
 
-import {ConfigSourceComponent} from '@data-studio/shared';
+import {BaseConfigSourceComponent} from '@data-studio/shared';
 import {debounceTime} from 'rxjs/operators';
 import {removeUndefined} from '../../../designer/utils/common';
 import { ChartLineOption } from '@data-studio/component/standard/lib/chart/line.chart.graphic';
@@ -20,7 +20,7 @@ import { ChartLineOption } from '@data-studio/component/standard/lib/chart/line.
   templateUrl: './line.config.component.html',
   styleUrls: ['./line.config.component.less']
 })
-export class LineConfigComponent extends ConfigSourceComponent implements AfterViewInit, OnInit {
+export class LineConfigComponent extends BaseConfigSourceComponent implements AfterViewInit, OnInit {
 
   @ViewChild(NgForm) ngForm: NgForm;
   @ViewChild('modalTitle') tplTitle: TemplateRef<any>;

@@ -9,7 +9,7 @@ import {
   ViewChild
 } from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {ConfigSourceComponent} from '@data-studio/shared';
+import {BaseConfigSourceComponent} from '@data-studio/shared';
 import {debounceTime} from 'rxjs/operators';
 
 @Component({
@@ -17,7 +17,7 @@ import {debounceTime} from 'rxjs/operators';
   templateUrl: './image.config.component.html',
   styleUrls: ['./image.config.component.less']
 })
-export class ImageConfigComponent extends ConfigSourceComponent implements AfterViewInit, OnInit {
+export class ImageConfigComponent extends BaseConfigSourceComponent implements AfterViewInit, OnInit {
 
   @ViewChild(NgForm) ngForm: NgForm;
 
@@ -87,7 +87,7 @@ export class ImageConfigComponent extends ConfigSourceComponent implements After
       }
       if (array.length > 0) {
         this._subject.next(array);
-        this._update(array);
+        this._batchTrigger(array);
       }
     });
   }

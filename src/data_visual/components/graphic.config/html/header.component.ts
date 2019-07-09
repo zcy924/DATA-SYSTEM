@@ -9,14 +9,14 @@ import {
   ViewChild,
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ConfigSourceComponent } from '@data-studio/shared';
+import { BaseConfigSourceComponent } from '@data-studio/shared';
 
 @Component({
   selector: 'app-header-config',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.less'],
 })
-export class DataHeaderComponent extends ConfigSourceComponent implements AfterViewInit, OnInit {
+export class DataHeaderComponent extends BaseConfigSourceComponent implements AfterViewInit, OnInit {
 
   @ViewChild(NgForm) ngForm: NgForm;
 

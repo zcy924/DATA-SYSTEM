@@ -2,7 +2,7 @@ import { session } from '../../utils/session';
 
 import { ConfigSourceComponentRefManager } from './config.source.component.ref.manager';
 import { graphicConfigDefinitionMap } from '../../../components/graphic.config/graphic.config.definition.map';
-import { ConfigSourceComponent, IConfigSourceFactory, IConfigSourceOption, Type } from '@data-studio/shared';
+import { BaseConfigSourceComponent, IConfigSourceFactory, IConfigSourceOption, Type } from '@data-studio/shared';
 
 /**
  * 设计时 配置源工厂
@@ -23,7 +23,7 @@ export class DesignerConfigSourceFactory implements IConfigSourceFactory {
   }
 
   getConfigSource({ graphicId, graphicKey, configOption }: IConfigSourceOption) {
-    const configComponentDefinition: Type<ConfigSourceComponent> = graphicConfigDefinitionMap.get(graphicKey),
+    const configComponentDefinition: Type<BaseConfigSourceComponent> = graphicConfigDefinitionMap.get(graphicKey),
       configComponentRef = session.siderLeftComponent.forwardCreateGraphicConfig(configComponentDefinition);
 
     configComponentRef.instance.importOption(configOption);

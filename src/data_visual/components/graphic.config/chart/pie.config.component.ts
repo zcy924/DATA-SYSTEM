@@ -13,7 +13,7 @@ import { NgForm } from '@angular/forms';
 
 
 import { NzModalService } from 'ng-zorro-antd';
-import { ConfigSourceComponent } from '@data-studio/shared';
+import { BaseConfigSourceComponent } from '@data-studio/shared';
 import { debounceTime } from 'rxjs/operators';
 import { removeUndefined } from '../../../designer/utils/common';
 import { IDataSourceDimension } from '@data-studio/shared';
@@ -24,7 +24,7 @@ import { ChartPieConfig } from '@data-studio/component/standard/lib/chart/pie.ch
   templateUrl: './pie.config.component.html',
   styleUrls: ['./pie.config.component.less'],
 })
-export class PieConfigComponent extends ConfigSourceComponent implements AfterViewInit, OnInit {
+export class PieConfigComponent extends BaseConfigSourceComponent implements AfterViewInit, OnInit {
 
   @ViewChild(NgForm) ngForm: NgForm;
   @ViewChild('modalTitle') tplTitle: TemplateRef<any>;

@@ -9,7 +9,7 @@ import {
 import { NgForm } from '@angular/forms';
 
 import { NzModalService } from 'ng-zorro-antd';
-import { ConfigSourceComponent } from '@data-studio/shared';
+import { BaseConfigSourceComponent } from '@data-studio/shared';
 
 import { removeUndefined } from '../../../designer/utils/common';
 import { debounceTime } from 'rxjs/operators';
@@ -21,7 +21,7 @@ import { ChartBarOption } from '@data-studio/component/standard/lib/chart/bar.ch
   templateUrl: './table.config.component.html',
   styleUrls: ['./table.config.component.less'],
 })
-export class TableConfigComponent extends ConfigSourceComponent implements AfterViewInit, OnInit {
+export class TableConfigComponent extends BaseConfigSourceComponent implements AfterViewInit, OnInit {
 
   @ViewChild(NgForm) ngForm: NgForm;
 
