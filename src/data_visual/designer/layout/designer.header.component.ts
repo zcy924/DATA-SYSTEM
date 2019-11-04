@@ -7,9 +7,10 @@ import { designerStorage } from '../utils/designer.storage';
 import { FilterTools, HelperTools, MoreTools } from './overlay.template';
 import { ActivatedRoute } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
-import { imageDimensions$ } from '../utils/common';
 import { ComponentRepositoryManager, Destroyable, Dimensions } from '@data-studio/shared';
+import { imageDimensions$ } from '../utils/common';
 import { grabHelper } from '../utils/grab.helper';
+import { PopupHelper } from '../utils/popup.helper';
 
 @Component({
   selector: 'app-designer-header',
@@ -18,9 +19,9 @@ import { grabHelper } from '../utils/grab.helper';
 })
 export class DesignerHeaderComponent extends Destroyable implements AfterViewInit, OnDestroy {
 
-  helperToolsPopup: PopupWrapper;
-  filterToolsPopup: PopupWrapper;
-  moreToolsPopup: PopupWrapper;
+  helperToolsPopup: PopupHelper;
+  filterToolsPopup: PopupHelper;
+  moreToolsPopup: PopupHelper;
   @Output() switch = new EventEmitter();
 
   reportTile: string;
@@ -53,7 +54,7 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
     this.destroy();
   }
 
-  mouseEnter(event: MouseEvent, popupWrapper: PopupWrapper, offsetLeft: number) {
+  mouseEnter(event: MouseEvent, popupWrapper: PopupHelper, offsetLeft: number) {
     popupWrapper.show($(event.currentTarget).offset().left - offsetLeft);
   }
 
@@ -69,10 +70,10 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
     return session.currentPage ? session.currentPage.actionManager : null;
   }
 
+  /**
+   * 保存当前数据报告or大屏文件到服务端
+   */
   doSave() {
-    // const blob = new Blob([JSON.stringify(session.currentPage.save(), null, 2)], { type: 'text/plain;charset=utf-8' });
-    //
-    // FileSaver.saveAs(blob, `zijin.template.${moment().format('YYYYMMDDHHmmss')}.json`);
     const url = this._router.snapshot.routeConfig.path;
     this._router.queryParams.subscribe(data => {
       this.spaceId = data.spaceId;
@@ -100,12 +101,19 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
     }
   }
 
+  /**
+   * 通过浏览器下载当前编辑器打开的数据报告or大屏文件
+   */
   doDownload() {
     const blob = new Blob([JSON.stringify(session.currentPage.save(), null, 2)], { type: 'text/plain;charset=utf-8' });
 
     FileSaver.saveAs(blob, `zijin.template.${moment().format('YYYYMMDDHHmmss')}.json`);
   }
 
+  /**
+   * 打开数据报告or大屏文件
+   * @param report
+   */
   doLoad(report: any) {
     session.currentPage.load(report);
   }
@@ -203,59 +211,9 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
 
 }
 
-class PopupWrapper {
-  private readonly _$element: JQuery;
-
-  constructor(template: string) {
-    this._$element = $(template);
-    $('body').append(this._$element);
-
-    this._init();
-  }
-
-  private _init() {
-    let componentPath: string;
-    this._$element.mouseleave(() => {
-      this._$element.hide();
-    });
-    this._$element.find('.btn-item.draggable')
-      .on('dragstart', ($event: JQuery.Event) => {
-        document.addEventListener('mousemove', mouseMove);
-        document.addEventListener('mouseup', mouseUp);
-        componentPath = (<HTMLElement>$event.target).dataset.componentPath;
-
-        grabHelper.show($event.pageX, $event.pageY, ComponentRepositoryManager.getInstance().getComponentMeta(componentPath).grabOption);
-        return false;
-      });
-
-    const mouseMove = (event: MouseEvent) => {
-      console.log('mouseMove');
-      grabHelper.refresh(event.pageX, event.pageY);
-    };
-    const mouseUp = (event: MouseEvent) => {
-      console.log('document mouseup', event, session.currentPage.offset());
-
-      session.currentPage.createGraphic(componentPath,
-        event.pageX - session.currentPage.offset().left - grabHelper.offsetX,
-        event.pageY - session.currentPage.offset().top - grabHelper.offsetY);
-      grabHelper.hidden();
-      document.removeEventListener('mousemove', mouseMove);
-      document.removeEventListener('mouseup', mouseUp);
-    };
-  }
-
-  show(left: number) {
-    this._$element.css({ left }).show();
-  }
-
-  hide() {
-    this._$element.hide();
-  }
-}
-
-const helperToolsPopup = new PopupWrapper(HelperTools);
-const filterToolsPopup = new PopupWrapper(FilterTools);
-const moreToolsPopup = new PopupWrapper(MoreTools);
+const helperToolsPopup = new PopupHelper(HelperTools);
+const filterToolsPopup = new PopupHelper(FilterTools);
+const moreToolsPopup = new PopupHelper(MoreTools);
 
 document.addEventListener('click', (event) => {
   helperToolsPopup.hide();

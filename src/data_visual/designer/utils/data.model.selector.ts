@@ -22,31 +22,33 @@ function getTemplate() {
   const result = dataModelManager.list.reduce((previous, current) => {
     return previous +
       `<li class="model-item" data-model-id="${current.id}">${current.displayName}
-<i class="u-icn u-icn-delete"></i>
-<i class="u-icn u-icn-check"></i>
-</li>`;
+        <i class="u-icn u-icn-delete"></i>
+        <i class="u-icn u-icn-check"></i>
+       </li>`;
   }, '');
 
   return `
-<div class="m-overlay m-overlay-dataModel top" style="z-index: 409; position: absolute; top: 138px; left: 1206.6px; width: 167px;">
-      <div class="u-overlay-blank" style="zoom: 1;">
-        <button class="add-dataModel"><i class="u-icn u-icn-add"></i>添加新数据模型</button>
-        <ul class="model-list">
-            ${result}
-        </ul>
-      </div>
-    
-</div>
-`;
+          <div class="m-overlay m-overlay-dataModel top" style="z-index: 409; position: absolute; width: 167px;">
+                <div class="u-overlay-blank" style="zoom: 1;">
+                  <button class="add-dataModel"><i class="u-icn u-icn-add"></i>添加新数据模型</button>
+                  <ul class="model-list">
+                      ${result}
+                  </ul>
+                </div>
+          </div>
+          `;
 }
 
-class DataModelPopupList {
+/**
+ * 数据模型选择弹出框
+ */
+class DataModelSelector {
   $mask: JQuery;
   $menu: JQuery;
 
   constructor() {
     this.$mask = $(windowMask);
-    this.$mask.click(($event) => {
+    this.$mask.on('click', ($event) => {
       this.close();
       if ($event.target === this.$mask[0]) {
 
@@ -55,21 +57,23 @@ class DataModelPopupList {
   }
 
   open(event: MouseEvent, callback?: Function) {
-    console.log(event);
+    const target = event.target as HTMLElement;
     this.$menu = $(getTemplate());
+    // 设置菜单显示位置
     this.$menu.css({
-      left: `${(<HTMLElement>event.target).offsetLeft}px`,
-      top: `${(<HTMLElement>event.target).offsetTop + (<HTMLElement>event.target).offsetHeight}px`
+      left: `${target.offsetLeft}px`,
+      top: `${target.offsetTop + target.offsetHeight}px`,
     });
+    // 绑定菜单项点击事件处理函数
     this.$menu.on('click', 'li.model-item', ($event) => {
-      console.log($event.currentTarget.dataset.modelId);
+      console.log('switch dataModel: ', $event.currentTarget.dataset.modelId);
       callback && callback($event.currentTarget.dataset.modelId);
       this.close();
 
       return false;
     });
-    $('body').append(this.$mask).append(this.$menu);
-
+    // 显示遮罩层/显示菜单
+    $('body').append(this.$mask, this.$menu);
   }
 
   close() {
@@ -78,4 +82,4 @@ class DataModelPopupList {
   }
 }
 
-export const dataModelList = new DataModelPopupList();
+export const dataModelSelector = new DataModelSelector();

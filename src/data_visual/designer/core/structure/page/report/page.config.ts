@@ -12,7 +12,7 @@ export class PageConfig extends Destroyable {
     super();
     switch (_mode) {
       case 'design':
-        this._inner = session.siderLeftComponent.forwardCreateCanvasConfig(PageConfigComponent);
+        this._inner = session.sideLeftComponent.forwardCreateCanvasConfig(PageConfigComponent);
         break;
       case 'runtime':
         this._inner = new PageConfigRuntime() as any;
@@ -41,7 +41,7 @@ export class PageConfig extends Destroyable {
     if (this._inner instanceof BasePageConfigComponent) {
 
     } else {
-      session.siderLeftComponent.attachDataProperty(this._inner.hostView);
+      session.sideLeftComponent.attachDataProperty(this._inner.hostView);
     }
   }
 

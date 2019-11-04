@@ -37,7 +37,7 @@ export class ConfigSourceComponentRefManager {
   activate(id: string) {
     if (this._map.has(id)) {
       const componentRef = this._map.get(id);
-      session.siderLeftComponent.attachDataProperty(componentRef.hostView);
+      session.sideLeftComponent.attachDataProperty(componentRef.hostView);
     }
   }
 

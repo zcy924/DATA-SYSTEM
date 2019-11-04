@@ -24,7 +24,7 @@ export class DesignerConfigSourceFactory implements IConfigSourceFactory {
 
   getConfigSource({ graphicId, graphicKey, configOption }: IConfigSourceOption) {
     const configComponentDefinition: Type<BaseConfigSourceComponent> = graphicConfigDefinitionMap.get(graphicKey),
-      configComponentRef = session.siderLeftComponent.forwardCreateGraphicConfig(configComponentDefinition);
+      configComponentRef = session.sideLeftComponent.forwardCreateGraphicConfig(configComponentDefinition);
 
     configComponentRef.instance.importOption(configOption);
     ConfigSourceComponentRefManager.getInstance().add(graphicId, configComponentRef);

@@ -7,18 +7,18 @@ import {
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DesignerBodyComponent } from '../designer.body.component';
-import { dataModelList } from '../../utils/dataModel';
+import { dataModelSelector } from '../../utils/data.model.selector';
 import { dataModelManager } from '../../data/data.model.manager';
 import { DataSourceConfigSetManager } from '../../data/data.source.config.set.manager';
 import { Destroyable } from '@data-studio/shared';
 
 @Component({
-  selector: 'app-sider-right',
+  selector: 'app-side-right',
   encapsulation: ViewEncapsulation.None,
-  templateUrl: './sider.right.component.html',
-  styleUrls: ['./sider.right.component.less'],
+  templateUrl: './side.right.component.html',
+  styleUrls: ['./side.right.component.less'],
 })
-export class SiderRightComponent extends Destroyable implements AfterViewInit, OnInit, OnDestroy {
+export class SideRightComponent extends Destroyable implements AfterViewInit, OnInit, OnDestroy {
 
   @ViewChild(NgForm) ngForm: NgForm;
 
@@ -54,7 +54,7 @@ export class SiderRightComponent extends Destroyable implements AfterViewInit, O
    * @param {MouseEvent} $event
    */
   switchDataModel($event: MouseEvent) {
-    dataModelList.open($event, (modelID: string) => {
+    dataModelSelector.open($event, (modelID: string) => {
       dataModelManager.switchDataModel(modelID);
     });
   }

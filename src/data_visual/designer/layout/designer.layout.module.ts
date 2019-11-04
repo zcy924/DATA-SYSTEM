@@ -5,15 +5,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { DesignerHeaderComponent } from './designer.header.component';
 import { DesignerBodyComponent } from './designer.body.component';
-import { SiderLeftComponent } from './sider/sider.left.component';
+import { SideLeftComponent } from './side/side.left.component';
 import { FormsModule } from '@angular/forms';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { HttpClientModule } from '@angular/common/http';
-import { SiderRightComponent } from './sider/sider.right.component';
+import { SideRightComponent } from './side/side.right.component';
 import { ConfigModule } from '../../components/config/config.module';
 import { GraphicConfigModule } from '../../components/graphic.config/graphic.config.module';
-import { DimensionAreaComponent } from './sider/model/dimension.area.component';
-import { MeasureAreaComponent } from './sider/model/measure.area.component';
+import { DimensionAreaComponent } from './side/model/dimension.area.component';
+import { MeasureAreaComponent } from './side/model/measure.area.component';
 import { DesignerComponent } from './designer.component';
 import { DesignerBodyLeftComponent } from './designer.body.left.component';
 import { PaletteComponent } from './part/palette.component';
@@ -28,8 +28,8 @@ const COMPONENTS = [
   DesignerBodyLeftComponent,
   PaletteComponent,
   OutlineComponent,
-  SiderLeftComponent,
-  SiderRightComponent,
+  SideLeftComponent,
+  SideRightComponent,
   // SchemaPillsComponent,
   DimensionAreaComponent,
   MeasureAreaComponent,

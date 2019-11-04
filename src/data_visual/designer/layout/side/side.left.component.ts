@@ -12,11 +12,11 @@ import { session } from '../../utils/session';
 import { BaseConfigSourceComponent, BasePageConfigComponent } from '@data-studio/shared';
 
 @Component({
-  selector: 'app-sider-left',
-  templateUrl: './sider.left.component.html',
-  styleUrls: ['./sider.left.component.less'],
+  selector: 'app-side-left',
+  templateUrl: './side.left.component.html',
+  styleUrls: ['./side.left.component.less'],
 })
-export class SiderLeftComponent implements AfterViewInit {
+export class SideLeftComponent implements AfterViewInit {
 
 
   @ViewChild('configContainer', {read: ViewContainerRef}) container: ViewContainerRef;
@@ -120,7 +120,7 @@ export class SiderLeftComponent implements AfterViewInit {
 
 
   ngAfterViewInit() {
-    session.siderLeftComponent = this;
+    session.sideLeftComponent = this;
   }
 
 }

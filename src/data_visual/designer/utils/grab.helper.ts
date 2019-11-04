@@ -1,8 +1,8 @@
-const grabTemplate = `<div class="m-chart-grabbing"
+const grabTemplate = `
+<div class="m-chart-grabbing"
  style="width: 300px; height: 200px;
  background-color: rgb(36, 148, 232);
  background-image: url('https://ydcdn.nosdn.127.net/dash-online/img/holder-automatic.8f656e5b7d.svg');
- background-repeat: no-repeat; background-position: center center;
  background-size: 320px 224px;">
  <div class="g-grab-fill"></div>
  <div class="g-grab-fill u-mover"></div>
@@ -12,15 +12,16 @@ const grabTemplate = `<div class="m-chart-grabbing"
 class GrabHelper {
   private readonly _$element: JQuery;
 
-  private _state = false;
+  // 辅助元素是否添加到dom树中
+  private _visible = false;
+  private _offsetX;
+  private _offsetY;
   private _defaultOption = {
     width: 300,
     height: 200,
     backgroundImage: 'url("https://ydcdn.nosdn.127.net/dash-online/img/holder-automatic.8f656e5b7d.svg")',
     backgroundSize: '320px 224px',
   };
-  private _offsetX;
-  private _offsetY;
 
   constructor(template: string) {
     this._$element = $(template);
@@ -34,14 +35,20 @@ class GrabHelper {
     return this._offsetY;
   }
 
+  /**
+   *
+   * @param left
+   * @param top
+   * @param option
+   */
   show(left: number, top: number, option?: { width: number, height: number, backgroundImage: string }) {
     const targetOption = option || this._defaultOption;
     this._offsetX = targetOption.width / 2;
     this._offsetY = targetOption.height / 2;
     this._$element.css(Object.assign({ backgroundSize: `${targetOption.width}px ${targetOption.height}px` }, targetOption));
-    if (!this._state) {
+    if (!this._visible) {
       $('body').append(this._$element);
-      this._state = true;
+      this._visible = true;
     }
     this._$element.css({
       left: left - this.offsetX,
@@ -67,7 +74,7 @@ class GrabHelper {
   hidden() {
     this._offsetX = this._offsetY = 0;
     this._$element.detach();
-    this._state = false;
+    this._visible = false;
   }
 }
 

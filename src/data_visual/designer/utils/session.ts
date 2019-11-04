@@ -1,10 +1,10 @@
 import { Subject } from 'rxjs';
 import { ReportPage } from '../core/structure/page/report/page.outer';
-import { SiderLeftComponent } from '../layout/sider/sider.left.component';
+import { SideLeftComponent } from '../layout/side/side.left.component';
 
 class Session {
   private _currentPage: ReportPage;
-  siderLeftComponent: SiderLeftComponent;
+  sideLeftComponent: SideLeftComponent;
   page = new Subject();
 
   set currentPage(value: ReportPage) {
@@ -16,7 +16,7 @@ class Session {
     return this._currentPage;
   }
 
-  get $currentPage() {
+  get currentPage$() {
     return this.page.asObservable();
   }
 }
