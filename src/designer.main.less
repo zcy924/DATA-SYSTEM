@@ -64,14 +64,15 @@
   background-color: transparent;
 }
 
-.m-chart-grabing {
+.m-chart-grabbing {
   position: absolute;
   background: #fff;
   opacity: 0.5;
-}
-
-.m-chart-grabing .u-mover {
+  z-index: 1000;
   cursor: grabbing;
+  .u-mover {
+    cursor: grabbing;
+  }
 }
 
 .g-grab-fill {

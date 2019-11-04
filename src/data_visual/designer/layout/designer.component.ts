@@ -1,6 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import * as _ from 'lodash';
 import { Observable } from 'rxjs/internal/Observable';
 import { switchMap } from 'rxjs/operators';
 
@@ -33,7 +32,6 @@ export class DesignerComponent implements AfterViewInit, OnInit {
     if (url == 'report-designer') {
       this.report$ = this._route.queryParams.pipe(
         switchMap(params => {
-          // (+) before `params.get()` turns the string into a number
           this.reportId = params.reportId;
           this.spaceId = params.spaceId;
           designerStorage.reportId = this.reportId;
@@ -48,7 +46,6 @@ export class DesignerComponent implements AfterViewInit, OnInit {
     } else {
       this.report$ = this._route.queryParams.pipe(
         switchMap(params => {
-          // (+) before `params.get()` turns the string into a number
           this.dashboardId = params.dashboardId;
           this.spaceId = params.spaceId;
           designerStorage.reportId = this.reportId;
@@ -63,10 +60,8 @@ export class DesignerComponent implements AfterViewInit, OnInit {
     this.report$.subscribe((data) => {
       designerStorage.reportInfo = data;
     });
-    console.log('ngOnInit main');
   }
 
   ngAfterViewInit() {
-    console.log('ngAfterViewInit main');
   }
 }

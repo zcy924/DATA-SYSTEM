@@ -1,7 +1,7 @@
 import { AfterViewInit, Component } from '@angular/core';
-import { grabHelper } from '../designer.header.component';
 import { ComponentRepositoryManager } from '@data-studio/shared';
 import { session } from '../../utils/session';
+import { grabHelper } from '../../utils/grab.helper';
 
 @Component({
   selector: 'app-palette',
