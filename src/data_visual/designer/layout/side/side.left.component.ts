@@ -5,9 +5,9 @@ import {
   KeyValueDiffer, NgZone, Type, ViewChild,
   ViewContainerRef, ViewRef,
 } from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {DataHeaderComponent} from '../../../components/graphic.config/html/header.component';
-import {DesignerBodyComponent} from '../designer.body.component';
+import { NgForm } from '@angular/forms';
+import { DataHeaderComponent } from '../../../components/graphic.config/html/header.component';
+import { DesignerBodyComponent } from '../designer.body.component';
 import { session } from '../../utils/session';
 import { BaseConfigSourceComponent, BasePageConfigComponent } from '@data-studio/shared';
 
@@ -19,28 +19,28 @@ import { BaseConfigSourceComponent, BasePageConfigComponent } from '@data-studio
 export class SideLeftComponent implements AfterViewInit {
 
 
-  @ViewChild('configContainer', {read: ViewContainerRef}) container: ViewContainerRef;
-  @ViewChild('shadowContainer', {read: ViewContainerRef}) shadowContainer: ViewContainerRef;
+  @ViewChild('configContainer', { read: ViewContainerRef }) container: ViewContainerRef;
+  @ViewChild('shadowContainer', { read: ViewContainerRef }) shadowContainer: ViewContainerRef;
 
   @ViewChild(NgForm) ngForm: NgForm;
 
   private _differ: KeyValueDiffer<any, any>;
   componentRef: any;
 
-  constructor(/*              private appBody: AppBodyComponent,*/
-              private resolver: ComponentFactoryResolver,
-              private zone: NgZone,
-              private _appbody: DesignerBodyComponent) {
+  constructor(
+    private _resolver: ComponentFactoryResolver,
+    private _zone: NgZone,
+    private _designerBody: DesignerBodyComponent) {
   }
 
   openRightPanel() {
-    this._appbody.openRightPanel();
+    this._designerBody.openRightPanel();
   }
 
   createComponent(type: string) {
     this.container.clear();
     const factory: ComponentFactory<DataHeaderComponent> =
-      this.resolver.resolveComponentFactory(DataHeaderComponent);
+      this._resolver.resolveComponentFactory(DataHeaderComponent);
     this.componentRef = this.container.createComponent(factory);
     // this.componentRef.instance.type = type;
     this.componentRef.instance.output.subscribe((msg: string) => {
@@ -49,11 +49,11 @@ export class SideLeftComponent implements AfterViewInit {
 
   createGraphicConfig(type: Type<BaseConfigSourceComponent>): ComponentRef<BaseConfigSourceComponent> {
     let retComponentRef: ComponentRef<BaseConfigSourceComponent>;
-    this.zone.run(() => {
+    this._zone.run(() => {
       this.container.detach();
       this.container.clear();
       const factory: ComponentFactory<BaseConfigSourceComponent> =
-        this.resolver.resolveComponentFactory(type);
+        this._resolver.resolveComponentFactory(type);
       retComponentRef = this.componentRef = this.container.createComponent(factory);
       this.componentRef.instance.type = type;
       // this.componentRef.instance.output.subscribe((msg: string) => {
@@ -68,11 +68,11 @@ export class SideLeftComponent implements AfterViewInit {
 
   forwardCreateGraphicConfig(type: Type<BaseConfigSourceComponent>): ComponentRef<BaseConfigSourceComponent> {
     let retComponentRef: ComponentRef<BaseConfigSourceComponent>;
-    this.zone.run(() => {
+    this._zone.run(() => {
       // this.shadowContainer.detach();
       // this.shadowContainer.clear();
       const factory: ComponentFactory<BaseConfigSourceComponent> =
-        this.resolver.resolveComponentFactory(type);
+        this._resolver.resolveComponentFactory(type);
       retComponentRef = this.componentRef = this.shadowContainer.createComponent(factory);
       this.componentRef.instance.type = type;
       // this.shadowContainer.detach();
@@ -88,11 +88,11 @@ export class SideLeftComponent implements AfterViewInit {
 
   forwardCreateCanvasConfig(type: Type<BasePageConfigComponent>): ComponentRef<BasePageConfigComponent> {
     let retComponentRef: ComponentRef<BasePageConfigComponent>;
-    this.zone.run(() => {
+    this._zone.run(() => {
       // this.shadowContainer.detach();
       // this.shadowContainer.clear();
       const factory: ComponentFactory<BasePageConfigComponent> =
-        this.resolver.resolveComponentFactory(type);
+        this._resolver.resolveComponentFactory(type);
       retComponentRef = this.componentRef = this.shadowContainer.createComponent(factory);
       // this.componentRef.instance.type = type;
       // this.shadowContainer.detach();
@@ -107,7 +107,7 @@ export class SideLeftComponent implements AfterViewInit {
   }
 
   attachDataProperty(viewRef: ViewRef) {
-    this.zone.run(() => {
+    this._zone.run(() => {
       const index = this.shadowContainer.indexOf(viewRef);
       if (index >= 0) {
         this.shadowContainer.detach(index);
