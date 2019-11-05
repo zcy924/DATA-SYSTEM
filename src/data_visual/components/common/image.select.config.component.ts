@@ -4,6 +4,7 @@ import {
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 
 import {CustomControlValueAccessor} from '../config/CustomControlValueAccessor';
+import { imageDimensions$ } from '../../designer/utils/common';
 
 export const IMAGE_SELECT_CONFIG_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -43,14 +44,10 @@ export class ImageSelectConfigComponent extends CustomControlValueAccessor {
     const reader = new FileReader();
     reader.onload = (evt) => {
       this.option.dataUrl = (<any>evt.target).result;
-      const image = new Image();
-      image.src = (<any>evt.target).result;
-      image.onload = function () {
-        that.option.width = (<HTMLImageElement>this).naturalWidth;
-        that.option.height = (<HTMLImageElement>this).naturalHeight;
+      imageDimensions$((<any>evt.target).result).subscribe((dimensions)=>{
+        Object.assign(that.option,dimensions);
         that._propagateChange(Object.assign({}, that.option));
-      };
-
+      });
     };
     reader.readAsDataURL(file.files[0]);
   }
