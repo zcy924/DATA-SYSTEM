@@ -9,7 +9,7 @@ import { NgForm } from '@angular/forms';
 import { DataHeaderComponent } from '../../../components/graphic.config/html/header.component';
 import { DesignerBodyComponent } from '../designer.body.component';
 import { session } from '../../utils/session';
-import { BaseConfigSourceComponent, BasePageConfigComponent } from '@data-studio/shared';
+import { BaseConfigSourceComponent, BasePageConfig } from '@data-studio/shared';
 
 @Component({
   selector: 'app-side-left',
@@ -86,12 +86,12 @@ export class SideLeftComponent implements AfterViewInit {
     return retComponentRef;
   }
 
-  forwardCreateCanvasConfig(type: Type<BasePageConfigComponent>): ComponentRef<BasePageConfigComponent> {
-    let retComponentRef: ComponentRef<BasePageConfigComponent>;
+  forwardCreateCanvasConfig(type: Type<BasePageConfig>): ComponentRef<BasePageConfig> {
+    let retComponentRef: ComponentRef<BasePageConfig>;
     this._zone.run(() => {
       // this.shadowContainer.detach();
       // this.shadowContainer.clear();
-      const factory: ComponentFactory<BasePageConfigComponent> =
+      const factory: ComponentFactory<BasePageConfig> =
         this._resolver.resolveComponentFactory(type);
       retComponentRef = this.componentRef = this.shadowContainer.createComponent(factory);
       // this.componentRef.instance.type = type;

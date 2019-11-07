@@ -1,7 +1,7 @@
 import { RepaintMask, repaintMaskGenerator } from '../../../helper/mask.helper';
 import { boxSelectHelper } from '../../../helper/box.select.helper';
 import { ReportPageKernel } from './page.kernel';
-import { BasePageConfigComponent, ViewEventTarget } from '@data-studio/shared';
+import { BasePageConfig, ViewEventTarget } from '@data-studio/shared';
 
 const TEMPLATE = `
     <div class="report-region">
@@ -22,11 +22,13 @@ const TEMPLATE = `
 
 export class PageView extends ViewEventTarget {
 
+  // 视图元素
   $element: JQuery;
   private _$canvas: JQuery;
   private _$box: JQuery;
   $grid: JQuery;
 
+  // 遮罩层重绘函数，根据当前选中的元素重绘遮罩层
   private _repaintMask: RepaintMask;
 
   private _scale = 1;
@@ -37,6 +39,12 @@ export class PageView extends ViewEventTarget {
     super();
   }
 
+  /**
+   * 1、创建视图
+   * 2、创建遮罩层重绘函数
+   * 3、功能构建 设置$grid识别拖拽操作，打开框选功能
+   * 4、事件绑定
+   */
   init() {
     const $element = this.$element = $(TEMPLATE);
 
@@ -46,15 +54,17 @@ export class PageView extends ViewEventTarget {
 
     this._repaintMask = repaintMaskGenerator($element.find('.u-edit-mask'));
 
-    this._init();
+    this.$grid.attr('draggable', 'true');
+    this._bindEvent();
 
+    // 先解除事件绑定
     this.onDestroy(() => {
-      this._$canvas = this._$box = this.$grid = this._repaintMask = null;
+      this._$canvas = this._$box = this.$grid = null;
       this.$element.remove();
       this.$element = null;
 
       this._repaintMask = null;
-    });
+    },2);
   }
 
   /**
@@ -65,10 +75,6 @@ export class PageView extends ViewEventTarget {
     this._repaintMask && this._repaintMask($targetRegion);
   }
 
-  protected _init() {
-    this.$grid.attr('draggable', 'true');
-    this._bindEvent();
-  }
 
   /**
    * 获取画布相对于文档的偏移值
@@ -87,7 +93,11 @@ export class PageView extends ViewEventTarget {
     this._refresh();
   }
 
-  public accept(model: BasePageConfigComponent) {
+  /**
+   * 监听页面模型变化
+   * @param model
+   */
+  public accept(model: BasePageConfig) {
     model.register('remove.backgroundClass', (key, oldValue, newValue) => {
       this._$box.removeClass('background1 background2 background3 background4');
     });
@@ -128,6 +138,9 @@ export class PageView extends ViewEventTarget {
     });
   }
 
+  /**
+   * 进入全屏模式
+   */
   enterFullScreen() {
     this._$box[0].requestFullscreen();
   }
@@ -156,6 +169,11 @@ export class PageView extends ViewEventTarget {
 
   /**
    * event transform
+   * 事件绑定以及事件类型转换
+   * editMask.click->deactivateRegion
+   * grid.click->select
+   * grid.contextmenu->rightClick
+   * grid.dragstart/document.mousemove/document.mouseup->boxSelect
    * @private
    */
   private _bindEvent() {
@@ -213,6 +231,6 @@ export class PageView extends ViewEventTarget {
 
     this.onDestroy(() => {
       this.$grid.off('click dragstart dragover contextmenu');
-    });
+    },1);
   }
 }

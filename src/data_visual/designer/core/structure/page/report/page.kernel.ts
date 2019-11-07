@@ -5,19 +5,20 @@ import { ActivateManager } from '../../../manager/activate.manager';
 import { ConfigSourceManager } from '../../../config/config.source.manager';
 import { dataSourceConfigSetManager } from '../../../../data/data.source.config.set.manager';
 import { ActionManager } from '../../../operate/action.manager';
-import { PageConfig } from './page.config';
+import { PageConfigAgent } from './page.config.agent';
 import { PageView } from './page.view';
 import {
-  BasePageConfigComponent,
-  DataSourceManager, Destroyable,
+  BasePageConfig,
+  DataSourceManager, Destroyable, IConfigSourceOptionWrapper,
   IPage,
 } from '@data-studio/shared';
 import { session } from '../../../../utils/session';
 import { contextMenuHelper } from '../../../helper/context.menu.helper';
+import { Observable } from 'rxjs';
 
 export class ReportPageKernel extends Destroyable implements IPage {
 
-  public config: PageConfig;
+  public pageConfigAgent: PageConfigAgent;
   public view: PageView;
 
   // manager
@@ -33,11 +34,13 @@ export class ReportPageKernel extends Destroyable implements IPage {
   constructor(private _mode: 'design' | 'runtime') {
     super();
 
+    // 创建页面视图，并初始化
     this.view = new PageView(this);
     this.view.init();
+    // 创建页面模型
+    this.pageConfigAgent = new PageConfigAgent(_mode);
 
-    this.config = new PageConfig(_mode);
-
+    // 创建管理工具 管理所有的图表/选中的图表/当前激活的图表。
     this.regionManager = new RegionManager();
     this.selectManager = new SelectManager();
     this.activateManager = new ActivateManager(this);
@@ -51,7 +54,7 @@ export class ReportPageKernel extends Destroyable implements IPage {
       this.regionManager.regionArray.forEach(value => value.destroy());
       this.regionManager.destroy();
       this.selectManager.destroy();
-      this.config.destroy();
+      this.pageConfigAgent.destroy();
       this.view.destroy();
     });
   }
@@ -62,12 +65,10 @@ export class ReportPageKernel extends Destroyable implements IPage {
 
   init() {
     // 1、监听model事件
-    this.config.model.register('themeMode', (key, oldValue, newValue) => {
-      this.regionManager.regionArray.forEach((item) => {
-        item.updateTheme(newValue);
-      });
+    this.pageConfigAgent.model.register('themeMode', (key, oldValue, newValue) => {
+      this.updateTheme(newValue);
     });
-    this.view.accept(this.config.model);
+    this.view.accept(this.pageConfigAgent.model);
 
     // 2、监听PageView事件
     this._init();
@@ -99,7 +100,7 @@ export class ReportPageKernel extends Destroyable implements IPage {
     this.view
       .addEventListener('select', () => {
         this.selectManager.clear();
-        this.config.show();
+        this.pageConfigAgent.show();
       })
       .addEventListener('boxSelect', (left, top, width, height) => {
         const array = this.regionManager.selectByBox(left, top, width, height);
@@ -121,6 +122,16 @@ export class ReportPageKernel extends Destroyable implements IPage {
   }
 
   /**
+   * 页面切换主题
+   * @param theme
+   */
+  updateTheme(theme: string) {
+    this.regionManager.regionArray.forEach((item) => {
+      item.updateTheme(theme);
+    });
+  }
+
+  /**
    * 当处于activated状态下  用户的快捷键将作用于当前页面
    */
   activate() {
@@ -128,6 +139,20 @@ export class ReportPageKernel extends Destroyable implements IPage {
   }
 
   deactivate() {
+  }
+
+  addChild(child: any): any {
+  }
+
+  removeChild(child: any): any {
+  }
+
+  getConfigSource(option: IConfigSourceOptionWrapper): Observable<any> {
+    return null;
+  }
+
+  getDataSource(id: string): Observable<any> {
+    return null;
   }
 
   unselect() {

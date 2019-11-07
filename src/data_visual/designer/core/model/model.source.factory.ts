@@ -1,8 +1,11 @@
 import { ConfigSourceManager } from '../config/config.source.manager';
-import { DataSourceManager, Destroyable, IConfigSourceOption } from '@data-studio/shared';
+import { DataSourceManager, Destroyable, IConfigSourceOptionWrapper } from '@data-studio/shared';
 import { ModelSource } from './model.source';
 import { dataSourceConfigSetManager } from '../../data/data.source.config.set.manager';
 
+/**
+ * 模型源工厂   模型=配置+数据
+ */
 export class ModelSourceFactory extends Destroyable {
 
   private _configSourceManager: ConfigSourceManager;
@@ -22,11 +25,10 @@ export class ModelSourceFactory extends Destroyable {
     const ret = new ModelSource(this._configSourceManager, this._dataSourceManager);
     // ret.init(modelOption.configSourceOption, modelOption.dataSourceKey);
     return ret;
-
   }
 }
 
 interface IModelOption {
-  configSourceOption: IConfigSourceOption;
-  dataSourceKey: any;
+  configSourceOption: IConfigSourceOptionWrapper;
+  dataSourceConfigID: string;
 }

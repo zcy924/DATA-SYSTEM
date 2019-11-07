@@ -1,15 +1,21 @@
+import { Observable } from 'rxjs';
 import { ReportPageKernel } from './page.kernel';
 import { IReportPageInnerFacade } from './page.interface';
-import { Observable } from 'rxjs';
 import { Region } from '../../region/region';
+import { Destroyable } from '@data-studio/shared';
 
-
-export class ReportPageInnerFacadeImpl implements IReportPageInnerFacade {
+/**
+ *
+ */
+export class ReportPageInnerFacadeImpl extends Destroyable implements IReportPageInnerFacade {
 
   focusRegion: Region;
 
   constructor(private _pageKernel: ReportPageKernel) {
-
+    super();
+    this.onDestroy(() => {
+      this._pageKernel = null;
+    });
   }
 
   get mode() {
@@ -97,9 +103,5 @@ export class ReportPageInnerFacadeImpl implements IReportPageInnerFacade {
 
   getDataSource(id: string) {
     return this._pageKernel.dataSourceManager.getDataSource(id);
-  }
-
-  destroy() {
-    this._pageKernel = null;
   }
 }

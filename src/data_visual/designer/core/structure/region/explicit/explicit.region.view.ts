@@ -26,10 +26,15 @@ export class ExplicitRegionView extends RegionView {
   }
 
   /**
+   * 建立关联关系
+   * 1、创建视图
+   * 2、根据运行模式，决定是否进行事件绑定，以响应用户操作
+   * 3、销毁
    * 设计模式和运行模式  执行不同的初始逻辑
    * 事件绑定
    */
   init() {
+    // 创建视图
     const $element = this.$element = $(template);
     this.$fill = $element.find('.g-fill');
     this._$mover = $element.find('.u-mover');
@@ -40,6 +45,7 @@ export class ExplicitRegionView extends RegionView {
       this._bindContextEvent();
     }
 
+    // 先调用父类的destroy方法
     this.onDestroy(() => {
       this.$fill = this._$mover = null;
       this.$element.remove();

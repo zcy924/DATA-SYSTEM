@@ -10,14 +10,14 @@ import {
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
-import { BasePageConfigComponent } from '@data-studio/shared';
+import { BasePageConfig } from '@data-studio/shared';
 
 @Component({
   selector: 'app-page-config',
   templateUrl: './page.config.component.html',
   styleUrls: ['./page.config.component.less'],
 })
-export class PageConfigComponent extends BasePageConfigComponent implements AfterViewInit, OnInit, OnDestroy {
+export class PageConfigComponent extends BasePageConfig implements AfterViewInit, OnInit, OnDestroy {
 
   @ViewChild(NgForm) ngForm: NgForm;
   @Output() output = new EventEmitter();

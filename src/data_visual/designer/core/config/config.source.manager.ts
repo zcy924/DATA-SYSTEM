@@ -1,6 +1,6 @@
 import { DesignerConfigSourceFactory } from './designer.config.source.factory';
 import { Observable } from 'rxjs';
-import { IConfigSourceFactory } from '@data-studio/shared';
+import { IConfigSourceFactory, IConfigSourceOptionWrapper } from '@data-studio/shared';
 import { RuntimeConfigSourceFactory } from '@data-studio/runtime';
 
 /**
@@ -15,11 +15,11 @@ export class ConfigSourceManager {
     this._mockConfigSourceFactory = RuntimeConfigSourceFactory.getInstance();
   }
 
-  getConfigSource(configSourceOption: any): Observable<any> {
+  getConfigSource(configSourceOption: IConfigSourceOptionWrapper): Observable<any> {
     return this._configSourceFactory.getConfigSource(configSourceOption);
   }
 
-  getMockConfigSource(configSourceOption: any): Observable<any> {
+  getMockConfigSource(configSourceOption: IConfigSourceOptionWrapper): Observable<any> {
     return this._mockConfigSourceFactory.getConfigSource(configSourceOption);
   }
 }

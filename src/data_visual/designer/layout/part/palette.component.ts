@@ -1,5 +1,5 @@
 import { AfterViewInit, Component } from '@angular/core';
-import { ComponentRepositoryManager } from '@data-studio/shared';
+import { componentManager } from '@data-studio/shared';
 import { session } from '../../utils/session';
 import { grabHelper } from '../../utils/grab.helper';
 
@@ -38,12 +38,12 @@ export class PaletteComponent implements AfterViewInit {
     document.addEventListener('mousemove', mouseMove);
     document.addEventListener('mouseup', mouseUp);
 
-    grabHelper.show(dragEvent.pageX, dragEvent.pageY, ComponentRepositoryManager.getInstance().getComponentMeta(componentPath).grabOption);
+    grabHelper.show(dragEvent.pageX, dragEvent.pageY, componentManager.getComponentMeta(componentPath).grabOption);
     return false;
   }
 
   ngAfterViewInit() {
-    ComponentRepositoryManager.getInstance().paletteConfig$.subscribe((value) => {
+    componentManager.paletteConfig$.subscribe((value) => {
       this.repoList = value;
     });
   }

@@ -56,8 +56,8 @@ export class ExplicitRegion extends Region {
     this._model.state = param;
   }
 
-  init(regionOption: any, graphic?: IGraphicOption) {
-    super.init(regionOption,graphic);
+  init(regionOption: any, { graphicPath, graphicOption }: { graphicPath: string, graphicOption?: IGraphicOption }) {
+    super.init(regionOption, { graphicPath, graphicOption });
 
     // 1、初始化region model
     this._model = new RegionModel();
@@ -77,7 +77,7 @@ export class ExplicitRegion extends Region {
     this.sync();
 
     const graphicWrapper = new GraphicWrapper(this);
-    graphicWrapper.init(graphic);
+    graphicWrapper.init({ graphicPath, graphicOption });
 
     setTimeout(() => {
       // if (componentOption.region.regionOption) {
@@ -354,6 +354,10 @@ export class ExplicitRegion extends Region {
       });
   }
 
+  /**
+   * 监听模型变化
+   * @private
+   */
   private _accept() {
     const model = this._model, view = this._view;
     model

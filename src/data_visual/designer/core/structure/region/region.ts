@@ -4,7 +4,9 @@ import { RegionModel, RegionState } from './region.model';
 import { RegionView } from './region.view';
 import { Destroyable, Coordinates, Dimensions, Rectangle, IRegion, IGraphicOption } from '@data-studio/shared';
 
-
+/**
+ * region
+ */
 export abstract class Region extends Destroyable implements IRegion {
 
   // 模型层
@@ -19,8 +21,16 @@ export abstract class Region extends Destroyable implements IRegion {
     super();
   }
 
+  init(regionOption: any, { graphicPath, graphicOption }: { graphicPath: string, graphicOption?: IGraphicOption }) {
+    this._methodMap = new Map();
+
+    this.onDestroy(() => {
+      this._methodMap.clear();
+    });
+  }
+
   get $element() {
-    return this._view.$element;
+    return this.usable ? this._view.$element : null;
   }
 
   get page(): IReportPageInnerFacade {
@@ -32,18 +42,22 @@ export abstract class Region extends Destroyable implements IRegion {
   }
 
   get index(): number {
-    return this._model.zIndex;
+    return this.usable ? this._model.zIndex : null;
   }
 
   set coordinates(coordinates: Coordinates) {
-    this._model.coordinates = coordinates;
-    this.sync();
+    if (this.usable) {
+      this._model.coordinates = coordinates;
+      this.sync();
+    }
   }
 
   set dimensions(dimensions: Dimensions) {
-    this._model.dimensions = dimensions;
-    this.sync();
-    this._graphicWrapper && this._graphicWrapper.resize();
+    if (this.usable) {
+      this._model.dimensions = dimensions;
+      this.sync();
+      this._graphicWrapper && this._graphicWrapper.resize();
+    }
   }
 
   get dimensions() {
@@ -51,11 +65,13 @@ export abstract class Region extends Destroyable implements IRegion {
   }
 
   set rectangle(value: Rectangle) {
-    this._model.rectangle = value;
-    this.sync();
-    setTimeout(() => {
-      this._graphicWrapper && this._graphicWrapper.resize();
-    }, 100);
+    if (this.usable) {
+      this._model.rectangle = value;
+      this.sync();
+      setTimeout(() => {
+        this._graphicWrapper && this._graphicWrapper.resize();
+      }, 100);
+    }
   }
 
   set state(param: RegionState) {
@@ -64,14 +80,6 @@ export abstract class Region extends Destroyable implements IRegion {
 
   get state() {
     return this._model.state;
-  }
-
-  init(regionOption: any, graphic?: IGraphicOption) {
-    this._methodMap = new Map();
-
-    this.onDestroy(() => {
-      this._methodMap.clear();
-    });
   }
 
   /**
@@ -84,7 +92,7 @@ export abstract class Region extends Destroyable implements IRegion {
   }
 
   updateTheme(theme: string) {
-    if (this._graphicWrapper) {
+    if (this.usable && this._graphicWrapper) {
       this._graphicWrapper.updateTheme(theme);
     }
   }

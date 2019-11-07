@@ -6,7 +6,7 @@ export const VERSION_INFO = {
     return /^\d+\.\d+\.\d+$/;
   },
   accept(versionNo: string): boolean {
-    if (this.versionPattern.test(versionNo)) {
+    if (versionNo && this.versionPattern.test(versionNo)) {
       const [a, b, c] = versionNo.match(/\d+/g),
         [ta, tb, tc] = this.version.match(/\d+/g);
       if (a === ta && parseInt(tb) >= parseInt(b)) {
@@ -16,7 +16,7 @@ export const VERSION_INFO = {
       }
 
     } else {
-      console.log('版本号格式错误:' + versionNo);
+      console.error('版本号格式错误:' + versionNo);
       return false;
     }
 

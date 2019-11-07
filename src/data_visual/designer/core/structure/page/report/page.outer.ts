@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { Region } from '../../region/region';
 import { ReportPageInnerFacadeImpl } from './page.inner.facade';
 import { VERSION_INFO } from './page.utils';
-import { Destroyable, IFileStructure } from '@data-studio/shared';
+import { Destroyable, IComponentOption, IFileStructure } from '@data-studio/shared';
 import { GraphicActionCreate } from '../../../operate/graphic.action.create';
 import { GraphicActionPaste } from '../../../operate/graphic.action.paste';
 import { addGraphicToPage } from '../../../operate/action.utils';
@@ -57,24 +57,24 @@ export class ReportPage extends Destroyable {
    */
   load(file: IFileStructure) {
     if (file.main) {
-      file.main.option && this._pageKernel.config.model.importOption(file.main.option);
+      file.main.option && this._pageKernel.pageConfigAgent.model.importOption(file.main.option);
       file.main.children && file.main.children.forEach((value) => {
         this._paste(value);
       });
     }
   }
 
-  private _paste(graphicMeta) {
-    addGraphicToPage(this._pageInnerFacade, graphicMeta);
+  private _paste(componentOption) {
+    addGraphicToPage(this._pageInnerFacade, componentOption);
   }
 
   save() {
     const main = {
-      option: this._pageKernel.config.model.exportOption(),
+      option: this._pageKernel.pageConfigAgent.model.exportOption(),
       children: this._pageKernel.regionManager.saveAs(),
     };
-    let keys = _.uniq(main.children.map((value, index, array) => {
-        return value.graphic.dataSourceKey;
+    let keys = _.uniq(main.children.map((componentOption: IComponentOption, index, array) => {
+        return componentOption.graphic.graphicOption.dataSourceConfigID;
       })),
       paths = _.uniq(main.children.map((value, index, array) => {
         return value.graphic.graphicPath;

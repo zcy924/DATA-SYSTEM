@@ -2,12 +2,12 @@ import { Observable } from 'rxjs';
 import { Region } from '../../region/region';
 import { ActionManager } from '../../../operate/action.manager';
 import { ConfigSourceManager } from '../../../config/config.source.manager';
-import { DataSourceManager } from '@data-studio/shared';
+import { DataSourceManager, IDestroyable } from '@data-studio/shared';
 
 /**
- *
+ * Page接口  供region，graphic等子元素引用
  */
-export interface IReportPageInnerFacade {
+export interface IReportPageInnerFacade extends IDestroyable{
 
   mode: 'design' | 'runtime';
   /**
@@ -15,10 +15,13 @@ export interface IReportPageInnerFacade {
    */
   scale: number;
 
+  // 当前页面中所有图表的最小index
   bottomIndex: number;
 
+  // 当前页面中所有图表的最大index
   topIndex: number;
 
+  // 当前获得焦点的region
   focusRegion: Region;
 
   regionArray: Array<Region>;
@@ -52,6 +55,4 @@ export interface IReportPageInnerFacade {
   getConfigSource(option: any);
 
   getDataSource(id: string);
-
-  destroy();
 }

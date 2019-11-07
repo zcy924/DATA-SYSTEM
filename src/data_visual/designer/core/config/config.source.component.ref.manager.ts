@@ -22,10 +22,14 @@ export class ConfigSourceComponentRefManager {
     return this._map.has(id);
   }
 
-  add(id: string, graphicConfig: ComponentRef<BaseConfigSourceComponent>) {
-    this._map.set(id, graphicConfig);
+  add(id: string, componentRef: ComponentRef<BaseConfigSourceComponent>) {
+    this._map.set(id, componentRef);
   }
 
+  /**
+   * 删除angular组件实例
+   * @param id
+   */
   remove(id: string) {
     if (this._map.has(id)) {
       const componentRef = this._map.get(id);
@@ -34,6 +38,10 @@ export class ConfigSourceComponentRefManager {
     }
   }
 
+  /**
+   * 激活angular组件实例
+   * @param id
+   */
   activate(id: string) {
     if (this._map.has(id)) {
       const componentRef = this._map.get(id);

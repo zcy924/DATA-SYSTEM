@@ -12,13 +12,12 @@ export class ControlDividerComponent implements AfterViewInit {
 
   @Output() stateChange = new EventEmitter();
 
-  ngAfterViewInit() {
-
-  }
-
   changeState() {
     this.state = !this.state;
     this.stateChange.emit(this.state);
   }
 
+  ngAfterViewInit() {
+
+  }
 }

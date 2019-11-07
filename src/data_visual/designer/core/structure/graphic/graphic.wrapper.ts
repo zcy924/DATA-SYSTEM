@@ -4,10 +4,10 @@ import { dataModelManager } from '../../../data/data.model.manager';
 import { Region } from '../region/region';
 
 import {
-  componentRepositoryManager,
   Destroyable,
   getParameterName,
   GraphicOption, guid,
+  componentManager,
   IGraphic,
   IGraphicOption,
 } from '@data-studio/shared';
@@ -31,7 +31,7 @@ export class GraphicWrapper extends Destroyable {
   }
 
   get uuid(): string {
-    return this._modelSource.graphicOption.graphicId;
+    return this._modelSource.graphicOption.id;
   }
 
   get $element() {
@@ -45,12 +45,12 @@ export class GraphicWrapper extends Destroyable {
    * 创建DataSource
    * @param graphicOption
    */
-  init(option: IGraphicOption) {
-    const graphicOption = new GraphicOption(option);
-    const { graphicId, graphicPath } = graphicOption;
+  init({ graphicPath, graphicOption }: { graphicPath: string, graphicOption: IGraphicOption }) {
+    const graphicOptionWrapper = new GraphicOption(graphicOption, graphicPath);
+    const { id, classID, configSourceOption, dataSourceConfigID } = graphicOptionWrapper;
     // 创建graphic对象
-    if (componentRepositoryManager.has(graphicPath)) {
-      this._graphic = new (componentRepositoryManager.getComponentMeta(graphicPath).graphicDef)();
+    if (componentManager.has(graphicPath)) {
+      this._graphic = componentManager.getGraphicInstance(graphicPath);
       const paramNameArray = getParameterName(this._graphic.init), map = {
         region: this._region,
         wrapper: this,
@@ -68,10 +68,10 @@ export class GraphicWrapper extends Destroyable {
     });
 
     // 创建modelSource
-    graphicOption.graphicId = graphicId || guid(10, 16);
+    graphicOption.id = id || guid(10, 16);
 
     this._modelSource = new ModelSource(this._region.page.configSourceManager, this._region.page.dataSourceManager);
-    this._modelSource.init(graphicOption);
+    this._modelSource.init(graphicOptionWrapper);
     this._modelSubscription = this._graphic.accept(this._modelSource.model$());
 
     this.onDestroy(() => {
@@ -93,8 +93,8 @@ export class GraphicWrapper extends Destroyable {
     this._modelSource.switchConfigSource();
   }
 
-  switchDataSource(dataSourceKey: string) {
-    this._modelSource.switchDataSource(dataSourceKey);
+  switchDataSource(dataSourceConfigID: string) {
+    this._modelSource.switchDataSource(dataSourceConfigID);
   }
 
   // 激活配置面板
@@ -102,7 +102,7 @@ export class GraphicWrapper extends Destroyable {
     this._region.page.focusRegion = this._region;
 
     // 运行时不需要调用此方法
-    dataModelManager.switchDataModel(this._modelSource.graphicOption.dataSourceKey, false);
+    dataModelManager.switchDataModel(this._modelSource.graphicOption.dataSourceConfigID, false);
     if (!ConfigSourceComponentRefManager.getInstance().has(this.uuid)) {
       this.switchConfigSource();
     }

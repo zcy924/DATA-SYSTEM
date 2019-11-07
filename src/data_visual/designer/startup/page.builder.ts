@@ -1,20 +1,20 @@
-import { ComponentRepositoryManager, GeneratorRepositoryManager, IFileStructure } from '@data-studio/shared';
-import { VERSION_INFO } from '../core/structure/page/report/page.utils';
-import { ReportPage } from '../core/structure/page/report/page.outer';
 import * as _ from 'lodash';
 import { StandardCompRepo } from '@data-studio/component/standard';
 import { CustomCompRepo } from '@data-studio/component/custom';
 import { standardGeneratorRepo } from '@data-studio/generator/mock';
+import { componentManager, generatorManager, IFileStructure } from '@data-studio/shared';
+import { VERSION_INFO } from '../core/structure/page/report/page.utils';
+import { ReportPage } from '../core/structure/page/report/page.outer';
 
 export class ReportPageBuilder {
 
-  private _compRepoManager = ComponentRepositoryManager.getInstance();
-  private _geneRepoManager = GeneratorRepositoryManager.getInstance();
+  private _componentManager = componentManager;
+  private _generatorManager = generatorManager;
 
   constructor() {
-    this._compRepoManager.addComponentRepository(StandardCompRepo);
-    this._compRepoManager.addComponentRepository(CustomCompRepo);
-    this._geneRepoManager.addRepository(standardGeneratorRepo);
+    this._componentManager.addRepository(StandardCompRepo);
+    this._componentManager.addRepository(CustomCompRepo);
+    this._generatorManager.addRepository(standardGeneratorRepo);
   }
 
   /**
@@ -42,15 +42,14 @@ export class ReportPageBuilder {
    * @private
    */
   private _checkVersion(file: IFileStructure) {
-    const version = _.get(file, 'manifest.version');
-    return version ? VERSION_INFO.accept(version) : false;
+    return VERSION_INFO.accept( _.get(file, 'manifest.version'));
   }
 
   private _checkDependencies(file: IFileStructure) {
     const { componentRepositories, generatorRepositories } =
       _.get(file, 'dependencies', { componentRepositories: [], generatorRepositories: [] });
-    return this._compRepoManager.includes(componentRepositories)
-      && this._geneRepoManager.includes(generatorRepositories);
+    return this._componentManager.includes(componentRepositories)
+      && this._generatorManager.includes(generatorRepositories);
   }
 }
 

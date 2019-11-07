@@ -1,9 +1,9 @@
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
-import { IDataSourceGenerator } from '@data-studio/shared';
+import { IGenerator } from '@data-studio/shared';
 
-export class JsonDataGenerator implements IDataSourceGenerator {
+export class JsonDataGenerator implements IGenerator {
 
   generate(api: any): Observable<any> {
 

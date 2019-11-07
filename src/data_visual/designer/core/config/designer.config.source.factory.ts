@@ -2,10 +2,12 @@ import { session } from '../../utils/session';
 
 import { ConfigSourceComponentRefManager } from './config.source.component.ref.manager';
 import { graphicConfigDefinitionMap } from '../../../components/graphic.config/graphic.config.definition.map';
-import { BaseConfigSourceComponent, IConfigSourceFactory, IConfigSourceOption, Type } from '@data-studio/shared';
+import { BaseConfigSourceComponent, IConfigSourceFactory, IConfigSourceOptionWrapper, Type } from '@data-studio/shared';
 
 /**
  * 设计时 配置源工厂
+ * 单例模式
+ * 关闭一个页面时，该页面关联的数据源应当全部关闭
  */
 export class DesignerConfigSourceFactory implements IConfigSourceFactory {
 
@@ -22,14 +24,20 @@ export class DesignerConfigSourceFactory implements IConfigSourceFactory {
   private constructor() {
   }
 
-  getConfigSource({ graphicId, graphicKey, configOption }: IConfigSourceOption) {
-    const configComponentDefinition: Type<BaseConfigSourceComponent> = graphicConfigDefinitionMap.get(graphicKey),
-      configComponentRef = session.sideLeftComponent.forwardCreateGraphicConfig(configComponentDefinition);
+  /**
+   * 新建配置源
+   * @param instanceID
+   * @param classID
+   * @param configSourceOption
+   */
+  getConfigSource({ instanceID, classID, configSourceOption }: IConfigSourceOptionWrapper) {
+    const configComponentDefinition: Type<BaseConfigSourceComponent> = graphicConfigDefinitionMap.get(classID),
+      configSourceComponentRef = session.sideLeftComponent.forwardCreateGraphicConfig(configComponentDefinition);
 
-    configComponentRef.instance.importOption(configOption);
-    ConfigSourceComponentRefManager.getInstance().add(graphicId, configComponentRef);
+    configSourceComponentRef.instance.importOption(configSourceOption);
+    ConfigSourceComponentRefManager.getInstance().add(instanceID, configSourceComponentRef);
 
-    return configComponentRef.instance.configSource;
+    return configSourceComponentRef.instance.configSource;
   }
 }
 

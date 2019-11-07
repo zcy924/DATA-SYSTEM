@@ -1,5 +1,5 @@
-import { closestNum, pick } from '../../../utils/common';
 import { Coordinates, Dimensions, IRegionOption, ModelEventTarget, Rectangle } from '@data-studio/shared';
+import { closestNum, pick } from '../../../utils/common';
 
 export enum RegionState {
   default, selected, multiSelected, activated
@@ -7,6 +7,8 @@ export enum RegionState {
 
 
 /**
+ * z-index/state的变化会触发属性变化事件
+ *
  * 首先，$scope本身是一个普通的JavaScript对象；其次，$scope是一个表达式的执行环境
  * $scope是一个树形结构，与DOM标签平行，子$scope对象可以对父$scope对象的变量、函数等进行操作。
  *
@@ -112,9 +114,6 @@ export class RegionModel extends ModelEventTarget {
     return pick(this._option, ['left', 'top', 'width', 'height']) as Rectangle;
   }
 
-  get state(): RegionState {
-    return this._state;
-  }
 
   set state(param: RegionState) {
     if (this._state !== param) {
@@ -122,6 +121,10 @@ export class RegionModel extends ModelEventTarget {
       this._state = param;
       this._trigger(changedItem);
     }
+  }
+
+  get state(): RegionState {
+    return this._state;
   }
 
   zoom(width: number, height: number, preserveAspectRatio?: boolean) {

@@ -8,6 +8,7 @@ export abstract class RegionView extends ViewEventTarget {
   protected _region: Region;
   protected _model: RegionModel;
 
+  // 视图元素
   $element: JQuery;
   $fill: JQuery;
   protected _$mover: JQuery;
@@ -23,13 +24,16 @@ export abstract class RegionView extends ViewEventTarget {
   abstract refresh();
 
   /**
-   * 给region添加resize功能
+   * 给region添加resize功能 此方法内不做任何响应操作
+   * draggable.dragstart->resizeStart
+   * document.mousemove->resizing
+   * document.mouseup->resizeEnd
    * @private
    */
   protected _bindEventForResize() {
     let mouseMoveSubscription: Subscription,
       draggable$ = this.$element.find('div.u-resize>.draggable'),
-      dragEndHandler = (event: MouseEvent) => {
+      dragEndHandler = (event: MouseEvent) => { //resize结束 解除事件绑定，触发resizeEnd事件
         if (mouseMoveSubscription) {
           mouseMoveSubscription.unsubscribe();
           mouseMoveSubscription = null;
@@ -65,6 +69,10 @@ export abstract class RegionView extends ViewEventTarget {
    * tips:
    * 1、被拖拽元素的z-index是否需要改变  以避免被其他高z-index的region覆盖
    * 2、如果要将一个region拖放到其他容器中，则当前region跟在鼠标后面移动的方式并不可行，因为drop事件会在被拖拽的元素上面触发
+   *
+   * mover.dragstart->moveStart
+   * document.mousemove->moving
+   * document.mouseup->moveEnd
    * @private
    */
   protected _bindEventForMover() {
@@ -130,6 +138,11 @@ export abstract class RegionView extends ViewEventTarget {
     });
   }
 
+  /**
+   * 事件转换
+   * contextmenu->rightClick
+   * @private
+   */
   protected _bindContextEvent() {
     this._$mover.on('contextmenu', ($event: JQuery.Event) => {
       this.dispatchEvent('rightClick', $event);

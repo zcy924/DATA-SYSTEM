@@ -1,4 +1,4 @@
-import { componentRepositoryManager } from '@data-studio/shared';
+import { componentManager } from '@data-studio/shared';
 import { grabHelper } from './grab.helper';
 import { session } from './session';
 
@@ -24,7 +24,7 @@ export class PopupHelper {
         // attach
         document.addEventListener('mousemove', mouseMove);
         document.addEventListener('mouseup', mouseUp);
-        grabHelper.show($event.pageX, $event.pageY, componentRepositoryManager.getComponentMeta(componentPath).grabOption);
+        grabHelper.show($event.pageX, $event.pageY, componentManager.getComponentMeta(componentPath).grabOption);
 
         return false;
       });

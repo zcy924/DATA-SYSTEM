@@ -2,9 +2,9 @@ import {fromPromise} from 'rxjs/internal-compatibility';
 import {map} from 'rxjs/operators';
 import {Observable} from "rxjs/internal/Observable";
 import * as X2JS from 'x2js';
-import { IDataSourceGenerator } from '@data-studio/shared';
+import { IGenerator } from '@data-studio/shared';
 
-export class XmlDataGenerator implements IDataSourceGenerator {
+export class XmlDataGenerator implements IGenerator {
 
   generate(api: any): Observable<any>{
 

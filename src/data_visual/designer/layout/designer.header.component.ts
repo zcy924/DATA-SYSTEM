@@ -7,7 +7,7 @@ import { designerStorage } from '../utils/designer.storage';
 import { FilterTools, HelperTools, MoreTools } from './overlay.template';
 import { ActivatedRoute } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
-import { ComponentRepositoryManager, Destroyable, Dimensions } from '@data-studio/shared';
+import { componentManager, Destroyable, Dimensions } from '@data-studio/shared';
 import { imageDimensions$ } from '../utils/common';
 import { grabHelper } from '../utils/grab.helper';
 import { PopupHelper } from '../utils/popup.helper';
@@ -194,7 +194,7 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
     document.addEventListener('mouseup', mouseUp);
     componentPath = (<HTMLElement>event.target).dataset.componentPath;
     grabHelper.show(dragEvent.pageX, dragEvent.pageY,
-      ComponentRepositoryManager.getInstance().getComponentMeta(componentPath).grabOption);
+      componentManager.getComponentMeta(componentPath).grabOption);
     return false;
   }
 
