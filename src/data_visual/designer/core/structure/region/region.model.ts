@@ -146,7 +146,7 @@ export class RegionModel extends ModelEventTarget {
    * @param option
    */
   importModel(option: any) {
-     Object.assign(this._option, option);
+    this._option = Object.assign({}, option);
   }
 
   /**

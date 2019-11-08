@@ -103,10 +103,10 @@ export class ReportPage extends Destroyable {
    * @param graphicName
    * @param x
    * @param y
-   * @param configOption 创建图片的时候，会从外部传入图片信息
+   * @param configSourceOption 创建图片的时候，会从外部传入图片信息
    */
-  createGraphic(graphicName: string, x: number, y: number, configOption?: any) {
-    this._pageKernel.actionManager.execute(new GraphicActionCreate(this._pageInnerFacade, graphicName, x, y, configOption));
+  createGraphic(graphicName: string, x: number, y: number, configSourceOption?: any) {
+    this._pageKernel.actionManager.execute(new GraphicActionCreate(this._pageInnerFacade, graphicName, x, y, configSourceOption));
   }
 
   paste(componentOption: any, x?: number, y?: number) {

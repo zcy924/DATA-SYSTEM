@@ -1,7 +1,7 @@
-import {Region} from '../region';
-import {RegionModel, RegionState} from '../region.model';
-import {CommentRegionView} from './comment.region.view';
-import {IReportPageInnerFacade} from '../../page/report/page.interface';
+import { Region } from '../region';
+import { RegionModel, RegionState } from '../region.model';
+import { CommentRegionView } from './comment.region.view';
+import { IReportPageInnerFacade } from '../../page/report/page.interface';
 
 
 export class CommentRegion extends Region {
@@ -83,6 +83,7 @@ export class CommentRegion extends Region {
   }
 
   getOption() {
+    return null;
   }
 
   render() {
