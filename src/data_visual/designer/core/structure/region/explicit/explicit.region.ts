@@ -56,10 +56,18 @@ export class ExplicitRegion extends Region {
     this._model.state = param;
   }
 
+  /**
+   * 创建regionModel
+   * @param regionOption
+   * @param graphicPath
+   * @param graphicOption
+   */
   init(regionOption: any, { graphicPath, graphicOption }: { graphicPath: string, graphicOption?: IGraphicOption }) {
     super.init(regionOption, { graphicPath, graphicOption });
 
-    // 1、初始化region model
+    // 1、初始化region model。
+    // 新建的RegionModel不会触发z-index和state属性变化事件
+    // 通过importModel批量导入模型数据也不会触发属性变化事件
     this._model = new RegionModel();
     regionOption && this._model.importModel(regionOption);
 
@@ -83,10 +91,6 @@ export class ExplicitRegion extends Region {
     graphicWrapper.init({ graphicPath, graphicOption });
 
     setTimeout(() => {
-      // if (componentOption.region.regionOption) {
-      //   const { width, height } = componentOption.region.regionOption;
-      //   region.dimensions = { width, height };
-      // }
       graphicWrapper.resize();
     }, 200);
 
@@ -117,6 +121,9 @@ export class ExplicitRegion extends Region {
 
   /**
    * 同步视图和数据模型
+   * 当从外部设置位置、维度时调用  graphicActionMove从外部记录、恢复位置 graphicActionResize
+   * 内部 move事件、resize事件导致位置和维度变化需要调用
+   * init 初始化的时候  因为是第一次设置位置和维度，因此需要进行同步
    */
   sync() {
     this._view.$element.css({
@@ -378,35 +385,37 @@ export class ExplicitRegion extends Region {
 
   /**
    * 监听模型变化
+   * 一般情况下在视图内部监听model，由于region中，当部门属性发生变化时，需要graphic
    * @private
    */
   private _accept() {
     const model = this._model, view = this._view;
     model
       .register('state', (key, oldValue, newValue, option) => {
+        const $element = view.$element;
         if (oldValue !== newValue) {
           switch (oldValue) {
             case RegionState.selected:
-              this.$element.removeClass('selected');
+              $element.removeClass('selected');
               break;
             case RegionState.multiSelected:
-              this.$element.removeClass('multi-selected');
+              $element.removeClass('multi-selected');
               break;
             case RegionState.activated:
-              this.$element.removeClass('activated');
+              $element.removeClass('activated');
           }
           switch (newValue) {
             case RegionState.default:
-              this.$element.removeClass('selected multi-selected activated');
+              $element.removeClass('selected multi-selected activated');
               break;
             case RegionState.selected:
-              this.$element.addClass('selected');
+              $element.addClass('selected');
               break;
             case RegionState.multiSelected:
-              this.$element.addClass('multi-selected');
+              $element.addClass('multi-selected');
               break;
             case RegionState.activated:
-              this.$element.addClass('activated');
+              $element.addClass('activated');
               break;
           }
         }

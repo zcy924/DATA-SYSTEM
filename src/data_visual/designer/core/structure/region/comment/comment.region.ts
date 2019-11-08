@@ -1,7 +1,6 @@
 import {Region} from '../region';
 import {RegionModel, RegionState} from '../region.model';
 import {CommentRegionView} from './comment.region.view';
-import {clipboard} from '../../../../utils/clipboard';
 import {IReportPageInnerFacade} from '../../page/report/page.interface';
 
 
