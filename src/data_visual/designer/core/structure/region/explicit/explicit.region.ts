@@ -196,10 +196,9 @@ export class ExplicitRegion extends Region {
 
   private _bindForResize() {
 
-    let scale = 1;
-
     // resize相关辅助变量
-    let which: string,
+    let scale = 1,
+      which: string,
       offsetX, offsetY,
       offset: Coordinates,
       resizeStartRectangle: Rectangle;
