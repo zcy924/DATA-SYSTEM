@@ -5,11 +5,11 @@ import { GeneratorRepository } from '@data-studio/shared';
 const repository = new GeneratorRepository('standard', '标准数据源生成器库');
 repository.batchRegister([
   {
-    key: 'json',
+    id: 'json',
     generatorDef: JsonDataGenerator,
   },
   {
-    key: 'xml',
+    id: 'xml',
     generatorDef: XmlDataGenerator,
   },
 ]);

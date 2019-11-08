@@ -2,6 +2,7 @@ import { BehaviorSubject, combineLatest, Observable, Subject, Subscription } fro
 import { ConfigSourceManager } from '../config/config.source.manager';
 import { DataSourceManager, Destroyable, GraphicOption } from '@data-studio/shared';
 import * as _ from 'lodash';
+import { filter } from 'rxjs/operators';
 
 export class ModelSource extends Destroyable {
 
@@ -60,6 +61,7 @@ export class ModelSource extends Destroyable {
     // 两个组件必须同时打开  不然收不到信息
     this._combineSubscription = combineLatest(this._config$, this._data$)
       .subscribe(([config, data]) => {
+        let a = 1;
         this._modelSubject.next([config, data]);
       });
 
@@ -105,7 +107,7 @@ export class ModelSource extends Destroyable {
   }
 
   model$(): Observable<any> {
-    return this._modelSubject.asObservable();
+    return this._modelSubject.asObservable().pipe(filter(value => value != null));
   }
 
 }

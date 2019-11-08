@@ -7,6 +7,8 @@ import { IAction } from './action';
 
 /**
  * 图表创建动作
+ *
+ *
  */
 export class GraphicActionCreate implements IAction {
 
@@ -36,7 +38,6 @@ export class GraphicActionCreate implements IAction {
         }), param);
 
         this._region = regionInstance;
-
         return {
           region: regionInstance,
         };
