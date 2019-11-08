@@ -1,8 +1,8 @@
 import { fromEvent, Subscription } from 'rxjs';
 import { throttleTime } from 'rxjs/internal/operators';
+import { ViewEventTarget } from '@data-studio/shared';
 import { Region } from './region';
 import { RegionModel } from './region.model';
-import { ViewEventTarget } from '@data-studio/shared';
 
 export abstract class RegionView extends ViewEventTarget {
   protected _region: Region;

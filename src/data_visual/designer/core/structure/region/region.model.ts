@@ -149,6 +149,9 @@ export class RegionModel extends ModelEventTarget {
     this._option = Object.assign({}, option);
   }
 
+  /**
+   * state不会被序列化
+   */
   exportModel() {
     return Object.assign({}, this._option);
   }

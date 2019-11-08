@@ -68,7 +68,10 @@ export class ExplicitRegion extends Region {
     this._view.init();
 
     // 事件绑定 监听RegionView事件
-    this._bind();
+    this._bindForSelect();
+    this._bindForMove();
+    this._bindForResize();
+    this._bindForContextMenu();
     // 监听RegionModel
     this._accept();
 
@@ -141,14 +144,59 @@ export class ExplicitRegion extends Region {
     return retObj;
   }
 
-  private _bind() {
+  private _bindForSelect() {
+    this._view
+      .addEventListener('select', () => {
+        this._page.select(this);
+      })
+      .addEventListener('ctrlSelect', () => {
+        this._page.ctrlSelect(this);
+      })
+      .addEventListener('activateRegion', () => {
+        this._page.activateRegion(this);
+      });
+  }
 
-    let scale = 1;
+  private _bindForMove() {
+    const model = this._model, view = this._view;
 
     // move相关辅助变量
-    let originPageX, originPageY,
+    let scale = 1,
+      originPageX, originPageY,
       moveStartCoordinates: Coordinates,
       moveStopCoordinates: Coordinates;
+
+    view.addEventListener('moveStart', (pageX, pageY) => {
+      scale = this._page.scale;
+      view.$element.addClass('no-transition');
+      moveStartCoordinates = model.coordinates;
+      resizeTipHelper.show(
+        originPageX = pageX,
+        originPageY = pageY,
+        moveStartCoordinates.left,
+        moveStartCoordinates.top);
+    })
+      .addEventListener('moving', (pageX, pageY) => {
+        model.left = moveStartCoordinates.left + ((pageX - originPageX) / scale);
+        model.top = moveStartCoordinates.top + ((pageY - originPageY) / scale);
+        moveStopCoordinates = {
+          left: model.left,
+          top: model.top,
+        };
+        resizeTipHelper.refresh(pageX, pageY, model.left, model.top);
+        // region 位置或维度发生变化  需要手工同步model和view
+        this.sync();
+      })
+      .addEventListener('moveEnd', () => {
+        view.$element.removeClass('no-transition');
+        resizeTipHelper.hide();
+        this._page.actionManager.execute(new GraphicActionMove(this, moveStartCoordinates, moveStopCoordinates));
+      });
+  }
+
+  private _bindForResize() {
+
+    let scale = 1;
 
     // resize相关辅助变量
     let which: string,
@@ -228,11 +276,45 @@ export class ExplicitRegion extends Region {
         }
       };
 
+
+    view
+      .addEventListener('resizeStart', (pageX, pageY, targetWhich) => {
+        // 记录resize事件开始时刻的数据状态
+        scale = this._page.scale;
+        offset = view.$element.offset();
+        resizeStartRectangle = model.rectangle;
+        which = targetWhich;
+        resizeTipHelper.show(pageX, pageY, model.width, model.height);
+        this.$element.addClass('no-transition');
+      })
+      .addEventListener('resizing', (pageX, pageY) => {
+        handleResize(pageX, pageY);
+        resizeTipHelper.refresh(pageX, pageY, model.width, model.height);
+        this.sync();
+      })
+      .addEventListener('resizeEnd', (pageX, pageY) => {
+        view.$element.removeClass('no-transition');
+        handleResize(pageX, pageY);
+        resizeTipHelper.hide();
+        this._page.actionManager.execute(new GraphicActionResize(this, resizeStartRectangle, model.rectangle));
+
+        if (this._graphicWrapper) {
+          this._graphicWrapper.resize();
+        }
+      });
+  }
+
+  /**
+   * 绑定region的右键菜单
+   * @private
+   */
+  private _bindForContextMenu() {
     const contextMenu = [
       {
         displayName: '复制',
         shortcut: 'Ctrl+C',
         callback: () => {
+          // 保存当前region的选项信息，该信息的结构应该符合IComponentOption接口
           clipboard.saveData(this.getOption());
           console.log('复制:', this.getOption());
           return false;
@@ -289,70 +371,11 @@ export class ExplicitRegion extends Region {
         },
       }];
 
-    view
-      .addEventListener('select', () => {
-        this._page.select(this);
-      })
-      .addEventListener('ctrlSelect', () => {
-        this._page.ctrlSelect(this);
-      })
-      .addEventListener('activateRegion', () => {
-        this._page.activateRegion(this);
-      })
-      .addEventListener('moveStart', (pageX, pageY) => {
-        scale = this._page.scale;
-        view.$element.addClass('no-transition');
-        moveStartCoordinates = model.coordinates;
-        resizeTipHelper.show(
-          originPageX = pageX,
-          originPageY = pageY,
-          moveStartCoordinates.left,
-          moveStartCoordinates.top);
-      })
-      .addEventListener('moving', (pageX, pageY) => {
-        model.left = moveStartCoordinates.left + ((pageX - originPageX) / scale);
-        model.top = moveStartCoordinates.top + ((pageY - originPageY) / scale);
-        moveStopCoordinates = {
-          left: model.left,
-          top: model.top,
-        };
-        resizeTipHelper.refresh(pageX, pageY, model.left, model.top);
-        this.sync();
-        ;
-      })
-      .addEventListener('moveEnd', () => {
-        view.$element.removeClass('no-transition');
-        resizeTipHelper.hide();
-        this._page.actionManager.execute(new GraphicActionMove(this, moveStartCoordinates, moveStopCoordinates));
-      })
-      .addEventListener('resizeStart', (pageX, pageY, targetWhich) => {
-        scale = this._page.scale;
-        offset = view.$element.offset();
-        resizeStartRectangle = model.rectangle;
-        which = targetWhich;
-        resizeTipHelper.show(pageX, pageY, model.width, model.height);
-        this.$element.addClass('no-transition');
-      })
-      .addEventListener('resizing', (pageX, pageY) => {
-        handleResize(pageX, pageY);
-        resizeTipHelper.refresh(pageX, pageY, model.width, model.height);
-        this.sync();
-      })
-      .addEventListener('resizeEnd', (pageX, pageY) => {
-        view.$element.removeClass('no-transition');
-        handleResize(pageX, pageY);
-        resizeTipHelper.hide();
-        this._page.actionManager.execute(new GraphicActionResize(this, resizeStartRectangle, model.rectangle));
-
-        console.log('resizeEnd handle:this._graphicWrapper.resize()');
-        if (this._graphicWrapper) {
-          this._graphicWrapper.resize();
-        }
-      })
-      .addEventListener('rightClick', ($event) => {
-        contextMenuHelper.open(contextMenu, $event.pageX, $event.pageY, $event);
-      });
+    this._view.addEventListener('rightClick', ($event) => {
+      contextMenuHelper.open(contextMenu, $event.pageX, $event.pageY, $event);
+    });
   }
+
 
   /**
    * 监听模型变化

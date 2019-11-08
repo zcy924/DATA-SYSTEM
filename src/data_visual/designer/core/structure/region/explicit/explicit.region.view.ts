@@ -1,6 +1,6 @@
+import { Region } from '../region';
 import { RegionView } from '../region.view';
 import { RegionModel, RegionState } from '../region.model';
-import { Region } from '../region';
 
 const template = `
 <div class="m-dashbox">
@@ -60,16 +60,17 @@ export class ExplicitRegionView extends RegionView {
    * 1、组件刚创建完成的时候
    */
   refresh() {
+    const { left, top, width, height, zIndex, state } = this._model;
     this.$element.css({
-      width: this._model.width,
-      height: this._model.height,
-      left: this._model.left,
-      top: this._model.top,
-      zIndex: this._model.zIndex,
+      left,
+      top,
+      width,
+      height,
+      zIndex,
     });
 
     // 激活状态下需要更新辅助元素mask的状态
-    if (this._model.state === RegionState.activated) {
+    if (state === RegionState.activated) {
       this._region.page.regionResize(this._region);
     }
   }

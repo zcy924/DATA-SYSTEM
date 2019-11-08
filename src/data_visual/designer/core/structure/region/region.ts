@@ -2,7 +2,15 @@ import { GraphicWrapper } from '../graphic/graphic.wrapper';
 import { IReportPageInnerFacade } from '../page/report/page.interface';
 import { RegionModel, RegionState } from './region.model';
 import { RegionView } from './region.view';
-import { Destroyable, Coordinates, Dimensions, Rectangle, IRegion, IGraphicOption } from '@data-studio/shared';
+import {
+  Destroyable,
+  Coordinates,
+  Dimensions,
+  Rectangle,
+  IRegion,
+  IGraphicOption,
+  IComponentOption,
+} from '@data-studio/shared';
 
 /**
  * region
@@ -26,6 +34,7 @@ export abstract class Region extends Destroyable implements IRegion {
 
     this.onDestroy(() => {
       this._methodMap.clear();
+      this._methodMap = null;
     });
   }
 
@@ -34,17 +43,21 @@ export abstract class Region extends Destroyable implements IRegion {
   }
 
   get page(): IReportPageInnerFacade {
-    return this._page;
+    return this.usable && this._page;
   }
 
   get graphicWrapper(): GraphicWrapper {
-    return this._graphicWrapper;
+    return this.usable && this._graphicWrapper;
   }
 
   get index(): number {
     return this.usable ? this._model.zIndex : null;
   }
 
+  /**
+   * 移动region
+   * @param coordinates
+   */
   set coordinates(coordinates: Coordinates) {
     if (this.usable) {
       this._model.coordinates = coordinates;
@@ -110,7 +123,7 @@ export abstract class Region extends Destroyable implements IRegion {
 
   abstract sync();
 
-  abstract getOption();
+  abstract getOption():IComponentOption;
 
 }
 
