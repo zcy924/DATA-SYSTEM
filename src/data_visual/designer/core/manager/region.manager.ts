@@ -23,19 +23,31 @@ export class RegionManager extends Destroyable {
   }
 
   get bottomIndex(): number {
-    return this._children.length > 0 ? this._children
-      .map(value => value.index)
-      .sort((a, b) => a - b)[0] : 0;
+    if (this.usable) {
+      return this._children.length > 0 ? this._children
+        .map(value => value.index)
+        .sort((a, b) => a - b)[0] : 0;
+    } else {
+      throw 'RegionManager已经销毁';
+    }
   }
 
   get topIndex(): number {
-    return this._children.length > 0 ?
-      this._children.map(value => value.index)
-        .sort((a, b) => b - a)[0] : 0;
+    if (this.usable) {
+      return this._children.length > 0 ?
+        this._children.map(value => value.index)
+          .sort((a, b) => b - a)[0] : 0;
+    } else {
+      throw 'RegionManager已经销毁';
+    }
   }
 
   has(region: Region) {
-    return this._children.includes(region);
+    if(this.usable){
+      return  this._children.includes(region);
+    } else {
+      throw 'RegionManager已经销毁';
+    }
   }
 
   /**
@@ -43,25 +55,41 @@ export class RegionManager extends Destroyable {
    * @param {Region} region
    */
   add(region: Region) {
-    if (!this.has(region)) {
-      this._children.push(region);
+    if(this.usable){
+      if (!this.has(region)) {
+        this._children.push(region);
+      }
+      this._subject.next([...this._children]);
+    } else {
+      throw 'RegionManager已经销毁';
     }
-    this._subject.next([...this.regionArray]);
   }
 
   remove(region: Region) {
-    if (this.has(region)) {
-      this._children.splice(this._children.indexOf(region), 1);
+    if(this.usable){
+      if (this.has(region)) {
+        this._children.splice(this._children.indexOf(region), 1);
+      }
+      this._subject.next([...this._children]);
+    } else {
+      throw 'RegionManager已经销毁';
     }
-    this._subject.next([...this.regionArray]);
   }
 
   get regionArray() {
-    return this._children.slice(0);
+    if(this.usable){
+      return this._children.slice(0);
+    } else {
+      throw 'RegionManager已经销毁';
+    }
   }
 
   get regionArray$(): Observable<Array<Region>> {
-    return this._subject.asObservable();
+    if(this.usable){
+      return this._subject.asObservable();
+    } else {
+      throw 'RegionManager已经销毁';
+    }
   }
 
   /**
@@ -73,20 +101,28 @@ export class RegionManager extends Destroyable {
    * @returns {Array<Region>}
    */
   public selectByBox(left, top, width, height): Array<Region> {
-    return this._children.filter((region: Region) => {
-      const $element = region.$element,
-        offset = $element.offset(),
-        x1 = left, y1 = top,
-        x2 = left + width, y2 = top + height,
-        x3 = offset.left, y3 = offset.top,
-        x4 = offset.left + $element.outerWidth(), y4 = offset.top + $element.outerHeight();
-      return (x3 > x1 && y3 > y1 && x2 > x4 && y2 > y4);
-    });
+    if(this.usable){
+      return this._children.filter((region: Region) => {
+        const $element = region.$element,
+          offset = $element.offset(),
+          x1 = left, y1 = top,
+          x2 = left + width, y2 = top + height,
+          x3 = offset.left, y3 = offset.top,
+          x4 = offset.left + $element.outerWidth(), y4 = offset.top + $element.outerHeight();
+        return (x3 > x1 && y3 > y1 && x2 > x4 && y2 > y4);
+      });
+    } else {
+      throw 'RegionManager已经销毁';
+    }
   }
 
   saveAs() {
-    return this._children.map((item) => {
-      return item.getOption();
-    });
+    if(this.usable){
+      return this._children.map((item) => {
+        return item.getOption();
+      });
+    } else {
+      throw 'RegionManager已经销毁';
+    }
   }
 }
