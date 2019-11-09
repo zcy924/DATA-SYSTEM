@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { componentManager, deepClone, IComponentOption } from '@data-studio/shared';
+import { componentManager, deepClone, Destroyable, IComponentOption } from '@data-studio/shared';
 import { regionDefinitionMap } from '../structure/region/region.definition.map';
 import { IReportPageInnerFacade } from '../structure/page/report/page.interface';
 import { Region } from '../structure/region/region';
@@ -10,13 +10,25 @@ import { IAction } from './action';
  *
  *
  */
-export class GraphicActionCreate implements IAction {
+export class GraphicActionCreate extends Destroyable implements IAction {
 
   private _region: Region;
 
+  /**
+   *
+   * @param _pageInnerFacade  目标页面
+   * @param _graphicPath  图表URI
+   * @param _left
+   * @param _top
+   * @param _configSourceOption 图表选项，譬如新建图片时，传递图片的维度、dataURL
+   */
   constructor(private _pageInnerFacade: IReportPageInnerFacade, private _graphicPath: string,
               private _left: number, private _top: number, private _configSourceOption?: any) {
-
+    super();
+    this.onDestroy(() => {
+      this._pageInnerFacade = this._graphicPath = this._configSourceOption = this._region = null;
+      this._left = this._top = null;
+    });
   }
 
   forward() {
@@ -30,6 +42,7 @@ export class GraphicActionCreate implements IAction {
         const regionInstance: Region = new (regionDefinitionMap.get(region.regionKey))(this._pageInnerFacade);
         const param = deepClone(graphic);
         if (this._configSourceOption) {
+          // 由于用户可能反复执行撤销、重做，所以this_configSourceOption会被重复使用
           _.set(param, 'graphicOption.configSourceOption', deepClone(this._configSourceOption));
         }
         regionInstance.init(Object.assign({}, region.regionOption, {
@@ -46,7 +59,7 @@ export class GraphicActionCreate implements IAction {
   }
 
   backward() {
-    if (this._region) {
+    if (this._region && this._region.usable) {
       this._region.destroy();
       this._region = null;
     }

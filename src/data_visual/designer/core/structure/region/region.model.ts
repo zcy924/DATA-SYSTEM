@@ -44,13 +44,21 @@ export class RegionModel extends ModelEventTarget {
   }
 
   set zIndex(value: number) {
-    const changedItem = { key: 'z-index', oldValue: this._option.zIndex, newValue: value, option: null };
-    this._option.zIndex = value;
-    this._trigger(changedItem);
+    if(this.usable){
+      const changedItem = { key: 'z-index', oldValue: this._option.zIndex, newValue: value, option: null };
+      this._option.zIndex = value;
+      this._trigger(changedItem);
+    }else{
+      throw "regionModel对象已经销毁！";
+    }
   }
 
   get zIndex(): number {
-    return this._option.zIndex;
+    if(this.usable){
+      return this._option.zIndex;
+    }else{
+      throw "regionModel对象已经销毁！";
+    }
   }
 
   set left(param: number) {

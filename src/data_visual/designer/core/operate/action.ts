@@ -1,3 +1,5 @@
+import { IDestroyable } from '@data-studio/shared';
+
 export interface IActionManager {
   canBackward: boolean;
 
@@ -10,7 +12,7 @@ export interface IActionManager {
   forward();
 }
 
-export interface IAction {
+export interface IAction extends IDestroyable {
 
   forward();
 
