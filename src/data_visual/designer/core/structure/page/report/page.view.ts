@@ -1,7 +1,8 @@
+import { BasePageConfig, ViewEventTarget } from '@data-studio/shared';
 import { RepaintMask, repaintMaskGenerator } from '../../../helper/mask.helper';
 import { boxSelectHelper } from '../../../helper/box.select.helper';
 import { ReportPageKernel } from './page.kernel';
-import { BasePageConfig, ViewEventTarget } from '@data-studio/shared';
+
 
 const TEMPLATE = `
     <div class="report-region">
@@ -64,15 +65,15 @@ export class PageView extends ViewEventTarget {
       this.$element = null;
 
       this._repaintMask = null;
-    },2);
+    }, 2);
   }
 
   /**
    * 绘制遮罩层
-   * @param $targetRegion 突出现实的元素
+   * @param $activatedRegion 突出现实的元素
    */
-  repaintMask($targetRegion: JQuery) {
-    this._repaintMask && this._repaintMask($targetRegion);
+  repaintMask($activatedRegion: JQuery) {
+    this._repaintMask && this._repaintMask($activatedRegion);
   }
 
 
@@ -95,6 +96,7 @@ export class PageView extends ViewEventTarget {
 
   /**
    * 监听页面模型变化
+   * 页面对象销毁时 先销毁哪个 model or pageView
    * @param model
    */
   public accept(model: BasePageConfig) {
@@ -110,7 +112,6 @@ export class PageView extends ViewEventTarget {
       });
     });
     model.register('add.backgroundCustom backgroundCustom', (key, oldValue, newValue) => {
-      console.log(newValue);
       newValue.dataUrl && this._$box.css({
         backgroundImage: `url(${newValue.dataUrl})`,
       });
@@ -142,7 +143,7 @@ export class PageView extends ViewEventTarget {
    * 进入全屏模式
    */
   enterFullScreen() {
-    this._$box[0].requestFullscreen();
+    this.usable && this._$box[0].requestFullscreen();
   }
 
   /**
@@ -185,7 +186,7 @@ export class PageView extends ViewEventTarget {
     this.onDestroy(() => {
       $editMask.off('click');
       $editMask = null;
-    });
+    }, 1);
 
     this.$grid
       .on('click', ($event) => {
@@ -197,6 +198,7 @@ export class PageView extends ViewEventTarget {
         if (this._page.activateManager.regionActivated) {
           return false;
         }
+        ;
 
         const startPageX = $event.pageX, startPageY = $event.pageY;
         let left: number, top: number, width: number, height: number;
@@ -225,12 +227,12 @@ export class PageView extends ViewEventTarget {
         $event.preventDefault();
       })
       .on('contextmenu', ($event: JQuery.Event) => {
-        this.dispatchEvent('rightClick',$event);
+        this.dispatchEvent('rightClick', $event);
         return false;
       });
 
     this.onDestroy(() => {
       this.$grid.off('click dragstart dragover contextmenu');
-    },1);
+    }, 1);
   }
 }
