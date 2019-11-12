@@ -79,24 +79,27 @@ export class ReportPageKernel extends Destroyable implements IPage {
    * @private
    */
   private _init() {
-    let contextMenu = [
-      'split', {
-        displayName: '剪切',
-        shortcut: 'Ctrl+X',
-      }, {
-        displayName: '粘贴',
-        shortcut: 'Ctrl+X',
-        enable: clipboard.hasData(),
-        callback: ($event) => {
-          console.log('粘贴', clipboard.getData());
-          session.currentPage.paste(clipboard.getData(), $event.offsetX, $event.offsetY);
-          return false;
+    const getContextMenu=()=>{
+      return [
+        'split', {
+          displayName: '剪切',
+          shortcut: 'Ctrl+X',
+        }, {
+          displayName: '粘贴',
+          shortcut: 'Ctrl+X',
+          enable: clipboard.hasData(),
+          callback: ($event) => {
+            console.log('粘贴', clipboard.getData());
+            session.currentPage.paste(clipboard.getData(), $event.offsetX, $event.offsetY);
+            return false;
+          },
+        }, {
+          displayName: '删除',
+          shortcut: 'Backspace',
         },
-      }, {
-        displayName: '删除',
-        shortcut: 'Backspace',
-      },
-    ];
+      ];
+    }
+
     this.view
       .addEventListener('select', () => {
         this.selectManager.clear();
@@ -114,10 +117,10 @@ export class ReportPageKernel extends Destroyable implements IPage {
         this.activateManager.deactivate();
       })
       .addEventListener('rightClick', ($event) => {
-        contextMenuHelper.open(contextMenu, $event.pageX, $event.pageY, $event);
+        contextMenuHelper.open(getContextMenu(), $event.pageX, $event.pageY, $event);
       });
     this.onDestroy(() => {
-      contextMenu = null;
+      //contextMenu = null;
     });
   }
 

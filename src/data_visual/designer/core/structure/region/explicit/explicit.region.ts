@@ -375,6 +375,13 @@ export class ExplicitRegion extends Region {
           this._model.zIndex = this._page.bottomIndex - 1;
           return false;
         },
+      }, {
+        displayName: '保存为组件模版',
+        shortcut: 'K',
+        callback: () => {
+          this._model.zIndex = this._page.bottomIndex - 1;
+          return false;
+        },
       }];
 
     this._view.addEventListener('rightClick', ($event) => {
