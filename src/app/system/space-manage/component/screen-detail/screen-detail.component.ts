@@ -8,7 +8,8 @@ import { PageRuntime } from '@data-studio/runtime/lib/page.runtime';
 import { Runtime } from '@data-studio/runtime';
 import { StandardCompRepo } from '@data-studio/component/standard';
 import { CustomCompRepo } from '@data-studio/component/custom';
-import { standardGeneratorRepo } from '@data-studio/generator/mock';
+import { mockGeneratorRepo } from '@data-studio/generator/mock';
+import { standardGeneratorRepo } from '@data-studio/generator/standard';
 
 
 @Component({
@@ -58,8 +59,8 @@ export class ScreenDetailComponent implements AfterViewInit, OnInit, OnDestroy {
       if (data.keepDashBoardId) {
         this.keepDashBoardId = data.keepDashBoardId;
       }
-      if (data.attr !== null && data.attr !== '' && JSON.stringify(data.attr) !== "{}" && data.attr !== undefined) {
-        console.log(data.attr)
+      if (data.attr !== null && data.attr !== '' && JSON.stringify(data.attr) !== '{}' && data.attr !== undefined) {
+        console.log(data.attr);
         console.log(typeof data.attr);
         if (this.runTime !== undefined) {
           this.report = this.runTime.open(data.attr);
@@ -68,7 +69,7 @@ export class ScreenDetailComponent implements AfterViewInit, OnInit, OnDestroy {
           this.runTime = Runtime.getInstance();
           this.runTime.addComponentRepository(StandardCompRepo);
           this.runTime.addComponentRepository(CustomCompRepo);
-          this.runTime.addGeneratorRepository(standardGeneratorRepo);
+          this.runTime.addGeneratorRepository([mockGeneratorRepo, standardGeneratorRepo]);
           this.report = this.runTime.open(data.attr);
           this.report.scale = 1.0;
         }
@@ -102,7 +103,7 @@ export class ScreenDetailComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   scaleChange(event) {
-    this.report.scale = event/100;
+    this.report.scale = event / 100;
   }
 
   collect() {

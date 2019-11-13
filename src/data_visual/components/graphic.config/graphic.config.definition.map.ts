@@ -10,14 +10,14 @@ import { WordCloudConfigComponent } from './chart/word.cloud.config.component';
 
 export const graphicConfigDefinitionMap = new Map();
 
-graphicConfigDefinitionMap.set('bar.chart.graphic', BarConfigComponent);
-graphicConfigDefinitionMap.set('line.chart.graphic', LineConfigComponent);
-graphicConfigDefinitionMap.set('pie.chart.graphic', PieConfigComponent);
-graphicConfigDefinitionMap.set('lines.chart.graphic', LineConfigComponent);
 graphicConfigDefinitionMap.set('image.graphic', ImageConfigComponent);
 graphicConfigDefinitionMap.set('text.graphic', TextConfigComponent);
 graphicConfigDefinitionMap.set('clock.graphic', TextConfigComponent);
 graphicConfigDefinitionMap.set('table.graphic', WordCloudConfigComponent);
+graphicConfigDefinitionMap.set('bar.chart.graphic', BarConfigComponent);
+graphicConfigDefinitionMap.set('line.chart.graphic', LineConfigComponent);
+graphicConfigDefinitionMap.set('lines.chart.graphic', LineConfigComponent);
+graphicConfigDefinitionMap.set('pie.chart.graphic', PieConfigComponent);
 graphicConfigDefinitionMap.set('flip.number.graphic', WordCloudConfigComponent);
 graphicConfigDefinitionMap.set('gauge.chart.graphic', GaugeConfigComponent);
 graphicConfigDefinitionMap.set('ring.chart.graphic', RingConfigComponent);

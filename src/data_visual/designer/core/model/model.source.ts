@@ -2,14 +2,14 @@ import { BehaviorSubject, combineLatest, Observable, Subject, Subscription } fro
 import { ConfigSourceManager } from '../config/config.source.manager';
 import { DataSourceManager, Destroyable, GraphicOption } from '@data-studio/shared';
 import * as _ from 'lodash';
-import { filter } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
 
 export class ModelSource extends Destroyable {
 
   private _graphicOption: GraphicOption;
 
-  private _modelSubject: Subject<any> = new BehaviorSubject(null);
-  private _modelSubscription: Subscription;
+  private _modelSubject: Subject<any>;
+  private _model$: Observable<Array<any>>;
 
   private _config$: Observable<any>;
   private _data$: Observable<any>;
@@ -19,13 +19,11 @@ export class ModelSource extends Destroyable {
     private _configSourceManger: ConfigSourceManager,
     private _dataSourceManager: DataSourceManager) {
     super();
+    this._modelSubject = new BehaviorSubject(null);
     this.onDestroy(() => {
-      if (this._modelSubscription) {
-        this._modelSubscription.unsubscribe();
-        this._modelSubscription = null;
-      }
       if (this._modelSubject) {
         this._modelSubject.unsubscribe();
+        this._modelSubject = null;
       }
       if (this._combineSubscription) {
         this._combineSubscription.unsubscribe();
@@ -61,12 +59,12 @@ export class ModelSource extends Destroyable {
     // 两个组件必须同时打开  不然收不到信息
     this._combineSubscription = combineLatest(this._config$, this._data$)
       .subscribe(([config, data]) => {
-        let a = 1;
         this._modelSubject.next([config, data]);
       });
 
-    this._modelSubscription = this._modelSubject
-      .subscribe((model: Array<any>) => {
+    this._model$ = this._modelSubject.asObservable().pipe(
+      filter(value => value != null),
+      tap((model: Array<any>) => {
         if (model) {
           const [config] = model;
           if (_.isArray(config)) {
@@ -75,39 +73,47 @@ export class ModelSource extends Destroyable {
             this._graphicOption.configSourceOption = Object.assign({}, config.option);
           }
         }
-      });
+      }));
   }
 
+  /**
+   * 设计模式下 切换配置信息源
+   * 设计器
+   */
   switchConfigSource() {
     if (this._combineSubscription) {
       this._combineSubscription.unsubscribe();
+      this._combineSubscription = null;
     }
-    const { id, classID, configSourceOption, dataSourceConfigID } = this._graphicOption;
+    const { id, classID, configSourceOption } = this._graphicOption;
     this._config$ = this._configSourceManger.getConfigSource({
       instanceID: id,
       classID,
       configSourceOption,
     });
-    this._combineSubscription = combineLatest(this._config$, this._data$).subscribe(([config, data]) => {
-      this._modelSubject.next([config, data]);
+    this._combineSubscription = combineLatest(this._config$, this._data$).subscribe((model) => {
+      this._modelSubject.next(model);
     });
   }
 
+  /**
+   * 设计模式下 切换数据源
+   * @param dataSourceConfigID
+   */
   switchDataSource(dataSourceConfigID: string) {
     this._graphicOption.dataSourceConfigID = dataSourceConfigID;
     if (this._combineSubscription) {
       this._combineSubscription.unsubscribe();
+      this._combineSubscription = null;
     }
     this._data$ = this._dataSourceManager.getDataSource(dataSourceConfigID);
-    this._combineSubscription = combineLatest(this._config$, this._data$).subscribe(([config, data]) => {
-      this._modelSubject.next({
-        config, data,
-      });
+    this._combineSubscription = combineLatest(this._config$, this._data$).subscribe((model) => {
+      this._modelSubject.next(model);
     });
   }
 
   model$(): Observable<any> {
-    return this._modelSubject.asObservable().pipe(filter(value => value != null));
+    return this._model$;
   }
 
 }

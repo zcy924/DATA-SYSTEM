@@ -2,6 +2,48 @@ import { IDataSourceConfig } from '@data-studio/shared';
 
 export const array: Array<IDataSourceConfig> = [
   {
+    id: 'simple1',
+    displayName: 'ce',
+    comment: '没有任何建议',
+    metaData: {
+      dataType: 'array',
+      dimensions: [
+        { name: 'CATALOG_NO', type: 'int' },
+        { name: 'catalog_desc', type: 'ordinal' },
+        { name: 'catalog_name', type: 'ordinal' }],
+    },
+    generatorPath: 'standard$simpleGenerator',
+    generatorParams: {
+      url:'http://10.2.72.166:8080/openAPI/ce?ak=d0772860f172400091ab7ea6e2010e55',
+      dimensions: [
+        { name: 'CATALOG_NO', type: 'int' },
+        { name: 'catalog_desc', type: 'ordinal' },
+        { name: 'catalog_name', type: 'ordinal' }],
+    },
+  },
+  {
+    id: 'simple2',
+    displayName: 'ceshi2',
+    comment: '没有任何建议',
+    metaData: {
+      dataType: 'array',
+      dimensions: [
+        { name: 'CLASSIFICATION', type: 'int' },
+        { name: 'DRIVER_CLASS', type: 'ordinal' },
+        { name: 'NAME', type: 'ordinal' },
+        { name: 'NO', type: 'ordinal' }],
+    },
+    generatorPath: 'standard$simpleGenerator',
+    generatorParams: {
+      url:'http://10.2.72.166:8080/openAPI/ceshi1?ak=d0772860f172400091ab7ea6e2010e55',
+      dimensions: [
+        { name: 'CLASSIFICATION', type: 'int' },
+        { name: 'DRIVER_CLASS', type: 'ordinal' },
+        { name: 'NAME', type: 'ordinal' },
+        { name: 'NO', type: 'ordinal' }],
+    },
+  },
+  {
     id: 'num1',
     displayName: '产品近三年销售额',
     comment: '没有任何建议',
@@ -15,7 +57,7 @@ export const array: Array<IDataSourceConfig> = [
           name: '2017', type: 'int',
         }],
     },
-    generatorPath: 'standard$mockDynamic',
+    generatorPath: 'mock$mockDynamic',
     generatorParams: {
       intervalTime: 10000,
       dataGenerator: `
@@ -44,7 +86,7 @@ export const array: Array<IDataSourceConfig> = [
     metaData: {
       dataType: 'single',
     },
-    generatorPath: 'standard$mockDynamic',
+    generatorPath: 'mock$mockDynamic',
     generatorParams: {
       intervalTime: 10000,
       dataGenerator: `
@@ -83,7 +125,7 @@ export const array: Array<IDataSourceConfig> = [
           type: 'int',
         }],
     },
-    generatorPath: 'standard$mockDynamic',
+    generatorPath: 'mock$mockDynamic',
     generatorParams: {
       intervalTime: 10000,
       dataGenerator: `
@@ -475,7 +517,7 @@ export const array: Array<IDataSourceConfig> = [
           type: 'int',
         }],
     },
-    generatorPath: 'standard$mockStatic',
+    generatorPath: 'mock$mockStatic',
     generatorParams: {
       data: {
         dimensions: [

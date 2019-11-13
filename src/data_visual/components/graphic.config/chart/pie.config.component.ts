@@ -98,7 +98,7 @@ export class PieConfigComponent extends BaseConfigSourceComponent implements Aft
       console.log('PieConfigComponent  valueChanges');
       // value.dataset = dataModelManager.current;
       value = removeUndefined(value);
-      this._trigger({
+      this._subject.next({
         key: 'option',
         oldValue: this._innerOption,
         newValue: value,

@@ -1,14 +1,15 @@
-import {AfterViewInit, Component, ElementRef, KeyValueDiffers, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {switchMap} from 'rxjs/operators';
-import {HttpResponse} from "@angular/common/http";
-import {NzMessageService} from "ng-zorro-antd";
-import {PersonalCenterService} from "../personal-center.service";
+import { AfterViewInit, Component, ElementRef, KeyValueDiffers, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+import { HttpResponse } from '@angular/common/http';
+import { NzMessageService } from 'ng-zorro-antd';
+import { PersonalCenterService } from '../personal-center.service';
 import { PageRuntime } from '@data-studio/runtime/lib/page.runtime';
 import { Runtime } from '@data-studio/runtime';
 import { StandardCompRepo } from '@data-studio/component/standard';
 import { CustomCompRepo } from '@data-studio/component/custom';
-import { standardGeneratorRepo } from '@data-studio/generator/mock';
+import { mockGeneratorRepo } from '@data-studio/generator/mock';
+import { standardGeneratorRepo } from '@data-studio/generator/standard';
 
 @Component({
   templateUrl: './detail-screen.html',
@@ -44,7 +45,7 @@ export class DetailScreenComponent implements AfterViewInit, OnInit, OnDestroy {
       this.dashboardId = data.dashBoardId;
       return this._personalService.getScreenInfo({
         dashBoardId: data.dashBoardId,
-        keepDashBoardId: data.keepDashBoardId
+        keepDashBoardId: data.keepDashBoardId,
       });
     }));
     reportInfo$.subscribe(data => {
@@ -54,7 +55,7 @@ export class DetailScreenComponent implements AfterViewInit, OnInit, OnDestroy {
       this.icon = data.icon;
       this.spaceId = data.spaceId;
 
-      if (data.attr !== null && data.attr !== '' && JSON.stringify(data.attr) !== "{}" && data.attr !== undefined) {
+      if (data.attr !== null && data.attr !== '' && JSON.stringify(data.attr) !== '{}' && data.attr !== undefined) {
         if (this.runTime !== undefined) {
           this.report = this.runTime.open(data.attr);
           this.report.scale = 1.0;
@@ -62,7 +63,7 @@ export class DetailScreenComponent implements AfterViewInit, OnInit, OnDestroy {
           this.runTime = Runtime.getInstance();
           this.runTime.addComponentRepository(StandardCompRepo);
           this.runTime.addComponentRepository(CustomCompRepo);
-          this.runTime.addGeneratorRepository(standardGeneratorRepo);
+          this.runTime.addGeneratorRepository([standardGeneratorRepo, mockGeneratorRepo]);
           this.report = this.runTime.open(data.attr);
           this.report.scale = 1.0;
         }
@@ -94,12 +95,12 @@ export class DetailScreenComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   scaleChange(event) {
-    this.report.scale = event/100;
+    this.report.scale = event / 100;
   }
 
   uncollect() {
     const params = {
-      keepDashBoardId: this.keepDashBoardId
+      keepDashBoardId: this.keepDashBoardId,
     };
     this._personalService.uncollectScreen(params).subscribe(
       data => {
@@ -109,8 +110,8 @@ export class DetailScreenComponent implements AfterViewInit, OnInit, OnDestroy {
         if (err instanceof HttpResponse) {
           this._nzMessage.error(err.body.retMsg);
         }
-      }
-    )
+      },
+    );
   }
 
 }

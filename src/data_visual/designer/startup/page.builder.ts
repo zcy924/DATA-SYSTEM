@@ -1,10 +1,11 @@
 import * as _ from 'lodash';
 import { StandardCompRepo } from '@data-studio/component/standard';
 import { CustomCompRepo } from '@data-studio/component/custom';
-import { standardGeneratorRepo } from '@data-studio/generator/mock';
+import { mockGeneratorRepo } from '@data-studio/generator/mock';
 import { componentManager, generatorManager, IFileStructure } from '@data-studio/shared';
 import { VERSION_INFO } from '../core/structure/page/report/page.utils';
 import { ReportPage } from '../core/structure/page/report/page.outer';
+import { standardGeneratorRepo } from '@data-studio/generator/standard';
 
 export class ReportPageBuilder {
 
@@ -14,7 +15,7 @@ export class ReportPageBuilder {
   constructor() {
     this._componentManager.addRepository(StandardCompRepo);
     this._componentManager.addRepository(CustomCompRepo);
-    this._generatorManager.addRepository(standardGeneratorRepo);
+    this._generatorManager.addRepository([standardGeneratorRepo, mockGeneratorRepo]);
   }
 
   /**
@@ -42,7 +43,7 @@ export class ReportPageBuilder {
    * @private
    */
   private _checkVersion(file: IFileStructure) {
-    return VERSION_INFO.accept( _.get(file, 'manifest.version'));
+    return VERSION_INFO.accept(_.get(file, 'manifest.version'));
   }
 
   private _checkDependencies(file: IFileStructure) {

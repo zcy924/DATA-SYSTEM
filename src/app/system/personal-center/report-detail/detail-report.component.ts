@@ -1,15 +1,15 @@
 import { AfterViewInit, Component, ElementRef, KeyValueDiffers, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { HttpResponse } from "@angular/common/http";
+import { HttpResponse } from '@angular/common/http';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { PersonalCenterService } from '../personal-center.service';
 import { PageRuntime } from '@data-studio/runtime/lib/page.runtime';
 import { Runtime } from '@data-studio/runtime';
 import { StandardCompRepo } from '@data-studio/component/standard';
 import { CustomCompRepo } from '@data-studio/component/custom';
-import { standardGeneratorRepo } from '@data-studio/generator/mock';
-
+import { mockGeneratorRepo } from '@data-studio/generator/mock';
+import { standardGeneratorRepo } from '@data-studio/generator/standard';
 
 
 @Component({
@@ -30,7 +30,7 @@ export class DetailReportComponent implements AfterViewInit, OnInit, OnDestroy {
               private _differs: KeyValueDiffers,
               private _acRouter: ActivatedRoute,
               private _router: Router,
-              private _personalService:PersonalCenterService,
+              private _personalService: PersonalCenterService,
               private _nzModel: NzModalService,
               private _nzMessage: NzMessageService) {
   }
@@ -43,20 +43,19 @@ export class DetailReportComponent implements AfterViewInit, OnInit, OnDestroy {
       this.keepReportId = data.keepReportId;
       return this._personalService.getSelfReportInfo({
         reportId: data.reportId,
-        keepReportId: data.keepReportId
+        keepReportId: data.keepReportId,
       });
     }));
     reportInfo$.subscribe(data => {
       this.reportName = data.reportName;
 
-      if (data.attr !== null && data.attr !== '' && JSON.stringify(data.attr) !== "{}" && data.attr !== undefined) {
+      if (data.attr !== null && data.attr !== '' && JSON.stringify(data.attr) !== '{}' && data.attr !== undefined) {
         if (this.runTime !== undefined) {
           this.report = this.runTime.open(data.attr);
         } else {
           this.runTime = Runtime.getInstance();
-          this.runTime.addComponentRepository(StandardCompRepo);
-          this.runTime.addComponentRepository(CustomCompRepo);
-          this.runTime.addGeneratorRepository(standardGeneratorRepo);
+          this.runTime.addComponentRepository([StandardCompRepo, CustomCompRepo]);
+          this.runTime.addGeneratorRepository([mockGeneratorRepo, standardGeneratorRepo]);
           this.report = this.runTime.open(data.attr);
         }
         $('.app-content').empty();
@@ -64,8 +63,8 @@ export class DetailReportComponent implements AfterViewInit, OnInit, OnDestroy {
       } else {
         this._nzMessage.warning('该大屏尚未编辑!');
       }
-    },err=>{
-      if(err instanceof HttpResponse){
+    }, err => {
+      if (err instanceof HttpResponse) {
         this._nzMessage.error(err.body.retMsg);
       }
     });
@@ -84,7 +83,7 @@ export class DetailReportComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   scaleChange(event) {
-    this.report.scale = event/100;
+    this.report.scale = event / 100;
   }
 
   // 取消收藏报表对话框

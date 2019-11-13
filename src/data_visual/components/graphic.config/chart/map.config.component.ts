@@ -238,7 +238,7 @@ export class MapConfigComponent extends BaseConfigSourceComponent implements Aft
       // value.dataset = dataModelManager.current;
       value.tooltip = {};
       value = removeUndefined(value);
-      this._trigger({
+      this._subject.next({
         key: 'option',
         oldValue: this._innerOption,
         newValue: this.option,

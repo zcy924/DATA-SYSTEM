@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, KeyValueDiffers, OnDestroy, OnIni
 import { ActivatedRoute } from '@angular/router';
 import { SpaceManageService } from '../../space-manage.service';
 import { switchMap } from 'rxjs/operators';
-import { HttpResponse } from "@angular/common/http";
+import { HttpResponse } from '@angular/common/http';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { ReportKeepModalComponent } from './modal/report-keep-modal.component';
 import { PersonalCenterService } from '../../../personal-center/personal-center.service';
@@ -10,7 +10,8 @@ import { PageRuntime } from '@data-studio/runtime/lib/page.runtime';
 import { Runtime } from '@data-studio/runtime';
 import { StandardCompRepo } from '@data-studio/component/standard';
 import { CustomCompRepo } from '@data-studio/component/custom';
-import { standardGeneratorRepo } from '@data-studio/generator/mock';
+import { mockGeneratorRepo } from '@data-studio/generator/mock';
+import { standardGeneratorRepo } from '@data-studio/generator/standard';
 
 
 @Component({
@@ -32,12 +33,12 @@ export class ReportDetailComponent implements AfterViewInit, OnInit, OnDestroy {
   leftPanelState = false;
 
   constructor(private _elementRef: ElementRef,
-    private _differs: KeyValueDiffers,
-    private _router: ActivatedRoute,
-    private _spaceManageService: SpaceManageService,
-    private _personalService: PersonalCenterService,
-    private _nzModel: NzModalService,
-    private _nzMessage: NzMessageService) {
+              private _differs: KeyValueDiffers,
+              private _router: ActivatedRoute,
+              private _spaceManageService: SpaceManageService,
+              private _personalService: PersonalCenterService,
+              private _nzModel: NzModalService,
+              private _nzMessage: NzMessageService) {
   }
 
   ngOnInit() {
@@ -61,7 +62,7 @@ export class ReportDetailComponent implements AfterViewInit, OnInit, OnDestroy {
       this.keepReportId = data.keepReportId;
 
       this.reportName = data.Report.reportName;
-      if (data.Report.attr !== null && data.Report.attr !== '' && JSON.stringify(data.Report.attr) !== "{}" && data.Report.attr !== undefined) {
+      if (data.Report.attr !== null && data.Report.attr !== '' && JSON.stringify(data.Report.attr) !== '{}' && data.Report.attr !== undefined) {
         if (this.runTime !== undefined) {
           this.report = this.runTime.open(data.Report.attr);
           this.report.scale = 1.0;
@@ -69,7 +70,7 @@ export class ReportDetailComponent implements AfterViewInit, OnInit, OnDestroy {
           this.runTime = Runtime.getInstance();
           this.runTime.addComponentRepository(StandardCompRepo);
           this.runTime.addComponentRepository(CustomCompRepo);
-          this.runTime.addGeneratorRepository(standardGeneratorRepo);
+          this.runTime.addGeneratorRepository([mockGeneratorRepo, standardGeneratorRepo]);
           this.report = this.runTime.open(data.Report.attr);
           this.report.scale = 1.0;
         }
@@ -101,7 +102,7 @@ export class ReportDetailComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   scaleChange(event) {
-    this.report.scale = event/100;
+    this.report.scale = event / 100;
   }
 
   // 收藏报表对话框
