@@ -1,9 +1,5 @@
-import { Coordinates, Dimensions, IRegionOption, ModelEventTarget, Rectangle } from '@data-studio/shared';
+import { Coordinates, Dimensions, RegionState, IRegionOption, ModelEventTarget, Rectangle } from '@data-studio/shared';
 import { closestNum, pick } from '../../../utils/common';
-
-export enum RegionState {
-  default, selected, multiSelected, activated
-}
 
 
 /**
@@ -44,20 +40,20 @@ export class RegionModel extends ModelEventTarget {
   }
 
   set zIndex(value: number) {
-    if(this.usable){
+    if (this.usable) {
       const changedItem = { key: 'z-index', oldValue: this._option.zIndex, newValue: value, option: null };
       this._option.zIndex = value;
       this._trigger(changedItem);
-    }else{
-      throw "regionModel对象已经销毁！";
+    } else {
+      throw 'regionModel对象已经销毁！';
     }
   }
 
   get zIndex(): number {
-    if(this.usable){
+    if (this.usable) {
       return this._option.zIndex;
-    }else{
-      throw "regionModel对象已经销毁！";
+    } else {
+      throw 'regionModel对象已经销毁！';
     }
   }
 

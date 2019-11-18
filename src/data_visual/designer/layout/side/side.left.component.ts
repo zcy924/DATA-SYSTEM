@@ -66,26 +66,6 @@ export class SideLeftComponent implements AfterViewInit {
     return retComponentRef;
   }
 
-  forwardCreateGraphicConfig(type: Type<BaseConfigSourceComponent>): ComponentRef<BaseConfigSourceComponent> {
-    let retComponentRef: ComponentRef<BaseConfigSourceComponent>;
-    this._zone.run(() => {
-      // this.shadowContainer.detach();
-      // this.shadowContainer.clear();
-      const factory: ComponentFactory<BaseConfigSourceComponent> =
-        this._resolver.resolveComponentFactory(type);
-      retComponentRef = this.componentRef = this.shadowContainer.createComponent(factory);
-      this.componentRef.instance.type = type;
-      // this.shadowContainer.detach();
-      // this.componentRef.instance.output.subscribe((msg: string) => {
-      //   console.log('我是', msg);
-      //   if (reportGlobal.instance) {
-      //     reportGlobal.instance.update(msg);
-      //   }
-      // });
-    });
-    return retComponentRef;
-  }
-
   forwardCreateCanvasConfig(type: Type<BasePageConfig>): ComponentRef<BasePageConfig> {
     let retComponentRef: ComponentRef<BasePageConfig>;
     this._zone.run(() => {
@@ -95,6 +75,20 @@ export class SideLeftComponent implements AfterViewInit {
         this._resolver.resolveComponentFactory(type);
       retComponentRef = this.componentRef = this.shadowContainer.createComponent(factory);
       // this.componentRef.instance.type = type;
+      // this.shadowContainer.detach();
+    });
+    return retComponentRef;
+  }
+
+  forwardCreateGraphicConfig(type: Type<BaseConfigSourceComponent>): ComponentRef<BaseConfigSourceComponent> {
+    let retComponentRef: ComponentRef<BaseConfigSourceComponent>;
+    this._zone.run(() => {
+      // this.shadowContainer.detach();
+      // this.shadowContainer.clear();
+      const factory: ComponentFactory<BaseConfigSourceComponent> =
+        this._resolver.resolveComponentFactory(type);
+      retComponentRef = this.componentRef = this.shadowContainer.createComponent(factory);
+      this.componentRef.instance.type = type;
       // this.shadowContainer.detach();
       // this.componentRef.instance.output.subscribe((msg: string) => {
       //   console.log('我是', msg);

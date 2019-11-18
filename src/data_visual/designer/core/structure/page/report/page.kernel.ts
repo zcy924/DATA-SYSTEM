@@ -1,3 +1,8 @@
+import { Observable } from 'rxjs';
+import {
+  DataSourceManager, Destroyable, IConfigSourceOptionWrapper,
+  IPage,
+} from '@data-studio/shared';
 import { clipboard } from '../../../../utils/clipboard';
 import { SelectManager } from '../../../manager/select.manager';
 import { RegionManager } from '../../../manager/region.manager';
@@ -5,20 +10,15 @@ import { ActivateManager } from '../../../manager/activate.manager';
 import { ConfigSourceManager } from '../../../config/config.source.manager';
 import { dataSourceConfigSetManager } from '../../../../data/data.source.config.set.manager';
 import { ActionManager } from '../../../operate/action.manager';
-import { PageConfigAgent } from './page.config.agent';
+import { PageConfigManager } from './page.config.manager';
 import { PageView } from './page.view';
-import {
-  BasePageConfig,
-  DataSourceManager, Destroyable, IConfigSourceOptionWrapper,
-  IPage,
-} from '@data-studio/shared';
 import { session } from '../../../../utils/session';
 import { contextMenuHelper } from '../../../helper/context.menu.helper';
-import { Observable } from 'rxjs';
+import { ModelSourceManager } from '../../../model/model.source.manager';
 
 export class ReportPageKernel extends Destroyable implements IPage {
 
-  public pageConfigAgent: PageConfigAgent;
+  public pageConfigManager: PageConfigManager;
   public view: PageView;
 
   // manager
@@ -26,37 +26,12 @@ export class ReportPageKernel extends Destroyable implements IPage {
   public selectManager: SelectManager;
   public activateManager: ActivateManager;
 
-  public configSourceManager: ConfigSourceManager;
-  public dataSourceManager: DataSourceManager;
+  public modelSourceManager: ModelSourceManager;
   public actionManager: ActionManager;
 
 
   constructor(private _mode: 'design' | 'runtime') {
     super();
-
-    // 创建页面视图，并初始化
-    this.view = new PageView(this);
-    this.view.init();
-    // 创建页面模型
-    this.pageConfigAgent = new PageConfigAgent(_mode);
-
-    // 创建管理工具 管理所有的图表/选中的图表/当前激活的图表。
-    this.regionManager = new RegionManager();
-    this.selectManager = new SelectManager();
-    this.activateManager = new ActivateManager(this);
-
-    this.configSourceManager = new ConfigSourceManager();
-    this.dataSourceManager = new DataSourceManager(dataSourceConfigSetManager.getItem('space1'));
-    this.actionManager = new ActionManager();
-
-    this.onDestroy(() => {
-      this.activateManager.destroy();
-      this.regionManager.regionArray.forEach(value => value.destroy());
-      this.regionManager.destroy();
-      this.selectManager.destroy();
-      this.pageConfigAgent.destroy();
-      this.view.destroy();
-    });
   }
 
   get mode(): 'design' | 'runtime' {
@@ -64,11 +39,39 @@ export class ReportPageKernel extends Destroyable implements IPage {
   }
 
   init() {
+
+    // 创建页面模型
+    this.pageConfigManager = new PageConfigManager(this._mode);
+    this.pageConfigManager.init();
+
+    // 创建页面视图，并初始化
+    this.view = new PageView(this);
+    this.view.init();
+
+    // 创建管理工具 管理所有的图表/选中的图表/当前激活的图表。
+    this.regionManager = new RegionManager();
+    this.selectManager = new SelectManager();
+    this.activateManager = new ActivateManager(this);
+
+    this.modelSourceManager = new ModelSourceManager();
+    this.modelSourceManager.init();
+
+    this.actionManager = new ActionManager();
+
+    this.onDestroy(() => {
+      this.activateManager.destroy();
+      this.regionManager.regionArray.forEach(value => value.destroy());
+      this.regionManager.destroy();
+      this.selectManager.destroy();
+      this.pageConfigManager.destroy();
+      this.view.destroy();
+    });
+
     // 1、监听model事件
-    this.pageConfigAgent.model.register('themeMode', (key, oldValue, newValue) => {
+    this.pageConfigManager.model.register('themeMode', (key, oldValue, newValue) => {
       this.updateTheme(newValue);
     });
-    this.view.accept(this.pageConfigAgent.model);
+    this.view.accept(this.pageConfigManager.model);
 
     // 2、监听PageView事件
     this._init();
@@ -79,7 +82,7 @@ export class ReportPageKernel extends Destroyable implements IPage {
    * @private
    */
   private _init() {
-    const getContextMenu=()=>{
+    const getContextMenu = () => {
       return [
         'split', {
           displayName: '剪切',
@@ -98,17 +101,16 @@ export class ReportPageKernel extends Destroyable implements IPage {
           shortcut: 'Backspace',
         },
       ];
-    }
+    };
 
     this.view
       .addEventListener('select', () => {
         this.selectManager.clear();
-        this.pageConfigAgent.show();
+        this.pageConfigManager.show();
       })
       .addEventListener('boxSelect', (left, top, width, height) => {
         const array = this.regionManager.selectByBox(left, top, width, height);
         this.selectManager.clear();
-        console.log(array.length);
         array.forEach((value) => {
           this.selectManager.ctrlSelect(value);
         });

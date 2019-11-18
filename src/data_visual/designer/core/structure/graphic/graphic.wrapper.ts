@@ -1,5 +1,4 @@
 import { Subscription } from 'rxjs';
-import { ConfigSourceComponentRefManager } from '../../config/config.source.component.ref.manager';
 import { dataModelManager } from '../../../data/data.model.manager';
 import { Region } from '../region/region';
 
@@ -70,8 +69,7 @@ export class GraphicWrapper extends Destroyable {
     // 创建modelSource
     graphicOption.id = id || guid(10, 16);
 
-    this._modelSource = new ModelSource(this._region.page.configSourceManager, this._region.page.dataSourceManager);
-    this._modelSource.init(graphicOptionWrapper);
+    this._modelSource = this._region.page.modelSourceManager.getModelSource(graphicOptionWrapper);
     this._modelSubscription = this._graphic.accept(this._modelSource.model$());
 
     this.onDestroy(() => {
@@ -103,10 +101,10 @@ export class GraphicWrapper extends Destroyable {
 
     // 运行时不需要调用此方法
     dataModelManager.switchDataModel(this._modelSource.graphicOption.dataSourceConfigID, false);
-    if (!ConfigSourceComponentRefManager.getInstance().has(this.uuid)) {
+    if (!this._region.page.modelSourceManager.componentRefManager.has(this.uuid)) {
       this.switchConfigSource();
     }
-    ConfigSourceComponentRefManager.getInstance().activate(this.uuid);
+    this._region.page.modelSourceManager.componentRefManager.activate(this.uuid);
   }
 
   get optionAccessor() {

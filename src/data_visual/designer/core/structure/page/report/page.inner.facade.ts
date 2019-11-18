@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { ReportPageKernel } from './page.kernel';
 import { IReportPageInnerFacade } from './page.interface';
 import { Region } from '../../region/region';
-import { Destroyable } from '@data-studio/shared';
+import { Destroyable, GraphicOption } from '@data-studio/shared';
 
 /**
  *
@@ -47,15 +47,11 @@ export class ReportPageInnerFacadeImpl extends Destroyable implements IReportPag
   }
 
   get selectedArray(): Array<Region> {
-    return this._pageKernel.selectManager.selectedArray;
+    return this._pageKernel.selectManager.selectedArray as Array<Region>;
   }
 
-  get configSourceManager() {
-    return this._pageKernel.configSourceManager;
-  }
-
-  get dataSourceManager() {
-    return this._pageKernel.dataSourceManager;
+  get modelSourceManager() {
+    return this._pageKernel.modelSourceManager;
   }
 
   get actionManager() {
@@ -93,15 +89,7 @@ export class ReportPageInnerFacadeImpl extends Destroyable implements IReportPag
     this._pageKernel.activateManager.regionResize(region);
   }
 
-  getMockConfigSource(option: any) {
-    return this._pageKernel.configSourceManager.getMockConfigSource(option);
-  }
-
-  getConfigSource(option: any) {
-    return this._pageKernel.configSourceManager.getConfigSource(option);
-  }
-
-  getDataSource(id: string) {
-    return this._pageKernel.dataSourceManager.getDataSource(id);
+  getModelSource(graphicOption: GraphicOption) {
+    return this._pageKernel.modelSourceManager.getModelSource(graphicOption);
   }
 }

@@ -1,6 +1,7 @@
 import { Region } from '../region';
 import { RegionView } from '../region.view';
-import { RegionModel, RegionState } from '../region.model';
+import { RegionModel } from '../region.model';
+import { RegionState } from '@data-studio/shared';
 
 const template = `
 <div class="m-dashbox">

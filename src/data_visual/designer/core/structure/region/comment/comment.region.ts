@@ -1,7 +1,8 @@
 import { Region } from '../region';
-import { RegionModel, RegionState } from '../region.model';
+import { RegionModel } from '../region.model';
 import { CommentRegionView } from './comment.region.view';
 import { IReportPageInnerFacade } from '../../page/report/page.interface';
+import { RegionState } from '@data-studio/shared';
 
 
 export class CommentRegion extends Region {

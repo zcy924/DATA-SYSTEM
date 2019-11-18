@@ -1,10 +1,10 @@
+import * as _ from 'lodash';
+import { Destroyable, IComponentOption, IFileStructure } from '@data-studio/shared';
 import { ReportPageKernel } from './page.kernel';
 import { IReportPageInnerFacade } from './page.interface';
-import * as _ from 'lodash';
 import { Region } from '../../region/region';
 import { ReportPageInnerFacadeImpl } from './page.inner.facade';
 import { VERSION_INFO } from './page.utils';
-import { Destroyable, IComponentOption, IFileStructure } from '@data-studio/shared';
 import { GraphicActionCreate } from '../../../operate/graphic.action.create';
 import { GraphicActionPaste } from '../../../operate/graphic.action.paste';
 import { addGraphicToPage } from '../../../operate/action.utils';
@@ -20,12 +20,10 @@ export class ReportPage extends Destroyable {
     this._pageKernel.init();
     this._pageInnerFacade = new ReportPageInnerFacadeImpl(this._pageKernel);
     this.onDestroy(() => {
-      if (!this.destroyed) {
-        this._pageKernel.destroy();
-        this._pageKernel = null;
-        this._pageInnerFacade.destroy();
-        this._pageInnerFacade = null;
-      }
+      this._pageKernel.destroy();
+      this._pageKernel = null;
+      this._pageInnerFacade.destroy();
+      this._pageInnerFacade = null;
     });
   }
 
@@ -57,7 +55,7 @@ export class ReportPage extends Destroyable {
    */
   load(file: IFileStructure) {
     if (file.main) {
-      file.main.option && this._pageKernel.pageConfigAgent.model.importOption(file.main.option);
+      file.main.option && this._pageKernel.pageConfigManager.model.importOption(file.main.option);
       file.main.children && file.main.children.forEach((value) => {
         this._paste(value);
       });
@@ -70,7 +68,7 @@ export class ReportPage extends Destroyable {
 
   save() {
     const main = {
-      option: this._pageKernel.pageConfigAgent.model.exportOption(),
+      option: this._pageKernel.pageConfigManager.model.exportOption(),
       children: this._pageKernel.regionManager.saveAs(),
     };
     let keys = _.uniq(main.children.map((componentOption: IComponentOption, index, array) => {
@@ -80,9 +78,9 @@ export class ReportPage extends Destroyable {
         return value.graphic.graphicPath;
       }));
 
-    const dataSourceConfigArray = this._pageKernel.dataSourceManager.getDataSourceConfigArray(keys);
+    const dataSourceConfigArray = this._pageKernel.modelSourceManager.dataSourceManager.getDataSourceConfigArray(keys);
 
-    keys = this._pageKernel.dataSourceManager.getDependencies(keys);
+    keys = this._pageKernel.modelSourceManager.dataSourceManager.getDependencies(keys);
     paths = _.uniq(paths.map(value => value.split('$')[0]));
     console.log(JSON.stringify(keys), paths);
     return {

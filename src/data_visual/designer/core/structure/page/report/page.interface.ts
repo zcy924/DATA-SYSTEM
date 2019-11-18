@@ -1,15 +1,22 @@
+import { GraphicOption, IDestroyable } from '@data-studio/shared';
 import { Observable } from 'rxjs';
 import { Region } from '../../region/region';
 import { ActionManager } from '../../../operate/action.manager';
-import { ConfigSourceManager } from '../../../config/config.source.manager';
-import { DataSourceManager, IDestroyable } from '@data-studio/shared';
+import { ModelSource } from '../../../model/model.source';
+import { ModelSourceManager } from '../../../model/model.source.manager';
+
+export type OpenMode = 'design' | 'runtime';
+
+export interface IPageInnerFacade {
+  getModelSource(): ModelSource;
+}
 
 /**
  * Page接口  供region，graphic等子元素引用
  */
-export interface IReportPageInnerFacade extends IDestroyable{
+export interface IReportPageInnerFacade extends IDestroyable {
 
-  mode: 'design' | 'runtime';
+  mode: OpenMode;
   /**
    * region根据scale计算位移和伸缩
    */
@@ -30,9 +37,7 @@ export interface IReportPageInnerFacade extends IDestroyable{
 
   selectedArray: Array<Region>;
 
-  configSourceManager: ConfigSourceManager;
-
-  dataSourceManager: DataSourceManager;
+  modelSourceManager: ModelSourceManager;
 
   actionManager: ActionManager;
 
@@ -50,9 +55,5 @@ export interface IReportPageInnerFacade extends IDestroyable{
 
   regionResize(region: Region);
 
-  getMockConfigSource(option: any);
-
-  getConfigSource(option: any);
-
-  getDataSource(id: string);
+  getModelSource(graphicOption: GraphicOption);
 }

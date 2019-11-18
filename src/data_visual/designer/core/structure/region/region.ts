@@ -1,6 +1,6 @@
 import { GraphicWrapper } from '../graphic/graphic.wrapper';
 import { IReportPageInnerFacade } from '../page/report/page.interface';
-import { RegionModel, RegionState } from './region.model';
+import { RegionModel } from './region.model';
 import { RegionView } from './region.view';
 import {
   Destroyable,
@@ -8,6 +8,7 @@ import {
   Dimensions,
   Rectangle,
   IRegion,
+  RegionState,
   IGraphicOption,
   IComponentOption,
 } from '@data-studio/shared';
@@ -123,7 +124,7 @@ export abstract class Region extends Destroyable implements IRegion {
 
   abstract sync();
 
-  abstract getOption():IComponentOption;
+  abstract getOption(): IComponentOption;
 
 }
 

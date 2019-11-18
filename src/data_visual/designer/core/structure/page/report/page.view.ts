@@ -1,4 +1,4 @@
-import { BasePageConfig, ViewEventTarget } from '@data-studio/shared';
+import { ModelEventTarget, ViewEventTarget } from '@data-studio/shared';
 import { RepaintMask, repaintMaskGenerator } from '../../../helper/mask.helper';
 import { boxSelectHelper } from '../../../helper/box.select.helper';
 import { ReportPageKernel } from './page.kernel';
@@ -52,10 +52,10 @@ export class PageView extends ViewEventTarget {
     this._$canvas = $element.find('.report-canvas');
     this._$box = $element.find('.report-box');
     this.$grid = $element.find('.report-grid');
+    this.$grid.attr('draggable', 'true');
 
     this._repaintMask = repaintMaskGenerator($element.find('.u-edit-mask'));
 
-    this.$grid.attr('draggable', 'true');
     this._bindEvent();
 
     // 先解除事件绑定
@@ -73,7 +73,7 @@ export class PageView extends ViewEventTarget {
    * @param $activatedRegion 突出现实的元素
    */
   repaintMask($activatedRegion: JQuery) {
-    this._repaintMask && this._repaintMask($activatedRegion);
+    this.usable && this._repaintMask($activatedRegion);
   }
 
 
@@ -99,7 +99,7 @@ export class PageView extends ViewEventTarget {
    * 页面对象销毁时 先销毁哪个 model or pageView
    * @param model
    */
-  public accept(model: BasePageConfig) {
+  public accept(model: ModelEventTarget) {
     model.register('remove.backgroundClass', (key, oldValue, newValue) => {
       this._$box.removeClass('background1 background2 background3 background4');
     });
@@ -198,7 +198,6 @@ export class PageView extends ViewEventTarget {
         if (this._page.activateManager.regionActivated) {
           return false;
         }
-        ;
 
         const startPageX = $event.pageX, startPageY = $event.pageY;
         let left: number, top: number, width: number, height: number;

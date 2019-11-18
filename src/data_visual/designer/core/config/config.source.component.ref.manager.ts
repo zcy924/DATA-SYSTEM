@@ -1,21 +1,22 @@
-import {ComponentRef} from '@angular/core';
+import { ComponentRef } from '@angular/core';
 import { session } from '../../utils/session';
-import { BaseConfigSourceComponent } from '@data-studio/shared';
+import { BaseConfigSourceComponent, Destroyable } from '@data-studio/shared';
 
 /**
  * 缓存应用中创建的GraphConfigComponent
  * note：
  * 缓存的是设计时配置源
  */
-export class ConfigSourceComponentRefManager {
-  private static _componentRefManager: ConfigSourceComponentRefManager;
-  private _map = new Map();
+export class ConfigSourceComponentRefManager extends Destroyable {
+  private _map: Map<string, ComponentRef<BaseConfigSourceComponent>> = new Map();
 
-  static getInstance() {
-    return this._componentRefManager = this._componentRefManager || new ConfigSourceComponentRefManager();
-  }
-
-  private constructor() {
+  constructor() {
+    super();
+    this.onDestroy(() => {
+      this._map.forEach((value => value.destroy()));
+      this._map.clear();
+      this._map = null;
+    });
   }
 
   has(id: string) {
@@ -45,7 +46,7 @@ export class ConfigSourceComponentRefManager {
   activate(id: string) {
     if (this._map.has(id)) {
       const componentRef = this._map.get(id);
-      session.sideLeftComponent.attachDataProperty(componentRef.hostView);
+      session.attachConfigViewRef(componentRef.hostView);
     }
   }
 

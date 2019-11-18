@@ -1,18 +1,31 @@
 import { DesignerConfigSourceFactory } from './designer.config.source.factory';
 import { Observable } from 'rxjs';
-import { IConfigSourceFactory, IConfigSourceOptionWrapper } from '@data-studio/shared';
+import { Destroyable, IConfigSourceFactory, IConfigSourceOptionWrapper } from '@data-studio/shared';
 import { RuntimeConfigSourceFactory } from '@data-studio/runtime';
+import { ConfigSourceComponentRefManager } from './config.source.component.ref.manager';
 
 /**
  *  每个页面对应一个ConfigSourceManager
  */
-export class ConfigSourceManager {
+export class ConfigSourceManager extends Destroyable {
+  private _componentRefManager: ConfigSourceComponentRefManager;
   private _configSourceFactory: IConfigSourceFactory;
   private _mockConfigSourceFactory: IConfigSourceFactory;
 
   constructor() {
-    this._configSourceFactory = DesignerConfigSourceFactory.getInstance();
+    super();
+    this._componentRefManager = new ConfigSourceComponentRefManager();
+    this._configSourceFactory = new DesignerConfigSourceFactory(this._componentRefManager);
     this._mockConfigSourceFactory = RuntimeConfigSourceFactory.getInstance();
+    this.onDestroy(() => {
+      this._componentRefManager.destroy();
+      this._configSourceFactory.destroy();
+      this._mockConfigSourceFactory = this._configSourceFactory = this._componentRefManager = null;
+    });
+  }
+
+  get componentRefManager(): ConfigSourceComponentRefManager {
+    return this._componentRefManager;
   }
 
   getConfigSource(configSourceOption: IConfigSourceOptionWrapper): Observable<any> {

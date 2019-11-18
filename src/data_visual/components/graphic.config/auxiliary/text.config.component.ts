@@ -31,9 +31,6 @@ export class TextConfigComponent extends BaseConfigSourceComponent implements Af
 
   ngAfterViewInit() {
     this.ngForm && this.ngForm.valueChanges.subscribe((value) => {
-      // console.log(JSON.stringify(value));
-      // console.log(JSON.stringify(this.option));
-      console.log('(((((((((((((((((((((((((((((((((((((((((((((((((');
       const changes = this._differ.diff(value);
       if (changes) {
         console.log('has change');
