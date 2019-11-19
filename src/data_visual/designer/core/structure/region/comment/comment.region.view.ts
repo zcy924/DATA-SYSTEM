@@ -32,7 +32,7 @@ export class CommentRegionView extends RegionView {
 
     this.$element = $(template);
     this.$fill = this.$element.find('.g-fill');
-    this._$mover = this.$element.find('.u-mover');
+   // this._$mover = this.$element.find('.u-mover');
 
     this._listenToModel(_model);
     this.refresh();
@@ -130,9 +130,9 @@ export class CommentRegionView extends RegionView {
   }
 
   private _bindEvent() {
-    this._bindEventForResize();
-    this._bindEventForMover();
-    this._bindContextEvent();
+    // this._bindEventForResize();
+    // this._bindEventForMover();
+    // this._bindContextEvent();
   }
 
   destroy() {

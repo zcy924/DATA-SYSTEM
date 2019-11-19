@@ -1,5 +1,5 @@
 import {
-  Destroyable, GraphicOption, IModelSource, IModelSourceManager,
+  Destroyable
 } from '@data-studio/shared';
 import { clipboard } from '../../../../utils/clipboard';
 import { SelectManager } from '../../../manager/select.manager';
