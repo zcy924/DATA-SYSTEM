@@ -4,7 +4,7 @@ import { CustomCompRepo } from '@data-studio/component/custom';
 import { mockGeneratorRepo } from '@data-studio/generator/mock';
 import { componentManager, generatorManager, IFileStructure } from '@data-studio/shared';
 import { VERSION_INFO } from '../core/structure/page/report/page.utils';
-import { ReportPage } from '../core/structure/page/report/page.outer';
+import { ReportPage } from '../core/structure/page/report/page';
 import { standardGeneratorRepo } from '@data-studio/generator/standard';
 
 export class ReportPageBuilder {

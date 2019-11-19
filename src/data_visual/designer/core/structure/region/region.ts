@@ -1,5 +1,5 @@
 import { GraphicWrapper } from '../graphic/graphic.wrapper';
-import { IReportPageInnerFacade } from '../page/report/page.interface';
+import { IReportPageInner } from '../page/report/page.interface';
 import { RegionModel } from './region.model';
 import { RegionView } from './region.view';
 import {
@@ -19,7 +19,7 @@ import {
 export abstract class Region extends Destroyable implements IRegion {
 
   // 模型层
-  protected _page: IReportPageInnerFacade;
+  protected _page: IReportPageInner;
   protected _model: RegionModel;
   protected _view: RegionView;
   protected _graphicWrapper: GraphicWrapper;
@@ -43,7 +43,7 @@ export abstract class Region extends Destroyable implements IRegion {
     return this.usable ? this._view.$element : null;
   }
 
-  get page(): IReportPageInnerFacade {
+  get page(): IReportPageInner {
     return this.usable && this._page;
   }
 

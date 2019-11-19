@@ -1,13 +1,13 @@
 import { Region } from '../region';
 import { RegionModel } from '../region.model';
 import { CommentRegionView } from './comment.region.view';
-import { IReportPageInnerFacade } from '../../page/report/page.interface';
+import { IReportPageInner } from '../../page/report/page.interface';
 import { RegionState } from '@data-studio/shared';
 
 
 export class CommentRegion extends Region {
 
-  constructor(protected _page: IReportPageInnerFacade) {
+  constructor(protected _page: IReportPageInner) {
     super();
     this._model = new RegionModel();
     this._view = new CommentRegionView(this, this._model);

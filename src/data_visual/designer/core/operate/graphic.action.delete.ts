@@ -1,7 +1,7 @@
 import { Destroyable } from '@data-studio/shared';
 import { Region } from '../structure/region/region';
 import { IAction } from './action';
-import { IReportPageInnerFacade } from '../structure/page/report/page.interface';
+import { IReportPageInner } from '../structure/page/report/page.interface';
 import { addGraphicToPage } from './action.utils';
 
 /**
@@ -11,7 +11,7 @@ export class GraphicActionDelete extends Destroyable implements IAction {
 
   private _deletedRegionCache: Array<string> = [];
 
-  constructor(private _pageInnerFacade: IReportPageInnerFacade, private _toDeleteArray: Array<Region>) {
+  constructor(private _pageInnerFacade: IReportPageInner, private _toDeleteArray: Array<Region>) {
     super();
     this.onDestroy(() => {
       this._pageInnerFacade = this._toDeleteArray = this._deletedRegionCache = null;

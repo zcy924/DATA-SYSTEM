@@ -1,6 +1,6 @@
 import { ComponentRef } from '@angular/core';
+import { Destroyable, BaseConfigSourceComponent } from '@data-studio/shared';
 import { session } from '../../utils/session';
-import { BaseConfigSourceComponent, Destroyable } from '@data-studio/shared';
 
 /**
  * 缓存应用中创建的GraphConfigComponent

@@ -1,17 +1,17 @@
 import { Observable } from 'rxjs';
-import { ReportPageKernel } from './page.kernel';
-import { IReportPageInnerFacade } from './page.interface';
-import { Region } from '../../region/region';
 import { Destroyable, GraphicOption } from '@data-studio/shared';
+import { IReportPageKernel, IReportPageInner } from './page.interface';
+import { Region } from '../../region/region';
+
 
 /**
  *
  */
-export class ReportPageInnerFacadeImpl extends Destroyable implements IReportPageInnerFacade {
+export class ReportPageInner extends Destroyable implements IReportPageInner {
 
   focusRegion: Region;
 
-  constructor(private _pageKernel: ReportPageKernel) {
+  constructor(private _pageKernel: IReportPageKernel) {
     super();
     this.onDestroy(() => {
       this._pageKernel = null;
@@ -86,7 +86,7 @@ export class ReportPageInnerFacadeImpl extends Destroyable implements IReportPag
   }
 
   regionResize(region: Region) {
-    this._pageKernel.activateManager.regionResize(region);
+    this._pageKernel.activateManager.adjust();
   }
 
   getModelSource(graphicOption: GraphicOption) {

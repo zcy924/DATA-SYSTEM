@@ -1,5 +1,5 @@
 import { ComponentRef } from '@angular/core';
-import { BasePageConfig, DefaultPageConfig, Destroyable, ModelEventTarget } from '@data-studio/shared';
+import { BasePageConfig, DefaultPageConfig, Destroyable } from '@data-studio/shared';
 import { session } from '../../../../utils/session';
 import { OpenMode } from './page.interface';
 

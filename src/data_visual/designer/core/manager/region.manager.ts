@@ -43,8 +43,8 @@ export class RegionManager extends Destroyable {
   }
 
   has(region: Region) {
-    if(this.usable){
-      return  this._children.includes(region);
+    if (this.usable) {
+      return this._children.includes(region);
     } else {
       throw 'RegionManager已经销毁';
     }
@@ -55,7 +55,7 @@ export class RegionManager extends Destroyable {
    * @param {Region} region
    */
   add(region: Region) {
-    if(this.usable){
+    if (this.usable) {
       if (!this.has(region)) {
         this._children.push(region);
       }
@@ -65,8 +65,12 @@ export class RegionManager extends Destroyable {
     }
   }
 
+  /**
+   * 只删除region的引用，不调用region的destroy方法
+   * @param region
+   */
   remove(region: Region) {
-    if(this.usable){
+    if (this.usable) {
       if (this.has(region)) {
         this._children.splice(this._children.indexOf(region), 1);
       }
@@ -76,8 +80,24 @@ export class RegionManager extends Destroyable {
     }
   }
 
+  /**
+   * 清空所有region
+   * 注意某些region被选中或处于activated状态
+   */
+  clear() {
+    if (this.usable) {
+      while (this._children.length > 0) {
+        const region = this._children.pop();
+        region.destroy();
+      }
+      this._subject.next([...this._children]);
+    } else {
+      throw 'RegionManager已经销毁';
+    }
+  }
+
   get regionArray() {
-    if(this.usable){
+    if (this.usable) {
       return this._children.slice(0);
     } else {
       throw 'RegionManager已经销毁';
@@ -85,7 +105,7 @@ export class RegionManager extends Destroyable {
   }
 
   get regionArray$(): Observable<Array<Region>> {
-    if(this.usable){
+    if (this.usable) {
       return this._subject.asObservable();
     } else {
       throw 'RegionManager已经销毁';
@@ -101,7 +121,7 @@ export class RegionManager extends Destroyable {
    * @returns {Array<Region>}
    */
   public selectByBox(left, top, width, height): Array<Region> {
-    if(this.usable){
+    if (this.usable) {
       return this._children.filter((region: Region) => {
         const $element = region.$element,
           offset = $element.offset(),
@@ -117,7 +137,7 @@ export class RegionManager extends Destroyable {
   }
 
   saveAs() {
-    if(this.usable){
+    if (this.usable) {
       return this._children.map((item) => {
         return item.getOption();
       });

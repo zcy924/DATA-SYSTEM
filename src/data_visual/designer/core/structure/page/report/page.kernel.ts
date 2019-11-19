@@ -1,22 +1,20 @@
-import { Observable } from 'rxjs';
 import {
-  DataSourceManager, Destroyable, IConfigSourceOptionWrapper,
-  IPage,
+  Destroyable, GraphicOption, IModelSource, IModelSourceManager,
 } from '@data-studio/shared';
 import { clipboard } from '../../../../utils/clipboard';
 import { SelectManager } from '../../../manager/select.manager';
 import { RegionManager } from '../../../manager/region.manager';
 import { ActivateManager } from '../../../manager/activate.manager';
-import { ConfigSourceManager } from '../../../config/config.source.manager';
-import { dataSourceConfigSetManager } from '../../../../data/data.source.config.set.manager';
 import { ActionManager } from '../../../operate/action.manager';
 import { PageConfigManager } from './page.config.manager';
 import { PageView } from './page.view';
 import { session } from '../../../../utils/session';
 import { contextMenuHelper } from '../../../helper/context.menu.helper';
 import { ModelSourceManager } from '../../../model/model.source.manager';
+import { IReportPageInner, IReportPageKernel, OpenMode } from './page.interface';
+import { ReportPageInner } from './page.inner';
 
-export class ReportPageKernel extends Destroyable implements IPage {
+export class ReportPageKernel extends Destroyable implements IReportPageKernel {
 
   public pageConfigManager: PageConfigManager;
   public view: PageView;
@@ -29,17 +27,17 @@ export class ReportPageKernel extends Destroyable implements IPage {
   public modelSourceManager: ModelSourceManager;
   public actionManager: ActionManager;
 
+  private _pageInner: IReportPageInner;
 
-  constructor(private _mode: 'design' | 'runtime') {
+  constructor(private _mode: OpenMode) {
     super();
   }
 
-  get mode(): 'design' | 'runtime' {
+  get mode(): OpenMode {
     return this._mode;
   }
 
   init() {
-
     // 创建页面模型
     this.pageConfigManager = new PageConfigManager(this._mode);
     this.pageConfigManager.init();
@@ -58,51 +56,16 @@ export class ReportPageKernel extends Destroyable implements IPage {
 
     this.actionManager = new ActionManager();
 
-    this.onDestroy(() => {
-      this.activateManager.destroy();
-      this.regionManager.regionArray.forEach(value => value.destroy());
-      this.regionManager.destroy();
-      this.selectManager.destroy();
-      this.pageConfigManager.destroy();
-      this.view.destroy();
-    });
-
     // 1、监听model事件
     this.pageConfigManager.model.register('themeMode', (key, oldValue, newValue) => {
-      this.updateTheme(newValue);
+      // 页面切换主题
+      this.regionManager.regionArray.forEach((item) => {
+        item.updateTheme(newValue);
+      });
     });
     this.view.accept(this.pageConfigManager.model);
 
     // 2、监听PageView事件
-    this._init();
-  }
-
-  /**
-   * 监听PageView事件
-   * @private
-   */
-  private _init() {
-    const getContextMenu = () => {
-      return [
-        'split', {
-          displayName: '剪切',
-          shortcut: 'Ctrl+X',
-        }, {
-          displayName: '粘贴',
-          shortcut: 'Ctrl+X',
-          enable: clipboard.hasData(),
-          callback: ($event) => {
-            console.log('粘贴', clipboard.getData());
-            session.currentPage.paste(clipboard.getData(), $event.offsetX, $event.offsetY);
-            return false;
-          },
-        }, {
-          displayName: '删除',
-          shortcut: 'Backspace',
-        },
-      ];
-    };
-
     this.view
       .addEventListener('select', () => {
         this.selectManager.clear();
@@ -119,21 +82,41 @@ export class ReportPageKernel extends Destroyable implements IPage {
         this.activateManager.deactivate();
       })
       .addEventListener('rightClick', ($event) => {
-        contextMenuHelper.open(getContextMenu(), $event.pageX, $event.pageY, $event);
+        const contextMenu = [
+          'split', {
+            displayName: '剪切',
+            shortcut: 'Ctrl+X',
+          }, {
+            displayName: '粘贴',
+            shortcut: 'Ctrl+X',
+            enable: clipboard.hasData(),
+            callback: ($event) => {
+              console.log('粘贴', clipboard.getData());
+              session.currentPage.paste(clipboard.getData(), $event.offsetX, $event.offsetY);
+              return false;
+            },
+          }, {
+            displayName: '删除',
+            shortcut: 'Backspace',
+          },
+        ];
+        contextMenuHelper.open(contextMenu, $event.pageX, $event.pageY, $event);
       });
+
     this.onDestroy(() => {
-      //contextMenu = null;
+      this.activateManager.destroy();
+      this.regionManager.regionArray.forEach(value => value.destroy());
+      this.regionManager.destroy();
+      this.selectManager.destroy();
+      this.modelSourceManager.destroy();
+      this.pageConfigManager.destroy();
+      this.view.destroy();
     });
+
+    this._pageInner = new ReportPageInner(this);
   }
 
-  /**
-   * 页面切换主题
-   * @param theme
-   */
-  updateTheme(theme: string) {
-    this.regionManager.regionArray.forEach((item) => {
-      item.updateTheme(theme);
-    });
+  load() {
   }
 
   /**
@@ -152,16 +135,12 @@ export class ReportPageKernel extends Destroyable implements IPage {
   removeChild(child: any): any {
   }
 
-  getConfigSource(option: IConfigSourceOptionWrapper): Observable<any> {
-    return null;
-  }
-
-  getDataSource(id: string): Observable<any> {
-    return null;
-  }
-
   unselect() {
 
+  }
+
+  asPageInner(): IReportPageInner {
+    return this._pageInner;
   }
 }
 

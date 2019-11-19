@@ -6,12 +6,12 @@ import { HttpResponse } from '@angular/common/http';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { ReportKeepModalComponent } from './modal/report-keep-modal.component';
 import { PersonalCenterService } from '../../../personal-center/personal-center.service';
-import { PageRuntime } from '@data-studio/runtime/lib/page.runtime';
 import { Runtime } from '@data-studio/runtime';
 import { StandardCompRepo } from '@data-studio/component/standard';
 import { CustomCompRepo } from '@data-studio/component/custom';
 import { mockGeneratorRepo } from '@data-studio/generator/mock';
 import { standardGeneratorRepo } from '@data-studio/generator/standard';
+import { IPage } from '@data-studio/shared';
 
 
 @Component({
@@ -25,7 +25,7 @@ export class ReportDetailComponent implements AfterViewInit, OnInit, OnDestroy {
   keepReportId;
   reportId;
 
-  report: PageRuntime;
+  report: IPage;
   runTime;
   reportName;
   spaceId: string;
@@ -75,7 +75,7 @@ export class ReportDetailComponent implements AfterViewInit, OnInit, OnDestroy {
           this.report.scale = 1.0;
         }
         $('.app-content').empty();
-        $('.app-content').prepend(this.report.$element);
+        $('.app-content').prepend(this.report.element);
       } else {
         $('.app-content').empty();
         $('.app-content').prepend('<h3>该大屏尚未编辑!</h3>');

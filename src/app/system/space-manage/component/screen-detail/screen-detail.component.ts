@@ -4,12 +4,12 @@ import { SpaceManageService } from '../../space-manage.service';
 import { switchMap } from 'rxjs/operators';
 import { HttpResponse } from '@angular/common/http';
 import { NzMessageService } from 'ng-zorro-antd';
-import { PageRuntime } from '@data-studio/runtime/lib/page.runtime';
 import { Runtime } from '@data-studio/runtime';
 import { StandardCompRepo } from '@data-studio/component/standard';
 import { CustomCompRepo } from '@data-studio/component/custom';
 import { mockGeneratorRepo } from '@data-studio/generator/mock';
 import { standardGeneratorRepo } from '@data-studio/generator/standard';
+import { IPage } from '@data-studio/shared';
 
 
 @Component({
@@ -18,7 +18,7 @@ import { standardGeneratorRepo } from '@data-studio/generator/standard';
 })
 export class ScreenDetailComponent implements AfterViewInit, OnInit, OnDestroy {
 
-  report: PageRuntime;
+  report: IPage;
   screenName;
   remark;
   icon;
@@ -75,7 +75,7 @@ export class ScreenDetailComponent implements AfterViewInit, OnInit, OnDestroy {
         }
         // const runtime = Runtime.getInstance();
         $('.app-content').empty();
-        $('.app-content').prepend(this.report.$element);
+        $('.app-content').prepend(this.report.element);
         // this.report.load(data.attr);
       } else {
         $('.app-content').empty();

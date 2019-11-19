@@ -37,8 +37,14 @@ export class ActivateManager extends Destroyable {
     }
   }
 
-  regionResize(region: Region) {
-    this._page.view.repaintMask(region.$element);
+  adjust() {
+    if (this._activatedRegion) {
+      this._page.view.repaintMask(this._activatedRegion.$element);
+    }
+  }
+
+  clear() {
+    this.deactivate();
   }
 
 

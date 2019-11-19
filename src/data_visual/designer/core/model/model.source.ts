@@ -1,10 +1,10 @@
 import { BehaviorSubject, combineLatest, Observable, Subject, Subscription } from 'rxjs';
 import { ConfigSourceManager } from '../config/config.source.manager';
-import { DataSourceManager, Destroyable, GraphicOption } from '@data-studio/shared';
+import { DataSourceManager, Destroyable, GraphicOption, IModelSource } from '@data-studio/shared';
 import * as _ from 'lodash';
 import { filter, tap } from 'rxjs/operators';
 
-export class ModelSource extends Destroyable {
+export class ModelSource extends Destroyable implements IModelSource {
 
   private _graphicOption: GraphicOption;
 
@@ -33,8 +33,24 @@ export class ModelSource extends Destroyable {
     });
   }
 
+  get id() {
+    return this._graphicOption.id;
+  }
+
+  get dataSourceConfigID() {
+    return this._graphicOption.dataSourceConfigID;
+  }
+
+  get value() {
+    return this._graphicOption.value;
+  }
+
   get graphicOption(): GraphicOption {
     return this._graphicOption;
+  }
+
+  get model$(): Observable<any> {
+    return this._model$;
   }
 
   // 根据配置信息初始化model
@@ -44,12 +60,12 @@ export class ModelSource extends Destroyable {
     // 如果是新建 则肯定是调用设计时的configFactory
     this._config$ = !!configSourceOption ? this._configSourceManger
       .getMockConfigSource({
-        instanceID: id,
+        id,
         classID,
         configSourceOption,
       }) : this._configSourceManger
       .getConfigSource({
-        instanceID: id,
+        id,
         classID,
         configSourceOption,
       });
@@ -87,7 +103,7 @@ export class ModelSource extends Destroyable {
     }
     const { id, classID, configSourceOption } = this._graphicOption;
     this._config$ = this._configSourceManger.getConfigSource({
-      instanceID: id,
+      id,
       classID,
       configSourceOption,
     });
@@ -110,10 +126,6 @@ export class ModelSource extends Destroyable {
     this._combineSubscription = combineLatest(this._config$, this._data$).subscribe((model) => {
       this._modelSubject.next(model);
     });
-  }
-
-  model$(): Observable<any> {
-    return this._model$;
   }
 
 }

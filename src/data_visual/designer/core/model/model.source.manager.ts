@@ -1,12 +1,20 @@
 import { ConfigSourceManager } from '../config/config.source.manager';
-import { DataSourceManager, Destroyable, GraphicOption, IConfigSourceOptionWrapper } from '@data-studio/shared';
+import {
+  DataSourceConfigSet,
+  DataSourceManager,
+  Destroyable,
+  GraphicOption,
+  dataSourceConfigSetManager, IModelSourceManager, IModelSource,
+} from '@data-studio/shared';
 import { ModelSource } from './model.source';
-import { dataSourceConfigSetManager } from '../../data/data.source.config.set.manager';
+import { array } from '../../data/test';
+
+dataSourceConfigSetManager.setItem('space1', new DataSourceConfigSet(array));
 
 /**
  * 模型源工厂   模型=配置+数据
  */
-export class ModelSourceManager extends Destroyable {
+export class ModelSourceManager extends Destroyable implements IModelSourceManager {
 
   private _configSourceManager: ConfigSourceManager;
   private _dataSourceManager: DataSourceManager;
@@ -36,14 +44,9 @@ export class ModelSourceManager extends Destroyable {
     return this._dataSourceManager;
   }
 
-  getModelSource(graphicOption: GraphicOption): ModelSource {
+  getModelSource(graphicOption: GraphicOption): IModelSource {
     const modelSource = new ModelSource(this._configSourceManager, this._dataSourceManager);
     modelSource.init(graphicOption);
     return modelSource;
   }
-}
-
-interface IModelOption {
-  configSourceOption: IConfigSourceOptionWrapper;
-  dataSourceConfigID: string;
 }

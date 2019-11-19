@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { debounceTime, delay } from 'rxjs/operators';
 import { Region } from '../../core/structure/region/region';
-import { IReportPageInnerFacade } from '../../core/structure/page/report/page.interface';
+import { IReportPageInner } from '../../core/structure/page/report/page.interface';
 import { session } from '../../utils/session';
 import { Destroyable } from '@data-studio/shared';
 
@@ -21,7 +21,7 @@ export class OutlineComponent extends Destroyable implements AfterViewInit, OnDe
 
   ngAfterViewInit() {
     let _regionArrayChangeSubscription: Subscription, _subscription = new Subscription();
-    _subscription.add(session.page.subscribe((currentPage: IReportPageInnerFacade) => {
+    _subscription.add(session.page.subscribe((currentPage: IReportPageInner) => {
       if (_regionArrayChangeSubscription) {
         _regionArrayChangeSubscription.unsubscribe();
         _subscription.remove(_regionArrayChangeSubscription);

@@ -1,20 +1,49 @@
-import { GraphicOption, IDestroyable } from '@data-studio/shared';
+import {
+  GraphicOption,
+  IDestroyable,
+  IFileStructure,
+  IModelSource,
+  IModelSourceManager,
+  IPageInner,
+} from '@data-studio/shared';
 import { Observable } from 'rxjs';
 import { Region } from '../../region/region';
 import { ActionManager } from '../../../operate/action.manager';
-import { ModelSource } from '../../../model/model.source';
 import { ModelSourceManager } from '../../../model/model.source.manager';
+import { PageView } from './page.view';
+import { RegionManager } from '../../../manager/region.manager';
+import { SelectManager } from '../../../manager/select.manager';
+import { ActivateManager } from '../../../manager/activate.manager';
 
 export type OpenMode = 'design' | 'runtime';
 
-export interface IPageInnerFacade {
-  getModelSource(): ModelSource;
+export interface IReportPage extends IDestroyable {
+  load(file: IFileStructure);
+
+  save(): any;
+
+  /**
+   * 清空页面中所有图表
+   */
+  clear();
+
+  enterFullScreen();
+}
+
+export interface IReportPageKernel extends IDestroyable {
+  mode: OpenMode;
+  view: PageView;
+  regionManager: RegionManager;
+  selectManager: SelectManager;
+  activateManager: ActivateManager;
+  actionManager: ActionManager;
+  modelSourceManager: ModelSourceManager;
 }
 
 /**
  * Page接口  供region，graphic等子元素引用
  */
-export interface IReportPageInnerFacade extends IDestroyable {
+export interface IReportPageInner extends IDestroyable {
 
   mode: OpenMode;
   /**
@@ -55,5 +84,5 @@ export interface IReportPageInnerFacade extends IDestroyable {
 
   regionResize(region: Region);
 
-  getModelSource(graphicOption: GraphicOption);
+  getModelSource(graphicOption: GraphicOption): IModelSource;
 }

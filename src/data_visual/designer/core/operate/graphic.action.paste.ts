@@ -1,7 +1,7 @@
 import { Destroyable } from '@data-studio/shared';
 import { Region } from '../structure/region/region';
 import { IAction } from './action';
-import { IReportPageInnerFacade } from '../structure/page/report/page.interface';
+import { IReportPageInner } from '../structure/page/report/page.interface';
 import { addGraphicToPage } from './action.utils';
 
 /**
@@ -11,7 +11,7 @@ export class GraphicActionPaste extends Destroyable implements IAction {
 
   private _region: Region;
 
-  constructor(private _pageInnerFacade: IReportPageInnerFacade, private _componentOption: any, private _x?: number, private  _y?: number) {
+  constructor(private _pageInnerFacade: IReportPageInner, private _componentOption: any, private _x?: number, private  _y?: number) {
     super();
     this.onDestroy(() => {
       this._pageInnerFacade = this._componentOption = null;

@@ -4,12 +4,12 @@ import { switchMap } from 'rxjs/operators';
 import { HttpResponse } from '@angular/common/http';
 import { NzMessageService } from 'ng-zorro-antd';
 import { PersonalCenterService } from '../personal-center.service';
-import { PageRuntime } from '@data-studio/runtime/lib/page.runtime';
 import { Runtime } from '@data-studio/runtime';
 import { StandardCompRepo } from '@data-studio/component/standard';
 import { CustomCompRepo } from '@data-studio/component/custom';
 import { mockGeneratorRepo } from '@data-studio/generator/mock';
 import { standardGeneratorRepo } from '@data-studio/generator/standard';
+import { IPage } from '@data-studio/shared';
 
 @Component({
   templateUrl: './detail-screen.html',
@@ -17,7 +17,7 @@ import { standardGeneratorRepo } from '@data-studio/generator/standard';
 })
 export class DetailScreenComponent implements AfterViewInit, OnInit, OnDestroy {
 
-  report: PageRuntime;
+  report: IPage;
   runTime;
 
   screenName;
@@ -68,7 +68,7 @@ export class DetailScreenComponent implements AfterViewInit, OnInit, OnDestroy {
           this.report.scale = 1.0;
         }
         $('.app-content').empty();
-        $('.app-content').prepend(this.report.$element);
+        $('.app-content').prepend(this.report.element);
       } else {
         $('.app-content').empty();
         $('.app-content').prepend('<h1>该大屏尚未编辑!</h1>');

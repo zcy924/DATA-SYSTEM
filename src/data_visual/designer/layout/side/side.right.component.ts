@@ -9,8 +9,7 @@ import { NgForm } from '@angular/forms';
 import { DesignerBodyComponent } from '../designer.body.component';
 import { dataModelSelector } from '../../utils/data.model.selector';
 import { dataModelManager } from '../../data/data.model.manager';
-import { DataSourceConfigSetManager } from '../../data/data.source.config.set.manager';
-import { Destroyable } from '@data-studio/shared';
+import { dataSourceConfigSetManager, Destroyable } from '@data-studio/shared';
 
 @Component({
   selector: 'app-side-right',
@@ -38,7 +37,7 @@ export class SideRightComponent extends Destroyable implements AfterViewInit, On
 
 
   ngAfterViewInit() {
-    dataModelManager.dataOptionSet = DataSourceConfigSetManager.getInstance().getItem('space1');
+    dataModelManager.dataOptionSet = dataSourceConfigSetManager.getItem('space1');
 
     const subscription = dataModelManager.modelName$.subscribe((modelName) => {
       this.modelName = modelName;

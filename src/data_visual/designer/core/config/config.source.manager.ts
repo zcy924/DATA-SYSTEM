@@ -1,7 +1,11 @@
 import { DesignerConfigSourceFactory } from './designer.config.source.factory';
 import { Observable } from 'rxjs';
-import { Destroyable, IConfigSourceFactory, IConfigSourceOptionWrapper } from '@data-studio/shared';
-import { RuntimeConfigSourceFactory } from '@data-studio/runtime';
+import {
+  Destroyable,
+  IConfigSourceFactory,
+  DefaultConfigSourceFactory,
+  IConfigSourceOptionWrapper,
+} from '@data-studio/shared';
 import { ConfigSourceComponentRefManager } from './config.source.component.ref.manager';
 
 /**
@@ -16,7 +20,7 @@ export class ConfigSourceManager extends Destroyable {
     super();
     this._componentRefManager = new ConfigSourceComponentRefManager();
     this._configSourceFactory = new DesignerConfigSourceFactory(this._componentRefManager);
-    this._mockConfigSourceFactory = RuntimeConfigSourceFactory.getInstance();
+    this._mockConfigSourceFactory = DefaultConfigSourceFactory.getInstance();
     this.onDestroy(() => {
       this._componentRefManager.destroy();
       this._configSourceFactory.destroy();

@@ -1,24 +1,21 @@
 import { Subscription } from 'rxjs';
-import { dataModelManager } from '../../../data/data.model.manager';
-import { Region } from '../region/region';
-
 import {
   Destroyable,
   getParameterName,
   GraphicOption, guid,
   componentManager,
   IGraphic,
-  IGraphicOption,
+  IGraphicOption, IModelSource, IRegion,
 } from '@data-studio/shared';
-import { ModelSource } from '../../model/model.source';
-
+import { dataModelManager } from '../../../data/data.model.manager';
+import { Region } from '../region/region';
 
 /**
  *
  */
 export class GraphicWrapper extends Destroyable {
 
-  private _modelSource: ModelSource;
+  private _modelSource: IModelSource;
   private _graphic: IGraphic;
 
   private _modelSubscription: Subscription;
@@ -30,7 +27,7 @@ export class GraphicWrapper extends Destroyable {
   }
 
   get uuid(): string {
-    return this._modelSource.graphicOption.id;
+    return this._modelSource.id;
   }
 
   get $element() {
@@ -45,8 +42,8 @@ export class GraphicWrapper extends Destroyable {
    * @param graphicOption
    */
   init({ graphicPath, graphicOption }: { graphicPath: string, graphicOption: IGraphicOption }) {
-    const graphicOptionWrapper = new GraphicOption(graphicOption, graphicPath);
-    const { id, classID, configSourceOption, dataSourceConfigID } = graphicOptionWrapper;
+    const graphicOptionWrapper = new GraphicOption(graphicPath, graphicOption);
+    const { id } = graphicOptionWrapper;
     // 创建graphic对象
     if (componentManager.has(graphicPath)) {
       this._graphic = componentManager.getGraphicInstance(graphicPath);
@@ -69,8 +66,8 @@ export class GraphicWrapper extends Destroyable {
     // 创建modelSource
     graphicOption.id = id || guid(10, 16);
 
-    this._modelSource = this._region.page.modelSourceManager.getModelSource(graphicOptionWrapper);
-    this._modelSubscription = this._graphic.accept(this._modelSource.model$());
+    this._modelSource = this._region.page.getModelSource(graphicOptionWrapper);
+    this._modelSubscription = this._graphic.accept(this._modelSource.model$);
 
     this.onDestroy(() => {
       if (this._modelSubscription) {
@@ -84,13 +81,6 @@ export class GraphicWrapper extends Destroyable {
     });
   }
 
-  /**
-   * 切换配置源
-   */
-  switchConfigSource() {
-    this._modelSource.switchConfigSource();
-  }
-
   switchDataSource(dataSourceConfigID: string) {
     this._modelSource.switchDataSource(dataSourceConfigID);
   }
@@ -100,15 +90,15 @@ export class GraphicWrapper extends Destroyable {
     this._region.page.focusRegion = this._region;
 
     // 运行时不需要调用此方法
-    dataModelManager.switchDataModel(this._modelSource.graphicOption.dataSourceConfigID, false);
+    dataModelManager.switchDataModel(this._modelSource.dataSourceConfigID, false);
     if (!this._region.page.modelSourceManager.componentRefManager.has(this.uuid)) {
-      this.switchConfigSource();
+      this._modelSource.switchConfigSource();
     }
     this._region.page.modelSourceManager.componentRefManager.activate(this.uuid);
   }
 
   get optionAccessor() {
-    return this._optionAccessor || (() => Object.assign({}, this._modelSource.graphicOption.value));
+    return this._optionAccessor || (() => Object.assign({}, this._modelSource.value));
   }
 
   set optionAccessor(value: Function) {
@@ -132,7 +122,6 @@ export class GraphicWrapper extends Destroyable {
 
 
   resize() {
-    console.log('graphicWrapper Resize');
     if (this._graphic) {
       this._graphic.resize();
     }

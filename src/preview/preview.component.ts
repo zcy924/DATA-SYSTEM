@@ -1,5 +1,5 @@
 import { AfterViewInit, Component } from '@angular/core';
-import { ReportPage } from '../data_visual/designer/core/structure/page/report/page.outer';
+import { ReportPage } from '../data_visual/designer/core/structure/page/report/page';
 import { session } from '../data_visual/designer/utils/session';
 import { reportPageBuilder } from '../data_visual/designer/startup/page.builder';
 

@@ -1,8 +1,8 @@
-import { Subject } from 'rxjs';
-import { ReportPage } from '../core/structure/page/report/page.outer';
-import { SideLeftComponent } from '../layout/side/side.left.component';
 import { ComponentRef, Type, ViewRef } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { BaseConfigSourceComponent, BasePageConfig } from '@data-studio/shared';
+import { ReportPage } from '../core/structure/page/report/page';
+import { SideLeftComponent } from '../layout/side/side.left.component';
 import { PageConfigComponent } from '../../components/page.config/page.config.component';
 
 class Session {
@@ -19,7 +19,7 @@ class Session {
     return this._currentPage;
   }
 
-  get currentPage$() {
+  get currentPage$(): Observable<any> {
     return this.page.asObservable();
   }
 

@@ -1,11 +1,11 @@
+import { Coordinates, IGraphicOption, Rectangle, RegionState } from '@data-studio/shared';
 import { Region } from '../region';
 import { clipboard } from '../../../../utils/clipboard';
 import { RegionModel } from '../region.model';
 import { ExplicitRegionView } from './explicit.region.view';
-import { IReportPageInnerFacade } from '../../page/report/page.interface';
+import { IReportPageInner } from '../../page/report/page.interface';
 import { GraphicActionDelete } from '../../../operate/graphic.action.delete';
 import { resizeTipHelper } from '../../../helper/resize.tip.helper';
-import { Coordinates, IGraphicOption, Rectangle, RegionState } from '@data-studio/shared';
 import { GraphicActionMove } from '../../../operate/graphic.action.move';
 import { GraphicActionResize } from '../../../operate/graphic.action.resize';
 import { contextMenuHelper } from '../../../helper/context.menu.helper';
@@ -39,7 +39,7 @@ import { GraphicWrapper } from '../../graphic/graphic.wrapper';
  */
 export class ExplicitRegion extends Region {
 
-  constructor(protected _page: IReportPageInnerFacade) {
+  constructor(protected _page: IReportPageInner) {
     super();
   }
 

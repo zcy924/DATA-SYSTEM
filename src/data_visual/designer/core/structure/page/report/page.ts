@@ -1,46 +1,48 @@
 import * as _ from 'lodash';
 import { Destroyable, IComponentOption, IFileStructure } from '@data-studio/shared';
 import { ReportPageKernel } from './page.kernel';
-import { IReportPageInnerFacade } from './page.interface';
+import { IReportPage, IReportPageInner, OpenMode } from './page.interface';
 import { Region } from '../../region/region';
-import { ReportPageInnerFacadeImpl } from './page.inner.facade';
 import { VERSION_INFO } from './page.utils';
 import { GraphicActionCreate } from '../../../operate/graphic.action.create';
 import { GraphicActionPaste } from '../../../operate/graphic.action.paste';
 import { addGraphicToPage } from '../../../operate/action.utils';
 
-export class ReportPage extends Destroyable {
+export class ReportPage extends Destroyable implements IReportPage {
 
   private _pageKernel: ReportPageKernel;
-  private _pageInnerFacade: IReportPageInnerFacade;
 
-  constructor(mode: 'design' | 'runtime') {
+  constructor(mode: OpenMode) {
     super();
     this._pageKernel = new ReportPageKernel(mode);
     this._pageKernel.init();
-    this._pageInnerFacade = new ReportPageInnerFacadeImpl(this._pageKernel);
     this.onDestroy(() => {
       this._pageKernel.destroy();
       this._pageKernel = null;
-      this._pageInnerFacade.destroy();
-      this._pageInnerFacade = null;
     });
   }
 
-  get mode(): 'design' | 'runtime' {
+  get mode(): OpenMode {
     return this._pageKernel.mode;
+  }
+
+  get element() {
+    return this._pageKernel.view.$element[0];
   }
 
   get $element() {
     return this._pageKernel.view.$element;
   }
 
+  /**
+   * 计算组件在页面中的位置
+   */
   offset() {
     return this._pageKernel.view.offset();
   }
 
-  get reportPage(): IReportPageInnerFacade {
-    return this._pageInnerFacade;
+  get reportPage(): IReportPageInner {
+    return this._pageKernel.asPageInner();
   }
 
   get actionManager() {
@@ -56,14 +58,10 @@ export class ReportPage extends Destroyable {
   load(file: IFileStructure) {
     if (file.main) {
       file.main.option && this._pageKernel.pageConfigManager.model.importOption(file.main.option);
-      file.main.children && file.main.children.forEach((value) => {
-        this._paste(value);
+      file.main.children && file.main.children.forEach((componentOption: IComponentOption) => {
+        addGraphicToPage(this._pageKernel.asPageInner(), componentOption);
       });
     }
-  }
-
-  private _paste(componentOption) {
-    addGraphicToPage(this._pageInnerFacade, componentOption);
   }
 
   save() {
@@ -104,11 +102,15 @@ export class ReportPage extends Destroyable {
    * @param configSourceOption 创建图片的时候，会从外部传入图片信息
    */
   createGraphic(graphicName: string, x: number, y: number, configSourceOption?: any) {
-    this._pageKernel.actionManager.execute(new GraphicActionCreate(this._pageInnerFacade, graphicName, x, y, configSourceOption));
+    this._pageKernel.actionManager.execute(new GraphicActionCreate(this._pageKernel.asPageInner(), graphicName, x, y, configSourceOption));
   }
 
   paste(componentOption: any, x?: number, y?: number) {
-    this._pageKernel.actionManager.execute(new GraphicActionPaste(this._pageInnerFacade, componentOption, x, y));
+    this._pageKernel.actionManager.execute(new GraphicActionPaste(this._pageKernel.asPageInner(), componentOption, x, y));
+  }
+
+  enterFullScreen() {
+    this.usable && this._pageKernel.view.enterFullScreen();
   }
 
   /**
@@ -119,9 +121,5 @@ export class ReportPage extends Destroyable {
     this._pageKernel.regionManager.regionArray.forEach((value: Region) => {
       value.destroy();
     });
-  }
-
-  enterFullScreen() {
-    this._pageKernel.view.enterFullScreen();
   }
 }

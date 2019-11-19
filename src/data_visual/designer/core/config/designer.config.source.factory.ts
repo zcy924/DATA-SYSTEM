@@ -27,14 +27,14 @@ export class DesignerConfigSourceFactory extends Destroyable implements IConfigS
    * @param classID
    * @param configSourceOption
    */
-  getConfigSource({ instanceID, classID, configSourceOption }: IConfigSourceOptionWrapper) {
+  getConfigSource({ id, classID, configSourceOption }: IConfigSourceOptionWrapper) {
     const configComponentDefinition: Type<BaseConfigSourceComponent> = graphicConfigDefinitionMap.get(classID),
       configSourceComponentRef = session.createGraphicConfig(configComponentDefinition);
 
     configSourceComponentRef.instance.importOption(configSourceOption);
-    this._configSourceComponentRefManager.add(instanceID, configSourceComponentRef);
+    this._configSourceComponentRefManager.add(id, configSourceComponentRef);
 
-    return configSourceComponentRef.instance.configSource;
+    return configSourceComponentRef.instance.config$;
   }
 }
 
