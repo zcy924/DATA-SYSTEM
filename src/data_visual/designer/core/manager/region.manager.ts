@@ -1,6 +1,6 @@
-import { Region } from '../structure/region/region';
 import { Observable, Subject } from 'rxjs';
 import { Destroyable } from '@data-studio/shared';
+import { Region } from '../structure/region/region';
 
 /**
  * 管理页面中的所有region，每个页面都有对应的RegionManager

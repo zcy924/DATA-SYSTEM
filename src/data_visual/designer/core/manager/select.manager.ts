@@ -1,4 +1,5 @@
-import { Destroyable, IRegionDesigner, RegionState } from '@data-studio/shared';
+import { Destroyable, RegionState } from '@data-studio/shared';
+import { Region } from '../structure/region/region';
 
 enum SelectStatus {
   default, single, multi
@@ -8,7 +9,7 @@ enum SelectStatus {
  * 被删除的region如何剔除
  */
 class Store extends Destroyable {
-  private _selectedArray: Array<IRegionDesigner> = [];
+  private _selectedArray: Array<Region> = [];
 
   constructor() {
     super();
@@ -45,11 +46,11 @@ class Store extends Destroyable {
    * @param {Region} region
    * @returns {boolean}
    */
-  include(region: IRegionDesigner) {
+  include(region: Region) {
     return this._selectedArray.includes(region);
   }
 
-  addRegion(region: IRegionDesigner) {
+  addRegion(region: Region) {
     if (!this.include(region)) {
       this._selectedArray.push(region);
       if (this._selectedArray.length > 1) {
@@ -64,7 +65,7 @@ class Store extends Destroyable {
     }
   }
 
-  removeRegion(region: IRegionDesigner) {
+  removeRegion(region: Region) {
     if (this._selectedArray.includes(region)) {
       region.state = RegionState.default;
       this._selectedArray.splice(this._selectedArray.indexOf(region), 1);
@@ -86,7 +87,7 @@ class Store extends Destroyable {
    * 当元素从页面删除的时候 需要清空selectManager对它的引用
    * @param region
    */
-  delete(region: IRegionDesigner) {
+  delete(region: Region) {
     if (this.include(region)) {
       this._selectedArray.splice(this._selectedArray.indexOf(region), 1);
     }
@@ -101,9 +102,9 @@ abstract class State extends Destroyable {
     });
   }
 
-  abstract select(region: IRegionDesigner);
+  abstract select(region: Region);
 
-  abstract ctrlSelect(region: IRegionDesigner);
+  abstract ctrlSelect(region: Region);
 }
 
 /**
@@ -114,11 +115,11 @@ class StateDefault extends State {
     super(store);
   }
 
-  select(region: IRegionDesigner) {
+  select(region: Region) {
     this._store.addRegion(region);
   }
 
-  ctrlSelect(region: IRegionDesigner) {
+  ctrlSelect(region: Region) {
     this._store.addRegion(region);
   }
 }
@@ -128,7 +129,7 @@ class StateSelected extends State {
     super(store);
   }
 
-  select(region: IRegionDesigner) {
+  select(region: Region) {
     if (this._store.include(region)) {
       return;
     } else {
@@ -137,7 +138,7 @@ class StateSelected extends State {
     }
   }
 
-  ctrlSelect(region: IRegionDesigner) {
+  ctrlSelect(region: Region) {
     if (this._store.include(region)) {
       this._store.removeRegion(region);
     } else {
@@ -151,12 +152,12 @@ class StateMultiSelected extends State {
     super(store);
   }
 
-  select(region: IRegionDesigner) {
+  select(region: Region) {
     this._store.clear();
     this._store.addRegion(region);
   }
 
-  ctrlSelect(region: IRegionDesigner) {
+  ctrlSelect(region: Region) {
     if (this._store.include(region)) {
       this._store.removeRegion(region);
     } else {
@@ -205,7 +206,7 @@ export class SelectManager extends Store {
    * 之前选择的图表会被清空
    * @param region
    */
-  select(region: IRegionDesigner) {
+  select(region: Region) {
     this.state.select(region);
   }
 
@@ -213,7 +214,7 @@ export class SelectManager extends Store {
    * 摁住ctrl键，点击region
    * @param region
    */
-  ctrlSelect(region: IRegionDesigner) {
+  ctrlSelect(region: Region) {
     this.state.ctrlSelect(region);
   }
 }

@@ -3,8 +3,6 @@ import {
   IDestroyable,
   IFileStructure,
   IModelSource,
-  IModelSourceManager,
-  IPageInner,
 } from '@data-studio/shared';
 import { Observable } from 'rxjs';
 import { Region } from '../../region/region';

@@ -45,6 +45,7 @@
               "node_modules/echarts/dist/echarts.min.js",
               "src/data_visual/lib/fullscreen/fullscreen-api-polyfill.js",
               "src/data_visual/lib/ckeditor/ckeditor.js",
+              "src/data_visual/lib/colorpicker/colpick.js",
               "src/data_visual/lib/echarts/plugins/echarts-wordcloud.min.js",
               "src/data_visual/lib/echarts/china.js",
               "src/data_visual/lib/echarts/province/guangdong.js",

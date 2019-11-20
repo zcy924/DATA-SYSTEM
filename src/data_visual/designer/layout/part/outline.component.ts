@@ -30,7 +30,7 @@ export class OutlineComponent extends Destroyable implements AfterViewInit, OnDe
         .regionArray$.pipe(debounceTime(50),delay(100)).subscribe((regionArray: Array<Region>) => {
           console.log('regionArray', regionArray.length, regionArray);
           this.list = regionArray.map((region: Region) => {
-            return region.invoke('desc');
+            return region.description;
           });
         });
       _subscription.add(_regionArrayChangeSubscription);

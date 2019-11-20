@@ -1,4 +1,4 @@
-import { Coordinates, IGraphicOption, Rectangle, RegionState } from '@data-studio/shared';
+import { Coordinates, Destroyable, Dimensions, IGraphicOption, Rectangle, RegionState } from '@data-studio/shared';
 import { Region } from '../region';
 import { clipboard } from '../../../../utils/clipboard';
 import { RegionModel } from '../region.model';
@@ -10,6 +10,7 @@ import { GraphicActionMove } from '../../../operate/graphic.action.move';
 import { GraphicActionResize } from '../../../operate/graphic.action.resize';
 import { contextMenuHelper } from '../../../helper/context.menu.helper';
 import { GraphicWrapper } from '../../graphic/graphic.wrapper';
+import { RegionView } from '../region.view';
 
 /**
  *
@@ -37,23 +38,17 @@ import { GraphicWrapper } from '../../graphic/graphic.wrapper';
 /**
  * 1、创建模型并初始化  模型数据是独立的
  */
-export class ExplicitRegion extends Region {
+export class ExplicitRegion extends Destroyable implements Region {
 
-  constructor(protected _page: IReportPageInner) {
+  // 模型层
+  private _page: IReportPageInner;
+  private _model: RegionModel;
+  private _view: RegionView;
+  private _graphicWrapper: GraphicWrapper;
+
+  constructor(page: IReportPageInner) {
     super();
-  }
-
-  /**
-   * 用户单击mover的时候调用select，进入选中状态
-   *
-   * unselect 点击画布  所有的region、调用unselect方法
-   *
-   * 用户双击mover，进入激活状态   此时已经调用了select
-   *
-   * 点击mask  当前激活的region调用deactivate
-   */
-  set state(param: RegionState) {
-    this._model.state = param;
+    this._page = page;
   }
 
   /**
@@ -63,8 +58,6 @@ export class ExplicitRegion extends Region {
    * @param graphicOption
    */
   init(regionOption: any, { graphicPath, graphicOption }: { graphicPath: string, graphicOption?: IGraphicOption }) {
-    super.init(regionOption, { graphicPath, graphicOption });
-
     // 1、初始化region model。
     // 新建的RegionModel不会触发z-index和state属性变化事件
     // 通过importModel批量导入模型数据也不会触发属性变化事件
@@ -119,6 +112,81 @@ export class ExplicitRegion extends Region {
     });
   }
 
+  get $element() {
+    return this._view.$element;
+  }
+
+  get page(): IReportPageInner {
+    return this._page;
+  }
+
+  get index(): number {
+    return this._model.zIndex;
+  }
+
+  /**
+   * 移动region
+   * @param coordinates
+   */
+  set coordinates(coordinates: Coordinates) {
+    this._model.coordinates = coordinates;
+    this.sync();
+  }
+
+  set dimensions(dimensions: Dimensions) {
+    this._model.dimensions = dimensions;
+    this.sync();
+    this._graphicWrapper && this._graphicWrapper.resize();
+  }
+
+  get dimensions() {
+    return this._model.dimensions;
+  }
+
+  set rectangle(value: Rectangle) {
+    this._model.rectangle = value;
+    this.sync();
+    setTimeout(() => {
+      this._graphicWrapper && this._graphicWrapper.resize();
+    }, 100);
+  }
+
+
+  /**
+   * 用户单击mover的时候调用select，进入选中状态
+   * unselect 点击画布  所有的region、调用unselect方法
+   * 用户双击mover，进入激活状态   此时已经调用了select
+   * 点击mask  当前激活的region调用deactivate
+   */
+  set state(param: RegionState) {
+    this._model.state = param;
+  }
+
+  get state() {
+    return this._model.state;
+  }
+
+  get description() {
+    return null;
+  }
+
+  /**
+   * 模型层关联，展现层关联
+   * @param {IGraphic} graphic
+   */
+  addChild(graphic: GraphicWrapper) {
+    this._graphicWrapper = graphic;
+    this._view.$fill.append(graphic.$element);
+  }
+
+  switchDataSource(id: string) {
+    this._graphicWrapper.switchDataSource(id);
+  }
+
+  updateTheme(theme: string) {
+    this._graphicWrapper.updateTheme(theme);
+  }
+
   /**
    * 同步视图和数据模型
    * 当从外部设置位置、维度时调用  graphicActionMove从外部记录、恢复位置 graphicActionResize
@@ -141,14 +209,13 @@ export class ExplicitRegion extends Region {
   }
 
   getOption() {
-    const retObj = {
+    return {
       region: {
         regionKey: 'explicit.region',
         regionOption: this._model.exportModel(),
       },
       graphic: this._graphicWrapper.getOption(),
     };
-    return retObj;
   }
 
   private _bindForSelect() {

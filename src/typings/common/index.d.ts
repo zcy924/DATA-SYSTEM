@@ -28,3 +28,9 @@ interface Echart {
 interface Array<T> {
   contain(item): boolean;
 }
+
+interface JQuery {
+  colpick(param: any);
+
+  colpickHide();
+}

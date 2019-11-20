@@ -5,7 +5,7 @@ import {
   GraphicOption, guid,
   componentManager,
   IGraphic,
-  IGraphicOption, IModelSource, IRegion,
+  IGraphicOption, IModelSource,
 } from '@data-studio/shared';
 import { dataModelManager } from '../../../data/data.model.manager';
 import { Region } from '../region/region';
@@ -15,15 +15,18 @@ import { Region } from '../region/region';
  */
 export class GraphicWrapper extends Destroyable {
 
-  private _modelSource: IModelSource;
+
+  private _region: Region;
   private _graphic: IGraphic;
 
+  private _modelSource: IModelSource;
   private _modelSubscription: Subscription;
 
   private _optionAccessor: Function;
 
-  constructor(private _region: Region) {
+  constructor(_region: Region) {
     super();
+    this._region = _region;
   }
 
   get uuid(): string {
