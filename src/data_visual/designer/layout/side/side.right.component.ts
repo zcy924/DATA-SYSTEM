@@ -18,9 +18,6 @@ import { dataSourceConfigSetManager, Destroyable } from '@data-studio/shared';
   styleUrls: ['./side.right.component.less'],
 })
 export class SideRightComponent extends Destroyable implements AfterViewInit, OnInit, OnDestroy {
-
-  @ViewChild(NgForm) ngForm: NgForm;
-
   modelName: string;
 
   constructor(
@@ -28,16 +25,15 @@ export class SideRightComponent extends Destroyable implements AfterViewInit, On
     super();
   }
 
-  ngOnInit() {
-  }
-
   closeRightPanel() {
     this.appBody.closeRightPanel();
   }
 
+  ngOnInit() {
+  }
 
   ngAfterViewInit() {
-    dataModelManager.dataOptionSet = dataSourceConfigSetManager.getItem('space1');
+    dataModelManager.dataSourceConfigSet = dataSourceConfigSetManager.getItem('space1');
 
     const subscription = dataModelManager.modelName$.subscribe((modelName) => {
       this.modelName = modelName;
@@ -52,14 +48,14 @@ export class SideRightComponent extends Destroyable implements AfterViewInit, On
    * 切换当前激活Graphic组件的数据源
    * @param {MouseEvent} $event
    */
-  switchDataModel($event: MouseEvent) {
-    dataModelSelector.open($event, (modelID: string) => {
-      dataModelManager.switchDataModel(modelID);
+  selectDataModel($event: MouseEvent) {
+    dataModelSelector.open($event, (dataModelID: string) => {
+      dataModelManager.switchDataModel(dataModelID);
     });
   }
 
   ngOnDestroy() {
-
+    this.destroy();
   }
 
 }

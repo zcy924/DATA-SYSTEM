@@ -7,7 +7,7 @@ import { draggableHelper } from '../../../utils/draggable.helper';
 import { fromEvent } from 'rxjs';
 import { DataModel } from '../../../data/data.model.interface';
 import { dataModelManager } from '../../../data/data.model.manager';
-import { Destroyable } from '@data-studio/shared';
+import { Destroyable, IDataSourceDimension } from '@data-studio/shared';
 
 
 @Component({
@@ -37,7 +37,7 @@ export class DimensionAreaComponent extends Destroyable implements AfterViewInit
     });
   }
 
-  doDragStart(event: DragEvent, item) {
+  doDragStart(event: DragEvent, item: IDataSourceDimension) {
     event.dataTransfer
       .setData('Text', (<HTMLElement>event.target).getAttribute('fieldid'));
     draggableHelper.dragInfo = item;
@@ -45,10 +45,7 @@ export class DimensionAreaComponent extends Destroyable implements AfterViewInit
 
   dragStartForDragBar(event: DragEvent) {
     const subscription = fromEvent(document, 'mousemove')
-    /*.pipe(throttleTime(30))*/
       .subscribe((mouseEvent: MouseEvent) => {
-        console.log(this._$element.offset());
-        console.log(mouseEvent.pageX, mouseEvent.pageY);
         this._$element.height(Math.max(36, mouseEvent.pageY - this._$element.offset().top));
       });
     const mouseupHandler = () => {

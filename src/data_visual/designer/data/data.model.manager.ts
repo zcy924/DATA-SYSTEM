@@ -1,7 +1,7 @@
+import { DataSourceConfigSet, Destroyable } from '@data-studio/shared';
 import { Dataset, DataModel } from './data.model.interface';
 import { Observable, Subject } from 'rxjs';
 import { session } from '../utils/session';
-import { DataSourceConfigSet, Destroyable } from '@data-studio/shared';
 
 /**
  * 该类不可以跟DataSourceManager合并 DataModelPlugin只认DataModelManager说话
@@ -11,7 +11,7 @@ class DataModelManager extends Destroyable {
   private _map: Map<string, DataModel> = new Map();
   private _currentDataModel: DataModel;
 
-  private _dataOptionSet: DataSourceConfigSet;
+  private _dataSourceConfigSet: DataSourceConfigSet;
   private _modelNameSubject = new Subject<string>();
   private _dataModelSubject = new Subject<DataModel>();
 
@@ -24,12 +24,13 @@ class DataModelManager extends Destroyable {
     });
   }
 
-  set dataOptionSet(value: DataSourceConfigSet) {
+  set dataSourceConfigSet(value: DataSourceConfigSet) {
+    this._map.clear();
     if (value) {
       value.values.forEach((dataSourceConfig) => {
         this.addDataModel(dataSourceConfig.id, dataSourceConfig.displayName, dataSourceConfig.dimensions);
       });
-      this._dataOptionSet = value;
+      this._dataSourceConfigSet = value;
     }
   }
 
@@ -77,7 +78,6 @@ class DataModelManager extends Destroyable {
       this._dataModelSubject.next(ret);
     }
     if (updateGraphic) {
-      console.log('switchDataSource:' + id);
       session.currentPage.reportPage.focusRegion.switchDataSource(id);
     }
     return ret;
@@ -88,11 +88,11 @@ class DataModelManager extends Destroyable {
   }
 
   get current(): Dataset {
-    return null; // this._currentDatasetWrapper ? this._currentDatasetWrapper.dataset : null;
+    return null;
   }
 
   getDefaultDataset(): DataModel {
-    return null; // this._map.entries().next().value[1];
+    return null;
   }
 }
 
