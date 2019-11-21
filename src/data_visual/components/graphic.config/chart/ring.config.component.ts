@@ -38,53 +38,54 @@ export class RingConfigComponent extends BaseConfigSourceComponent implements Af
     tooltip: {
       show: false,
     },
-    series: [{
-      name: '访问来源',
-      type: 'pie',
-      radius: ['30%', '45%'],
-      avoidLabelOverlap: false,
-      label: {
-        normal: {
-          formatter: '{b|{b}} {c|{c}} 台',
-          color: '#fff',
-          rich: {
-            b: {
-              color: '#fff',
-            },
-            c: {
-              fontWeight: 'bold',
+    series: [
+      {
+        name: '访问来源',
+        type: 'pie',
+        radius: ['30%', '45%'],
+        avoidLabelOverlap: false,
+        label: {
+          normal: {
+            formatter: '{b|{b}} {c|{c}} 台',
+            color: '#fff',
+            rich: {
+              b: {
+                color: '#fff',
+              },
+              c: {
+                fontWeight: 'bold',
+              },
             },
           },
         },
-      },
-      labelLine: {
-        normal: {
-          show: true,
-          lineStyle: {
-            color: '#274862',
+        labelLine: {
+          normal: {
+            show: true,
+            lineStyle: {
+              color: '#274862',
+            },
+            length: 45,
           },
-          length: 45,
         },
+        data: [{
+          value: 335,
+          name: '危急',
+        },
+          {
+            value: 310,
+            name: '高危',
+          },
+          {
+            value: 234,
+            name: '中危',
+          },
+          {
+            value: 135,
+            name: '低危',
+          },
+        ],
+        z: 5,
       },
-      data: [{
-        value: 335,
-        name: '危急',
-      },
-        {
-          value: 310,
-          name: '高危',
-        },
-        {
-          value: 234,
-          name: '中危',
-        },
-        {
-          value: 135,
-          name: '低危',
-        },
-      ],
-      z: 5,
-    },
       {
         type: 'pie',
         radius: '60%',

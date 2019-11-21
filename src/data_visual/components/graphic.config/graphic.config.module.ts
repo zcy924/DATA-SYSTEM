@@ -29,6 +29,7 @@ import {GaugeConfigComponent} from './chart/gauge.config.component';
 import {WordCloudConfigComponent} from './chart/word.cloud.config.component';
 import {TableConfigComponent} from './custom/table.config.component';
 import { ColorPickerModule } from '../shared/color-picker/color-picker.module';
+import { RankConfigComponent } from './chart/rank.config.component';
 
 const COMPONENTS = [
   BarConfigComponent,
@@ -48,7 +49,8 @@ const COMPONENTS = [
   BuildInConfigComponent,
   ImageSelectConfigComponent,
   PageConfigComponent,
-  TableConfigComponent
+  TableConfigComponent,
+  RankConfigComponent
 ];
 
 @NgModule({

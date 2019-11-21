@@ -1,6 +1,6 @@
 import {
   AfterViewInit,
-  Component, forwardRef, Input,
+  Component, forwardRef,
   ViewChild,
 } from '@angular/core';
 import {NG_VALUE_ACCESSOR, NgForm} from '@angular/forms';

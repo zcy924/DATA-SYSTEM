@@ -33,4 +33,6 @@ interface JQuery {
   colpick(param: any);
 
   colpickHide();
+
+  colorPicker(param: any);
 }
