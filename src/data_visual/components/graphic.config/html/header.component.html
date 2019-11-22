@@ -27,7 +27,7 @@
             <nz-select style="width: 100%;" name="fontSize" [(ngModel)]="option.textStyle.fontSize" nzSize="small" nzAllowClear
                        nzPlaceHolder="字号">
               <nz-option *ngFor="let item of fontSizeArray" nzCustomContent
-                         [nzValue]="item" [nzLabel]="item"><span [style.fontSize]="item+'px'">{{item}}</span></nz-option>
+                         [nzValue]="item" [nzLabel]="item"><span [style.fontSize]="item">{{item}}</span></nz-option>
             </nz-select>
           </div>
           <div nz-col [nzSpan]="8" style="padding: 0 2px;">

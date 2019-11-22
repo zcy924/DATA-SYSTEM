@@ -36,7 +36,7 @@ export class DataHeaderComponent extends BaseConfigSourceComponent implements Af
     },
   };
 
-  fontSizeArray = [10, 12, 14, 16, 18, 20, 24, 32, 40];
+  fontSizeArray = ['10px', '12px', '14px', '16px', '18px', '20px', '24px', '32px', '40px'];
 
   headerSizeArray = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
