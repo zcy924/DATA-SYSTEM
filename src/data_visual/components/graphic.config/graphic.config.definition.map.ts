@@ -8,6 +8,7 @@ import { RingConfigComponent } from './chart/ring.config.component';
 import { MapConfigComponent } from './chart/map.config.component';
 import { WordCloudConfigComponent } from './chart/word.cloud.config.component';
 import { RankConfigComponent } from './chart/rank.config.component';
+import { DataHeaderComponent } from './html/header.component';
 
 export const graphicConfigDefinitionMap = new Map();
 
@@ -25,3 +26,4 @@ graphicConfigDefinitionMap.set('ring.chart.graphic', RingConfigComponent);
 graphicConfigDefinitionMap.set('rank.chart.graphic', RankConfigComponent);
 graphicConfigDefinitionMap.set('map.chart.graphic', MapConfigComponent);
 graphicConfigDefinitionMap.set('wordCloud.chart.graphic', WordCloudConfigComponent);
+graphicConfigDefinitionMap.set('header.html.graphic', DataHeaderComponent);

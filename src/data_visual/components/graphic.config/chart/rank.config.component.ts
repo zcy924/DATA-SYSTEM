@@ -9,11 +9,12 @@ import {
 import { NgForm } from '@angular/forms';
 
 import { NzModalService } from 'ng-zorro-antd';
-import { BaseConfigSourceComponent } from '@data-studio/shared';
+import { BaseConfigSourceComponent, IDataSourceDimension } from '@data-studio/shared';
 
 import { removeUndefined } from '../../../designer/utils/common';
 import { debounceTime } from 'rxjs/operators';
 import * as _ from 'lodash';
+import { draggableHelper } from '../../../designer/utils/draggable.helper';
 
 @Component({
   selector: 'app-rank-config',
@@ -44,42 +45,6 @@ export class RankConfigComponent extends BaseConfigSourceComponent implements Af
       right: '0%',
       bottom: '8%',
       containLabel: true,
-    },
-    dataset: {
-      dimensions: ['score', 'name'],
-      source: [
-        {
-          score: 4,
-          name: '南昌转运中心',
-        }, {
-          score: 13,
-          name: '广州转运中心',
-        }, {
-          score: 25,
-          name: '杭州转运中心',
-        }, {
-          score: 29,
-          name: '宁夏转运中心',
-        }, {
-          score: 38,
-          name: '兰州转运中心',
-        }, {
-          score: 44,
-          name: '南宁转运中心',
-        }, {
-          score: 50,
-          name: '长沙转运中心',
-        }, {
-          score: 52,
-          name: '武汉转运中心',
-        }, {
-          score: 60,
-          name: '北京转运中心',
-        }, {
-          score: 72,
-          name: '贵州转运中心',
-        },
-      ],
     },
     xAxis: [{
       show: false,
@@ -125,10 +90,7 @@ export class RankConfigComponent extends BaseConfigSourceComponent implements Af
         name: '条',
         type: 'bar',
         yAxisIndex: 0,
-        encode: {
-          x: 'score',
-          y: 'name',
-        },
+        encode: {},
         label: {
           normal: {
             show: true,
@@ -195,12 +157,51 @@ export class RankConfigComponent extends BaseConfigSourceComponent implements Af
     ],
   };
 
+  name: any;
+  indicator: any;
+
   private _differ: KeyValueDiffer<any, any>;
 
   private _innerOption = {};
 
   constructor(private modalService: NzModalService, private _differs: KeyValueDiffers) {
     super();
+  }
+
+  dragenter(event: DragEvent) {
+    event.dataTransfer.dropEffect = 'move';
+    // 阻止浏览器默认事件
+    event.preventDefault();
+  }
+
+  /**
+   * 在其它的事件(如ondragover、ondragleave等），是无法获取dataTransfer里面的值了。
+   * 这是由于W3C要求对dataTransfer里的值进行保护[参考]。
+   * 因此，如果需要在这些事件里获取数据，只能通过一个全局变量等其它方式来实现了。
+   * @param {DragEvent} event
+   */
+  dragover(event: DragEvent) {
+    // 阻止浏览器默认事件
+    event.preventDefault();
+  }
+
+  drop(event: DragEvent, path: string) {
+    // 火狐中取消drop默认行为，阻止打开URL
+    event.preventDefault();
+    if (path.indexOf('x') > 0) {
+      this.indicator = draggableHelper.dragInfo.name;
+    } else {
+      this.name = draggableHelper.dragInfo.name;
+    }
+
+    _.set(this.option, path, draggableHelper.dragInfo.name);
+
+    this._subject.next({
+      key: 'option',
+      oldValue: this._innerOption,
+      newValue: this.option,
+      option: this.option,
+    });
   }
 
   exportOption() {

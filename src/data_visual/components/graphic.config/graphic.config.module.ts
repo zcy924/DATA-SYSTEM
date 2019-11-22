@@ -40,7 +40,6 @@ const COMPONENTS = [
   RingConfigComponent,
   WordCloudConfigComponent,
   LineConfigComponent,
-  DataHeaderComponent,
   TextConfigComponent,
   CommentConfigComponent,
   ImageConfigComponent,
@@ -50,6 +49,7 @@ const COMPONENTS = [
   ImageSelectConfigComponent,
   PageConfigComponent,
   TableConfigComponent,
+  DataHeaderComponent,
   RankConfigComponent
 ];
 

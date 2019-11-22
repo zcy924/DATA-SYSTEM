@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { BaseConfigSourceComponent } from '@data-studio/shared';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header-config',
@@ -23,9 +24,45 @@ export class DataHeaderComponent extends BaseConfigSourceComponent implements Af
   @Output() output = new EventEmitter();
 
   option = {
-    text: '我是标题',
-    backgroundColor: undefined,
+    size: 'h1',
+    color: 'red',
+    content: '我是标题',
+    textAlign: 'center',
+    textStyle: {
+      fontSize:null,
+      fontFamily: null,
+      fontStyle: null,
+      fontWeight: null,
+    },
   };
+
+  fontSizeArray = [10, 12, 14, 16, 18, 20, 24, 32, 40];
+
+  headerSizeArray = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+
+  fontStyleArray = ['normal', 'italic', 'oblique'];
+
+  fontFamilyArray = [
+    ['serif', 'serif'],
+    ['Courier New', 'Courier New'],
+    ['楷体', 'KaiTi'],
+    ['黑体', 'SimHei'],
+    ['宋体', 'SimSun'],
+    ['微软雅黑', 'Microsoft YaHei'],
+    ['华文细黑', 'STXihei'],
+    ['华文楷体', 'STKaiti'],
+    ['华文宋体', 'STSong'],
+    ['华文彩云', 'STCaiyun'],
+    ['华文琥珀', 'STHupo'],
+    ['华文隶书', 'STLiti'],
+    ['华文行楷', 'STXingkai'],
+  ];
+
+  fontWeightArray = ['normal',
+    'bold',
+    'bolder',
+    'lighter',
+    100, 200, 300, 400, 500, 600, 800];
 
   private _differ: KeyValueDiffer<any, any>;
 
@@ -39,14 +76,13 @@ export class DataHeaderComponent extends BaseConfigSourceComponent implements Af
 
 
   ngAfterViewInit() {
-    this.ngForm.valueChanges.subscribe((value) => {
-      console.log(JSON.stringify(value));
-      console.log(JSON.stringify(this.option));
-      const changes = this._differ.diff(value);
-      if (changes) {
-        console.log('has change');
-        this.output.emit(value);
-      }
+    this.ngForm.valueChanges.pipe(debounceTime(100)).subscribe((value) => {
+      this._subject.next({
+        key: 'option',
+        oldValue: this.option,
+        newValue: this.option,
+        option: this.option,
+      });
     });
   }
 

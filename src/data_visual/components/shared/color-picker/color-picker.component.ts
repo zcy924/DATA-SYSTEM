@@ -62,7 +62,7 @@ export class ColorPickerComponent extends CustomControlValueAccessor implements 
       },
 
       cssAddon: // could also be in a css file instead
-        '.cp-color-picker{box-sizing:border-box; width:226px;}' +
+        '.cp-color-picker{box-sizing:border-box; width:226px;z-index:999;}' +
         '.cp-color-picker .cp-panel {line-height: 21px; float:right;' +
         'padding:0 1px 0 8px; margin-top:-1px; overflow:visible}' +
         '.cp-xy-slider:active {cursor:none;}' +

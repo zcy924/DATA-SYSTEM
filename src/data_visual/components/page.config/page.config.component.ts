@@ -89,7 +89,6 @@ export class PageConfigComponent extends BasePageConfig implements AfterViewInit
 
   ngAfterViewInit() {
     let subscription = this.ngForm.valueChanges.pipe(debounceTime(200)).subscribe((value) => {
-      console.log('************************');
       const array = [], changes = this._differ.diff(value);
       if (changes) {
         changes.forEachRemovedItem((record) => {

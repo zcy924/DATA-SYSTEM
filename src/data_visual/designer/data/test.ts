@@ -2,6 +2,75 @@ import { IDataSourceConfig } from '@data-studio/shared';
 
 export const array: Array<IDataSourceConfig> = [
   {
+    id: 'zhuanyunzhongxin',
+    displayName: '转运中心排名',
+    comment: '没有任何建议',
+    metaData: {
+      dataType: 'array',
+      dimensions: [
+        {
+          name: 'name',
+          type: 'ordinal',
+        }, {
+          name: 'score',
+          type: 'int',
+        }, {
+          name: 'province',
+          type: 'ordinal',
+        }],
+    },
+    generatorPath: 'mock$mockStatic',
+    generatorParams: {
+      data: {
+        dimensions: ['score', 'name', 'province'],
+        source: [
+          {
+            score: 4,
+            name: '南昌转运中心',
+            province: '江西',
+          }, {
+            score: 13,
+            name: '广州转运中心',
+            province: '广东',
+
+          }, {
+            score: 25,
+            name: '杭州转运中心',
+            province: '浙江',
+          }, {
+            score: 29,
+            name: '宁夏转运中心',
+            province: '宁夏',
+          }, {
+            score: 38,
+            name: '兰州转运中心',
+            province: '甘肃',
+          }, {
+            score: 44,
+            name: '南宁转运中心',
+            province: '广西',
+          }, {
+            score: 50,
+            name: '长沙转运中心',
+            province: '湖南',
+          }, {
+            score: 52,
+            name: '武汉转运中心',
+            province: '湖北',
+          }, {
+            score: 60,
+            name: '北京转运中心',
+            province: '北京',
+          }, {
+            score: 72,
+            name: '贵州转运中心',
+            province: '贵州',
+          },
+        ],
+      },
+    },
+  },
+  {
     id: 'simple1',
     displayName: 'ce',
     comment: '没有任何建议',
@@ -14,11 +83,137 @@ export const array: Array<IDataSourceConfig> = [
     },
     generatorPath: 'standard$simpleGenerator',
     generatorParams: {
-      url:'http://10.2.72.166:8080/openAPI/ce?ak=d0772860f172400091ab7ea6e2010e55',
+      url: 'http://10.2.72.166:8080/openAPI/ce?ak=d0772860f172400091ab7ea6e2010e55',
       dimensions: [
         { name: 'CATALOG_NO', type: 'int' },
         { name: 'catalog_desc', type: 'ordinal' },
         { name: 'catalog_name', type: 'ordinal' }],
+    },
+  },
+  {
+    id: '交易类型交易额统计',
+    displayName: '交易类型交易额统计',
+    comment: '没有任何建议',
+    metaData: {
+      dataType: 'array',
+      dimensions: [
+        { name: 'AMOUNT_SUM', type: 'int' },
+        { name: 'TRANS_TYPE_DETAIL', type: 'ordinal' }],
+    },
+    generatorPath: 'standard$simpleGenerator',
+    generatorParams: {
+      url: 'http://10.2.72.166:8080/openAPI/demo/amountByType?ak=d0772860f172400091ab7ea6e2010e55',
+      dimensions: [
+        { name: 'AMOUNT_SUM', type: 'int' },
+        { name: 'TRANS_TYPE_DETAIL', type: 'ordinal' }],
+    },
+  },
+  {
+    id: '杭州地区网点交易量',
+    displayName: '杭州地区网点交易量',
+    comment: '没有任何建议',
+    metaData: {
+      dataType: 'array',
+      dimensions: [
+        { name: '交易量', type: 'int' },
+        { name: 'ORG_NO', type: 'ordinal' }],
+    },
+    generatorPath: 'standard$simpleGenerator',
+    generatorParams: {
+      url: 'http://10.2.72.166:8080/openAPI/hangzhou/netpoint/trans/count?ak=d0772860f172400091ab7ea6e2010e55',
+      dimensions: [
+        { name: '交易量', type: 'int' },
+        { name: 'ORG_NO', type: 'ordinal' }],
+    },
+  },
+  {
+    id: '网点case量TOP10（近一年）',
+    displayName: '网点case量TOP10（近一年）',
+    comment: '没有任何建议',
+    metaData: {
+      dataType: 'array',
+      dimensions: [
+        { name: 'case量', type: 'int' },
+        { name: 'ORG_NAME', type: 'ordinal' }],
+    },
+    generatorPath: 'standard$simpleGenerator',
+    generatorParams: {
+      url: 'http://10.2.72.166:8080/openAPI/netpoint/case/count/top10?ak=d0772860f172400091ab7ea6e2010e55',
+      dimensions: [
+        { name: 'case量', type: 'int' },
+        { name: 'ORG_NAME', type: 'ordinal' }],
+    },
+  },
+  {
+    id: '网点日均交易量Top10（17年）',
+    displayName: '网点日均交易量Top10（17年）',
+    comment: '没有任何建议',
+    metaData: {
+      dataType: 'array',
+      dimensions: [
+        { name: '交易量', type: 'int' },
+        { name: 'ORG_NAME', type: 'ordinal' }],
+    },
+    generatorPath: 'standard$simpleGenerator',
+    generatorParams: {
+      url: 'http://10.2.72.166:8080/openAPI/netpoint/day/count/top10?ak=d0772860f172400091ab7ea6e2010e55',
+      dimensions: [
+        { name: '交易量', type: 'int' },
+        { name: 'ORG_NAME', type: 'ordinal' }],
+    },
+  },
+  {
+    id: '设备效益Top（近一年）',
+    displayName: '设备效益Top（近一年）',
+    comment: '没有任何建议',
+    metaData: {
+      dataType: 'array',
+      dimensions: [
+        { name: '设备效益', type: 'int' },
+        { name: 'DEV_NO', type: 'ordinal' }],
+    },
+    generatorPath: 'standard$simpleGenerator',
+    generatorParams: {
+      url: 'http://10.2.72.166:8080/openAPI/atm/benefit/lastYear/top5?ak=d0772860f172400091ab7ea6e2010e55',
+      dimensions: [
+        { name: '设备效益', type: 'int' },
+        { name: 'DEV_NO', type: 'ordinal' }],
+    },
+  },
+  {
+    id: '设备自助渠道年交易量',
+    displayName: '设备自助渠道年交易量',
+    comment: '没有任何建议',
+    metaData: {
+      dataType: 'array',
+      dimensions: [
+        { name: '交易量', type: 'int' },
+        { name: 'TRANS_YEAR', type: 'ordinal' }],
+    },
+    generatorPath: 'standard$simpleGenerator',
+    generatorParams: {
+      url: 'http://10.2.72.166:8080/openAPI/atm/year/count?ak=d0772860f172400091ab7ea6e2010e55',
+      dimensions: [
+        { name: '交易量', type: 'int' },
+        { name: 'TRANS_YEAR', type: 'ordinal' }],
+    },
+  },
+  {
+    id: '设备自助渠道年交易额',
+    displayName: '设备自助渠道年交易额',
+    comment: '没有任何建议',
+    metaData: {
+      dataType: 'array',
+      dimensions: [
+        { name: '交易额', type: 'int' },
+        { name: 'TRANS_YEAR', type: 'ordinal' }],
+    },
+    generatorPath: 'standard$simpleGenerator',
+    generatorParams: {
+      url: 'http://10.2.72.166:8080/openAPI/atm/year/amount/count?ak=d0772860f172400091ab7ea6e2010e55',
+      dimensions: [
+        { name: '交易额', type: 'int' },
+        { name: 'TRANS_YEAR', type: 'ordinal' }],
     },
   },
   {
@@ -35,7 +230,7 @@ export const array: Array<IDataSourceConfig> = [
     },
     generatorPath: 'standard$simpleGenerator',
     generatorParams: {
-      url:'http://10.2.72.166:8080/openAPI/ceshi1?ak=d0772860f172400091ab7ea6e2010e55',
+      url: 'http://10.2.72.166:8080/openAPI/ceshi1?ak=d0772860f172400091ab7ea6e2010e55',
       dimensions: [
         { name: 'CLASSIFICATION', type: 'int' },
         { name: 'DRIVER_CLASS', type: 'ordinal' },
@@ -567,5 +762,5 @@ export const array: Array<IDataSourceConfig> = [
         ],
       },
     },
-  }
+  },
 ];

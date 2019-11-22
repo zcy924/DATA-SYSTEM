@@ -2,10 +2,26 @@
   <nz-tab nzTitle="数据">
     <nz-collapse [nzBordered]="false" class="zijin-form">
       <nz-collapse-panel nzHeader="X 轴">
+        <div nz-row nzType="flex">
+          <div nz-col [nzSpan]="10" style="margin-bottom: 8px">
+            <span class="item-title" style="line-height: 24px;">拖入指标:</span>
+          </div>
+          <div nz-col [nzSpan]="14" style="margin-bottom: 8px">
+            <div (dragenter)="dragenter($event)" (dragover)="dragover($event)"
+                 (drop)="drop($event,'series[0].encode.x')"><span>{{indicator || '未选择'}}</span></div>
+          </div>
+        </div>
 
       </nz-collapse-panel>
       <nz-collapse-panel nzHeader="Y 轴">
         <div nz-row nzType="flex">
+          <div nz-col [nzSpan]="10" style="margin-bottom: 8px">
+            <span class="item-title" style="line-height: 24px;">拖入名称:</span>
+          </div>
+          <div nz-col [nzSpan]="14" style="margin-bottom: 8px">
+            <div (dragenter)="dragenter($event)" (dragover)="dragover($event)"
+                 (drop)="drop($event,'series[0].encode.y')"><span>{{name || '未选择'}}</span></div>
+          </div>
           <div nz-col [nzSpan]="10" style="margin-bottom: 8px">
             <span class="item-title" style="line-height: 36px;">气泡大小:</span>
           </div>
