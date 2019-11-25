@@ -36,3 +36,10 @@ interface JQuery {
 
   colorPicker(param: any);
 }
+
+declare const ace: {
+  edit(param: any): any;
+  setTheme(param: string);
+
+  session: any;
+};

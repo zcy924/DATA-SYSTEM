@@ -1,35 +1,36 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
-import {FormsModule} from '@angular/forms';
-import {NgZorroAntdModule} from 'ng-zorro-antd';
-import {HttpClientModule} from '@angular/common/http';
-import {PieConfigComponent} from './chart/pie.config.component';
-import {DataHeaderComponent} from './html/header.component';
+import { FormsModule } from '@angular/forms';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { HttpClientModule } from '@angular/common/http';
+import { PieConfigComponent } from './chart/pie.config.component';
+import { DataHeaderComponent } from './html/header.component';
 
-import {CommentConfigComponent} from './auxiliary/comment.config.component';
-import {TextConfigComponent} from './auxiliary/text.config.component';
+import { CommentConfigComponent } from './auxiliary/comment.config.component';
+import { TextConfigComponent } from './auxiliary/text.config.component';
 
-import {ImageConfigComponent} from './auxiliary/image.config.component';
-import {BarConfigComponent} from './chart/bar.config.component';
-import {NzModalFilterComponent} from './common/filter.modal.component';
-import {FilterListComponent} from './common/filter.list.component';
-import {ConfigModule} from '../config/config.module';
-import {PageConfigComponent} from '../page.config/page.config.component';
-import {LineConfigComponent} from './chart/line.config.component';
-import {BuildInConfigComponent} from '../page.config/build-in.config.component';
-import {ImageSelectConfigComponent} from '../common/image.select.config.component';
-import {MapConfigComponent} from './chart/map.config.component';
-import {RingConfigComponent} from './chart/ring.config.component';
-import {FlipBarConfigComponent} from './chart/flip.bar.config.component';
-import {GaugeConfigComponent} from './chart/gauge.config.component';
-import {WordCloudConfigComponent} from './chart/word.cloud.config.component';
-import {TableConfigComponent} from './custom/table.config.component';
+import { ImageConfigComponent } from './auxiliary/image.config.component';
+import { BarConfigComponent } from './chart/bar.config.component';
+import { NzModalFilterComponent } from './common/filter.modal.component';
+import { FilterListComponent } from './common/filter.list.component';
+import { ConfigModule } from '../config/config.module';
+import { PageConfigComponent } from '../page.config/page.config.component';
+import { LineConfigComponent } from './chart/line.config.component';
+import { BuildInConfigComponent } from '../page.config/build-in.config.component';
+import { ImageSelectConfigComponent } from '../common/image.select.config.component';
+import { MapConfigComponent } from './chart/map.config.component';
+import { RingConfigComponent } from './chart/ring.config.component';
+import { FlipBarConfigComponent } from './chart/flip.bar.config.component';
+import { GaugeConfigComponent } from './chart/gauge.config.component';
+import { WordCloudConfigComponent } from './chart/word.cloud.config.component';
+import { TableConfigComponent } from './custom/table.config.component';
 import { ColorPickerModule } from '../shared/color-picker/color-picker.module';
 import { RankConfigComponent } from './chart/rank.config.component';
+import { PowerfulConfigComponent } from './chart/powerful.config.component';
 
 const COMPONENTS = [
   BarConfigComponent,
@@ -50,12 +51,13 @@ const COMPONENTS = [
   PageConfigComponent,
   TableConfigComponent,
   DataHeaderComponent,
-  RankConfigComponent
+  RankConfigComponent,
+  PowerfulConfigComponent,
 ];
 
 @NgModule({
   declarations: [
-    ...COMPONENTS
+    ...COMPONENTS,
   ],
   imports: [
     BrowserModule,
@@ -64,14 +66,14 @@ const COMPONENTS = [
     HttpClientModule,
     ColorPickerModule,
     NgZorroAntdModule,
-    ConfigModule
+    ConfigModule,
   ],
   entryComponents: [
-    ...COMPONENTS
+    ...COMPONENTS,
   ],
   exports: [
-    ...COMPONENTS
-  ]
+    ...COMPONENTS,
+  ],
 })
 export class GraphicConfigModule {
 }

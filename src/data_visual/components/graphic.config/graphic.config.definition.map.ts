@@ -9,6 +9,7 @@ import { MapConfigComponent } from './chart/map.config.component';
 import { WordCloudConfigComponent } from './chart/word.cloud.config.component';
 import { RankConfigComponent } from './chart/rank.config.component';
 import { DataHeaderComponent } from './html/header.component';
+import { PowerfulConfigComponent } from './chart/powerful.config.component';
 
 export const graphicConfigDefinitionMap = new Map();
 
@@ -25,5 +26,6 @@ graphicConfigDefinitionMap.set('gauge.chart.graphic', GaugeConfigComponent);
 graphicConfigDefinitionMap.set('ring.chart.graphic', RingConfigComponent);
 graphicConfigDefinitionMap.set('rank.chart.graphic', RankConfigComponent);
 graphicConfigDefinitionMap.set('map.chart.graphic', MapConfigComponent);
+graphicConfigDefinitionMap.set('powerful.chart.graphic', PowerfulConfigComponent);
 graphicConfigDefinitionMap.set('wordCloud.chart.graphic', WordCloudConfigComponent);
 graphicConfigDefinitionMap.set('header.html.graphic', DataHeaderComponent);
