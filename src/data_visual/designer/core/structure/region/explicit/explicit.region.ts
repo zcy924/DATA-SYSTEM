@@ -1,4 +1,12 @@
-import { Coordinates, Destroyable, Dimensions, IGraphicOption, Rectangle, RegionState } from '@data-studio/shared';
+import {
+  Coordinates,
+  Destroyable,
+  Dimensions,
+  guid,
+  IGraphicOption,
+  Rectangle,
+  RegionState,
+} from '@data-studio/shared';
 import { Region } from '../region';
 import { clipboard } from '../../../../utils/clipboard';
 import { RegionModel } from '../region.model';
@@ -11,6 +19,7 @@ import { GraphicActionResize } from '../../../operate/graphic.action.resize';
 import { contextMenuHelper } from '../../../helper/context.menu.helper';
 import { GraphicWrapper } from '../../graphic/graphic.wrapper';
 import { RegionView } from '../region.view';
+import { session } from '../../../../utils/session';
 
 /**
  *
@@ -389,7 +398,6 @@ export class ExplicitRegion extends Destroyable implements Region {
         callback: () => {
           // 保存当前region的选项信息，该信息的结构应该符合IComponentOption接口
           clipboard.saveData(this.getOption());
-          console.log('复制:', this.getOption());
           return false;
         },
       },
@@ -443,10 +451,10 @@ export class ExplicitRegion extends Destroyable implements Region {
           return false;
         },
       }, {
-        displayName: '保存为组件模版',
+        displayName: '保存为本地模版',
         shortcut: 'K',
         callback: () => {
-          this._model.zIndex = this._page.bottomIndex - 1;
+          session.addLocalTemplate(`${this.description||'未命名'}${guid(4,10)}`,this.getOption());
           return false;
         },
       }];

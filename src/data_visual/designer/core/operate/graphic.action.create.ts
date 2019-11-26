@@ -51,6 +51,7 @@ export class GraphicActionCreate extends Destroyable implements IAction {
         }), param);
 
         this._region = regionInstance;
+        regionInstance.updateTheme(this._pageInner.theme);
         return {
           region: regionInstance,
         };

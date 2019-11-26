@@ -1,5 +1,5 @@
 import {
-  Destroyable
+  Destroyable,
 } from '@data-studio/shared';
 import { clipboard } from '../../../../utils/clipboard';
 import { SelectManager } from '../../../manager/select.manager';
@@ -29,12 +29,18 @@ export class ReportPageKernel extends Destroyable implements IReportPageKernel {
 
   private _pageInner: IReportPageInner;
 
+  private _theme: string = null;
+
   constructor(private _mode: OpenMode) {
     super();
   }
 
   get mode(): OpenMode {
     return this._mode;
+  }
+
+  get theme(): string {
+    return this._theme;
   }
 
   init() {
@@ -46,8 +52,10 @@ export class ReportPageKernel extends Destroyable implements IReportPageKernel {
     this.view = new PageView(this);
     this.view.init();
 
+    this._pageInner = new ReportPageInner(this);
+
     // 创建管理工具 管理所有的图表/选中的图表/当前激活的图表。
-    this.regionManager = new RegionManager();
+    this.regionManager = new RegionManager(this._pageInner);
     this.selectManager = new SelectManager();
     this.activateManager = new ActivateManager(this);
 
@@ -57,8 +65,9 @@ export class ReportPageKernel extends Destroyable implements IReportPageKernel {
     this.actionManager = new ActionManager();
 
     // 1、监听model事件
-    this.pageConfigManager.model.register('themeMode', (key, oldValue, newValue) => {
+    this.pageConfigManager.model.register('themeMode add.themeMode', (key, oldValue, newValue) => {
       // 页面切换主题
+      this._theme = newValue;
       this.regionManager.regionArray.forEach((item) => {
         item.updateTheme(newValue);
       });
@@ -112,8 +121,6 @@ export class ReportPageKernel extends Destroyable implements IReportPageKernel {
       this.pageConfigManager.destroy();
       this.view.destroy();
     });
-
-    this._pageInner = new ReportPageInner(this);
   }
 
   load() {

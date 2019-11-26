@@ -22,7 +22,17 @@ export const array: Array<IDataSourceConfig> = [
     generatorPath: 'mock$mockStatic',
     generatorParams: {
       data: {
-        dimensions: ['score', 'name', 'province'],
+        dimensions: [
+          {
+            name: 'name',
+            type: 'ordinal',
+          }, {
+            name: 'score',
+            type: 'int',
+          }, {
+            name: 'province',
+            type: 'ordinal',
+          }],
         source: [
           {
             score: 4,

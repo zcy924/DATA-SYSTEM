@@ -25,7 +25,7 @@ export function addGraphicToPage(pageInner: IReportPageInner, componentOption: I
     }
     // 第二步初始化region
     regionInstance.init(region.regionOption, graphic);
-
+    regionInstance.updateTheme(pageInner.theme);
     return { region: regionInstance };
   }
 }

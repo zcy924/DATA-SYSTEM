@@ -1,6 +1,7 @@
 import { Observable, Subject } from 'rxjs';
 import { Destroyable } from '@data-studio/shared';
 import { Region } from '../structure/region/region';
+import { IReportPageInner } from '../structure/page/report/page.interface';
 
 /**
  * 管理页面中的所有region，每个页面都有对应的RegionManager
@@ -10,13 +11,14 @@ export class RegionManager extends Destroyable {
   private _children: Array<Region> = [];
   private _subject: Subject<Array<Region>> = new Subject();
 
-  constructor() {
+  constructor(private _pageInner: IReportPageInner) {
     super();
     this.onDestroy(() => {
       if (this._subject) {
         this._subject.unsubscribe();
         this._subject = null;
       }
+      this._pageInner = null;
       this._children.splice(0);
       this._children = null;
     });
@@ -128,7 +130,8 @@ export class RegionManager extends Destroyable {
           x1 = left, y1 = top,
           x2 = left + width, y2 = top + height,
           x3 = offset.left, y3 = offset.top,
-          x4 = offset.left + $element.outerWidth(), y4 = offset.top + $element.outerHeight();
+          x4 = offset.left + $element.outerWidth() * this._pageInner.scale,
+          y4 = offset.top + $element.outerHeight() * this._pageInner.scale;
         return (x3 > x1 && y3 > y1 && x2 > x4 && y2 > y4);
       });
     } else {

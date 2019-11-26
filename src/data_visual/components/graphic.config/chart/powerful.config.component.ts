@@ -7,13 +7,11 @@ import {
   ViewChild,
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
-
 import { NzModalService } from 'ng-zorro-antd';
 import { BaseConfigSourceComponent } from '@data-studio/shared';
-
-import { removeUndefined } from '../../../designer/utils/common';
 import { debounceTime } from 'rxjs/operators';
 import * as _ from 'lodash';
+import { removeUndefined } from '../../../designer/utils/common';
 import { popupEditor } from '../../../designer/utils/popup.editor';
 
 @Component({
@@ -26,7 +24,7 @@ export class PowerfulConfigComponent extends BaseConfigSourceComponent implement
   @ViewChild(NgForm) ngForm: NgForm;
 
   option = {
-    text: '',
+    functionText: '',
   };
 
   private _differ: KeyValueDiffer<any, any>;
@@ -38,9 +36,9 @@ export class PowerfulConfigComponent extends BaseConfigSourceComponent implement
   }
 
   edit() {
-    popupEditor.open('',(newValue:string)=>{
-      if(!!newValue){
-        this.option.text=newValue;
+    popupEditor.open(this.option.functionText, (newValue: string) => {
+      if (!!newValue) {
+        this.option.functionText = newValue;
         this._subject.next({
           key: 'option',
           oldValue: this.option,

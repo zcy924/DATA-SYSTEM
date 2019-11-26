@@ -1,0 +1,35 @@
+ul {
+  li {
+    line-height: 32px;
+    padding-left: 10px;
+    span{
+      cursor: pointer;
+    }
+
+    &:hover {
+      background-color: #ccc;
+      .u-icn {
+        &.u-icn-close{
+          display: block;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .u-icn {
+      display: inline-block;
+      line-height: 32px;
+      margin-right: 6px;
+      font-size: 20px;
+      color: #3b3b3b;
+      &.u-icn-close{
+        display: none;
+        float: right;
+        color: red;
+        line-height: 32px;
+        font-size: 16px;
+        margin-right: 12px;
+      }
+    }
+  }
+}

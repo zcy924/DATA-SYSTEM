@@ -29,7 +29,8 @@ export interface IReportPage extends IDestroyable {
 }
 
 export interface IReportPageKernel extends IDestroyable {
-  mode: OpenMode;
+  readonly mode: OpenMode;
+  readonly theme: string;
   view: PageView;
   regionManager: RegionManager;
   selectManager: SelectManager;
@@ -44,6 +45,8 @@ export interface IReportPageKernel extends IDestroyable {
 export interface IReportPageInner extends IDestroyable {
 
   mode: OpenMode;
+
+  readonly theme: string;
   /**
    * region根据scale计算位移和伸缩
    */

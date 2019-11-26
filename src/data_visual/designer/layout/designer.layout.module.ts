@@ -20,6 +20,7 @@ import { PaletteComponent } from './part/palette.component';
 import { OutlineComponent } from './part/outline.component';
 import { CommService } from '../service/comm.service';
 import { ColorPickerModule } from '../../components/shared/color-picker/color-picker.module';
+import { LocalTemplateComponent } from './part/local.template.component';
 
 const COMPONENTS = [
   DesignerComponent,
@@ -28,6 +29,7 @@ const COMPONENTS = [
   DesignerBodyLeftComponent,
   PaletteComponent,
   OutlineComponent,
+  LocalTemplateComponent,
   SideLeftComponent,
   SideRightComponent,
   // SchemaPillsComponent,

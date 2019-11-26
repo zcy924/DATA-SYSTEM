@@ -22,6 +22,10 @@ export class ReportPageInner extends Destroyable implements IReportPageInner {
     return this._pageKernel.mode;
   }
 
+  get theme() {
+    return this._pageKernel.theme;
+  }
+
   set scale(value: number) {
     this._pageKernel.view.scale = value;
   }
