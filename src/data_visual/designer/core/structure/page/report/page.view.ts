@@ -73,7 +73,7 @@ export class PageView extends ViewEventTarget {
    * @param $activatedRegion 突出现实的元素
    */
   repaintMask($activatedRegion: JQuery) {
-    this.usable && this._repaintMask($activatedRegion);
+    this.usable && this._repaintMask($activatedRegion, this._scale);
   }
 
 
