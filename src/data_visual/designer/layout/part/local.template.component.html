@@ -1,5 +1,5 @@
 <ul>
-  <li *ngFor="let item of list" nz-tooltip nzTitle="点击复制" (click)="copy(item.option)">
+  <li *ngFor="let item of list" (click)="copy(item.option)">
     <i class="u-icn u-icn-link"></i><span nz-tooltip nzTitle="点击复制">{{item?.name}}</span>
     <i class="u-icn u-icn-close" (click)="deleteItem(item.name)"></i>
   </li>

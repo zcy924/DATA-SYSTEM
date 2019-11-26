@@ -101,6 +101,7 @@ export class ReportPageKernel extends Destroyable implements IReportPageKernel {
             enable: clipboard.hasData(),
             callback: ($event) => {
               console.log('粘贴', clipboard.getData());
+              console.log( $event.offsetX, $event.offsetY);
               session.currentPage.paste(clipboard.getData(), $event.offsetX, $event.offsetY);
               return false;
             },

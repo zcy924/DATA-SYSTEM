@@ -1,4 +1,5 @@
 import { IComponentOption } from '@data-studio/shared';
+import * as _ from 'lodash';
 import { IReportPageInner } from '../structure/page/report/page.interface';
 import { regionDefinitionMap } from '../structure/region/region.definition.map';
 import { Region } from '../structure/region/region';
@@ -17,8 +18,8 @@ export function addGraphicToPage(pageInner: IReportPageInner, componentOption: I
     // 创建region
     // 第一步创建region对象
     const regionInstance: Region = new (regionDefinitionMap.get(region.regionKey))(pageInner);
-
-    if (Number.isInteger(left) && Number.isInteger(top)) {
+    console.log(left, top);
+    if (_.isNumber(left) && _.isNumber(top)) {
       Object.assign(region.regionOption, {
         left, top,
       });

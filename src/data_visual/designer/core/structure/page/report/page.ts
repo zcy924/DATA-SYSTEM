@@ -102,7 +102,7 @@ export class ReportPage extends Destroyable implements IReportPage {
    * @param configSourceOption 创建图片的时候，会从外部传入图片信息
    */
   createGraphic(graphicName: string, x: number, y: number, configSourceOption?: any) {
-    this._pageKernel.actionManager.execute(new GraphicActionCreate(this._pageKernel.asPageInner(), graphicName, x, y, configSourceOption));
+    this._pageKernel.actionManager.execute(new GraphicActionCreate(this._pageKernel.asPageInner(), graphicName, x/this._pageKernel.view.scale, y/this._pageKernel.view.scale, configSourceOption));
   }
 
   paste(componentOption: any, x?: number, y?: number) {

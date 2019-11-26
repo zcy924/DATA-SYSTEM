@@ -1,5 +1,6 @@
 import { Coordinates, Dimensions, RegionState, IRegionOption, ModelEventTarget, Rectangle } from '@data-studio/shared';
 import { closestNum, pick } from '../../../utils/common';
+import * as _ from 'lodash';
 
 
 /**
@@ -151,6 +152,7 @@ export class RegionModel extends ModelEventTarget {
    */
   importModel(option: any) {
     this._option = Object.assign({}, option);
+    this._option.zIndex = _.isNumber(this._option.zIndex) ? this._option.zIndex : 1;
   }
 
   /**
