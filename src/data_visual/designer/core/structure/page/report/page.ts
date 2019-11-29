@@ -37,8 +37,16 @@ export class ReportPage extends Destroyable implements IReportPage {
   /**
    * 计算组件在页面中的位置
    */
-  offset() {
+  get offset() {
     return this._pageKernel.view.offset();
+  }
+
+  get focusRegion() {
+    return this._pageKernel.asPageInner().focusRegion;
+  }
+
+  get regionArray$() {
+    return this._pageKernel.regionManager.regionArray$;
   }
 
   get reportPage(): IReportPageInner {
@@ -102,7 +110,7 @@ export class ReportPage extends Destroyable implements IReportPage {
    * @param configSourceOption 创建图片的时候，会从外部传入图片信息
    */
   createGraphic(graphicName: string, x: number, y: number, configSourceOption?: any) {
-    this._pageKernel.actionManager.execute(new GraphicActionCreate(this._pageKernel.asPageInner(), graphicName, x/this._pageKernel.view.scale, y/this._pageKernel.view.scale, configSourceOption));
+    this._pageKernel.actionManager.execute(new GraphicActionCreate(this._pageKernel.asPageInner(), graphicName, x / this._pageKernel.view.scale, y / this._pageKernel.view.scale, configSourceOption));
   }
 
   paste(componentOption: any, x?: number, y?: number) {

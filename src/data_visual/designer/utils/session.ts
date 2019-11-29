@@ -1,25 +1,25 @@
 import { ComponentRef, Type, ViewRef } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { BaseConfigSourceComponent, BasePageConfig } from '@data-studio/shared';
-import { ReportPage } from '../core/structure/page/report/page';
 import { SideLeftComponent } from '../layout/side/side.left.component';
 import { PageConfigComponent } from '../../components/page.config/page.config.component';
 import { delay } from 'rxjs/operators';
+import { IReportPage } from '../core/structure/page/report/page.interface';
 
 class Session {
-  private _currentPage: ReportPage;
+  private _currentPage: IReportPage;
   sideLeftComponent: SideLeftComponent;
-  page = new Subject();
+  page: Subject<IReportPage> = new Subject<IReportPage>();
 
   private _localTemplateKey = '_localTemplateKey';
   private _localTemplateChangeSubject = new Subject();
 
-  set currentPage(value: ReportPage) {
+  set currentPage(value: IReportPage) {
     this._currentPage = value;
-    this.page.next(value.reportPage);
+    this.page.next(value);
   }
 
-  get currentPage() {
+  get currentPage(): IReportPage {
     return this._currentPage;
   }
 

@@ -180,11 +180,11 @@ export class DesignerHeaderComponent extends Destroyable implements AfterViewIni
       grabHelper.refresh(event.pageX, event.pageY);
     };
     const mouseUp = (event: MouseEvent) => {
-      console.log('document mouseup', event, session.currentPage.offset());
+      console.log('document mouseup', event, session.currentPage.offset);
 
       session.currentPage.createGraphic(componentPath,
-        event.pageX - session.currentPage.offset().left - grabHelper.offsetX,
-        event.pageY - session.currentPage.offset().top - grabHelper.offsetY);
+        event.pageX - session.currentPage.offset.left - grabHelper.offsetX,
+        event.pageY - session.currentPage.offset.top - grabHelper.offsetY);
       grabHelper.hidden();
       document.removeEventListener('mousemove', mouseMove);
       document.removeEventListener('mouseup', mouseUp);

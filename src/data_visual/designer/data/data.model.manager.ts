@@ -78,8 +78,8 @@ class DataModelManager extends Destroyable {
       this._dataModelSubject.next(ret);
     }
     if (updateGraphic) {
-      if(session.currentPage.reportPage.focusRegion){
-        session.currentPage.reportPage.focusRegion.switchDataSource(id);
+      if(session.currentPage.focusRegion){
+        session.currentPage.focusRegion.switchDataSource(id);
       }
     }
     return ret;

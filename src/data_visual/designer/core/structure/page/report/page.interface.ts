@@ -16,7 +16,19 @@ import { ActivateManager } from '../../../manager/activate.manager';
 export type OpenMode = 'design' | 'runtime';
 
 export interface IReportPage extends IDestroyable {
+  offset;
+
+  focusRegion;
+
+  regionArray$: Observable<Array<Region>>;
+
+  actionManager: ActionManager;
+
   load(file: IFileStructure);
+
+  createGraphic(graphicName: string, x: number, y: number, configSourceOption?: any);
+
+  paste(componentOption: any, x?: number, y?: number);
 
   save(): any;
 
